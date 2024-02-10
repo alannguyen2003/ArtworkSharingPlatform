@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArtworkSharingPlatform", "ArtworkSharingPlatform\ArtworkSharingPlatform.csproj", "{F1A65395-6C9A-456A-8AC7-BFED6C9DFA85}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{18144D82-FC3C-4434-9DFC-DE7C4413B9E0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{94D55BCD-690B-47C2-B4A1-BC1497E096CC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Host", "Host", "{03C596C4-A4D3-42BF-BCC1-74B12F472254}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{779E09B7-D6D8-46E1-82F4-53A4E08B66F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArtworkSharingPlatform.Domain", "ArtworkSharingPlatform.Domain\ArtworkSharingPlatform.Domain.csproj", "{D6A265EF-F10E-4CE2-804E-7E2B927A0E41}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArtworkSharingPlatform.Application", "ArtworkSharingPlatform.Application\ArtworkSharingPlatform.Application.csproj", "{681B62D5-C38B-4672-A851-23373CA30751}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArtworkSharingPlatform.Infrastructure", "ArtworkSharingPlatform.Infrastructure\ArtworkSharingPlatform.Infrastructure.csproj", "{601952F7-76CA-4FF3-815D-3D1DB2A5DC51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArtworkSharingPlatform.DataTransferLayer", "ArtworkSharingPlatform.DataTransferLayer\ArtworkSharingPlatform.DataTransferLayer.csproj", "{DBEA55A5-5161-47CF-98B4-EAC4A7A0C2FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArtworkSharingPlatform.Repository", "ArtworkSharingPlatform.Repository\ArtworkSharingPlatform.Repository.csproj", "{76DE514E-9E04-46F2-B2CD-584FFE1C1952}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F1A65395-6C9A-456A-8AC7-BFED6C9DFA85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1A65395-6C9A-456A-8AC7-BFED6C9DFA85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1A65395-6C9A-456A-8AC7-BFED6C9DFA85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1A65395-6C9A-456A-8AC7-BFED6C9DFA85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6A265EF-F10E-4CE2-804E-7E2B927A0E41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6A265EF-F10E-4CE2-804E-7E2B927A0E41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6A265EF-F10E-4CE2-804E-7E2B927A0E41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6A265EF-F10E-4CE2-804E-7E2B927A0E41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{681B62D5-C38B-4672-A851-23373CA30751}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{681B62D5-C38B-4672-A851-23373CA30751}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{681B62D5-C38B-4672-A851-23373CA30751}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{681B62D5-C38B-4672-A851-23373CA30751}.Release|Any CPU.Build.0 = Release|Any CPU
+		{601952F7-76CA-4FF3-815D-3D1DB2A5DC51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{601952F7-76CA-4FF3-815D-3D1DB2A5DC51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{601952F7-76CA-4FF3-815D-3D1DB2A5DC51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{601952F7-76CA-4FF3-815D-3D1DB2A5DC51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBEA55A5-5161-47CF-98B4-EAC4A7A0C2FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBEA55A5-5161-47CF-98B4-EAC4A7A0C2FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBEA55A5-5161-47CF-98B4-EAC4A7A0C2FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBEA55A5-5161-47CF-98B4-EAC4A7A0C2FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76DE514E-9E04-46F2-B2CD-584FFE1C1952}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76DE514E-9E04-46F2-B2CD-584FFE1C1952}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76DE514E-9E04-46F2-B2CD-584FFE1C1952}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76DE514E-9E04-46F2-B2CD-584FFE1C1952}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F1A65395-6C9A-456A-8AC7-BFED6C9DFA85} = {03C596C4-A4D3-42BF-BCC1-74B12F472254}
+		{D6A265EF-F10E-4CE2-804E-7E2B927A0E41} = {94D55BCD-690B-47C2-B4A1-BC1497E096CC}
+		{681B62D5-C38B-4672-A851-23373CA30751} = {94D55BCD-690B-47C2-B4A1-BC1497E096CC}
+		{601952F7-76CA-4FF3-815D-3D1DB2A5DC51} = {18144D82-FC3C-4434-9DFC-DE7C4413B9E0}
+		{DBEA55A5-5161-47CF-98B4-EAC4A7A0C2FC} = {94D55BCD-690B-47C2-B4A1-BC1497E096CC}
+		{76DE514E-9E04-46F2-B2CD-584FFE1C1952} = {94D55BCD-690B-47C2-B4A1-BC1497E096CC}
+	EndGlobalSection
+EndGlobal

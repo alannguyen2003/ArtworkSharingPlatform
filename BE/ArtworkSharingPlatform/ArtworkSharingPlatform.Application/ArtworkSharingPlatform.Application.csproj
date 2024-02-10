@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ArtworkSharingPlatform.DataTransferLayer\ArtworkSharingPlatform.DataTransferLayer.csproj" />
+      <ProjectReference Include="..\ArtworkSharingPlatform.Domain\ArtworkSharingPlatform.Domain.csproj" />
+    </ItemGroup>
+
+</Project>
