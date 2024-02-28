@@ -15,16 +15,16 @@ public class ArtworkSharingPlatformDbContext : DbContext
 {
     public DbSet<Artwork>? Artworks { get; set; }
     public DbSet<ArtworkImage>? ArtworkImages { get; set; }
-    // public DbSet<Like>? Likes { get; set; }
-    // public DbSet<Comment>? Comments { get; set; }
-    // public DbSet<Rating>? Ratings { get; set; }
-    // public DbSet<ConfigManager>? ConfigManagers { get; set; }
-    // public DbSet<PreOrder>? PreOrders { get; set; }
-    // public DbSet<PackageBilling>? PackageBilling { get; set; }
-    // public DbSet<PackageInformation>? PackageInformation { get; set; }
-    // public DbSet<Transaction>? Transactions { get; set; }
-    // public DbSet<Role>? Roles { get; set; }
-    // public DbSet<User>? Users { get; set; }
+    public DbSet<Like>? Likes { get; set; }
+    public DbSet<Comment>? Comments { get; set; }
+    public DbSet<Rating>? Ratings { get; set; }
+    public DbSet<ConfigManager>? ConfigManagers { get; set; }
+    public DbSet<PreOrder>? PreOrders { get; set; }
+    public DbSet<PackageBilling>? PackageBilling { get; set; }
+    public DbSet<PackageInformation>? PackageInformation { get; set; }
+    public DbSet<Transaction>? Transactions { get; set; }
+    public DbSet<Role>? Roles { get; set; }
+    public DbSet<User>? Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
