@@ -2,14 +2,8 @@
 
 namespace ArtworkSharingPlatform.Domain.Entities.Users;
 
-public class Role:BaseEntity
+public class Role : BaseEntity
 {
-    private string? _roleName;
-    public User? User;
-
-    public string? RoleName
-    {
-        get => _roleName;
-        set => _roleName = value;
-    }
+    public string? RoleName { get; set; }
+    public ICollection<User>? Users { get; set; }
 }
