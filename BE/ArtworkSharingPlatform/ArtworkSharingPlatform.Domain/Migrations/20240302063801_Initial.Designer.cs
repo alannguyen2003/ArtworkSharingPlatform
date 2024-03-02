@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArtworkSharingPlatform.Domain.Migrations
 {
     [DbContext(typeof(ArtworkSharingPlatformDbContext))]
-    [Migration("20240228052852_Initial")]
+    [Migration("20240302063801_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -66,6 +66,9 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool?>("IsThumbnail")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ArtworkId");
@@ -96,7 +99,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comment");
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Artworks.Like", b =>
@@ -119,7 +122,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Like");
+                    b.ToTable("Likes");
                 });
 
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Artworks.Rating", b =>
@@ -145,7 +148,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Rating");
+                    b.ToTable("Ratings");
                 });
 
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Configs.ConfigManager", b =>
@@ -208,7 +211,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
                     b.HasIndex("AdministratorId");
 
-                    b.ToTable("ConfigManager");
+                    b.ToTable("ConfigManagers");
                 });
 
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Orders.PreOrder", b =>
@@ -238,7 +241,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
                     b.HasIndex("BuyerId");
 
-                    b.ToTable("PreOrder");
+                    b.ToTable("PreOrders");
                 });
 
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Packages.PackageBilling", b =>
@@ -319,7 +322,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
                     b.HasIndex("ManagerId");
 
-                    b.ToTable("Transaction");
+                    b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Users.Role", b =>
@@ -335,7 +338,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Role");
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Users.User", b =>
@@ -374,7 +377,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("ConfigManagerPackageInformation", b =>
