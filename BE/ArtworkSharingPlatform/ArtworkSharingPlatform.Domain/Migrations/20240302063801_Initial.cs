@@ -27,7 +27,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Role",
+                name: "Roles",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -36,11 +36,11 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Role", x => x.Id);
+                    table.PrimaryKey("PK_Roles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "User",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -56,11 +56,11 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_User_Role_RoleId",
+                        name: "FK_Users_Roles_RoleId",
                         column: x => x.RoleId,
-                        principalTable: "Role",
+                        principalTable: "Roles",
                         principalColumn: "Id");
                 });
 
@@ -79,15 +79,15 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 {
                     table.PrimaryKey("PK_Artworks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Artworks_User_OwnerId",
+                        name: "FK_Artworks_Users_OwnerId",
                         column: x => x.OwnerId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ConfigManager",
+                name: "ConfigManagers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -111,16 +111,16 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ConfigManager", x => x.Id);
+                    table.PrimaryKey("PK_ConfigManagers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ConfigManager_User_AdministratorId",
+                        name: "FK_ConfigManagers_Users_AdministratorId",
                         column: x => x.AdministratorId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Transaction",
+                name: "Transactions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -133,11 +133,11 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Transaction", x => x.Id);
+                    table.PrimaryKey("PK_Transactions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Transaction_User_ManagerId",
+                        name: "FK_Transactions_Users_ManagerId",
                         column: x => x.ManagerId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id");
                 });
 
@@ -148,6 +148,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsThumbnail = table.Column<bool>(type: "bit", nullable: true),
                     ArtworkId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -162,7 +163,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Comment",
+                name: "Comments",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -173,21 +174,21 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Comment", x => x.Id);
+                    table.PrimaryKey("PK_Comments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Comment_Artworks_ArtworkId",
+                        name: "FK_Comments_Artworks_ArtworkId",
                         column: x => x.ArtworkId,
                         principalTable: "Artworks",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Comment_User_UserId",
+                        name: "FK_Comments_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Like",
+                name: "Likes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -197,21 +198,21 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Like", x => x.Id);
+                    table.PrimaryKey("PK_Likes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Like_Artworks_ArtworkId",
+                        name: "FK_Likes_Artworks_ArtworkId",
                         column: x => x.ArtworkId,
                         principalTable: "Artworks",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Like_User_UserId",
+                        name: "FK_Likes_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "PreOrder",
+                name: "PreOrders",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -223,22 +224,22 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PreOrder", x => x.Id);
+                    table.PrimaryKey("PK_PreOrders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PreOrder_Artworks_ArtworkId",
+                        name: "FK_PreOrders_Artworks_ArtworkId",
                         column: x => x.ArtworkId,
                         principalTable: "Artworks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PreOrder_User_BuyerId",
+                        name: "FK_PreOrders_Users_BuyerId",
                         column: x => x.BuyerId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Rating",
+                name: "Ratings",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -249,16 +250,16 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rating", x => x.Id);
+                    table.PrimaryKey("PK_Ratings", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Rating_Artworks_ArtworkId",
+                        name: "FK_Ratings_Artworks_ArtworkId",
                         column: x => x.ArtworkId,
                         principalTable: "Artworks",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Rating_User_UserId",
+                        name: "FK_Ratings_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id");
                 });
 
@@ -273,9 +274,9 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 {
                     table.PrimaryKey("PK_ConfigManagerPackageInformation", x => new { x.ConfigManagersId, x.PackageConfigsId });
                     table.ForeignKey(
-                        name: "FK_ConfigManagerPackageInformation_ConfigManager_ConfigManagersId",
+                        name: "FK_ConfigManagerPackageInformation_ConfigManagers_ConfigManagersId",
                         column: x => x.ConfigManagersId,
-                        principalTable: "ConfigManager",
+                        principalTable: "ConfigManagers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -301,14 +302,14 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 {
                     table.PrimaryKey("PK_PackageBilling", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PackageBilling_Transaction_TransactionId",
+                        name: "FK_PackageBilling_Transactions_TransactionId",
                         column: x => x.TransactionId,
-                        principalTable: "Transaction",
+                        principalTable: "Transactions",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_PackageBilling_User_UserId",
+                        name: "FK_PackageBilling_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id");
                 });
 
@@ -347,19 +348,14 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 column: "OwnerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comment_ArtworkId",
-                table: "Comment",
+                name: "IX_Comments_ArtworkId",
+                table: "Comments",
                 column: "ArtworkId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comment_UserId",
-                table: "Comment",
+                name: "IX_Comments_UserId",
+                table: "Comments",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ConfigManager_AdministratorId",
-                table: "ConfigManager",
-                column: "AdministratorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ConfigManagerPackageInformation_PackageConfigsId",
@@ -367,13 +363,18 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 column: "PackageConfigsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Like_ArtworkId",
-                table: "Like",
+                name: "IX_ConfigManagers_AdministratorId",
+                table: "ConfigManagers",
+                column: "AdministratorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Likes_ArtworkId",
+                table: "Likes",
                 column: "ArtworkId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Like_UserId",
-                table: "Like",
+                name: "IX_Likes_UserId",
+                table: "Likes",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -392,34 +393,34 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 column: "PackageInformationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PreOrder_ArtworkId",
-                table: "PreOrder",
+                name: "IX_PreOrders_ArtworkId",
+                table: "PreOrders",
                 column: "ArtworkId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_PreOrder_BuyerId",
-                table: "PreOrder",
+                name: "IX_PreOrders_BuyerId",
+                table: "PreOrders",
                 column: "BuyerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Rating_ArtworkId",
-                table: "Rating",
+                name: "IX_Ratings_ArtworkId",
+                table: "Ratings",
                 column: "ArtworkId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Rating_UserId",
-                table: "Rating",
+                name: "IX_Ratings_UserId",
+                table: "Ratings",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transaction_ManagerId",
-                table: "Transaction",
+                name: "IX_Transactions_ManagerId",
+                table: "Transactions",
                 column: "ManagerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_User_RoleId",
-                table: "User",
+                name: "IX_Users_RoleId",
+                table: "Users",
                 column: "RoleId");
         }
 
@@ -430,25 +431,25 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 name: "ArtworkImages");
 
             migrationBuilder.DropTable(
-                name: "Comment");
+                name: "Comments");
 
             migrationBuilder.DropTable(
                 name: "ConfigManagerPackageInformation");
 
             migrationBuilder.DropTable(
-                name: "Like");
+                name: "Likes");
 
             migrationBuilder.DropTable(
                 name: "PackageBillingPackageInformation");
 
             migrationBuilder.DropTable(
-                name: "PreOrder");
+                name: "PreOrders");
 
             migrationBuilder.DropTable(
-                name: "Rating");
+                name: "Ratings");
 
             migrationBuilder.DropTable(
-                name: "ConfigManager");
+                name: "ConfigManagers");
 
             migrationBuilder.DropTable(
                 name: "PackageBilling");
@@ -460,13 +461,13 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 name: "Artworks");
 
             migrationBuilder.DropTable(
-                name: "Transaction");
+                name: "Transactions");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Role");
+                name: "Roles");
         }
     }
 }

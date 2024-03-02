@@ -5,5 +5,6 @@ namespace ArtworkSharingPlatform.Domain.Entities.Artworks;
 public class ArtworkImage : BaseEntity
 {
     public string? ImageUrl { get; set; }
+    public bool? IsThumbnail { get; set; }
     public Artwork Artwork { get; set; }
 }
