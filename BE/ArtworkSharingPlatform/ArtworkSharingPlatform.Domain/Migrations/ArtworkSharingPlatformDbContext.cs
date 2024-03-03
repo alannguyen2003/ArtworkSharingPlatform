@@ -46,12 +46,11 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
     public DbSet<User>? Users { get; set; }
     public DbSet<UserRole> UserRoles { get; set; }
 
-      protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-      {
-          optionsBuilder
-              .UseSqlServer(
-                  "Data Source=(local); database= ASPDatabase;uid=sa;pwd=1234567890; TrustServerCertificate=True");
-
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder
+            .UseSqlServer(
+                "Data Source=(local); database=ASPDatabase;uid=sa;pwd=12345;TrustServerCertificate=True");
       }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -18,37 +18,49 @@
           <a href="#" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Home</a>
         </li>
         <li>
+          <a routerLink="/test-error" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Test error</a>
+        </li>
+        <li *ngIf="(accountService.currentUser$ | async)">
           <a routerLink="/artwork" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Artworks</a>
         </li>
-        <li>
+        <li *appHasRole="['Artist']">
           <a routerLink="/artist/pricing" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Pricing</a>
         </li>
         <li>
           <a routerLink="/contact" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contact</a>
         </li>
-        <li>
+        <li *ngIf="!(accountService.currentUser$ | async)">
           <a routerLink="/login" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Login</a>
         </li>
-        <li>
+        <li *ngIf="(accountService.currentUser$ | async) as user">
           <div class="dropdown" dropdown>
-            <button
-              class="flex items-center justify-between w-full py-2 px-3 text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:hover:bg-gray-700 md:dark:hover:bg-transparent dropdown-toggle"
-              dropdownToggle
-            >
-              Profile
-            </button>
+            <div class="flex items-center space-x-4">
+              <img src="{{user.imageUrl}}" alt="user photo" class="w-12 h-12 bg-center bg-cover rounded-full dark:bg-gray-500">
+              <div>
+                <p class="text-lg font-semibold">Welcome, {{user.name}}</p>
+                <p class="text-sm dark:text-gray-400">
+                  <button
+                    class="flex items-center justify-between w-full py-2 px-3 text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:hover:bg-gray-700 md:dark:hover:bg-transparent dropdown-toggle"
+                    dropdownToggle
+                  >
+                    Your profile
+                  </button>
+                </p>
+              </div>
+            </div>
+<!--            <img src="{{user.imageUrl}}" alt="user photo" class="w-12 h-12 border rounded-full dark:bg-gray-500 dark:border-gray-700 d-flex"/>-->
             <!-- Dropdown menu -->
             <div class="dropdown-menu z-10 hidden font-normal divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600" *dropdownMenu>
               <ul class="py-2 text-sm text-gray-700 dark:text-gray-200 border-none" aria-labelledby="dropdownLargeButton">
                 <li>
-                  <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit profile</a>
                 </li>
                 <li>
-                  <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Pre-orders</a>
                 </li>
               </ul>
               <div class="py-1">
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" (click)="logout()">Sign out</a>
               </div>
             </div>
           </div>

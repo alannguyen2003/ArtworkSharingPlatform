@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {NgxSpinnerModule} from "ngx-spinner";
 import {BsDropdownModule} from "ngx-bootstrap/dropdown";
+import {ToastrModule} from "ngx-toastr";
 
 
 
@@ -10,11 +11,15 @@ import {BsDropdownModule} from "ngx-bootstrap/dropdown";
   imports: [
     CommonModule,
     NgxSpinnerModule.forRoot({ type: 'line-scale-party' }),
-    BsDropdownModule.forRoot()
+    BsDropdownModule.forRoot(),
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right'
+    })
   ],
   exports: [
     NgxSpinnerModule,
-    BsDropdownModule
+    BsDropdownModule,
+    ToastrModule
   ]
 })
 export class SharedModule { }

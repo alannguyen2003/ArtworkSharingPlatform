@@ -7,6 +7,8 @@ import {ContactComponent} from "./components/contact/contact.component";
 import {LoginComponent} from "./components/login/login.component";
 import {NotfoundComponent} from "./components/error/notfound/notfound.component";
 import {SignupComponent} from "./components/signup/signup.component";
+import {TestErrorComponent} from "./components/error/test-error/test-error.component";
+import {ServerErrorComponent} from "./components/error/server-error/server-error.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -20,6 +22,8 @@ const routes: Routes = [
   {path: 'contact', component: ContactComponent},
   {path: 'login', component: LoginComponent},
   {path: 'signup', component: SignupComponent},
+  {path: 'test-error', component: TestErrorComponent},
+  {path: 'server-error', component: ServerErrorComponent},
   {path: '**', component: NotfoundComponent}
 ];
 
