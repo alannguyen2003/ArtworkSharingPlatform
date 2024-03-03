@@ -6,13 +6,32 @@ using ArtworkSharingPlatform.Domain.Entities.Orders;
 using ArtworkSharingPlatform.Domain.Entities.Packages;
 using ArtworkSharingPlatform.Domain.Entities.Transactions;
 using ArtworkSharingPlatform.Domain.Entities.Users;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace ArtworkSharingPlatform.Domain.Migrations;
 
-public class ArtworkSharingPlatformDbContext : DbContext
+public class ArtworkSharingPlatformDbContext : IdentityDbContext<User, 
+                                                                Role, 
+                                                                int, 
+                                                                IdentityUserClaim<int>, 
+                                                                UserRole,
+                                                                IdentityUserLogin<int>, 
+                                                                IdentityRoleClaim<int>,
+                                                                IdentityUserToken<int>
+                                                                >
+
 {
+    public ArtworkSharingPlatformDbContext() 
+    {
+    }
+
+    public ArtworkSharingPlatformDbContext(DbContextOptions options) : base(options)
+    {
+    }
+
     public DbSet<Artwork>? Artworks { get; set; }
     public DbSet<ArtworkImage>? ArtworkImages { get; set; }
     public DbSet<Like>? Likes { get; set; }
@@ -25,17 +44,20 @@ public class ArtworkSharingPlatformDbContext : DbContext
     public DbSet<Transaction>? Transactions { get; set; }
     public DbSet<Role>? Roles { get; set; }
     public DbSet<User>? Users { get; set; }
+    public DbSet<UserRole> UserRoles { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder
-            .UseSqlServer(
-                "Data Source=(local); database=ASPDatabase;uid=sa;pwd=1234567890;TrustServerCertificate=True");
+      protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+      {
+          optionsBuilder
+              .UseSqlServer(
+                  "Data Source=(local); database= ASPDatabase;uid=sa;pwd=1234567890; TrustServerCertificate=True");
 
-    }
+      }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+
         modelBuilder.Entity<Artwork>()
             .HasMany(e => e.Likes)
             .WithOne(e => e.Artwork);
@@ -60,11 +82,17 @@ public class ArtworkSharingPlatformDbContext : DbContext
             .HasMany(e => e.ConfigManagers)
             .WithMany(e => e.PackageConfigs);
        
+        modelBuilder.Entity<User>()
+            .HasMany(e => e.UserRoles)
+            .WithOne(e=>e.User)
+            .HasForeignKey(e =>e.UserId)
+            .IsRequired();
         modelBuilder.Entity<Role>()
-            .HasMany(e => e.Users)
-            .WithOne(e=>e.Role);
-        
-        
+           .HasMany(e => e.UserRoles)
+           .WithOne(e => e.Role)
+           .HasForeignKey(e =>e.RoleId)
+           .IsRequired();
+
         modelBuilder.Entity<User>()
             .HasMany(e => e.Artworks)
             .WithOne(e => e.Owner);

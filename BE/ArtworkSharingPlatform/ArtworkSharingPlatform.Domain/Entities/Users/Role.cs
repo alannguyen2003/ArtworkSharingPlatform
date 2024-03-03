@@ -1,9 +1,9 @@
 ﻿using ArtworkSharingPlatform.Domain.Entities.Abstract;
+using Microsoft.AspNetCore.Identity;
 
 namespace ArtworkSharingPlatform.Domain.Entities.Users;
 
-public class Role : BaseEntity
+public class Role : IdentityRole<int>
 {
-    public string? RoleName { get; set; }
-    public ICollection<User>? Users { get; set; }
+    public ICollection<UserRole>? UserRoles { get; set; }
 }
