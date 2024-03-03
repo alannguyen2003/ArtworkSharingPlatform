@@ -7,10 +7,13 @@ namespace ArtworkSharingPlatform.Domain.Entities.Artworks;
 
 public class Artwork : BaseEntity
 {
+    public string Title { get; set; }
     public string? Description { get; set; }
     [Column(TypeName = "decimal(10,5)")] public decimal Price { get; set; }
     public int ReleaseCount { get; set; }
     public User Owner { get; set; }
+    public DateTime CreatedDate { get; set; }
+    public byte Status {  get; set; }
     public ICollection<ArtworkImage> ArtworkImages { get; set; }
     public ICollection<Like>? Likes { get; set; }
     public ICollection<Comment>? Comments { get; set; }

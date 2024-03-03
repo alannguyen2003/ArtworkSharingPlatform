@@ -22,7 +22,6 @@ public class User : BaseEntity
     public Role? Role { get; set; }
     public ICollection<Transaction>? Transactions { get; set; }
     public ICollection<ConfigManager>? ConfigManagers { get; set; }
-
     public ICollection<Like>? Likes { get; set; }
     public ICollection<Comment>? Comments { get; set; }
     public ICollection<Rating>? Ratings { get; set; }
