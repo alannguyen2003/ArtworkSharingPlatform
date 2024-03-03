@@ -8,7 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ArtworkSharingPlatform.DataTransferLayer\ArtworkSharingPlatform.DataTransferLayer.csproj" />
-      <ProjectReference Include="..\ArtworkSharingPlatform.Domain\ArtworkSharingPlatform.Domain.csproj" />
+      <ProjectReference Include="..\ArtworkSharingPlatform.Repository\ArtworkSharingPlatform.Repository.csproj" />
     </ItemGroup>
 
 </Project>
