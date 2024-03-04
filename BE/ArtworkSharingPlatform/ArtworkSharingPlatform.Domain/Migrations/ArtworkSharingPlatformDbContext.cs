@@ -45,6 +45,7 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
     public DbSet<Role>? Roles { get; set; }
     public DbSet<User>? Users { get; set; }
     public DbSet<UserRole> UserRoles { get; set; }
+    public DbSet<Genre> Genres { get; set; }
 
       protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
       {
@@ -57,7 +58,6 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-
         modelBuilder.Entity<Artwork>()
             .HasMany(e => e.Likes)
             .WithOne(e => e.Artwork);
@@ -73,6 +73,9 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
             .HasForeignKey<PreOrder>(e=>e.ArtworkId);
         modelBuilder.Entity<Artwork>()
             .HasMany(e => e.ArtworkImages)
+            .WithOne(e => e.Artwork);
+        modelBuilder.Entity<Artwork>()
+            .HasMany(e => e.Genres)
             .WithOne(e => e.Artwork);
         
         modelBuilder.Entity<PackageInformation>()
