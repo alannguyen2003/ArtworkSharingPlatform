@@ -99,6 +99,27 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Artworks.Genre", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ArtworkId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArtworkId");
+
+                    b.ToTable("Genres");
+                });
+
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Artworks.Like", b =>
                 {
                     b.Property<int>("Id")
@@ -602,6 +623,17 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Artworks.Genre", b =>
+                {
+                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.Artworks.Artwork", "Artwork")
+                        .WithMany("Genres")
+                        .HasForeignKey("ArtworkId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Artwork");
+                });
+
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Artworks.Like", b =>
                 {
                     b.HasOne("ArtworkSharingPlatform.Domain.Entities.Artworks.Artwork", "Artwork")
@@ -768,6 +800,8 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.Navigation("ArtworkImages");
 
                     b.Navigation("Comments");
+
+                    b.Navigation("Genres");
 
                     b.Navigation("Likes");
 

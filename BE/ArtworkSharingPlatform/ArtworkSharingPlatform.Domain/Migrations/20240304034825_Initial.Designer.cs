@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArtworkSharingPlatform.Domain.Migrations
 {
     [DbContext(typeof(ArtworkSharingPlatformDbContext))]
-    [Migration("20240303153700_Initial")]
+    [Migration("20240304034825_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -100,6 +100,27 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Artworks.Genre", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ArtworkId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArtworkId");
+
+                    b.ToTable("Genres");
                 });
 
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Artworks.Like", b =>
@@ -605,6 +626,17 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Artworks.Genre", b =>
+                {
+                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.Artworks.Artwork", "Artwork")
+                        .WithMany("Genres")
+                        .HasForeignKey("ArtworkId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Artwork");
+                });
+
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Artworks.Like", b =>
                 {
                     b.HasOne("ArtworkSharingPlatform.Domain.Entities.Artworks.Artwork", "Artwork")
@@ -771,6 +803,8 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.Navigation("ArtworkImages");
 
                     b.Navigation("Comments");
+
+                    b.Navigation("Genres");
 
                     b.Navigation("Likes");
 

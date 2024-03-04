@@ -301,6 +301,26 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Genres",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ArtworkId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Genres", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Genres_Artworks_ArtworkId",
+                        column: x => x.ArtworkId,
+                        principalTable: "Artworks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Likes",
                 columns: table => new
                 {
@@ -520,6 +540,11 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 column: "AdministratorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Genres_ArtworkId",
+                table: "Genres",
+                column: "ArtworkId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Likes_ArtworkId",
                 table: "Likes",
                 column: "ArtworkId");
@@ -597,6 +622,9 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
             migrationBuilder.DropTable(
                 name: "ConfigManagerPackageInformation");
+
+            migrationBuilder.DropTable(
+                name: "Genres");
 
             migrationBuilder.DropTable(
                 name: "Likes");
