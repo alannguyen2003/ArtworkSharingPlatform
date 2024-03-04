@@ -1,4 +1,9 @@
 using ArtworkSharingHost.Middleware;
+using ArtworkSharingPlatform.Domain.Entities.Users;
+using ArtworkSharingPlatform.Domain.Migrations;
+using ArtworkSharingPlatform.Infrastructure;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 const string artworkSharingPlatformCors = "_artworkSharingPlatformCors";
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +11,26 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddDbContext<ArtworkSharingPlatformDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+builder.Services.AddIdentityCore<User>(opt =>
+{
+    opt.Password.RequiredLength = 5;
+
+    opt.User.RequireUniqueEmail = true;
+})
+    .AddRoles<Role>()
+    .AddRoleManager<RoleManager<Role>>()
+    .AddEntityFrameworkStores<ArtworkSharingPlatformDbContext>()
+    .AddSignInManager<SignInManager<User>>()
+    .AddDefaultTokenProviders();
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = IdentityConstants.ApplicationScheme;
+    options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+}).AddIdentityCookies();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: artworkSharingPlatformCors,
@@ -33,7 +58,24 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseCors(artworkSharingPlatformCors);    
 app.UseAuthorization();
-
+app.UseAuthentication();
 app.MapControllers();
+
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+try
+{
+    var context = services.GetRequiredService<ArtworkSharingPlatformDbContext>();
+    var userManager = services.GetRequiredService<UserManager<User>>();
+    var roleManager = services.GetRequiredService<RoleManager<Role>>();
+    await context.Database.MigrateAsync();
+    await Seed.SeedUser(userManager, roleManager);
+    await Seed.SeedArtwork(context);
+}
+catch (Exception ex)
+{
+    var logger = services.GetRequiredService<ILogger<Program>>();
+    logger.LogError(ex, "An error while seeding data");
+}
 
 app.Run();

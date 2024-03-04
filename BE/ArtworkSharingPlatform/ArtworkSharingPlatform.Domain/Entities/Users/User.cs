@@ -19,7 +19,6 @@ public class User : IdentityUser<int>
     public ICollection<PackageBilling>? PackageBillings { get; set; }
     public ICollection<Transaction>? Transactions { get; set; }
     public ICollection<ConfigManager>? ConfigManagers { get; set; }
-
     public ICollection<Like>? Likes { get; set; }
     public ICollection<Comment>? Comments { get; set; }
     public ICollection<Rating>? Ratings { get; set; }
