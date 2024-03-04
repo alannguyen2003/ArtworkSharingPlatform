@@ -32,6 +32,7 @@ namespace ArtworkSharingPlatform.Infrastructure
                 context.Genres.AddAsync(genre);
             }
             await context.SaveChangesAsync();
+
             if (await context.Artworks.AnyAsync())
             {
                 return;
