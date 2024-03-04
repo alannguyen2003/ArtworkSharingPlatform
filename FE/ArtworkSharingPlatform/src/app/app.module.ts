@@ -21,6 +21,9 @@ import {JwtInterceptor} from "./_interceptor/jwt.interceptor";
 import { ServerErrorComponent } from './components/error/server-error/server-error.component';
 import { TestErrorComponent } from './components/error/test-error/test-error.component';
 import {ErrorInterceptor} from "./_interceptor/error.interceptor";
+import { ArtworkCardComponent } from './components/artwork/artwork-card/artwork-card.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { TruncatePipe } from './_pipe/truncate.pipe';
 
 @NgModule({
   declarations: [
@@ -36,13 +39,17 @@ import {ErrorInterceptor} from "./_interceptor/error.interceptor";
     FooterComponent,
     HasRoleDirective,
     ServerErrorComponent,
-    TestErrorComponent
+    TestErrorComponent,
+    ArtworkCardComponent,
+    TruncatePipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
     SharedModule
   ],
   providers: [

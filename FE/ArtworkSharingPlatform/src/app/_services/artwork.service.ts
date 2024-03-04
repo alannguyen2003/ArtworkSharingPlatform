@@ -1,74 +1,72 @@
 import { Injectable } from '@angular/core';
 import {Artwork} from "../_model/artwork.model";
 import {User} from "../_model/user.model";
+import {HttpClient} from "@angular/common/http";
+import {AccountService} from "./account.service";
+import {map, of, take} from "rxjs";
+import {UserParams} from "../_model/userParams.model";
+import {getPaginatedResult, getPaginationHeaders} from "./pagination-helper.service";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArtworkService {
-  fakeUser: User = {
-    name: 'Test',
-    telephone: '0123456789',
-    email: 'test@gmail.com',
-    imageUrl: 'https://randomuser.me/api/portraits/men/2.jpg',
-    role: 'Artist'
-  } as User;
-  artworks: Artwork[] = [
-    {
-      id:1,
-      title: 'A portrait',
-      description: "Pariatur cillum exercitation veniam et nostrud cupidatat do. Proident mollit amet nulla laboris ut occaecat veniam nulla fugiat. Enim ex commodo minim eiusmod incididunt magna velit anim. Incididunt sint eiusmod culpa labore non nulla dolore officia. Reprehenderit ex et ut ullamco proident non. Consectetur pariatur dolor ut aliquip est labore qui non ut cupidatat. Laborum et Lorem laboris aliqua aliquip.\r\n",
-      imageUrl: "https://randomuser.me/api/portraits/women/22.jpg",
-      price: 100,
-      createdDate: new Date('3-3-2024'),
-      releaseCount: 10,
-      user: this.fakeUser
-    },
-    {
-      id:2,
-      title: 'A portrait',
-      description: "Aliquip consequat culpa incididunt et veniam occaecat. Proident minim velit aliqua laborum ut labore do est. Est laborum est ea cupidatat sunt sunt nostrud sit aliqua reprehenderit.\r\n",
-      imageUrl: "https://randomuser.me/api/portraits/women/50.jpg",
-      price: 100,
-      createdDate: new Date('3-3-2024'),
-      releaseCount: 10,
-      user: this.fakeUser
-    },
-    {
-      id:3,
-      title: 'A portrait',
-      description: "Magna incididunt fugiat dolore id. Lorem cillum voluptate et dolor mollit et minim. Exercitation occaecat ipsum eu elit anim aliquip mollit est ullamco. Sit commodo non reprehenderit in nisi officia.\r\n",
-      imageUrl: "https://randomuser.me/api/portraits/women/1.jpg",
-      price: 100,
-      createdDate: new Date('3-3-2024'),
-      releaseCount: 10,
-      user: this.fakeUser
-    },
-    {
-      id:4,
-      title: 'A portrait',
-      description: "Pariatur officia aute nisi et cillum veniam nostrud mollit nulla ipsum. Incididunt esse proident proident pariatur id ex officia ea minim. Et id nulla ad qui excepteur aliquip aliqua.\r\n",
-      imageUrl: "https://randomuser.me/api/portraits/women/8.jpg",
-      price: 100,
-      createdDate: new Date('3-3-2024'),
-      releaseCount: 10,
-      user: this.fakeUser
-    },
-    {
-      id:5,
-      title: 'A portrait',
-      description: "Aliquip dolore commodo reprehenderit nisi. Labore irure minim aliqua commodo quis occaecat sunt excepteur tempor. Labore sint Lorem deserunt deserunt amet laboris aliqua sit culpa dolor occaecat deserunt. Eiusmod in ex pariatur laboris fugiat officia fugiat esse cupidatat fugiat laboris.\r\n",
-      imageUrl: "https://randomuser.me/api/portraits/women/5.jpg",
-      price: 100,
-      createdDate: new Date('3-3-2024'),
-      releaseCount: 10,
-      user: this.fakeUser
+  baseUrl = environment.apiUrl;
+  user: User | undefined;
+  userParams: UserParams | undefined;
+  fakeUserParams: UserParams = {
+    minPrice: 0,
+    maxPrice: 10000000,
+    orderBy: 'lowPrice',
+    pageNumber: 1,
+    pageSize: 6
+  };
+  artworkCache = new Map();
+  artworks: Artwork[] = [];
+  constructor(private http: HttpClient, private accountService: AccountService)
+  {
+    this.accountService.currentUser$.pipe(take(1)).subscribe({
+      next: user => {
+        if (user) {
+          this.user = user;
+          this.userParams = this.fakeUserParams;
+        }
+      }
+    })
+  }
+
+  getUserParams() {
+    return this.userParams;
+  }
+
+  setUserParams(params: UserParams) {
+    this.userParams = params;
+  }
+
+  resetUserParams() {
+    if (this.user) {
+      this.userParams = this.fakeUserParams;
+      return this.userParams;
     }
-  ];
+    return;
+  }
 
-  constructor() { }
 
-  getArtworks() {
-    return this.artworks;
+  getArtworks(userParams: UserParams) {
+    const response = this.artworkCache.get(Object.values(userParams).join('-'));
+    if(response) return of(response);
+
+    if (userParams.pageSize == null) userParams.pageSize = this.fakeUserParams.pageSize;
+    let params = getPaginationHeaders(userParams.pageNumber, userParams.pageSize);
+    params = params.append('minPrice', userParams.minPrice);
+    params = params.append('maxPrice', userParams.maxPrice);
+    params = params.append('orderBy', userParams.orderBy);
+    return getPaginatedResult<Artwork[]>(this.baseUrl + 'artworks', params, this.http).pipe(
+      map(response => {
+        this.artworkCache.set(Object.values(userParams).join('-'), response);
+        return response;
+      })
+    );
   }
 }
