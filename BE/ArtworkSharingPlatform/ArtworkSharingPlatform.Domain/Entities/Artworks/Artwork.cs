@@ -9,8 +9,9 @@ public class Artwork : BaseEntity
 {
     public string Title { get; set; }
     public string? Description { get; set; }
-    [Column(TypeName = "decimal(10,5)")] public decimal Price { get; set; }
+    public decimal Price { get; set; }
     public int ReleaseCount { get; set; }
+    public int OwnerId { get; set; }
     public User Owner { get; set; }
     public DateTime CreatedDate { get; set; }
     public byte Status {  get; set; }
@@ -19,4 +20,5 @@ public class Artwork : BaseEntity
     public ICollection<Comment>? Comments { get; set; }
     public ICollection<Rating>? Ratings { get; set; }
     public PreOrder? PreOrder { get; set; }
+    public Genre Genre { get; set; }
 }
