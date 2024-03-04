@@ -1,5 +1,7 @@
-export interface UserParam {
+export interface UserParams {
   orderBy: string;
-  totalItemPerPage: number ;
-  rowSize : number;
+  pageNumber: number ;
+  pageSize: number ;
+  minPrice: number;
+  maxPrice: number;
 }

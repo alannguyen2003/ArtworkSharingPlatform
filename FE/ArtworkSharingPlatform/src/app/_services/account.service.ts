@@ -11,7 +11,7 @@ export class AccountService {
     telephone: '0123456789',
     email: 'test@gmail.com',
     imageUrl: 'https://randomuser.me/api/portraits/men/2.jpg',
-    role: 'Artist'
+    roles: ['Audience', 'Artist']
   } as User;
   private currentUserSource = new BehaviorSubject<User | null>(null);
   currentUser$ = this.currentUserSource.asObservable();

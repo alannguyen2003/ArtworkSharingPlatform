@@ -1,7 +1,9 @@
 using ArtworkSharingHost.Middleware;
+using ArtworkSharingPlatform.Application.Interfaces;
 using ArtworkSharingPlatform.Domain.Entities.Users;
 using ArtworkSharingPlatform.Domain.Migrations;
 using ArtworkSharingPlatform.Infrastructure;
+using ArtworkSharingPlatform.Infrastructure.Configuration;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +17,7 @@ builder.Services.AddDbContext<ArtworkSharingPlatformDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddDependencyInjection();
 builder.Services.AddIdentityCore<User>(opt =>
 {
     opt.Password.RequiredLength = 5;
