@@ -15,10 +15,10 @@ public class Artwork : BaseEntity
     public User Owner { get; set; }
     public DateTime CreatedDate { get; set; }
     public byte Status {  get; set; }
+    public PreOrder? PreOrder { get; set; }
     public ICollection<ArtworkImage> ArtworkImages { get; set; }
     public ICollection<Like>? Likes { get; set; }
     public ICollection<Comment>? Comments { get; set; }
     public ICollection<Rating>? Ratings { get; set; }
-    public PreOrder? PreOrder { get; set; }
-    public Genre Genre { get; set; }
+    public ICollection<Genre> Genres { get; set; }
 }
