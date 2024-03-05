@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System.Security.AccessControl;
 using ArtworkSharingPlatform.Domain.Entities.Artworks;
+using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Domain.Entities.Configs;
 using ArtworkSharingPlatform.Domain.Entities.Orders;
 using ArtworkSharingPlatform.Domain.Entities.Packages;
@@ -13,18 +14,18 @@ using Microsoft.Extensions.Configuration;
 
 namespace ArtworkSharingPlatform.Domain.Migrations;
 
-public class ArtworkSharingPlatformDbContext : IdentityDbContext<User, 
-                                                                Role, 
-                                                                int, 
-                                                                IdentityUserClaim<int>, 
-                                                                UserRole,
-                                                                IdentityUserLogin<int>, 
-                                                                IdentityRoleClaim<int>,
-                                                                IdentityUserToken<int>
-                                                                >
+public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
+    Role,
+    int,
+    IdentityUserClaim<int>,
+    UserRole,
+    IdentityUserLogin<int>,
+    IdentityRoleClaim<int>,
+    IdentityUserToken<int>
+>
 
 {
-    public ArtworkSharingPlatformDbContext() 
+    public ArtworkSharingPlatformDbContext()
     {
     }
 
@@ -46,13 +47,15 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
     public DbSet<User>? Users { get; set; }
     public DbSet<UserRole> UserRoles { get; set; }
     public DbSet<Genre> Genres { get; set; }
+    public DbSet<CommissionImage> CommissionImages { get; set; }
+    public DbSet<CommissionRequest> CommissionRequests { get; set; }
+    public DbSet<CommissionStatus> CommissionStatus { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder
             .UseSqlServer(
-                "Data Source=(local); database=ASPDatabase;uid=sa;pwd=12345;TrustServerCertificate=True");
-
+                "Data Source=(local); database=ASPDatabase;uid=sa;pwd=1234567890;TrustServerCertificate=True");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -70,32 +73,58 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
         modelBuilder.Entity<Artwork>()
             .HasOne(e => e.PreOrder)
             .WithOne(e => e.Artwork)
-            .HasForeignKey<PreOrder>(e=>e.ArtworkId);
+            .HasForeignKey<PreOrder>(e => e.ArtworkId);
         modelBuilder.Entity<Artwork>()
             .HasMany(e => e.ArtworkImages)
             .WithOne(e => e.Artwork);
         modelBuilder.Entity<Artwork>()
-            .HasMany(e => e.Genres)
-            .WithOne(e => e.Artwork);
-        
+            .HasOne(e => e.Genre)
+            .WithMany(e => e.Artworks);
+
+
         modelBuilder.Entity<PackageInformation>()
             .HasMany(e => e.PackageBillings)
             .WithMany(e => e.PackageInformation);
         modelBuilder.Entity<PackageInformation>()
             .HasMany(e => e.ConfigManagers)
             .WithMany(e => e.PackageConfigs);
-       
+
+
+        modelBuilder.Entity<Role>()
+            .HasMany(e => e.UserRoles)
+            .WithOne(e => e.Role)
+            .HasForeignKey(e => e.RoleId)
+            .IsRequired();
+
+
+        modelBuilder.Entity<CommissionStatus>()
+            .HasMany(e => e.CommissionHistories)
+            .WithOne(e => e.CommissionStatus);
+
+
+        modelBuilder.Entity<Genre>()
+            .HasMany(e => e.CommissionRequests)
+            .WithOne(e => e.Genre);
+
+
+        modelBuilder.Entity<CommissionRequest>()
+            .HasMany(e => e.CommissionImages)
+            .WithOne(e => e.CommissionRequest);
+        // modelBuilder.Entity<CommissionRequest>()
+        //     .HasOne(e => e.Sender)
+        //     .WithMany(e => e.CommissionSent)
+        //     .OnDelete(DeleteBehavior.Cascade);
+        // modelBuilder.Entity<CommissionRequest>()
+        //     .HasOne(e => e.Receiver)
+        //     .WithMany(e => e.CommissionReceived)
+        //     .OnDelete(DeleteBehavior.Cascade);
+
+
         modelBuilder.Entity<User>()
             .HasMany(e => e.UserRoles)
-            .WithOne(e=>e.User)
-            .HasForeignKey(e =>e.UserId)
+            .WithOne(e => e.User)
+            .HasForeignKey(e => e.UserId)
             .IsRequired();
-        modelBuilder.Entity<Role>()
-           .HasMany(e => e.UserRoles)
-           .WithOne(e => e.Role)
-           .HasForeignKey(e =>e.RoleId)
-           .IsRequired();
-
         modelBuilder.Entity<User>()
             .HasMany(e => e.Artworks)
             .WithOne(e => e.Owner);
@@ -111,5 +140,11 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
         modelBuilder.Entity<User>()
             .HasMany(e => e.ConfigManagers)
             .WithOne(e => e.Administrator);
+        modelBuilder.Entity<User>()
+            .HasMany(e => e.CommissionSent)
+            .WithOne(e => e.Sender);
+        modelBuilder.Entity<User>()
+            .HasMany(e => e.CommissionReceived)
+            .WithOne(e => e.Receiver);
     }
 }
