@@ -1,4 +1,5 @@
 import {User} from "./user.model";
+import {ArtworkImage} from "./artworkImage.model";
 
 export interface Artwork {
   id: number;
@@ -9,4 +10,5 @@ export interface Artwork {
   price: number;
   releaseCount: number;
   user: User;
+  artworkImages: ArtworkImage[];
 }

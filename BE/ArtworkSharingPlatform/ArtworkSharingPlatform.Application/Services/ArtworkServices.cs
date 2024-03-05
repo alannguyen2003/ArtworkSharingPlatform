@@ -18,7 +18,16 @@ namespace ArtworkSharingPlatform.Application.Services
 			_artworkRepository = artworkRepository;
 			_mapper = mapper;
 		}
-        public async Task<PagedList<ArtworkDTO>> GetArtworksAsync(UserParams userParams)
+
+		public async Task<ArtworkDTO> GetArtworkAsync(int id)
+		{
+			var query = _artworkRepository.GetArtworksAsQueryable();
+
+			var artwork = await query.Where(x => x.Id == id).ProjectTo<ArtworkDTO>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
+			return artwork;
+		}
+
+		public async Task<PagedList<ArtworkDTO>> GetArtworksAsync(UserParams userParams)
 		{
 			var query = _artworkRepository.GetArtworksAsQueryable();
 

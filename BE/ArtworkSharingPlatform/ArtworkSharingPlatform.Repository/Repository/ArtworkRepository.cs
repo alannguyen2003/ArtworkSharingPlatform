@@ -2,6 +2,7 @@
 using ArtworkSharingPlatform.Domain.Helpers;
 using ArtworkSharingPlatform.Domain.Migrations;
 using ArtworkSharingPlatform.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace ArtworkSharingPlatform.Repository.Repository
 {
@@ -13,7 +14,8 @@ namespace ArtworkSharingPlatform.Repository.Repository
         {
             _context = context;
         }
-        public IQueryable<Artwork> GetArtworksAsQueryable()
+
+		public IQueryable<Artwork> GetArtworksAsQueryable()
         {
             return _context.Artworks.AsQueryable();
         }

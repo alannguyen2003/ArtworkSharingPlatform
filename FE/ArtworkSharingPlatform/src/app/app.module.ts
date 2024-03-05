@@ -24,6 +24,7 @@ import {ErrorInterceptor} from "./_interceptor/error.interceptor";
 import { ArtworkCardComponent } from './components/artwork/artwork-card/artwork-card.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { TruncatePipe } from './_pipe/truncate.pipe';
+import { ArtworkDetailComponent } from './components/artwork/artwork-detail/artwork-detail.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { TruncatePipe } from './_pipe/truncate.pipe';
     TestErrorComponent,
     ArtworkCardComponent,
     TruncatePipe
+
   ],
   imports: [
     BrowserModule,
