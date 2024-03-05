@@ -10,6 +10,7 @@ namespace ArtworkSharingPlatform.Application.Helpers
         public AutoMapperProfile()
         {
             CreateMap<User, ArtworkUserDTO>();
+            CreateMap<ArtworkImage, ArtworkImageDTO>();
             CreateMap<Artwork, ArtworkDTO>()
                 .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ArtworkImages.SingleOrDefault(x => x.IsThumbnail.Value).ImageUrl))
                 .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.Owner));
