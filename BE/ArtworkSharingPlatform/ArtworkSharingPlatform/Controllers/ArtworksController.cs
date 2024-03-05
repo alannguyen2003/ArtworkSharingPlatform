@@ -38,5 +38,16 @@ namespace ArtworkSharingHost.Controllers
 																artworks.TotalPage));
 			return Ok(artworks);
 		}
+
+		[HttpGet("{id}")]
+		public async Task<ActionResult<ArtworkDTO>> GetArtwork(int id)
+		{
+			var artwork = await _artworkService.GetArtworkAsync(id);
+			if(artwork == null)
+			{
+				return NotFound();
+			}
+			return Ok(artwork);
+		}
     }
 }

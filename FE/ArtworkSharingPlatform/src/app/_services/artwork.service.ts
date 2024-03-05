@@ -69,4 +69,11 @@ export class ArtworkService {
       })
     );
   }
+
+  getArtwork(id: number) {
+    const artwork =[...this.artworkCache.values()]
+      .reduce((arr, elm) => arr.concat(elm.result), []).find((artwork: Artwork) => artwork.id == id);
+    if (artwork) return of(artwork);
+    return this.http.get<Artwork>(this.baseUrl + 'artworks/' + id);
+  }
 }

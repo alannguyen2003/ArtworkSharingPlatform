@@ -9,6 +9,8 @@ import {NotfoundComponent} from "./components/error/notfound/notfound.component"
 import {SignupComponent} from "./components/signup/signup.component";
 import {TestErrorComponent} from "./components/error/test-error/test-error.component";
 import {ServerErrorComponent} from "./components/error/server-error/server-error.component";
+import {ArtworkDetailComponent} from "./components/artwork/artwork-detail/artwork-detail.component";
+import {artworkDetailResolver} from "./_resolvers/artwork-detail.resolver";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -16,7 +18,8 @@ const routes: Routes = [
   {path: '',
     children: [
       {path: 'artist/pricing', component: PricingComponent},
-      {path: 'artwork', component: ArtworkComponent}
+      {path: 'artwork', component: ArtworkComponent},
+      {path: 'artwork/:id', component: ArtworkDetailComponent, resolve: {artwork: artworkDetailResolver}}
     ]
   },
   {path: 'contact', component: ContactComponent},
