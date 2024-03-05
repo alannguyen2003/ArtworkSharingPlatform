@@ -1,4 +1,5 @@
 ﻿using ArtworkSharingPlatform.Domain.Entities.Artworks;
+using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Domain.Entities.Orders;
 
 namespace ArtworkSharingPlatform.Domain.Entities.Users;

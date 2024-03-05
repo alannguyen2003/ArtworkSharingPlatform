@@ -1,5 +1,6 @@
 ﻿using ArtworkSharingPlatform.Domain.Entities.Abstract;
 using ArtworkSharingPlatform.Domain.Entities.Artworks;
+using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Domain.Entities.Configs;
 using ArtworkSharingPlatform.Domain.Entities.Orders;
 using ArtworkSharingPlatform.Domain.Entities.Packages;
@@ -23,4 +24,6 @@ public class User : IdentityUser<int>
     public ICollection<Comment>? Comments { get; set; }
     public ICollection<Rating>? Ratings { get; set; }
     public ICollection<UserRole> UserRoles { get; set; }
+    public ICollection<CommissionRequest>? CommissionSent;
+    public ICollection<CommissionRequest>? CommissionReceived;
 }
