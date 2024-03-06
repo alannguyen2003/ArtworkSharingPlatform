@@ -94,7 +94,6 @@ try
     var userManager = services.GetRequiredService<UserManager<User>>();
     var roleManager = services.GetRequiredService<RoleManager<Role>>();
     await context.Database.MigrateAsync();
-    /*Seed.SeedGenre(context);*/
     await Seed.SeedUser(userManager, roleManager);
     await Seed.SeedArtwork(context);
 }
