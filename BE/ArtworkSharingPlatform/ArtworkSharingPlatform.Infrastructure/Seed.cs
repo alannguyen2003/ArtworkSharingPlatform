@@ -3,12 +3,7 @@ using ArtworkSharingPlatform.Domain.Entities.Users;
 using ArtworkSharingPlatform.Domain.Migrations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace ArtworkSharingPlatform.Infrastructure
 {
@@ -42,6 +37,7 @@ namespace ArtworkSharingPlatform.Infrastructure
             var arts = JsonSerializer.Deserialize<List<Artwork>>(artworks, jsonOptions);
             foreach (var art in arts)
             {
+                art.ArtworkImages.First().IsThumbnail = true;
                 await context.Artworks.AddAsync(art);
             }
             await context.SaveChangesAsync();
@@ -86,7 +82,7 @@ namespace ArtworkSharingPlatform.Infrastructure
             };
 
             var resultAdmin = await userManager.CreateAsync(admin, "Pa$$w0rd");
-            await userManager.AddToRoleAsync(admin, "Admin");
+            await userManager.AddToRolesAsync(admin, new[] {"Admin", "Artist", "Audience"});
 
             var manager = new User
             {
@@ -97,7 +93,7 @@ namespace ArtworkSharingPlatform.Infrastructure
                 EmailConfirmed = true
             };
             await userManager.CreateAsync(manager, "Pa$$w0rd");
-            await userManager.AddToRoleAsync(manager, "Manager");
+            await userManager.AddToRolesAsync(manager, new[] { "Manager", "Artist", "Audience" });
 
             var artist = new User
             {
@@ -109,7 +105,7 @@ namespace ArtworkSharingPlatform.Infrastructure
                 EmailConfirmed = true
             };
             await userManager.CreateAsync(artist, "Pa$$w0rd");
-            await userManager.AddToRoleAsync(artist, "Artist");
+            await userManager.AddToRolesAsync(artist, new[] {"Artist", "Audience" });
         }
     }
 }

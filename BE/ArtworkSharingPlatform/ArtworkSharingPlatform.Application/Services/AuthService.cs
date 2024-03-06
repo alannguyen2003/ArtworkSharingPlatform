@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -25,7 +26,7 @@ namespace ArtworkSharingPlatform.Application.Services
             _config = config;
         }
 
-        public async Task<bool> Register(RegisterDTO registerBody)
+        public async Task<IdentityResult> Register(RegisterDTO registerBody)
         {
             var user = new User
             {
@@ -36,7 +37,7 @@ namespace ArtworkSharingPlatform.Application.Services
                 Status = 1
             };
             var result = await _userManager.CreateAsync(user, registerBody.Password);
-            return result.Succeeded;
+            return result;
         }
 
         public async Task<bool> Login(LoginDTO loginDTO)
@@ -50,27 +51,49 @@ namespace ArtworkSharingPlatform.Application.Services
             return await _userManager.CheckPasswordAsync(user, loginDTO.Password);
         }
 
-        public string GenerateTokenString(LoginDTO loginDTO)
+        public async Task<string> GenerateTokenString(LoginDTO loginDTO)
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Email,loginDTO.Email),
-                new Claim(ClaimTypes.Role,"Admin"),
+                new Claim(JwtRegisteredClaimNames.Email,loginDTO.Email),
+                new Claim(JwtRegisteredClaimNames.UniqueName,loginDTO.Email),
             };
+
+            var user = await _userManager.FindByEmailAsync(loginDTO.Email);
+            var roles = await _userManager.GetRolesAsync(user);
+            claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("Jwt:Key").Value));
 
             var signingCred = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512Signature);
 
-            var securityToken = new JwtSecurityToken(
-                claims: claims,
-                expires: DateTime.Now.AddMinutes(60),
-                issuer: _config.GetSection("Jwt:Issuer").Value,
-                audience: _config.GetSection("Jwt:Audience").Value,
-                signingCredentials: signingCred);
+            var securityToken = new SecurityTokenDescriptor {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.Now.AddMinutes(60),
+                Issuer = _config.GetSection("Jwt:Issuer").Value,
+                Audience = _config.GetSection("Jwt:Audience").Value,
+                SigningCredentials = signingCred};
 
-            string tokenString = new JwtSecurityTokenHandler().WriteToken(securityToken);
-            return tokenString;
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.CreateToken(securityToken);
+            return tokenHandler.WriteToken(token);
         }
-    }
+
+		public async Task<UserDTO> GetUserDTO(string email, string tokenString)
+		{
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user != null && !string.IsNullOrEmpty(tokenString))
+            {
+                return new UserDTO
+                {
+                    Email = user.Email,
+                    Token = tokenString,
+                    PhoneNumber = user.PhoneNumber,
+                    Name = user.Name
+                };
+            }
+            return null;
+		}
+	}
 }
