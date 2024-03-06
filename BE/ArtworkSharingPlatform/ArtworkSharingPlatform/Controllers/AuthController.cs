@@ -23,7 +23,8 @@ namespace ArtworkSharingHost.Controllers
             }
             if(await _authService.Login(loginDTO))
             {
-                return Ok("Successfully");
+                var tokenString = _authService.GenerateTokenString(loginDTO);
+                return Ok(tokenString);
             }
             return BadRequest();
         }

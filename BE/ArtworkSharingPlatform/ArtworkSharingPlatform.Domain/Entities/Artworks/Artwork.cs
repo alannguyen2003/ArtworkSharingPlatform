@@ -9,8 +9,9 @@ public class Artwork : BaseEntity
 {
     public string Title { get; set; }
     public string? Description { get; set; }
-    [Column(TypeName = "decimal(10,5)")] public decimal Price { get; set; }
+    [Column(TypeName = "decimal(18,2)")] public decimal Price { get; set; }
     public int ReleaseCount { get; set; }
+    public int GenreId { get; set; }
     public int OwnerId { get; set; }
     public User Owner { get; set; }
     public DateTime CreatedDate { get; set; }
