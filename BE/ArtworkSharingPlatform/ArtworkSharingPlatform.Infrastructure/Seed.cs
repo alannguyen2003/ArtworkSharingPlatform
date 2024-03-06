@@ -14,11 +14,6 @@ namespace ArtworkSharingPlatform.Infrastructure
 {
     public class Seed
     {
-
-        /*public static async Task SeedGenre(ArtworkSharingPlatformDbContext context)
-        {
-            
-        }*/
         public static async Task SeedArtwork(ArtworkSharingPlatformDbContext context)
         {
             if (await context.Genres.AnyAsync())
