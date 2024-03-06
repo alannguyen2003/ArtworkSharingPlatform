@@ -4,6 +4,7 @@ using ArtworkSharingPlatform.Application.Services.CommissionService;
 using ArtworkSharingPlatform.Repository.Interfaces;
 using ArtworkSharingPlatform.Repository.Repository;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Identity.Client;
 
 namespace ArtworkSharingPlatform.Infrastructure.Configuration;
 
@@ -14,6 +15,9 @@ public static class DependencyInjection
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         services.AddScoped<IArtworkRepository, ArtworkRepository>();
         services.AddScoped<ICommissionRequestRepository, CommissionRequestRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IGenreRepository, GenreRepository>();
+        services.AddScoped<ICommissionStatusRepository, CommissionStatusRepository>();
         services.AddScoped<IArtworkService, ArtworkServices>();
         services.AddScoped<ICommissionService, CommissionService>();
         return services;

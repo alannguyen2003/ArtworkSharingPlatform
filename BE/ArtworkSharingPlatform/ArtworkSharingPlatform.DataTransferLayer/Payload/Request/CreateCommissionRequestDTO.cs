@@ -2,10 +2,10 @@
 
 public class CreateCommissionRequestDTO
 {
-    public decimal MinPrice;
-    public decimal MaxPrice;
-    public string? RequestDescription;
-    public int SenderId;
-    public int ReceiverId;
-    public int GenreId;
+    public decimal MinPrice{get;set;}
+    public decimal MaxPrice{get;set;}
+    public string? RequestDescription{get;set;}
+    public int SenderId{get;set;}
+    public int ReceiverId{get;set;}
+    public int GenreId{get;set;}
 }

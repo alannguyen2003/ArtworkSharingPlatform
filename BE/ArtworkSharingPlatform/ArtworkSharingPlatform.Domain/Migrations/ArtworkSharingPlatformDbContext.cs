@@ -117,7 +117,7 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
         modelBuilder.Entity<CommissionRequest>()
             .HasMany(e => e.CommissionImages)
             .WithOne(e => e.CommissionRequest);
-        
+
         modelBuilder.Entity<User>()
             .HasMany(e => e.UserRoles)
             .WithOne(e => e.User)
@@ -153,6 +153,5 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
         modelBuilder.Entity<User>()
             .HasMany(e => e.CommissionReceived)
             .WithOne(e => e.Receiver);
-        
     }
 }
