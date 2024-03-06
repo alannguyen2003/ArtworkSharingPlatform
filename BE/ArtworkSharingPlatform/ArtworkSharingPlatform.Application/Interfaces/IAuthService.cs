@@ -1,11 +1,14 @@
 ﻿using ArtworkSharingPlatform.DataTransferLayer;
+using ArtworkSharingPlatform.Domain.Entities.Users;
+using Microsoft.AspNetCore.Identity;
 
 namespace ArtworkSharingPlatform.Application.Interfaces
 {
     public interface IAuthService
     {
-        string GenerateTokenString(LoginDTO loginDTO);
+        Task<string> GenerateTokenString(LoginDTO loginDTO);
         Task<bool> Login(LoginDTO loginDTO);
-        Task<bool> Register(RegisterDTO registerBody);
+        Task<UserDTO> GetUserDTO(string email, string tokenString);
+        Task<IdentityResult> Register(RegisterDTO registerBody);
     }
 }

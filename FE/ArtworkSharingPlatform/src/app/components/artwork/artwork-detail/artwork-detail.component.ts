@@ -1,17 +1,18 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, RouterLink} from "@angular/router";
 import {Artwork} from "../../../_model/artwork.model";
 import {ArtworkImage} from "../../../_model/artworkImage.model";
 import {CommonModule} from "@angular/common";
 import {TabsModule} from "ngx-bootstrap/tabs";
 import {GalleryItem, GalleryModule, ImageItem} from "ng-gallery";
+import {TruncatePipe} from "../../../_pipe/truncate.pipe";
 
 @Component({
   selector: 'app-artwork-detail',
   standalone: true,
   templateUrl: './artwork-detail.component.html',
   styleUrls: ['./artwork-detail.component.css'],
-  imports: [CommonModule, TabsModule, GalleryModule]
+  imports: [CommonModule, TabsModule, GalleryModule, RouterLink]
 })
 export class ArtworkDetailComponent implements OnInit{
 

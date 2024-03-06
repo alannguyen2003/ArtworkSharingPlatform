@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Artwork} from "../../../_model/artwork.model";
 
 @Component({
@@ -8,4 +8,5 @@ import {Artwork} from "../../../_model/artwork.model";
 })
 export class ArtworkCardComponent {
   @Input() artwork: Artwork | undefined;
+
 }

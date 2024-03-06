@@ -3,12 +3,7 @@ using ArtworkSharingPlatform.Domain.Entities.Users;
 using ArtworkSharingPlatform.Domain.Migrations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace ArtworkSharingPlatform.Infrastructure
 {
@@ -42,6 +37,7 @@ namespace ArtworkSharingPlatform.Infrastructure
             var arts = JsonSerializer.Deserialize<List<Artwork>>(artworks, jsonOptions);
             foreach (var art in arts)
             {
+                art.ArtworkImages.First().IsThumbnail = true;
                 await context.Artworks.AddAsync(art);
             }
             await context.SaveChangesAsync();
