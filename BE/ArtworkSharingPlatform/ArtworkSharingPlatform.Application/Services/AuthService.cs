@@ -59,24 +59,25 @@ namespace ArtworkSharingPlatform.Application.Services
                 new Claim(JwtRegisteredClaimNames.UniqueName,loginDTO.Email),
             };
 
-			var user = await _userManager.FindByEmailAsync(loginDTO.Email);
+            var user = await _userManager.FindByEmailAsync(loginDTO.Email);
             var roles = await _userManager.GetRolesAsync(user);
-			claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+            claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
 
-			var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("Jwt:Key").Value));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("Jwt:Key").Value));
 
             var signingCred = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512Signature);
 
-            var securityToken = new JwtSecurityToken(
-                claims: claims,
-                expires: DateTime.Now.AddMinutes(60),
-                issuer: _config.GetSection("Jwt:Issuer").Value,
-                audience: _config.GetSection("Jwt:Audience").Value,
-                signingCredentials: signingCred);
+            var securityToken = new SecurityTokenDescriptor {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.Now.AddMinutes(60),
+                Issuer = _config.GetSection("Jwt:Issuer").Value,
+                Audience = _config.GetSection("Jwt:Audience").Value,
+                SigningCredentials = signingCred};
 
-            string tokenString = new JwtSecurityTokenHandler().WriteToken(securityToken);
-            return tokenString;
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.CreateToken(securityToken);
+            return tokenHandler.WriteToken(token);
         }
 
 		public async Task<UserDTO> GetUserDTO(string email, string tokenString)

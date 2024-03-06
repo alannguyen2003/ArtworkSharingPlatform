@@ -82,7 +82,7 @@ namespace ArtworkSharingPlatform.Infrastructure
             };
 
             var resultAdmin = await userManager.CreateAsync(admin, "Pa$$w0rd");
-            await userManager.AddToRoleAsync(admin, "Admin");
+            await userManager.AddToRolesAsync(admin, new[] {"Admin", "Artist", "Audience"});
 
             var manager = new User
             {
@@ -93,7 +93,7 @@ namespace ArtworkSharingPlatform.Infrastructure
                 EmailConfirmed = true
             };
             await userManager.CreateAsync(manager, "Pa$$w0rd");
-            await userManager.AddToRoleAsync(manager, "Manager");
+            await userManager.AddToRolesAsync(manager, new[] { "Manager", "Artist", "Audience" });
 
             var artist = new User
             {
@@ -105,7 +105,7 @@ namespace ArtworkSharingPlatform.Infrastructure
                 EmailConfirmed = true
             };
             await userManager.CreateAsync(artist, "Pa$$w0rd");
-            await userManager.AddToRoleAsync(artist, "Artist");
+            await userManager.AddToRolesAsync(artist, new[] {"Artist", "Audience" });
         }
     }
 }
