@@ -43,7 +43,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(10,5)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("ReleaseCount")
                         .HasColumnType("int");
@@ -112,6 +112,29 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Artworks.Follow", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("ArtistId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("FollowerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArtistId");
+
+                    b.HasIndex("FollowerId");
+
+                    b.ToTable("Follow");
                 });
 
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Artworks.Genre", b =>
@@ -220,11 +243,17 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.Property<int?>("CommissionStatusId")
                         .HasColumnType("int");
 
-                    b.Property<int>("GenreId")
+                    b.Property<int?>("GenreId")
                         .HasColumnType("int");
 
+                    b.Property<byte>("IsProgressStatus")
+                        .HasColumnType("tinyint");
+
+                    b.Property<decimal>("MaxPrice")
+                        .HasColumnType("decimal(10,2)");
+
                     b.Property<decimal>("MinPrice")
-                        .HasColumnType("decimal(10,5)");
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<string>("NotAcceptedReason")
                         .HasColumnType("nvarchar(max)");
@@ -240,9 +269,6 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
                     b.Property<int?>("SenderId")
                         .HasColumnType("int");
-
-                    b.Property<byte>("Status")
-                        .HasColumnType("tinyint");
 
                     b.HasKey("Id");
 
@@ -354,7 +380,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(10,5)");
+                        .HasColumnType("decimal(10,2)");
 
                     b.HasKey("Id");
 
@@ -378,7 +404,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(10,5)");
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<int?>("TransactionId")
                         .HasColumnType("int");
@@ -407,7 +433,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(10,5)");
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
@@ -735,6 +761,21 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Artworks.Follow", b =>
+                {
+                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.User", "Artist")
+                        .WithMany("FollowingAudiences")
+                        .HasForeignKey("ArtistId");
+
+                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.User", "Follower")
+                        .WithMany("FollowingArtists")
+                        .HasForeignKey("FollowerId");
+
+                    b.Navigation("Artist");
+
+                    b.Navigation("Follower");
+                });
+
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Artworks.Like", b =>
                 {
                     b.HasOne("ArtworkSharingPlatform.Domain.Entities.Artworks.Artwork", "Artwork")
@@ -756,11 +797,13 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                         .WithMany("Ratings")
                         .HasForeignKey("ArtworkId");
 
-                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.User", null)
+                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.User", "User")
                         .WithMany("Ratings")
                         .HasForeignKey("UserId");
 
                     b.Navigation("Artwork");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Commissions.CommissionImage", b =>
@@ -782,9 +825,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
                     b.HasOne("ArtworkSharingPlatform.Domain.Entities.Artworks.Genre", "Genre")
                         .WithMany("CommissionRequests")
-                        .HasForeignKey("GenreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GenreId");
 
                     b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.User", "Receiver")
                         .WithMany("CommissionReceived")
@@ -987,6 +1028,10 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.Navigation("CommissionSent");
 
                     b.Navigation("ConfigManagers");
+
+                    b.Navigation("FollowingArtists");
+
+                    b.Navigation("FollowingAudiences");
 
                     b.Navigation("Likes");
 
