@@ -20,6 +20,7 @@ export class ArtworkComponent implements OnInit{
   }
   ngOnInit() {
     this.loadArtworks();
+    console.log(this.artworks);
   }
 
   loadArtworks() {

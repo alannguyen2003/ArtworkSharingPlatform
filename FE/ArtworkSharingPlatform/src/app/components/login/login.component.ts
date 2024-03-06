@@ -8,13 +8,16 @@ import {Router} from "@angular/router";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-
+  model: any = {};
+  validationErrs: string[] = [];
   constructor(private accountService: AccountService, private router: Router) {
   }
 
   login() {
-    this.accountService.login();
-    this.router.navigateByUrl('/');
+    this.accountService.login(this.model).subscribe({
+      next: _ => this.router.navigateByUrl('/'),
+      error: err => this.validationErrs = err
+    });
   }
 
 

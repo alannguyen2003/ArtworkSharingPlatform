@@ -23,19 +23,29 @@ namespace ArtworkSharingHost.Controllers
             }
             if(await _authService.Login(loginDTO))
             {
-                var tokenString = _authService.GenerateTokenString(loginDTO);
-                return Ok(tokenString);
+                var tokenString = await _authService.GenerateTokenString(loginDTO);
+                var userDto = await _authService.GetUserDTO(loginDTO.Email, tokenString);
+                return Ok(userDto);
             }
-            return BadRequest();
+            return BadRequest("Invalid username or password");
         }
 
         [HttpPost("Register")]
         public async Task<IActionResult> Register(RegisterDTO registerDTO)
         {
-            if(await _authService.Register(registerDTO)){
-                return Ok("Successfully");
+            var result = await _authService.Register(registerDTO);
+
+			if (result.Succeeded){
+                var loginDto = new LoginDTO
+                {
+                    Email = registerDTO.Email,
+                    Password = registerDTO.Password
+                };
+                var tokenString = await _authService.GenerateTokenString(loginDto);
+                var userDto = await _authService.GetUserDTO(loginDto.Email, tokenString);
+                return Ok(userDto);
             } 
-            return BadRequest();
+            return BadRequest(result.Errors);
         }
     }
 }

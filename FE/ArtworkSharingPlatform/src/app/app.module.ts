@@ -25,6 +25,7 @@ import { ArtworkCardComponent } from './components/artwork/artwork-card/artwork-
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { TruncatePipe } from './_pipe/truncate.pipe';
 import { ArtworkDetailComponent } from './components/artwork/artwork-detail/artwork-detail.component';
+import { TextInputComponent } from './_forms/text-input/text-input.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { ArtworkDetailComponent } from './components/artwork/artwork-detail/artw
     ServerErrorComponent,
     TestErrorComponent,
     ArtworkCardComponent,
-    TruncatePipe
+    TruncatePipe,
+    TextInputComponent
 
   ],
   imports: [
@@ -55,15 +57,24 @@ import { ArtworkDetailComponent } from './components/artwork/artwork-detail/artw
     SharedModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS,
+    {
+      provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptor,
-      multi: true},
-    {provide: HTTP_INTERCEPTORS ,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
-      multi: true},
-    {provide: HTTP_INTERCEPTORS ,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
-      multi: true}
+      multi: true
+    }
+  ],
+  exports: [
+    TruncatePipe
   ],
   bootstrap: [AppComponent]
 })
