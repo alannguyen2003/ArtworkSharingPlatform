@@ -14,8 +14,30 @@ namespace ArtworkSharingPlatform.Infrastructure
 {
     public class Seed
     {
+
+        /*public static async Task SeedGenre(ArtworkSharingPlatformDbContext context)
+        {
+            
+        }*/
         public static async Task SeedArtwork(ArtworkSharingPlatformDbContext context)
         {
+            if (await context.Genres.AnyAsync())
+            {
+                return;
+            }
+            var genres = new List<Genre>
+            {
+                new Genre {Name = "Landscape"},
+                new Genre {Name = "Portrait"},
+                new Genre {Name = "Anime"},
+                new Genre {Name = "Fiction"}
+            };
+            foreach (var genre in genres)
+            {
+                await context.Genres.AddAsync(genre);
+            }
+            await context.SaveChangesAsync();
+
             if (await context.Artworks.AnyAsync())
             {
                 return;
