@@ -24,7 +24,6 @@ import {ErrorInterceptor} from "./_interceptor/error.interceptor";
 import { ArtworkCardComponent } from './components/artwork/artwork-card/artwork-card.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { TruncatePipe } from './_pipe/truncate.pipe';
-import { ArtworkDetailComponent } from './components/artwork/artwork-detail/artwork-detail.component';
 import { TextInputComponent } from './_forms/text-input/text-input.component';
 
 @NgModule({
@@ -45,7 +44,6 @@ import { TextInputComponent } from './_forms/text-input/text-input.component';
     ArtworkCardComponent,
     TruncatePipe,
     TextInputComponent
-
   ],
   imports: [
     BrowserModule,
