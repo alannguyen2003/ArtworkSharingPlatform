@@ -8,20 +8,27 @@ import {take} from "rxjs";
 })
 export class HasRoleDirective implements OnInit{
   @Input() appHasRole: string[] = [];
-  user: User = {} as User;
+  user: User | undefined;
+
   constructor(private viewContainerRef: ViewContainerRef,
               private templateRef: TemplateRef<any>,
-              private accountService: AccountService)
-  {
+              private accountService: AccountService) {
     this.accountService.currentUser$.pipe(take(1)).subscribe({
-      next:user => {
+      next: user => {
         if (user) this.user = user;
       }
-    })
+    });
   }
 
   ngOnInit() {
-    if (this.user.roles.some(r => this.appHasRole.includes(r))) {
+    // this.accountService.currentUser$.pipe(take(1)).subscribe({
+    //   next: user => {
+    //     if (user) {
+    //       this.user = user;
+    //     }
+    //   }
+    // });
+    if (this.user?.roles.some(r => this.appHasRole.includes(r))) {
       this.viewContainerRef.createEmbeddedView(this.templateRef);
     } else {
       this.viewContainerRef.clear();
