@@ -3,6 +3,7 @@ using System.Security.AccessControl;
 using ArtworkSharingPlatform.Domain.Entities.Artworks;
 using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Domain.Entities.Configs;
+using ArtworkSharingPlatform.Domain.Entities.Messages;
 using ArtworkSharingPlatform.Domain.Entities.Orders;
 using ArtworkSharingPlatform.Domain.Entities.Packages;
 using ArtworkSharingPlatform.Domain.Entities.Transactions;
@@ -50,6 +51,10 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
     public DbSet<CommissionImage> CommissionImages { get; set; }
     public DbSet<CommissionRequest> CommissionRequests { get; set; }
     public DbSet<CommissionStatus> CommissionStatus { get; set; }
+    public DbSet<Message> Messages{ get; set; }
+    public DbSet<Connection> Connections{ get; set; }
+    public DbSet<Group> Groups{ get; set; }
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -146,5 +151,16 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
         modelBuilder.Entity<User>()
             .HasMany(e => e.CommissionReceived)
             .WithOne(e => e.Receiver);
+
+        modelBuilder.Entity<Message>()
+            .HasOne(x => x.Recipient)
+            .WithMany(x => x.MessageReceived)
+            .OnDelete(DeleteBehavior.NoAction);
+        modelBuilder.Entity<Message>()
+            .HasOne(x => x.Sender)
+            .WithMany(x => x.MessageSent)
+            .OnDelete(DeleteBehavior.NoAction);
+
+       
     }
 }

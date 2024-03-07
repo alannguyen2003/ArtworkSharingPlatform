@@ -1,7 +1,7 @@
-﻿using ArtworkSharingPlatform.Domain.Entities.Abstract;
-using ArtworkSharingPlatform.Domain.Entities.Artworks;
+﻿using ArtworkSharingPlatform.Domain.Entities.Artworks;
 using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Domain.Entities.Configs;
+using ArtworkSharingPlatform.Domain.Entities.Messages;
 using ArtworkSharingPlatform.Domain.Entities.Orders;
 using ArtworkSharingPlatform.Domain.Entities.Packages;
 using ArtworkSharingPlatform.Domain.Entities.Transactions;
@@ -26,4 +26,7 @@ public class User : IdentityUser<int>
     public ICollection<UserRole> UserRoles { get; set; }
     public ICollection<CommissionRequest>? CommissionSent;
     public ICollection<CommissionRequest>? CommissionReceived;
+    public ICollection<Message>? MessageReceived;
+    public ICollection<Message>? MessageSent;
+
 }

@@ -40,151 +40,17 @@
           <p>{{artwork.description}}</p>
         </div>
       </div>
+      <button (click)="selectTab('Message')">Messages</button>
     </div>
     <div class="col-8">
-      <tabset class="member-tabset">
-        <tab heading="Artwork Images" #imageTab="tab">
+      <tabset class="member-tabset" #artworkTabs>
+        <tab heading="Artwork Images" #imageTab="tab" (selectTab)="onTabActivated($event)">
           <gallery *ngIf="imageTab.active" [items]="images" class="gallery"></gallery>
         </tab>
-        <tab heading="Artist Contact Information"></tab>
-        <tab heading="Message Artist">
+        <tab heading="Artist Contact Information" (selectTab)="onTabActivated($event)"></tab>
+        <tab heading="Messages" *ngIf="user" (selectTab)="onTabActivated($event)">
           <!-- component -->
-          <div class="flex h-screen antialiased text-gray-800">
-            <div class="flex flex-row h-full w-full overflow-x-hidden">
-              <div class="flex flex-col flex-auto h-full p-6">
-                <div
-                  class="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full p-4"
-                >
-                  <div class="flex flex-col h-full overflow-x-auto mb-4">
-                    <div class="flex flex-col h-full">
-                      <div class="grid grid-cols-12 gap-y-2">
-                        <div class="col-start-1 col-end-12 p-3 rounded-lg">
-                          <div class=" items-center">
-                            <a routerLink="/artwork/{{artwork.id}}">
-                              <div class="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl">
-                                <img src="{{artwork.imageUrl}}" class="w-1/3 h-32 pe-1.5 d-inline">
-                                <div class="d-inline-flex flex-col h-auto">
-                                  <p><strong>Title:</strong> {{artwork.title}}</p>
-                                  <p><strong>Price: </strong>{{artwork.price}}</p>
-                                </div>
-                              </div>
-                            </a>
-                          </div>
-                        </div>
-                        <div class="col-start-1 col-end-8 p-3 rounded-lg">
-                          <div class="flex flex-row items-center">
-
-                            <div
-                              class="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl"
-                            >
-                              <div>Hey How are you today?</div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-start-1 col-end-8 p-3 rounded-lg">
-                          <div class="flex flex-row items-center">
-
-                            <div
-                              class="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl"
-                            >
-                              <div>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing
-                                elit. Vel ipsa commodi illum saepe numquam maxime
-                                asperiores voluptate sit, minima perspiciatis.
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-start-6 col-end-13 p-3 rounded-lg">
-                          <div class="flex items-center justify-start flex-row-reverse">
-
-                            <div class="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl">
-                              <div>I'm ok what about you?</div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-start-6 col-end-13 p-3 rounded-lg">
-                          <div class="flex items-center justify-start flex-row-reverse">
-
-                            <div class="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl">
-                              <div>
-                                Lorem ipsum dolor sit, amet consectetur adipisicing. ?
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-start-1 col-end-8 p-3 rounded-lg">
-                          <div class="flex flex-row items-center">
-
-                            <div class="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl">
-                              <div>Lorem ipsum dolor sit amet !</div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-start-6 col-end-13 p-3 rounded-lg">
-                          <div class="flex items-center justify-start flex-row-reverse">
-
-                            <div class="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl">
-                              <div>
-                                Lorem ipsum dolor sit, amet consectetur adipisicing. ?
-                              </div>
-                              <div class="absolute text-xs bottom-0 right-0 -mb-5 mr-2 text-gray-500">
-                                Seen
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-start-1 col-end-8 p-3 rounded-lg">
-                          <div class="flex flex-row items-center">
-
-                            <div class="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl">
-                              <div>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Perspiciatis, in.
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4">
-                    <div class="flex-grow ml-4">
-                      <div class="relative w-full">
-                        <input
-                          type="text"
-                          class="flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10"
-                        />
-                      </div>
-                    </div>
-                    <div class="ml-4">
-                      <button
-                        class="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0"
-                      >
-                        <span>Send</span>
-                        <span class="ml-2">
-                  <svg
-                    class="w-4 h-4 transform rotate-45 -mt-px"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                    ></path>
-                  </svg>
-                </span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <app-artwork-message [user]="user" [artwork]="artwork" ></app-artwork-message>
         </tab>
       </tabset>
     </div>

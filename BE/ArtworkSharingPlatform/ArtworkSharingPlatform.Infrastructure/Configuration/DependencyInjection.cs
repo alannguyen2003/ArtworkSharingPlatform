@@ -13,6 +13,8 @@ public static class DependencyInjection
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         services.AddScoped<IArtworkRepository, ArtworkRepository>();
         services.AddScoped<IArtworkService, ArtworkServices>();
+        services.AddScoped<IMessageRepository, MessageRepository>();
+        services.AddScoped<IMessageService, MessageService>();
         return services;
     }
 }

@@ -1,0 +1,96 @@
+<!-- component -->
+<div class="flex w-full h-full shadow-lg rounded-3xl">
+  <section class="flex flex-col pt-3 w-4/12 bg-gray-50 h-full overflow-y-scroll dark:bg-gray-800 dark:text-gray-100">
+    <ul class="mt-6">
+      <li class="py-5 border-b px-3 transition hover:bg-indigo-100" *ngFor="let message of messages" (click)="loadSpecificMessageBox(message.senderEmail, message.artwork)" style="cursor: pointer">
+        <a class="flex justify-between items-center">
+          <h3 class="text-lg font-semibold">{{message.senderEmail}}</h3>
+          <p class="text-md text-gray-400">23m ago</p>
+        </a>
+        <div class="text-md italic text-gray-400">Artwork: {{message.artwork.title}}</div>
+      </li>
+    </ul>
+  </section>
+  <section class="w-8/12 px-4 flex flex-col dark:bg-gray-800 dark:text-gray-100 rounded-r-3xl" *ngIf="(messageService.messageThread$ | async)!.length > 0">
+    <div class="flex h-screen antialiased text-gray-800">
+      <div class="flex flex-row h-full w-full overflow-x-hidden">
+        <div class="flex flex-col flex-auto h-full p-6">
+          <div
+            class="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full p-4"
+          >
+            <div class="flex flex-col h-full overflow-x-auto mb-4">
+              <div class="flex flex-col h-full">
+                <div class="grid grid-cols-12 gap-y-2">
+                  <div class="col-start-1 col-end-12 p-3 rounded-lg">
+                    <div class=" items-center">
+                      <a routerLink="/artwork/">
+                        <div class="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl">
+                          <img src="{{artwork && artwork.imageUrl}}" class="w-1/3 h-32 pe-1.5 d-inline">
+                          <div class="d-inline-flex flex-col h-auto">
+                            <p><strong>Title: </strong>{{artwork && artwork.title}}</p>
+                            <p><strong>Price: </strong>{{artwork && artwork.price}}</p>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                  <ng-container *ngFor="let message1 of (messageService.messageThread$ | async)">
+                    <div class="col-start-1 col-end-6 p-3 rounded-lg"
+                         *ngIf="message1.senderEmail !== message1.artwork.user.email">
+                      <app-message-received [username]="message1.senderEmail"
+                                            [content]="message1.content"></app-message-received>
+                    </div>
+                    <div class="col-start-6 col-end-12 p-3 rounded-lg" *ngIf="user && message1.senderEmail === user.email">
+                      <app-message-sent [content]="message1.content"></app-message-sent>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+            <form #messageForm="ngForm" (ngSubmit)="sendMessage()" autocomplete="off">
+              <div class="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4">
+                <div class="flex-grow ml-4">
+                  <div class="relative w-full">
+                    <input
+                      type="text"
+                      name="messageContent"
+                      required
+                      [(ngModel)]="messageContent"
+                      class="flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10"
+                    />
+                  </div>
+                </div>
+                <div class="ml-4">
+                  <button
+                    [disabled]="!messageForm.valid || loading"
+                    type="submit"
+                    class="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0"
+                  >
+                    <span>Send</span>
+                    <span class="ml-2">
+                  <svg
+                    class="w-4 h-4 transform rotate-45 -mt-px"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                    ></path>
+                  </svg>
+                </span>
+                  </button>
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

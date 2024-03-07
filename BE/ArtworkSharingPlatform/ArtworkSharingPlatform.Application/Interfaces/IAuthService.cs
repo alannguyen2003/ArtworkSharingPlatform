@@ -9,6 +9,7 @@ namespace ArtworkSharingPlatform.Application.Interfaces
         Task<string> GenerateTokenString(LoginDTO loginDTO);
         Task<bool> Login(LoginDTO loginDTO);
         Task<UserDTO> GetUserDTO(string email, string tokenString);
+        Task<User> GetUserByEmail(string email);
         Task<IdentityResult> Register(RegisterDTO registerBody);
     }
 }

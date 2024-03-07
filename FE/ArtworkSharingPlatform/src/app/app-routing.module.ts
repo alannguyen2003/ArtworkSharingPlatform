@@ -11,12 +11,14 @@ import {TestErrorComponent} from "./components/error/test-error/test-error.compo
 import {ServerErrorComponent} from "./components/error/server-error/server-error.component";
 import {ArtworkDetailComponent} from "./components/artwork/artwork-detail/artwork-detail.component";
 import {artworkDetailResolver} from "./_resolvers/artwork-detail.resolver";
+import {ArtistMessageComponent} from "./components/artist/artist-message/artist-message.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   //Phần này dành cho những route cần Guard
   {path: '',
     children: [
+      {path: 'artist/messages', component: ArtistMessageComponent},
       {path: 'artist/pricing', component: PricingComponent},
       {path: 'artwork', component: ArtworkComponent},
       {path: 'artwork/:id', component: ArtworkDetailComponent, resolve: {artwork: artworkDetailResolver}}
