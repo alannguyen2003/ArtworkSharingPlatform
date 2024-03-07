@@ -54,6 +54,7 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
     public DbSet<Message> Messages{ get; set; }
     public DbSet<Connection> Connections{ get; set; }
     public DbSet<Group> Groups{ get; set; }
+    public DbSet<Follow> Follows { get; set; }
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

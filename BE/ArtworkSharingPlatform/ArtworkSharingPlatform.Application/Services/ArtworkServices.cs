@@ -1,5 +1,6 @@
 ﻿using ArtworkSharingPlatform.Application.Interfaces;
 using ArtworkSharingPlatform.DataTransferLayer;
+using ArtworkSharingPlatform.Domain.Entities.Artworks;
 using ArtworkSharingPlatform.Domain.Helpers;
 using ArtworkSharingPlatform.Repository.Interfaces;
 using AutoMapper;
@@ -19,7 +20,8 @@ namespace ArtworkSharingPlatform.Application.Services
 			_mapper = mapper;
 		}
 
-		public async Task<ArtworkDTO> GetArtworkAsync(int id)
+
+        public async Task<ArtworkDTO> GetArtworkAsync(int id)
 		{
 			var query = _artworkRepository.GetArtworksAsQueryable();
 
@@ -46,12 +48,66 @@ namespace ArtworkSharingPlatform.Application.Services
 															userParams.PageSize);
 		}
 
-		public async Task UserLike(ArtworkLikeDTO like)
+        public async Task UserLike(ArtworkLikeDTO like)
 		{
 			try
 			{
-				await _artworkRepository.UserLike(like.UserId, like.ArtworkId);
+				var artworkLike = _mapper.Map<Like>(like);
+
+				await _artworkRepository.UserLike(artworkLike);
 			} catch (Exception ex) { }
 		}
-	}
+
+        public async Task UserRating(ArtworkRatingDTO rating)
+        {
+            try
+            {
+                var artworkRate = _mapper.Map<Rating>(rating);
+
+                await _artworkRepository.UserRating(artworkRate);
+            }
+            catch (Exception ex) { }
+        }
+
+        public async Task AddArtwork(ArtworkDTO _artwork)
+        {
+            try
+            {
+                var artwork= _mapper.Map<Artwork>(_artwork);
+
+                await _artworkRepository.AddArtwork(artwork);
+            }
+            catch (Exception ex) { }
+        }
+
+        public async Task DeleteArtwork(int artworkId)
+        {
+            try
+            {
+                await _artworkRepository.DeleteArtwork(artworkId);
+            }
+            catch (Exception ex) { }
+        }
+        public async Task UpdateArtwork(ArtworkDTO _artwork)
+        {
+            try
+            {
+                var artwork = _mapper.Map<Artwork>(_artwork);
+
+                await _artworkRepository.UpdateArtwork(artwork);
+            }
+            catch (Exception ex) { }
+        }
+
+        public async Task UserFollow(UserFollowDTO follow)
+        {
+            try
+            {
+                var artworkFollow = _mapper.Map<Follow>(follow);
+
+                await _artworkRepository.UserFollow(artworkFollow);
+            }
+            catch (Exception ex) { }
+        }
+    }
 }
