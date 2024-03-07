@@ -45,5 +45,13 @@ namespace ArtworkSharingPlatform.Application.Services
 															userParams.PageNumber,
 															userParams.PageSize);
 		}
+
+		public async Task UserLike(ArtworkLikeDTO like)
+		{
+			try
+			{
+				await _artworkRepository.UserLike(like.UserId, like.ArtworkId);
+			} catch (Exception ex) { }
+		}
 	}
 }
