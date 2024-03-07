@@ -60,7 +60,7 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
     {
         optionsBuilder
             .UseSqlServer(
-                "Data Source=(local); database=ASPDatabase;uid=sa;pwd=1234567890;TrustServerCertificate=True");
+                "Data Source=(local); database=ASPDatabase;uid=sa;pwd=12345;TrustServerCertificate=True");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

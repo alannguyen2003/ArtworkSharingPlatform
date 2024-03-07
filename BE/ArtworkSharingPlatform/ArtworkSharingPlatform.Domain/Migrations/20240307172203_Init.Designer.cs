@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArtworkSharingPlatform.Domain.Migrations
 {
     [DbContext(typeof(ArtworkSharingPlatformDbContext))]
-    [Migration("20240306145554_Initial")]
-    partial class Initial
+    [Migration("20240307172203_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -363,6 +363,81 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.HasIndex("AdministratorId");
 
                     b.ToTable("ConfigManagers");
+                });
+
+            modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Messages.Connection", b =>
+                {
+                    b.Property<string>("ConnectionId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GroupName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ConnectionId");
+
+                    b.HasIndex("GroupName");
+
+                    b.ToTable("Connections");
+                });
+
+            modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Messages.Group", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Name");
+
+                    b.ToTable("Groups");
+                });
+
+            modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Messages.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ArtworkId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DateRead")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("MessageSent")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RecipientEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RecipientId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SenderEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SenderId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArtworkId");
+
+                    b.HasIndex("RecipientId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Orders.PreOrder", b =>
@@ -856,6 +931,40 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.Navigation("Administrator");
                 });
 
+            modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Messages.Connection", b =>
+                {
+                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.Messages.Group", null)
+                        .WithMany("Connections")
+                        .HasForeignKey("GroupName");
+                });
+
+            modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Messages.Message", b =>
+                {
+                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.Artworks.Artwork", "Artwork")
+                        .WithMany()
+                        .HasForeignKey("ArtworkId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.User", "Recipient")
+                        .WithMany("MessageReceived")
+                        .HasForeignKey("RecipientId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.User", "Sender")
+                        .WithMany("MessageSent")
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Artwork");
+
+                    b.Navigation("Recipient");
+
+                    b.Navigation("Sender");
+                });
+
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Orders.PreOrder", b =>
                 {
                     b.HasOne("ArtworkSharingPlatform.Domain.Entities.Artworks.Artwork", "Artwork")
@@ -1010,6 +1119,11 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.Navigation("CommissionHistories");
                 });
 
+            modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Messages.Group", b =>
+                {
+                    b.Navigation("Connections");
+                });
+
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Transactions.Transaction", b =>
                 {
                     b.Navigation("PackageBillings");
@@ -1037,6 +1151,10 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.Navigation("FollowingAudiences");
 
                     b.Navigation("Likes");
+
+                    b.Navigation("MessageReceived");
+
+                    b.Navigation("MessageSent");
 
                     b.Navigation("PackageBillings");
 

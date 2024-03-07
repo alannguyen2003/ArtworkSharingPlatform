@@ -23,10 +23,6 @@ namespace ArtworkSharingPlatform.Application.Helpers
                 .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.Owner))
                 .ReverseMap();
             CreateMap<Message, MessageDTO>();
-
-                .ForMember(dest => dest.ImageUrl,
-                    opt => opt.MapFrom(src => src.ArtworkImages.SingleOrDefault(x => x.IsThumbnail.Value).ImageUrl))
-                .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.Owner));
             CreateCommissionRequestToCommissionEntityMap();
         }
 
