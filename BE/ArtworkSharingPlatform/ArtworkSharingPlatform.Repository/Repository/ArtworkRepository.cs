@@ -4,7 +4,9 @@ using ArtworkSharingPlatform.Domain.Migrations;
 using ArtworkSharingPlatform.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
+using System.ComponentModel;
 using System.Reflection.Metadata.Ecma335;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ArtworkSharingPlatform.Repository.Repository
 {
@@ -27,82 +29,157 @@ namespace ArtworkSharingPlatform.Repository.Repository
         {
             return await _context.Artworks.FirstOrDefaultAsync(a => a.Id.Equals(artworkid));
         }
-        public async Task UserLike(int userId, int artworkid)
+        public async Task UserLike(Like like)
         {
-            Like like = new Like
-            {
-                Artwork = await GetArtworkById(artworkid),
-                User = await _userRepository.GetUserById(userId)
-            };
-            //var index = await _context.Likes.Where(a => a.Artwork.Equals(like.Artwork) && a.User.Equals(like.User)).FirstOrDefaultAsync();
-            var isLike = await _context.Likes.AnyAsync(a => a.Artwork.Equals(like.Artwork) && a.User.Equals(like.User));
-            if (like != null && !isLike)
-            {
-                _context.Likes.Remove(like);
-                await _context.SaveChangesAsync();
+            try
+            {                
+                
+                var isLike = await _context.Likes.AnyAsync(a => a.Artwork.Equals(like.Artwork) && a.User.Equals(like.User));
+                if (like != null && !isLike)
+                {
+                    var index = await _context.Likes.Where(a => a.Artwork.Equals(like.Artwork) && a.User.Equals(like.User)).FirstOrDefaultAsync();
+                    _context.Likes.Remove(index);
+                    await _context.SaveChangesAsync();
 
-            } else if (like != null)
-            {
-                _context.Likes.AddAsync(like);
-                await _context.SaveChangesAsync();
-            }
-        }
-
-        /*public async Task UserFollow(int userId, int artworkid)
-        {
-            Like like = new Like
-            {
-                Artwork = await GetArtworkById(artworkid),
-                User = await _userRepository.GetUserById(userId)
-            };
-            //var index = await _context.Likes.Where(a => a.Artwork.Equals(like.Artwork) && a.User.Equals(like.User)).FirstOrDefaultAsync();
-            var isLike = await _context.Likes.AnyAsync(a => a.Artwork.Equals(like.Artwork) && a.User.Equals(like.User));
-            if (like != null && !isLike)
-            {
-                _context.Likes.Remove(like);
-                await _context.SaveChangesAsync();
-            }
-            else if (like != null)
-            {
-                _context.Likes.AddAsync(like);
-                await _context.SaveChangesAsync();
-            }
-        }*/
-        public async Task UserRating(int userId, int artworkid, int score)
-        {
-            Rating rate = new Rating
-            {
-                Artwork = await GetArtworkById(artworkid),
-                User = await _userRepository.GetUserById(userId),
-                Score = score
-            };
-            //var index = await _context.Likes.Where(a => a.Artwork.Equals(like.Artwork) && a.User.Equals(like.User)).FirstOrDefaultAsync();
-            var isRate = await _context.Ratings.FirstOrDefaultAsync(a => a.Artwork.Equals(rate.Artwork) && a.User.Equals(rate.User));
-            if (rate != null && isRate != null)
+                }
+                else if (like != null)
+                {
+                    _context.Likes.AddAsync(like);
+                    await _context.SaveChangesAsync();
+                }
+            } catch (Exception ex) 
             {
                 
-                await _context.SaveChangesAsync();
-
-            }
-            else if (rate != null)
-            {
-                _context.Ratings.AddAsync(rate);
-                await _context.SaveChangesAsync();
             }
         }
 
-        public async Task UserComment (int userId, int artworkId, string content)
+        public async Task UserFollow(Follow follow)
         {
-            Comment comment = new Comment
+            try
             {
-                Content = content,
-                User = await _userRepository.GetUserById(userId),
-                Artwork = await GetArtworkById(artworkId)
-            };
-            if (comment != null)
+                //var index = await _context.Likes.Where(a => a.Artwork.Equals(like.Artwork) && a.User.Equals(like.User)).FirstOrDefaultAsync();
+                var isFollow = await _context.Follows.AnyAsync(a => a.Artist.Equals(follow.Artist) && a.Follower.Equals(follow.Follower));
+                if (follow != null && !isFollow)
+                {
+                    var index = await _context.Follows.FirstOrDefaultAsync(a => a.Artist.Equals(follow.Artist) && a.Follower.Equals(follow.Follower));
+                    _context.Follows.Remove(index);
+                    await _context.SaveChangesAsync();
+                }
+                else if (follow != null)
+                {
+                    _context.Follows.AddAsync(follow);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
             {
-                _context.Comments.AddAsync(comment);
-                await _context.SaveChangesAsync();
+
+            }
+        }
+        public async Task UserRating(Rating rate)
+        {
+            try
+            {
+                
+                var isRate = await _context.Ratings.FirstOrDefaultAsync(a => a.Artwork.Equals(rate.Artwork) && a.User.Equals(rate.User));
+                if (rate != null && isRate != null)
+                {
+                    var index = await _context.Ratings.Where(a => a.Artwork.Equals(rate.Artwork) && a.User.Equals(rate.User)).FirstOrDefaultAsync();
+                    _context.Entry(index).CurrentValues.SetValues(rate);
+
+                    await _context.SaveChangesAsync();
+                }
+                else if (rate != null)
+                {
+                    _context.Ratings.AddAsync(rate);
+                    await _context.SaveChangesAsync();
+                }
+            } catch (Exception ex)
+            {
+
+            }
+        }
+
+        public async Task UserComment (Comment comment)
+        {
+            try
+            {                
+                if (comment != null)
+                {
+                    _context.Comments.AddAsync(comment);
+                    await _context.SaveChangesAsync();
+                }
+            } catch (Exception ex)
+            {
+
+            }
+        }
+
+        public async Task<IEnumerable<Artwork>?> SearchArtwork(string search)
+        {
+            try
+            {
+                var result = _context.Artworks.Where(x => x.Title.Equals(search.ToLower())).ToList();
+                return result;
+            } catch (Exception ex) 
+            {
+                return null;
+            }
+        }
+
+        public async Task AddArtwork(Artwork artwork)
+        {
+            try
+            {
+                if (artwork != null)
+                {
+                    _context.Artworks.AddAsync(artwork);
+
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                
+            }
+        }
+
+        public async Task DeleteArtwork(int artworkId)
+        {
+            try
+            {
+                if (artwork != null)
+                {
+                    var index = await _context.Artworks.FindAsync(artwork.Id);
+                    index.Status = 0;
+
+                    _context.Entry(index).CurrentValues.SetValues(artwork);
+
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public async Task UpdateArtwork(Artwork artwork)
+        {
+            try
+            {
+                if (artwork != null)
+                {
+                    var index = await _context.Artworks.FindAsync(artwork.Id);
+
+                    _context.Entry(index).CurrentValues.SetValues(artwork);
+
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+
             }
         }
     }
