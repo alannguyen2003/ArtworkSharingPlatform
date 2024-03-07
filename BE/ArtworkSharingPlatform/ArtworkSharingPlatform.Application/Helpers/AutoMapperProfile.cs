@@ -2,7 +2,11 @@
 using ArtworkSharingPlatform.DataTransferLayer;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
 using ArtworkSharingPlatform.Domain.Entities.Artworks;
+
+using ArtworkSharingPlatform.Domain.Entities.Messages;
+
 using ArtworkSharingPlatform.Domain.Entities.Commissions;
+
 using ArtworkSharingPlatform.Domain.Entities.Users;
 using AutoMapper;
 
@@ -12,9 +16,14 @@ namespace ArtworkSharingPlatform.Application.Helpers
     {
         public AutoMapperProfile()
         {
-            CreateMap<User, ArtworkUserDTO>();
-            CreateMap<ArtworkImage, ArtworkImageDTO>();
+            CreateMap<User, ArtworkUserDTO>().ReverseMap();
+            CreateMap<ArtworkImage, ArtworkImageDTO>().ReverseMap();
             CreateMap<Artwork, ArtworkDTO>()
+                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ArtworkImages.SingleOrDefault(x => x.IsThumbnail.Value).ImageUrl))
+                .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.Owner))
+                .ReverseMap();
+            CreateMap<Message, MessageDTO>();
+
                 .ForMember(dest => dest.ImageUrl,
                     opt => opt.MapFrom(src => src.ArtworkImages.SingleOrDefault(x => x.IsThumbnail.Value).ImageUrl))
                 .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.Owner));

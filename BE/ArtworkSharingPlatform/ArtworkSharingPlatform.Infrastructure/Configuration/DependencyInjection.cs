@@ -19,6 +19,8 @@ public static class DependencyInjection
         services.AddScoped<IGenreRepository, GenreRepository>();
         services.AddScoped<ICommissionStatusRepository, CommissionStatusRepository>();
         services.AddScoped<IArtworkService, ArtworkServices>();
+        services.AddScoped<IMessageRepository, MessageRepository>();
+        services.AddScoped<IMessageService, MessageService>();
         services.AddScoped<ICommissionService, CommissionService>();
         return services;
     }

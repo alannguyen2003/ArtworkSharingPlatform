@@ -25,6 +25,10 @@ import { ArtworkCardComponent } from './components/artwork/artwork-card/artwork-
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { TruncatePipe } from './_pipe/truncate.pipe';
 import { TextInputComponent } from './_forms/text-input/text-input.component';
+import { MessagesComponent } from './components/messages/messages.component';
+import {MessageReceivedComponent} from "./components/messages/message-received/message-received.component";
+import {MessageSentComponent} from "./components/messages/message-sent/message-sent.component";
+
 
 @NgModule({
   declarations: [
@@ -43,7 +47,8 @@ import { TextInputComponent } from './_forms/text-input/text-input.component';
     TestErrorComponent,
     ArtworkCardComponent,
     TruncatePipe,
-    TextInputComponent
+    TextInputComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +57,9 @@ import { TextInputComponent } from './_forms/text-input/text-input.component';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    MessageReceivedComponent,
+    MessageSentComponent
   ],
   providers: [
     {
@@ -71,9 +78,9 @@ import { TextInputComponent } from './_forms/text-input/text-input.component';
       multi: true
     }
   ],
-  exports: [
-    TruncatePipe
-  ],
+    exports: [
+        TruncatePipe
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,5 @@
 using ArtworkSharingHost.Middleware;
+using ArtworkSharingHost.SignalR;
 using ArtworkSharingPlatform.Application.Interfaces;
 using ArtworkSharingPlatform.Application.Services;
 using ArtworkSharingPlatform.Domain.Entities.Users;
@@ -11,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-const string artworkSharingPlatformCors = "_artworkSharingPlatformCors";
+//const string artworkSharingPlatformCors = "_artworkSharingPlatformCors";
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -21,6 +22,7 @@ builder.Services.AddDbContext<ArtworkSharingPlatformDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddSingleton<PresenceTracker>();
 builder.Services.AddDependencyInjection();
 builder.Services.AddIdentityCore<User>(opt =>
     {
@@ -52,19 +54,33 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey =
             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt:Key").Value))
     };
-});
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: artworkSharingPlatformCors,
-        policy =>
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
         {
-            policy.WithOrigins("*")
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-        });
+            var accessToken = context.Request.Query["access_token"];
+            var path = context.HttpContext.Request.Path;
+            if(!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hub"))
+            {
+                context.Token = accessToken;
+            }
+            return Task.CompletedTask;
+        }
+    };
 });
 
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy(name: artworkSharingPlatformCors,
+//        policy =>
+//        {
+//            policy.AllowAnyHeader()
+//            .AllowAnyMethod()
+//            .AllowCredentials()
+//            .WithOrigins("https://localhost:4200");
+//        });
+//});
+builder.Services.AddSignalR();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -82,10 +98,16 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors(artworkSharingPlatformCors);
+app.UseCors(builder => builder
+.AllowAnyHeader()
+.AllowAnyMethod()
+.AllowCredentials()
+.WithOrigins("http://localhost:4200"));
 app.UseAuthorization();
 app.UseAuthentication();
 app.MapControllers();
+app.MapHub<PresenceHub>("hub/presence");
+app.MapHub<MessageHub>("hub/message");
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
@@ -95,6 +117,7 @@ try
     var userManager = services.GetRequiredService<UserManager<User>>();
     var roleManager = services.GetRequiredService<RoleManager<Role>>();
     await context.Database.MigrateAsync();
+    await context.Database.ExecuteSqlRawAsync("DELETE FROM Connections");
     await Seed.SeedUser(userManager, roleManager);
     await Seed.SeedArtwork(context);
     await Seed.SeedCommissionStatus(context);

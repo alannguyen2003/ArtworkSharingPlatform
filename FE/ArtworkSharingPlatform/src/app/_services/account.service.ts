@@ -5,6 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {ToastrService} from "ngx-toastr";
 import {Router} from "@angular/router";
+import {PresenceService} from "./presence.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class AccountService {
   currentUser$ = this.currentUserSource.asObservable();
   constructor(private http: HttpClient,
               private toastr: ToastrService,
-              private router: Router) { }
+              private router: Router,
+              private presenceService: PresenceService) { }
 
   login(model: any) {
     return this.http.post<User>(this.baseUrl + 'auth/login', model)
@@ -46,11 +48,13 @@ export class AccountService {
     Array.isArray(roles) ? user.roles = roles : user.roles.push(roles);
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
+    this.presenceService.createHubConnection(user);
   }
 
   logout() {
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
+    this.presenceService.stopHubConnection();
   }
 
   getDecodedToken(token: string){

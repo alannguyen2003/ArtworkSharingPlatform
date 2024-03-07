@@ -95,5 +95,10 @@ namespace ArtworkSharingPlatform.Application.Services
             }
             return null;
 		}
-	}
+
+        public async Task<User> GetUserByEmail(string email)
+        {
+            return await _userManager.FindByEmailAsync(email);
+        }
+    }
 }
