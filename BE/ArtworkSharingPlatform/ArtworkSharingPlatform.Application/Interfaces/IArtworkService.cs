@@ -7,5 +7,7 @@ namespace ArtworkSharingPlatform.Application.Interfaces
 	{
 		Task<PagedList<ArtworkDTO>> GetArtworksAsync(UserParams userParams);
 		Task<ArtworkDTO> GetArtworkAsync(int id);
+		Task UserLike(ArtworkLikeDTO like);
+		
 	}
 }
