@@ -38,6 +38,9 @@ export class TestErrorComponent {
     });
   }
   get400ValidationError() {
-
+    this.http.post(this.baseUrl + 'api/auth/register', {}).subscribe({
+      next: response => console.log(response),
+      error: err => console.log(err)
+    });
   }
 }

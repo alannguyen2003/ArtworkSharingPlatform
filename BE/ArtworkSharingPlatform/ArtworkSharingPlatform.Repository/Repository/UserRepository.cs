@@ -12,25 +12,30 @@ namespace ArtworkSharingPlatform.Repository.Repository
 {
     public class UserRepository : IUserRepository
     {
-        private readonly ArtworkSharingPlatformDbContext _context;
+        private readonly ArtworkSharingPlatformDbContext _dbContext;
 
         public UserRepository(ArtworkSharingPlatformDbContext context)
         {
-            _context = context;
+            _dbContext = context;
         }
 
         public async Task<User> GetUserById(int id)
         {
-            
+
             try
             {
-               var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+                var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
                 return user;
-            } catch (Exception ex)
-            {
+            } catch (Exception ex) { 
+
 
             }
             return null;
         }
+        public User GetById(int id)
+        {
+            return _dbContext?.Users?.Where(user => user.Id == id).FirstOrDefault()!;
+        }
     }
+
 }

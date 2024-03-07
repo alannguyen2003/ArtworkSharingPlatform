@@ -10,5 +10,6 @@ namespace ArtworkSharingPlatform.Repository.Interfaces
     public interface IUserRepository
     {
         Task<User> GetUserById(int id);
+        User GetById(int id);
     }
 }

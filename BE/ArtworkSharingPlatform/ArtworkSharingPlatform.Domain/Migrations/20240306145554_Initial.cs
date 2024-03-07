@@ -89,7 +89,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Credit = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(10,5)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -237,6 +237,30 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Follow",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FollowerId = table.Column<int>(type: "int", nullable: true),
+                    ArtistId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Follow", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Follow_AspNetUsers_ArtistId",
+                        column: x => x.ArtistId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Follow_AspNetUsers_FollowerId",
+                        column: x => x.FollowerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Transactions",
                 columns: table => new
                 {
@@ -268,10 +292,10 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ReleaseCount = table.Column<int>(type: "int", nullable: false),
+                    GenreId = table.Column<int>(type: "int", nullable: false),
                     OwnerId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<byte>(type: "tinyint", nullable: false),
-                    GenreId = table.Column<int>(type: "int", nullable: false)
+                    Status = table.Column<byte>(type: "tinyint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -296,14 +320,15 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MinPrice = table.Column<decimal>(type: "decimal(10,5)", nullable: false),
+                    MinPrice = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
+                    MaxPrice = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     RequestDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NotAcceptedReason = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RequestDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<byte>(type: "tinyint", nullable: false),
+                    IsProgressStatus = table.Column<byte>(type: "tinyint", nullable: false),
                     SenderId = table.Column<int>(type: "int", nullable: true),
                     ReceiverId = table.Column<int>(type: "int", nullable: true),
-                    GenreId = table.Column<int>(type: "int", nullable: false),
+                    GenreId = table.Column<int>(type: "int", nullable: true),
                     CommissionStatusId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -328,8 +353,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                         name: "FK_CommissionRequests_Genres_GenreId",
                         column: x => x.GenreId,
                         principalTable: "Genres",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -362,7 +386,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TotalPrice = table.Column<decimal>(type: "decimal(10,5)", nullable: false),
+                    TotalPrice = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: true),
                     TransactionId = table.Column<int>(type: "int", nullable: true)
@@ -460,7 +484,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ArtworkId = table.Column<int>(type: "int", nullable: false),
                     EstimateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TotalPrice = table.Column<decimal>(type: "decimal(10,5)", nullable: false),
+                    TotalPrice = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     BuyerId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -651,6 +675,16 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 column: "AdministratorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Follow_ArtistId",
+                table: "Follow",
+                column: "ArtistId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Follow_FollowerId",
+                table: "Follow",
+                column: "FollowerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Likes_ArtworkId",
                 table: "Likes",
                 column: "ArtworkId");
@@ -731,6 +765,9 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
             migrationBuilder.DropTable(
                 name: "ConfigManagerPackageInformation");
+
+            migrationBuilder.DropTable(
+                name: "Follow");
 
             migrationBuilder.DropTable(
                 name: "Likes");

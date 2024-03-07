@@ -68,27 +68,28 @@ namespace ArtworkSharingPlatform.Repository.Repository
                 await _context.SaveChangesAsync();
             }
         }*/
-        /*public async Task UserRating(int userId, int artworkid, int score)
+        public async Task UserRating(int userId, int artworkid, int score)
         {
-            Like like = new Like
+            Rating rate = new Rating
             {
                 Artwork = await GetArtworkById(artworkid),
-                User = await _userRepository.GetUserById(userId)
+                User = await _userRepository.GetUserById(userId),
+                Score = score
             };
             //var index = await _context.Likes.Where(a => a.Artwork.Equals(like.Artwork) && a.User.Equals(like.User)).FirstOrDefaultAsync();
-            var isLike = await _context.Likes.AnyAsync(a => a.Artwork.Equals(like.Artwork) && a.User.Equals(like.User));
-            if (like != null && !isLike)
+            var isRate = await _context.Ratings.FirstOrDefaultAsync(a => a.Artwork.Equals(rate.Artwork) && a.User.Equals(rate.User));
+            if (rate != null && isRate != null)
             {
-                _context.Likes.Remove(like);
+                
                 await _context.SaveChangesAsync();
 
             }
-            else if (like != null)
+            else if (rate != null)
             {
-                _context.Likes.AddAsync(like);
+                _context.Ratings.AddAsync(rate);
                 await _context.SaveChangesAsync();
             }
-        }*/
+        }
 
         public async Task UserComment (int userId, int artworkId, string content)
         {
