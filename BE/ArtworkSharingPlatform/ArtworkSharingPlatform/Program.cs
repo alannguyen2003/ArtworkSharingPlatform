@@ -25,11 +25,11 @@ builder.Services.AddDbContext<ArtworkSharingPlatformDbContext>(options =>
 builder.Services.AddSingleton<PresenceTracker>();
 builder.Services.AddDependencyInjection();
 builder.Services.AddIdentityCore<User>(opt =>
-{
-    opt.Password.RequiredLength = 5;
+    {
+        opt.Password.RequiredLength = 5;
 
-    opt.User.RequireUniqueEmail = true;
-})
+        opt.User.RequireUniqueEmail = true;
+    })
     .AddRoles<Role>()
     .AddRoleManager<RoleManager<Role>>()
     .AddEntityFrameworkStores<ArtworkSharingPlatformDbContext>()
@@ -51,7 +51,8 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuerSigningKey = true,
         ValidIssuer = builder.Configuration.GetSection("Jwt:Issuer").Value,
         ValidAudience = builder.Configuration.GetSection("Jwt:Audience").Value,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt:Key").Value))
+        IssuerSigningKey =
+            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt:Key").Value))
     };
     options.Events = new JwtBearerEvents
     {
@@ -119,6 +120,7 @@ try
     await context.Database.ExecuteSqlRawAsync("DELETE FROM Connections");
     await Seed.SeedUser(userManager, roleManager);
     await Seed.SeedArtwork(context);
+    await Seed.SeedCommissionStatus(context);
 }
 catch (Exception ex)
 {

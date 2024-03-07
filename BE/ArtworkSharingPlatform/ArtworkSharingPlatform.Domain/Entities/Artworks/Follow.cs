@@ -3,9 +3,8 @@ using ArtworkSharingPlatform.Domain.Entities.Users;
 
 namespace ArtworkSharingPlatform.Domain.Entities.Artworks;
 
-public class Rating : BaseEntity
+public class Follow:BaseEntity
 {
-    public int Score { get; set; }
-    public Artwork? Artwork { get; set; }
-    public User? User { get; set; }
+    public User? Follower { get; set; }
+    public User? Artist { get; set; }
 }

@@ -24,9 +24,10 @@ public class User : IdentityUser<int>
     public ICollection<Comment>? Comments { get; set; }
     public ICollection<Rating>? Ratings { get; set; }
     public ICollection<UserRole> UserRoles { get; set; }
-    public ICollection<CommissionRequest>? CommissionSent;
-    public ICollection<CommissionRequest>? CommissionReceived;
     public ICollection<Message>? MessageReceived;
     public ICollection<Message>? MessageSent;
-
+    public ICollection<CommissionRequest>? CommissionSent { get; set; }
+    public ICollection<CommissionRequest>? CommissionReceived{ get; set; }
+    public ICollection<Follow>? FollowingArtists{ get; set; }
+    public ICollection<Follow>? FollowingAudiences{ get; set; }
 }

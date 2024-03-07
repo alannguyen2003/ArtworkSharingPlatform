@@ -4,6 +4,7 @@ using ArtworkSharingPlatform.Domain.Migrations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
+using ArtworkSharingPlatform.Domain.Entities.Commissions;
 
 namespace ArtworkSharingPlatform.Infrastructure
 {
@@ -106,6 +107,21 @@ namespace ArtworkSharingPlatform.Infrastructure
             };
             await userManager.CreateAsync(artist, "Pa$$w0rd");
             await userManager.AddToRolesAsync(artist, new[] {"Artist", "Audience" });
+        }
+
+        public static async Task SeedCommissionStatus(ArtworkSharingPlatformDbContext context)
+        {
+            var commissionStatusList = new List<CommissionStatus>
+            {
+                new CommissionStatus {Description = "Pending"},
+                new CommissionStatus {Description = "Completed"},
+                new CommissionStatus {Description = "Aborted"},
+            };
+            foreach (var commissionStatus in commissionStatusList)
+            {
+                await context.CommissionStatus.AddAsync(commissionStatus);
+            }
+            await context.SaveChangesAsync();
         }
     }
 }

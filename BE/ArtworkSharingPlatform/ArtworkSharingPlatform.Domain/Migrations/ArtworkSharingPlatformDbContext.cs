@@ -60,7 +60,7 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
     {
         optionsBuilder
             .UseSqlServer(
-                "Data Source=(local); database=ASPDatabase;uid=sa;pwd=12345;TrustServerCertificate=True");
+                "Data Source=(local); database=ASPDatabase;uid=sa;pwd=1234567890;TrustServerCertificate=True");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -94,6 +94,13 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
             .HasMany(e => e.ConfigManagers)
             .WithMany(e => e.PackageConfigs);
 
+        modelBuilder.Entity<Follow>()
+            .HasOne(e => e.Follower)
+            .WithMany(e => e.FollowingArtists);
+        modelBuilder.Entity<Follow>()
+            .HasOne(e => e.Artist)
+            .WithMany(e => e.FollowingAudiences);
+
 
         modelBuilder.Entity<Role>()
             .HasMany(e => e.UserRoles)
@@ -115,15 +122,6 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
         modelBuilder.Entity<CommissionRequest>()
             .HasMany(e => e.CommissionImages)
             .WithOne(e => e.CommissionRequest);
-        // modelBuilder.Entity<CommissionRequest>()
-        //     .HasOne(e => e.Sender)
-        //     .WithMany(e => e.CommissionSent)
-        //     .OnDelete(DeleteBehavior.Cascade);
-        // modelBuilder.Entity<CommissionRequest>()
-        //     .HasOne(e => e.Receiver)
-        //     .WithMany(e => e.CommissionReceived)
-        //     .OnDelete(DeleteBehavior.Cascade);
-
 
         modelBuilder.Entity<User>()
             .HasMany(e => e.UserRoles)
@@ -133,6 +131,15 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
         modelBuilder.Entity<User>()
             .HasMany(e => e.Artworks)
             .WithOne(e => e.Owner);
+        modelBuilder.Entity<User>()
+            .HasMany(e => e.Likes)
+            .WithOne(e => e.User);
+        modelBuilder.Entity<User>()
+            .HasMany(e => e.Comments)
+            .WithOne(e => e.User);
+        modelBuilder.Entity<User>()
+            .HasMany(e => e.Ratings)
+            .WithOne(e => e.User);
         modelBuilder.Entity<User>()
             .HasMany(e => e.PreOrders)
             .WithOne(e => e.Buyer);
