@@ -9,6 +9,7 @@ using ArtworkSharingPlatform.Domain.Entities.Commissions;
 
 using ArtworkSharingPlatform.Domain.Entities.Users;
 using AutoMapper;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Response;
 
 namespace ArtworkSharingPlatform.Application.Helpers
 {
@@ -24,6 +25,16 @@ namespace ArtworkSharingPlatform.Application.Helpers
                 .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.Owner))
                 .ReverseMap();
             CreateMap<Message, MessageDTO>();
+            CreateMap<User, UserInfoDTO>()
+                .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.UserRoles.Any() ? src.UserRoles.First().Role.Name : null))
+                .ReverseMap();
+            CreateMap<User, UserAdminDTO>()
+                .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.UserRoles.First().Role.Name))
+                .ReverseMap();
+            CreateMap<User, UserInfoAudienceDTO>()
+                .ReverseMap();
+            CreateMap<User, UserDetailUpdateDTO>()
+                .ReverseMap();
             CreateCommissionRequestToCommissionEntityMap();
         }
 
