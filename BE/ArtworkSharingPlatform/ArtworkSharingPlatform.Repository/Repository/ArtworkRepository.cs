@@ -148,12 +148,12 @@ namespace ArtworkSharingPlatform.Repository.Repository
         {
             try
             {
-                if (artwork != null)
+                if (artworkId != null)
                 {
-                    var index = await _context.Artworks.FindAsync(artwork.Id);
+                    var index = await _context.Artworks.FindAsync(artworkId);
                     index.Status = 0;
 
-                    _context.Entry(index).CurrentValues.SetValues(artwork);
+                    _context.Entry(index).CurrentValues.SetValues(index);
 
                     await _context.SaveChangesAsync();
                 }
