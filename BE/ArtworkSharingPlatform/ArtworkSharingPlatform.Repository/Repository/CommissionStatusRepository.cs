@@ -1,4 +1,5 @@
-﻿using ArtworkSharingPlatform.Domain.Entities.Commissions;
+﻿using System.IO.Enumeration;
+using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Domain.Migrations;
 using ArtworkSharingPlatform.Repository.Interfaces;
 
@@ -15,8 +16,7 @@ public class CommissionStatusRepository : ICommissionStatusRepository
 
     public CommissionStatus GetById(int id)
     {
-        return _dbContext?.CommissionStatus?
-            .Where(commStatus => commStatus.Id == id)
-            .FirstOrDefault()!;
+        return _dbContext?.CommissionStatus?.Find(id)!;
+
     }
 }

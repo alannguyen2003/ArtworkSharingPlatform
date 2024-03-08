@@ -13,9 +13,20 @@ public class CommissionRequestRepository:ICommissionRequestRepository
         _dbContext = dbContext;
     }
 
-    public void InsertCommission(CommissionRequest commissionRequest)
+    public void Insert(CommissionRequest commissionRequest)
     {
         _dbContext.CommissionRequests.Add(commissionRequest);
+        _dbContext.SaveChanges();
+    }
+
+    public CommissionRequest GetById(int id)
+    {
+        return _dbContext.CommissionRequests.Find(id)!;
+    }
+
+    public void Update(CommissionRequest commissionRequest)
+    {
+        _dbContext.Update(commissionRequest);
         _dbContext.SaveChanges();
     }
 }

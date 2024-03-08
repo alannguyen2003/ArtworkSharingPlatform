@@ -1,6 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using ArtworkSharingPlatform.DataTransferLayer;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.CommissionRequest;
 using ArtworkSharingPlatform.Domain.Entities.Artworks;
 
 using ArtworkSharingPlatform.Domain.Entities.Messages;

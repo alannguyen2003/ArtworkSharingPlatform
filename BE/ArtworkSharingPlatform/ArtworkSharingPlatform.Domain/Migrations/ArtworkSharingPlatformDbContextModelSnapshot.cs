@@ -134,7 +134,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
                     b.HasIndex("FollowerId");
 
-                    b.ToTable("Follow");
+                    b.ToTable("Follows");
                 });
 
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Artworks.Genre", b =>
@@ -240,10 +240,13 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CommissionStatusId")
+                    b.Property<decimal>("ActualPrice")
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<int>("CommissionStatusId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("GenreId")
+                    b.Property<int>("GenreId")
                         .HasColumnType("int");
 
                     b.Property<byte>("IsProgressStatus")
@@ -258,7 +261,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.Property<string>("NotAcceptedReason")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ReceiverId")
+                    b.Property<int>("ReceiverId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("RequestDate")
@@ -267,7 +270,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.Property<string>("RequestDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SenderId")
+                    b.Property<int>("SenderId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -896,19 +899,27 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 {
                     b.HasOne("ArtworkSharingPlatform.Domain.Entities.Commissions.CommissionStatus", "CommissionStatus")
                         .WithMany("CommissionHistories")
-                        .HasForeignKey("CommissionStatusId");
+                        .HasForeignKey("CommissionStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ArtworkSharingPlatform.Domain.Entities.Artworks.Genre", "Genre")
                         .WithMany("CommissionRequests")
-                        .HasForeignKey("GenreId");
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.User", "Receiver")
                         .WithMany("CommissionReceived")
-                        .HasForeignKey("ReceiverId");
+                        .HasForeignKey("ReceiverId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.User", "Sender")
                         .WithMany("CommissionSent")
-                        .HasForeignKey("SenderId");
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("CommissionStatus");
 

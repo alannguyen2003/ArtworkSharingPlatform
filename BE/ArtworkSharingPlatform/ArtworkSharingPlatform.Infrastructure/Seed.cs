@@ -114,8 +114,9 @@ namespace ArtworkSharingPlatform.Infrastructure
             var commissionStatusList = new List<CommissionStatus>
             {
                 new CommissionStatus {Description = "Pending"},
+                new CommissionStatus {Description = "Accepted"},
                 new CommissionStatus {Description = "Completed"},
-                new CommissionStatus {Description = "Aborted"},
+                new CommissionStatus {Description = "Rejected"},
             };
             foreach (var commissionStatus in commissionStatusList)
             {

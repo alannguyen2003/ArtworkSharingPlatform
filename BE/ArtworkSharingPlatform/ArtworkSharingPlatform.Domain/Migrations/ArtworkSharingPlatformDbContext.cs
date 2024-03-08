@@ -61,7 +61,7 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
     {
         optionsBuilder
             .UseSqlServer(
-                "Data Source=(local); database=ASPDatabase;uid=sa;pwd=12345;TrustServerCertificate=True");
+                "Data Source=(local); database=ASPDatabase;uid=sa;pwd=1234567890;TrustServerCertificate=True");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -124,6 +124,7 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
             .HasMany(e => e.CommissionImages)
             .WithOne(e => e.CommissionRequest);
 
+        
         modelBuilder.Entity<User>()
             .HasMany(e => e.UserRoles)
             .WithOne(e => e.User)
@@ -155,11 +156,14 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
             .WithOne(e => e.Administrator);
         modelBuilder.Entity<User>()
             .HasMany(e => e.CommissionSent)
-            .WithOne(e => e.Sender);
+            .WithOne(e => e.Sender)
+            .OnDelete(DeleteBehavior.NoAction);
         modelBuilder.Entity<User>()
             .HasMany(e => e.CommissionReceived)
-            .WithOne(e => e.Receiver);
+            .WithOne(e => e.Receiver)
+            .OnDelete(DeleteBehavior.NoAction);
 
+        
         modelBuilder.Entity<Message>()
             .HasOne(x => x.Recipient)
             .WithMany(x => x.MessageReceived)

@@ -144,19 +144,19 @@ namespace ArtworkSharingPlatform.Repository.Repository
             }
         }
 
-        public async Task DeleteArtwork(int artworkId)
+        public async Task DeleteArtwork(int artwork)
         {
             try
             {
-                if (artwork != null)
-                {
-                    var index = await _context.Artworks.FindAsync(artwork.Id);
-                    index.Status = 0;
-
-                    _context.Entry(index).CurrentValues.SetValues(artwork);
-
-                    await _context.SaveChangesAsync();
-                }
+                // if (artwork != null)
+                // {
+                //     var index = await _context.Artworks.FindAsync(artwork.Id);
+                //     index.Status = 0;
+                //
+                //     _context.Entry(index).CurrentValues.SetValues(artwork);
+                //
+                //     await _context.SaveChangesAsync();
+                // }
             }
             catch (Exception ex)
             {

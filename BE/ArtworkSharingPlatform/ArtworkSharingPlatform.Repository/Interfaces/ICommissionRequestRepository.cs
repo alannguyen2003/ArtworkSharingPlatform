@@ -4,5 +4,7 @@ namespace ArtworkSharingPlatform.Repository.Interfaces;
 
 public interface ICommissionRequestRepository
 {
-    void InsertCommission(CommissionRequest commissionRequest);
+    void Insert(CommissionRequest commissionRequest);
+    CommissionRequest GetById(int id);
+    void Update(CommissionRequest commissionRequest);
 }
