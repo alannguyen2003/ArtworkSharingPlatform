@@ -18,6 +18,7 @@ namespace ArtworkSharingPlatform.Application.Helpers
         public AutoMapperProfile()
         {
             CreateMap<User, ArtworkUserDTO>().ReverseMap();
+            CreateMap<Like, ArtworkLikeDTO>().ReverseMap();
             CreateMap<ArtworkImage, ArtworkImageDTO>().ReverseMap();
             CreateMap<Artwork, ArtworkDTO>()
                 .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ArtworkImages.SingleOrDefault(x => x.IsThumbnail.Value).ImageUrl))

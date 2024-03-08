@@ -1,4 +1,5 @@
 ﻿using ArtworkSharingPlatform.DataTransferLayer;
+using ArtworkSharingPlatform.Domain.Entities.Artworks;
 using ArtworkSharingPlatform.Domain.Helpers;
 
 namespace ArtworkSharingPlatform.Application.Interfaces
@@ -7,5 +8,12 @@ namespace ArtworkSharingPlatform.Application.Interfaces
 	{
 		Task<PagedList<ArtworkDTO>> GetArtworksAsync(UserParams userParams);
 		Task<ArtworkDTO> GetArtworkAsync(int id);
-	}
+		Task UserLike(ArtworkLikeDTO like);
+        Task UserRating(ArtworkRatingDTO rating);
+        Task UserFollow(UserFollowDTO follow);
+        Task AddArtwork(ArtworkDTO artwork);
+        Task DeleteArtwork(int artworkId);
+        Task UpdateArtwork(ArtworkDTO artwork);
+
+    }
 }
