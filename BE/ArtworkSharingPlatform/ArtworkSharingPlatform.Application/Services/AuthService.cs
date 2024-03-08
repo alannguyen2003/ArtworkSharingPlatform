@@ -37,6 +37,10 @@ namespace ArtworkSharingPlatform.Application.Services
                 Status = 1
             };
             var result = await _userManager.CreateAsync(user, registerBody.Password);
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, "Audience");
+            }
             return result;
         }
 

@@ -6,6 +6,8 @@ using ArtworkSharingPlatform.Domain.Entities.Users;
 using ArtworkSharingPlatform.Domain.Migrations;
 using ArtworkSharingPlatform.Infrastructure;
 using ArtworkSharingPlatform.Infrastructure.Configuration;
+using ArtworkSharingPlatform.Repository.Interfaces;
+using ArtworkSharingPlatform.Repository.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -81,7 +83,10 @@ builder.Services.AddAuthentication(options =>
 //        });
 //});
 builder.Services.AddSignalR();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

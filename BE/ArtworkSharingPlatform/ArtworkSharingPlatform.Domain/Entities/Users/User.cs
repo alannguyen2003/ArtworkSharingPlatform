@@ -6,6 +6,7 @@ using ArtworkSharingPlatform.Domain.Entities.Orders;
 using ArtworkSharingPlatform.Domain.Entities.Packages;
 using ArtworkSharingPlatform.Domain.Entities.Transactions;
 using Microsoft.AspNetCore.Identity;
+using System.Text.Json.Serialization;
 
 namespace ArtworkSharingPlatform.Domain.Entities.Users;
 
@@ -23,6 +24,7 @@ public class User : IdentityUser<int>
     public ICollection<Like>? Likes { get; set; }
     public ICollection<Comment>? Comments { get; set; }
     public ICollection<Rating>? Ratings { get; set; }
+    [JsonIgnore]
     public ICollection<UserRole> UserRoles { get; set; }
     public ICollection<Message>? MessageReceived;
     public ICollection<Message>? MessageSent;
