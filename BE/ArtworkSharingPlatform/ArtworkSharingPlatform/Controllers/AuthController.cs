@@ -1,7 +1,11 @@
 ﻿using ArtworkSharingPlatform.Application.Interfaces;
+using ArtworkSharingPlatform.Application.Services;
 using ArtworkSharingPlatform.DataTransferLayer;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
+using System.Text;
 
 namespace ArtworkSharingHost.Controllers
 {
@@ -46,6 +50,27 @@ namespace ArtworkSharingHost.Controllers
                 return Ok(userDto);
             } 
             return BadRequest(result.Errors);
+        }
+        [HttpPost("ForgotPassword")]
+        public async Task<IActionResult> ForgotPassword([FromBody] string email)
+        {
+            var code = await _authService.ForgotPassword(email);
+            var token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+            return Ok(token);
+        }
+
+        [HttpPost("ResetPassword")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDTO resetPasswordDTO)
+        {
+            var resetPassword = new ResetPasswordDTO
+            {
+                Email = resetPasswordDTO.Email,
+                Password = resetPasswordDTO.Password,
+                ConfirmPassword = resetPasswordDTO.ConfirmPassword,
+                Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(resetPasswordDTO.Code))
+            };
+            await _authService.ResetPassword(resetPassword);
+            return Ok("Reset password successfully. Return to login");
         }
     }
 }

@@ -61,14 +61,5 @@ namespace ArtworkSharingPlatform.Application.Services
         {
             await _userRepository.UpdateUserDetail(user);
         }
-        public async Task<string> ForgotPassword(string email)
-        {
-            return await _userRepository.ForgotPassword(email);
-        }
-
-        public async Task ResetPassword(ResetPasswordDTO resetPasswordDTO)
-        {
-            await _userRepository.ResetPassword(resetPasswordDTO);
-        }
     }
 }
