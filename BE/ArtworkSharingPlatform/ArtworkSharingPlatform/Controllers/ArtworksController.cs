@@ -21,8 +21,8 @@ namespace ArtworkSharingHost.Controllers
 		[HttpGet]
 		public async Task<ActionResult<PagedList<ArtworkDTO>>> GetArtworks([FromQuery] UserParams userParams) 
 		{
-			//var currentUserId = User.GetUserId();
-			var currentUserId = 7;
+			var currentUserId = User.GetUserId();
+			//var currentUserId = 7;
 			userParams.CurrentUserId = currentUserId;
 
 			if(userParams.MinPrice > userParams.MaxPrice)

@@ -28,6 +28,7 @@ import { TextInputComponent } from './_forms/text-input/text-input.component';
 import { MessagesComponent } from './components/messages/messages.component';
 import {MessageReceivedComponent} from "./components/messages/message-received/message-received.component";
 import {MessageSentComponent} from "./components/messages/message-sent/message-sent.component";
+import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import {MessageSentComponent} from "./components/messages/message-sent/message-s
     ArtworkCardComponent,
     TruncatePipe,
     TextInputComponent,
-    MessagesComponent
+    MessagesComponent,
+    ProfileEditComponent
   ],
   imports: [
     BrowserModule,
