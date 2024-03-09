@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -61,6 +62,10 @@ namespace ArtworkSharingPlatform.Repository.Repository
                 if (u == null)
                 {
                     string password = "Pa$$w0rd";
+                    if(await IsPhoneExistAsync(user.PhoneNumber))
+                    {
+                        throw new Exception("Phone is exist");
+                    }
                     await _userManager.CreateAsync(user, password);
                     /*await _userManager.SetUserNameAsync(user, user.Email);*/
                 }
@@ -86,6 +91,10 @@ namespace ArtworkSharingPlatform.Repository.Repository
                     u.Name = user.Name;
                     u.Email = user.Email;
                     u.PhoneNumber = user.PhoneNumber;
+                    if (await IsPhoneExistAsync(u.PhoneNumber))
+                    {
+                        throw new Exception("Phone is exist");
+                    }
                     u.UserRoles = user.UserRoles;
                     u.Status = user.Status;
                     u.RemainingCredit = user.RemainingCredit;
@@ -134,6 +143,10 @@ namespace ArtworkSharingPlatform.Repository.Repository
                     u.Name = user.Name;
                     u.Email = user.Email;
                     u.PhoneNumber = user.PhoneNumber;
+                    if (await IsPhoneExistAsync(u.PhoneNumber))
+                    {
+                        throw new Exception("Phone is exist");
+                    }
                     await _userManager.UpdateAsync(u);
                 }
                 else
@@ -182,6 +195,12 @@ namespace ArtworkSharingPlatform.Repository.Repository
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        public async Task<bool> IsPhoneExistAsync(string phone)
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == phone);
+            return user != null;
         }
     }
 }
