@@ -1,12 +1,18 @@
 ﻿using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
-using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.CommissionRequest;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.Commission;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Response.Commission;
 
 namespace ArtworkSharingPlatform.Application.Interfaces;
 
 public interface ICommissionService
 {
-    CommissionServiceResponse CreateCommission(CreateCommissionRequestDTO createCommissionRequestDto);
-    CommissionServiceResponse AcceptCommission(AcceptCommissionRequestDTO acceptCommissionRequestDto);
-    CommissionServiceResponse RejectCommission(RejectCommissionRequestDTO rejectCommissionRequestDto);
+    CommissionServiceResponseDTO CreateCommission(CreateCommissionRequestDTO createCommissionRequestDto);
+    CommissionServiceResponseDTO AcceptCommission(AcceptCommissionRequestDTO acceptCommissionRequestDto);
+    CommissionServiceResponseDTO RejectCommission(RejectCommissionRequestDTO rejectCommissionRequestDto);
+    Task<CommissionServiceResponseDTO> GetAllSenderCommissions(int senderId);
+    Task<CommissionServiceResponseDTO> GetAllReceiverCommissions(int receiverId);
+    
+    
+
 }

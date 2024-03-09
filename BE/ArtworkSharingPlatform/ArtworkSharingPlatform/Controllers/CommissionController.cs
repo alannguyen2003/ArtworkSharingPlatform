@@ -1,6 +1,7 @@
 ﻿using ArtworkSharingPlatform.Application.Interfaces;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
-using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.CommissionRequest;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.Commission;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Response.Commission;
 using ArtworkSharingPlatform.Domain.Common.Enum;
 using Microsoft.AspNetCore.Mvc;
 
@@ -50,4 +51,34 @@ public class CommissionController : ControllerBase
         }
         return StatusCode(CommissionServiceStatusCode.SUCCESS, result.Message);
     }
+    [HttpGet("Sender/GetAll/{senderId}")]
+    public async Task<ActionResult> GetAllBySenderId([FromRoute] int senderId)
+    {
+        
+        var result = await _commissionService.GetAllSenderCommissions(senderId);
+        var clientResponse = await Task.Run(()=>ReturnStatusCodeToAsyncFunction(result));
+        return clientResponse;
+    }
+    [HttpGet("Receiver/GetAll/{receiverId}")]
+    public async Task<ActionResult> GetAllByReceiverId([FromRoute] int receiverId )
+    {
+        var result = await _commissionService.GetAllReceiverCommissions(receiverId);
+        if (result.Result == CommissionServiceEnum.FAILURE)
+        {
+            return StatusCode(CommissionServiceStatusCode.INTERNAL_SERVER_ERROR,
+                result.Message);
+        }
+        return StatusCode(CommissionServiceStatusCode.SUCCESS, result);
+    }
+
+    private ObjectResult ReturnStatusCodeToAsyncFunction(CommissionServiceResponseDTO result)
+    {
+        if (result.Result == CommissionServiceEnum.FAILURE)
+        {
+            return StatusCode(CommissionServiceStatusCode.INTERNAL_SERVER_ERROR,
+                result.Message);
+        }
+        return StatusCode(CommissionServiceStatusCode.SUCCESS, result);
+    }
+
 }

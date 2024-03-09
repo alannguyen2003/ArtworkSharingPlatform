@@ -1,4 +1,4 @@
-﻿namespace ArtworkSharingPlatform.DataTransferLayer.Payload.Request.CommissionRequest;
+﻿namespace ArtworkSharingPlatform.DataTransferLayer.Payload.Request.Commission;
 
 public class CreateCommissionRequestDTO
 {

@@ -1,5 +1,6 @@
-﻿using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.CommissionRequest;
+﻿using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.Commission;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Response.Commission;
 using ArtworkSharingPlatform.Domain.Common.Enum;
 using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Domain.Helpers;
@@ -18,7 +19,7 @@ public class RejectCommissionService
         _commissionRequestRepository = repository;
     }
 
-    public CommissionServiceResponse Reject(RejectCommissionRequestDTO rejectCommissionRequestDto)
+    public CommissionServiceResponseDTO Reject(RejectCommissionRequestDTO rejectCommissionRequestDto)
     {
         _rejectCommissionRequestDto = rejectCommissionRequestDto;
         if (IsNotAcceptedReasonEmpty()) return NotAcceptedReasonEmptyResult();
@@ -56,18 +57,18 @@ public class RejectCommissionService
         _commissionRequestRepository.Update(_commissionRequest);
     }
 
-    private CommissionServiceResponse NotAcceptedReasonEmptyResult()
+    private CommissionServiceResponseDTO NotAcceptedReasonEmptyResult()
     {
-        return new CommissionServiceResponse()
+        return new CommissionServiceResponseDTO()
         {
             Result = CommissionServiceEnum.FAILURE,
             Message = $"The not accepted reason can't be empty. Please try again."
         };
     }
 
-    private CommissionServiceResponse RejectCommissionSuccessResult()
+    private CommissionServiceResponseDTO RejectCommissionSuccessResult()
     {
-        return new CommissionServiceResponse()
+        return new CommissionServiceResponseDTO()
         {
             Result = CommissionServiceEnum.SUCCESS,
             Message =

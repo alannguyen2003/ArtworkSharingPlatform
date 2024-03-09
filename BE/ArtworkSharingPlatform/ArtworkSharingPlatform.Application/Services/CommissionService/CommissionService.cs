@@ -1,7 +1,8 @@
 ﻿using ArtworkSharingPlatform.Application.Interfaces;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
-using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.CommissionRequest;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.Commission;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Response.Commission;
 using ArtworkSharingPlatform.Domain.Common.Enum;
 using ArtworkSharingPlatform.Domain.Entities.Artworks;
 using ArtworkSharingPlatform.Domain.Entities.Commissions;
@@ -17,8 +18,12 @@ public class CommissionService : ICommissionService
     private CreateCommissionService? _createCommissionService;
     private AcceptCommissionService? _acceptCommissionService;
     private RejectCommissionService? _rejectCommissionService;
+    private GetAllSenderCommissionsService _getAllSenderCommissionsService;
+    private GetAllReceiverCommissionsService _getAllReceiverCommissionsService;
     private readonly ICommissionRequestRepository _commissionRequestRepository;
     private readonly ICommissionStatusRepository _commissionStatusRepository;
+    private readonly IGenreRepository _genreRepository;
+    private readonly IUserRepository _userRepository;
     private CreateCommissionRequestDTO? _createCommissionRequestDto;
     private CommissionRequest? _commissionRequest;
     private readonly IMapper _mapper;
@@ -26,27 +31,41 @@ public class CommissionService : ICommissionService
     public CommissionService(
         ICommissionRequestRepository repository,
         IMapper mapper,
-        ICommissionStatusRepository commissionStatusRepository)
+        ICommissionStatusRepository commissionStatusRepository,
+        IUserRepository userRepository,
+        IGenreRepository genreRepository)
     {
         _commissionRequestRepository = repository;
         _mapper = mapper;
         _commissionStatusRepository = commissionStatusRepository;
+        _userRepository = userRepository;
+        _genreRepository = genreRepository;
         InitializeChildServices();
     }
 
-    public CommissionServiceResponse CreateCommission(CreateCommissionRequestDTO createCommissionRequestDto)
+    public CommissionServiceResponseDTO CreateCommission(CreateCommissionRequestDTO createCommissionRequestDto)
     {
         return _createCommissionService.Create(createCommissionRequestDto);
     }
 
-    public CommissionServiceResponse AcceptCommission(AcceptCommissionRequestDTO acceptCommissionRequestDto)
+    public CommissionServiceResponseDTO AcceptCommission(AcceptCommissionRequestDTO acceptCommissionRequestDto)
     {
         return _acceptCommissionService.Accept(acceptCommissionRequestDto);
     }
 
-    public CommissionServiceResponse RejectCommission(RejectCommissionRequestDTO rejectCommissionRequestDto)
+    public CommissionServiceResponseDTO RejectCommission(RejectCommissionRequestDTO rejectCommissionRequestDto)
     {
         return _rejectCommissionService.Reject(rejectCommissionRequestDto);
+    }
+
+    public Task<CommissionServiceResponseDTO> GetAllSenderCommissions(int senderId)
+    {
+        return Task.Run(() => _getAllSenderCommissionsService.Get(senderId));
+    }
+
+    public Task<CommissionServiceResponseDTO> GetAllReceiverCommissions(int receiverId)
+    {
+        return Task.Run(() => _getAllReceiverCommissionsService.Get(receiverId));
     }
 
     private void InitializeChildServices()
@@ -59,5 +78,13 @@ public class CommissionService : ICommissionService
             _commissionRequestRepository);
         _rejectCommissionService = new RejectCommissionService(
             _commissionRequestRepository);
+        _getAllSenderCommissionsService = new GetAllSenderCommissionsService(
+            _commissionRequestRepository, _userRepository, 
+            _genreRepository, _commissionStatusRepository, _mapper
+        );
+        _getAllReceiverCommissionsService = new GetAllReceiverCommissionsService(
+            _commissionRequestRepository, _userRepository, 
+            _genreRepository, _commissionStatusRepository, _mapper
+        );
     }
 }

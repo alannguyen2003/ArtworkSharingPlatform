@@ -1,8 +1,8 @@
 ﻿using ArtworkSharingPlatform.Domain.Common.Enum;
 
-namespace ArtworkSharingPlatform.DataTransferLayer.Payload.Response;
+namespace ArtworkSharingPlatform.DataTransferLayer.Payload.Response.Commission;
 
-public class CommissionServiceResponse
+public class CommissionServiceResponseDTO
 {
     public CommissionServiceEnum Result { get; set; }
     public string? Message { get; set; }

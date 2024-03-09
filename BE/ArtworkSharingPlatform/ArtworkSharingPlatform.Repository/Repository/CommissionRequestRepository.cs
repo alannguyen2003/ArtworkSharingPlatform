@@ -4,7 +4,7 @@ using ArtworkSharingPlatform.Repository.Interfaces;
 
 namespace ArtworkSharingPlatform.Repository.Repository;
 
-public class CommissionRequestRepository:ICommissionRequestRepository
+public class CommissionRequestRepository : ICommissionRequestRepository
 {
     private ArtworkSharingPlatformDbContext _dbContext;
 
@@ -22,6 +22,16 @@ public class CommissionRequestRepository:ICommissionRequestRepository
     public CommissionRequest GetById(int id)
     {
         return _dbContext.CommissionRequests.Find(id)!;
+    }
+
+    public IEnumerable<CommissionRequest> GetAllBySenderId(int senderId)
+    {
+        return _dbContext.CommissionRequests.Where(commissionRequest => commissionRequest.SenderId == senderId);
+    }
+
+    public IEnumerable<CommissionRequest> GetAllByReceiverId(int receiverId)
+    {
+        return _dbContext.CommissionRequests.Where(commissionRequest => commissionRequest.ReceiverId == receiverId);
     }
 
     public void Update(CommissionRequest commissionRequest)

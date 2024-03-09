@@ -1,7 +1,8 @@
 ﻿using System.Runtime.InteropServices;
 using ArtworkSharingPlatform.DataTransferLayer;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
-using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.CommissionRequest;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.Commission;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Response.Commission;
 using ArtworkSharingPlatform.Domain.Entities.Artworks;
 
 using ArtworkSharingPlatform.Domain.Entities.Messages;
@@ -26,6 +27,7 @@ namespace ArtworkSharingPlatform.Application.Helpers
                 .ReverseMap();
             CreateMap<Message, MessageDTO>();
             CreateCommissionRequestToCommissionEntityMap();
+            CommissionEntityToCommissionDTOMap();
         }
 
 
@@ -68,6 +70,44 @@ namespace ArtworkSharingPlatform.Application.Helpers
                 .ForMember(dest => dest.CommissionImages,
                 opt => opt.Ignore()
             );
+        }
+
+        private void CommissionEntityToCommissionDTOMap()
+        {
+            CreateMap<CommissionRequest, CommissionDTO>()
+                .ForMember(dest => dest.MinPrice,
+                    opt => opt.MapFrom(
+                        src => src.MinPrice
+                    ))
+                .ForMember(dest => dest.MaxPrice,
+                    opt => opt.MapFrom(
+                        src => src.MaxPrice
+                    ))
+                .ForMember(dest => dest.RequestDescription,
+                    opt => opt.MapFrom(
+                        src => src.RequestDescription
+                    ))
+                .ForMember(dest => dest.NotAcceptedReason,
+                    opt => opt.Ignore()
+                )
+                .ForMember(dest => dest.RequestDate,
+                    opt => opt.Ignore()
+                )
+                .ForMember(dest => dest.IsProgressStatus,
+                    opt => opt.Ignore()
+                )
+                .ForMember(dest => dest.SenderName,
+                    opt => opt.Ignore()
+                )
+                .ForMember(dest => dest.ReceiverName,
+                    opt => opt.Ignore()
+                )
+                .ForMember(dest => dest.GenreName,
+                    opt => opt.Ignore()
+                )
+                .ForMember(dest => dest.CommissionStatus,
+                    opt => opt.Ignore()
+                );
         }
     }
 }

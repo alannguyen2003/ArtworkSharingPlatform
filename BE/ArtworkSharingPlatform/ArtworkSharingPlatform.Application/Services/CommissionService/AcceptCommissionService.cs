@@ -1,6 +1,7 @@
 ﻿using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
-using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.CommissionRequest;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.Commission;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Response.Commission;
 using ArtworkSharingPlatform.Domain.Common.Enum;
 using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Domain.Entities.Users;
@@ -27,7 +28,7 @@ public class AcceptCommissionService
         _commissionRequestRepository = repository;
     }
 
-    public CommissionServiceResponse Accept(AcceptCommissionRequestDTO acceptCommissionRequestDto)
+    public CommissionServiceResponseDTO Accept(AcceptCommissionRequestDTO acceptCommissionRequestDto)
     {
         _acceptCommissionRequestDto = acceptCommissionRequestDto;
         GetCommissionRequestById();
@@ -68,9 +69,9 @@ public class AcceptCommissionService
         _commissionRequestRepository.Update(_commissionRequest);
     }
 
-    private CommissionServiceResponse ActualPriceNotWithinMinAndMaxPriceResult()
+    private CommissionServiceResponseDTO ActualPriceNotWithinMinAndMaxPriceResult()
     {
-        return new CommissionServiceResponse()
+        return new CommissionServiceResponseDTO()
         {
             Result = CommissionServiceEnum.FAILURE,
             Message =
@@ -79,9 +80,9 @@ public class AcceptCommissionService
         };
     }
 
-    private CommissionServiceResponse AcceptCommissionSuccessResult()
+    private CommissionServiceResponseDTO AcceptCommissionSuccessResult()
     {
-        return new CommissionServiceResponse()
+        return new CommissionServiceResponseDTO()
         {
             Result = CommissionServiceEnum.SUCCESS,
             Message = $"Successfully accepted the Commission " +

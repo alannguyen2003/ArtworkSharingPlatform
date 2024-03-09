@@ -1,6 +1,7 @@
 ﻿using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
-using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.CommissionRequest;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.Commission;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Response.Commission;
 using ArtworkSharingPlatform.Domain.Common.Enum;
 using ArtworkSharingPlatform.Domain.Entities.Artworks;
 using ArtworkSharingPlatform.Domain.Entities.Commissions;
@@ -26,7 +27,7 @@ public class CreateCommissionService
         _commissionStatusRepository = commissionStatusRepository;
         _mapper = mapper;
     }
-    public CommissionServiceResponse Create(CreateCommissionRequestDTO createCommissionRequestDto)
+    public CommissionServiceResponseDTO Create(CreateCommissionRequestDTO createCommissionRequestDto)
     {
         _createCommissionRequestDto = createCommissionRequestDto;
         MapCommissionRequestToCommissionEntity();
@@ -55,9 +56,9 @@ public class CreateCommissionService
         return _commissionStatusRepository.GetById(1);
     }
 
-    private CommissionServiceResponse CreateCommissionSuccessResult()
+    private CommissionServiceResponseDTO CreateCommissionSuccessResult()
     {
-        return new CommissionServiceResponse()
+        return new CommissionServiceResponseDTO()
         {
             Result = CommissionServiceEnum.SUCCESS,
             Message = $"Successfully added the Commission " +
