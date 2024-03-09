@@ -1,4 +1,5 @@
-﻿using ArtworkSharingPlatform.Domain.Entities.Users;
+﻿using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
+using ArtworkSharingPlatform.Domain.Entities.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,7 @@ namespace ArtworkSharingPlatform.Repository.Interfaces
         Task UpdateUserAdmin(User user);
         Task DeleteUserAdmin(User user);
         Task UpdateUserDetail(User user);
+        Task<string> ForgotPassword(string email);
+        Task ResetPassword(ResetPasswordDTO resetPasswordDTO);
     }
 }
