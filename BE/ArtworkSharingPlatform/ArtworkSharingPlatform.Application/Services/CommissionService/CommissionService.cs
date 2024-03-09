@@ -20,6 +20,7 @@ public class CommissionService : ICommissionService
     private RejectCommissionService? _rejectCommissionService;
     private GetAllSenderCommissionsService _getAllSenderCommissionsService;
     private GetAllReceiverCommissionsService _getAllReceiverCommissionsService;
+    private RequestProgressImageService _requestProgressImageService;
     private readonly ICommissionRequestRepository _commissionRequestRepository;
     private readonly ICommissionStatusRepository _commissionStatusRepository;
     private readonly IGenreRepository _genreRepository;
@@ -68,6 +69,16 @@ public class CommissionService : ICommissionService
         return Task.Run(() => _getAllReceiverCommissionsService.Get(receiverId));
     }
 
+    public CommissionServiceResponseDTO RequestProgressImageRequest(RequestProgressImageDTO requestProgressImageDto)
+    {
+        return _requestProgressImageService.Request(requestProgressImageDto);
+    }
+
+    public CommissionServiceResponseDTO RespondProgressImageRequest(RespondProgressImageDTO respondProgressImageDto)
+    {
+        return null;
+    }
+
     private void InitializeChildServices()
     {
         _createCommissionService = new CreateCommissionService(
@@ -86,5 +97,9 @@ public class CommissionService : ICommissionService
             _commissionRequestRepository, _userRepository, 
             _genreRepository, _commissionStatusRepository, _mapper
         );
+        _requestProgressImageService = new RequestProgressImageService(
+            _commissionRequestRepository
+            );
+
     }
 }

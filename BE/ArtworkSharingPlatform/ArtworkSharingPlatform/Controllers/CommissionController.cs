@@ -1,4 +1,5 @@
-﻿using ArtworkSharingPlatform.Application.Interfaces;
+﻿using ArtworkSharingHost.Extensions;
+using ArtworkSharingPlatform.Application.Interfaces;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.Commission;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response.Commission;
@@ -56,7 +57,7 @@ public class CommissionController : ControllerBase
     {
         
         var result = await _commissionService.GetAllSenderCommissions(senderId);
-        var clientResponse = await Task.Run(()=>ReturnStatusCodeToAsyncFunction(result));
+        var clientResponse = await Task.Run(()=>ReturnStatusCodeToEndpoint(result));
         return clientResponse;
     }
     [HttpGet("Receiver/GetAll/{receiverId}")]
@@ -70,8 +71,16 @@ public class CommissionController : ControllerBase
         }
         return StatusCode(CommissionServiceStatusCode.SUCCESS, result);
     }
+    [HttpPost("Sender/Request")]
+    public ActionResult RequestProgressImage([FromBody] RequestProgressImageDTO requestProgressImageDto)
+    {
+        requestProgressImageDto.UserId = User.GetUserId();
+        var result = _commissionService.RequestProgressImageRequest(requestProgressImageDto);
+        var clientResponse = ReturnStatusCodeToEndpoint(result);
+        return clientResponse;
+    }
 
-    private ObjectResult ReturnStatusCodeToAsyncFunction(CommissionServiceResponseDTO result)
+    private ObjectResult ReturnStatusCodeToEndpoint(CommissionServiceResponseDTO result)
     {
         if (result.Result == CommissionServiceEnum.FAILURE)
         {
