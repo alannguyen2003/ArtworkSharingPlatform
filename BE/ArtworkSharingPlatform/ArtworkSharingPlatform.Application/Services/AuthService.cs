@@ -53,16 +53,15 @@ namespace ArtworkSharingPlatform.Application.Services
 
         public async Task<string> GenerateTokenString(LoginDTO loginDTO)
         {
+            var user = await _userManager.FindByEmailAsync(loginDTO.Email);
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Email,loginDTO.Email),
                 new Claim(JwtRegisteredClaimNames.UniqueName,loginDTO.Email),
+                new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString())
             };
-
-            var user = await _userManager.FindByEmailAsync(loginDTO.Email);
             var roles = await _userManager.GetRolesAsync(user);
             claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
-
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("Jwt:Key").Value));
 
