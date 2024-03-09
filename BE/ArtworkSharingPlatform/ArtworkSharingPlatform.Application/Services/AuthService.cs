@@ -2,6 +2,7 @@
 using ArtworkSharingPlatform.DataTransferLayer;
 using ArtworkSharingPlatform.Domain.Entities.Users;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -36,6 +37,10 @@ namespace ArtworkSharingPlatform.Application.Services
                 PhoneNumber = registerBody.PhoneNumber,
                 Status = 1
             };
+            if (await IsPhoneExistAsync(user.PhoneNumber))
+            {
+                throw new Exception("Phone is exist");
+            }
             var result = await _userManager.CreateAsync(user, registerBody.Password);
             if (result.Succeeded)
             {
@@ -103,6 +108,12 @@ namespace ArtworkSharingPlatform.Application.Services
         public async Task<User> GetUserByEmail(string email)
         {
             return await _userManager.FindByEmailAsync(email);
+        }
+
+        public async Task<bool> IsPhoneExistAsync(string phone)
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == phone);
+            return user != null;
         }
     }
 }
