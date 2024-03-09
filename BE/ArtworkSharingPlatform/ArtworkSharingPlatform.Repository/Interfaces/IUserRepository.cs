@@ -11,5 +11,10 @@ namespace ArtworkSharingPlatform.Repository.Interfaces
     {
         Task<User> GetUserById(int id);
         User GetById(int id);
+        IQueryable<User> GetAll();
+        Task CreateUserAdmin(User user);
+        Task UpdateUserAdmin(User user);
+        Task DeleteUserAdmin(User user);
+        Task UpdateUserDetail(User user);
     }
 }
