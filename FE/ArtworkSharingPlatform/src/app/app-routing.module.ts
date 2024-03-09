@@ -12,6 +12,7 @@ import {ServerErrorComponent} from "./components/error/server-error/server-error
 import {ArtworkDetailComponent} from "./components/artwork/artwork-detail/artwork-detail.component";
 import {artworkDetailResolver} from "./_resolvers/artwork-detail.resolver";
 import {ArtistMessageComponent} from "./components/artist/artist-message/artist-message.component";
+import {ProfileEditComponent} from "./components/profile-edit/profile-edit.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -21,7 +22,8 @@ const routes: Routes = [
       {path: 'artist/messages', component: ArtistMessageComponent},
       {path: 'artist/pricing', component: PricingComponent},
       {path: 'artwork', component: ArtworkComponent},
-      {path: 'artwork/:id', component: ArtworkDetailComponent, resolve: {artwork: artworkDetailResolver}}
+      {path: 'artwork/:id', component: ArtworkDetailComponent, resolve: {artwork: artworkDetailResolver}},
+      {path: 'profile-edit', component: ProfileEditComponent}
     ]
   },
   {path: 'contact', component: ContactComponent},

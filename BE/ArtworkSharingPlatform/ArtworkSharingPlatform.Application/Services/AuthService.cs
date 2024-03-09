@@ -2,6 +2,7 @@
 using ArtworkSharingPlatform.DataTransferLayer;
 using ArtworkSharingPlatform.Domain.Entities.Users;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -36,6 +37,10 @@ namespace ArtworkSharingPlatform.Application.Services
                 PhoneNumber = registerBody.PhoneNumber,
                 Status = 1
             };
+            if (await IsPhoneExistAsync(user.PhoneNumber))
+            {
+                throw new Exception("Phone is exist");
+            }
             var result = await _userManager.CreateAsync(user, registerBody.Password);
             if (result.Succeeded)
             {
@@ -57,16 +62,15 @@ namespace ArtworkSharingPlatform.Application.Services
 
         public async Task<string> GenerateTokenString(LoginDTO loginDTO)
         {
+            var user = await _userManager.FindByEmailAsync(loginDTO.Email);
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Email,loginDTO.Email),
                 new Claim(JwtRegisteredClaimNames.UniqueName,loginDTO.Email),
+                new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString())
             };
-
-            var user = await _userManager.FindByEmailAsync(loginDTO.Email);
             var roles = await _userManager.GetRolesAsync(user);
             claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
-
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("Jwt:Key").Value));
 
@@ -103,6 +107,12 @@ namespace ArtworkSharingPlatform.Application.Services
         public async Task<User> GetUserByEmail(string email)
         {
             return await _userManager.FindByEmailAsync(email);
+        }
+
+        public async Task<bool> IsPhoneExistAsync(string phone)
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == phone);
+            return user != null;
         }
     }
 }

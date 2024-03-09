@@ -1,4 +1,5 @@
-﻿using ArtworkSharingPlatform.Domain.Entities.Users;
+﻿using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
+using ArtworkSharingPlatform.Domain.Entities.Users;
 using ArtworkSharingPlatform.Domain.Migrations;
 using ArtworkSharingPlatform.Repository.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -60,6 +62,10 @@ namespace ArtworkSharingPlatform.Repository.Repository
                 if (u == null)
                 {
                     string password = "Pa$$w0rd";
+                    if(await IsPhoneExistAsync(user.PhoneNumber))
+                    {
+                        throw new Exception("Phone is exist");
+                    }
                     await _userManager.CreateAsync(user, password);
                     /*await _userManager.SetUserNameAsync(user, user.Email);*/
                 }
@@ -85,6 +91,10 @@ namespace ArtworkSharingPlatform.Repository.Repository
                     u.Name = user.Name;
                     u.Email = user.Email;
                     u.PhoneNumber = user.PhoneNumber;
+                    if (await IsPhoneExistAsync(u.PhoneNumber))
+                    {
+                        throw new Exception("Phone is exist");
+                    }
                     u.UserRoles = user.UserRoles;
                     u.Status = user.Status;
                     u.RemainingCredit = user.RemainingCredit;
@@ -133,6 +143,10 @@ namespace ArtworkSharingPlatform.Repository.Repository
                     u.Name = user.Name;
                     u.Email = user.Email;
                     u.PhoneNumber = user.PhoneNumber;
+                    if (await IsPhoneExistAsync(u.PhoneNumber))
+                    {
+                        throw new Exception("Phone is exist");
+                    }
                     await _userManager.UpdateAsync(u);
                 }
                 else
@@ -145,6 +159,48 @@ namespace ArtworkSharingPlatform.Repository.Repository
                 throw new Exception(ex.Message);
             }
         }
-    }
 
+        public async Task<string> ForgotPassword(string email)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(email);
+                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                return code;
+            }catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public async Task ResetPassword(ResetPasswordDTO resetPasswordDTO)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(resetPasswordDTO.Email);
+                if (user == null)
+                {
+                    throw new Exception("User cannot be found");
+                }
+                if(resetPasswordDTO.Password != resetPasswordDTO.ConfirmPassword)
+                {
+                    throw new Exception("Confirm password must match with password");
+                }
+                var result = await _userManager.ResetPasswordAsync(user, resetPasswordDTO.Code, resetPasswordDTO.Password);
+                if (!result.Succeeded)
+                {
+                    throw new Exception("Password reset failed: " + result.Errors.FirstOrDefault()?.Description);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<bool> IsPhoneExistAsync(string phone)
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == phone);
+            return user != null;
+        }
+    }
 }
