@@ -1,4 +1,5 @@
-﻿using ArtworkSharingPlatform.Domain.Entities.Users;
+﻿using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
+using ArtworkSharingPlatform.Domain.Entities.Users;
 using ArtworkSharingPlatform.Domain.Migrations;
 using ArtworkSharingPlatform.Repository.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -145,6 +146,42 @@ namespace ArtworkSharingPlatform.Repository.Repository
                 throw new Exception(ex.Message);
             }
         }
-    }
 
+        public async Task<string> ForgotPassword(string email)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(email);
+                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                return code;
+            }catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public async Task ResetPassword(ResetPasswordDTO resetPasswordDTO)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(resetPasswordDTO.Email);
+                if (user == null)
+                {
+                    throw new Exception("User cannot be found");
+                }
+                if(resetPasswordDTO.Password != resetPasswordDTO.ConfirmPassword)
+                {
+                    throw new Exception("Confirm password must match with password");
+                }
+                var result = await _userManager.ResetPasswordAsync(user, resetPasswordDTO.Code, resetPasswordDTO.Password);
+                if (!result.Succeeded)
+                {
+                    throw new Exception("Password reset failed: " + result.Errors.FirstOrDefault()?.Description);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+    }
 }
