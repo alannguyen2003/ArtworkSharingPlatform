@@ -23,34 +23,22 @@ public class CommissionController : ControllerBase
     public ActionResult Create([FromBody] CreateCommissionRequestDTO requestDto)
     {
         var result = _commissionService.CreateCommission(requestDto);
-        if (result.Result == CommissionServiceEnum.FAILURE)
-        {
-            return StatusCode(CommissionServiceStatusCode.INTERNAL_SERVER_ERROR,
-                result.Message);
-        }
-        return StatusCode(CommissionServiceStatusCode.SUCCESS, result.Message);
+        var clientResponse = ReturnStatusCodeToEndpoint(result);
+        return clientResponse;
     }
     [HttpPost("Accept")]
     public ActionResult Accept([FromBody] AcceptCommissionRequestDTO requestDto)
     {
         var result = _commissionService.AcceptCommission(requestDto);
-        if (result.Result == CommissionServiceEnum.FAILURE)
-        {
-            return StatusCode(CommissionServiceStatusCode.INTERNAL_SERVER_ERROR,
-                result.Message);
-        }
-        return StatusCode(CommissionServiceStatusCode.SUCCESS, result.Message);
+        var clientResponse = ReturnStatusCodeToEndpoint(result);
+        return clientResponse;
     }
     [HttpPost("Reject")]
     public ActionResult Reject([FromBody] RejectCommissionRequestDTO requestDto)
     {
         var result = _commissionService.RejectCommission(requestDto);
-        if (result.Result == CommissionServiceEnum.FAILURE)
-        {
-            return StatusCode(CommissionServiceStatusCode.INTERNAL_SERVER_ERROR,
-                result.Message);
-        }
-        return StatusCode(CommissionServiceStatusCode.SUCCESS, result.Message);
+        var clientResponse = ReturnStatusCodeToEndpoint(result);
+        return clientResponse;
     }
     [HttpGet("Sender/GetAll/{senderId}")]
     public async Task<ActionResult> GetAllBySenderId([FromRoute] int senderId)
@@ -64,18 +52,22 @@ public class CommissionController : ControllerBase
     public async Task<ActionResult> GetAllByReceiverId([FromRoute] int receiverId )
     {
         var result = await _commissionService.GetAllReceiverCommissions(receiverId);
-        if (result.Result == CommissionServiceEnum.FAILURE)
-        {
-            return StatusCode(CommissionServiceStatusCode.INTERNAL_SERVER_ERROR,
-                result.Message);
-        }
-        return StatusCode(CommissionServiceStatusCode.SUCCESS, result);
+        var clientResponse = ReturnStatusCodeToEndpoint(result);
+        return clientResponse;
     }
     [HttpPost("Sender/Request")]
     public ActionResult RequestProgressImage([FromBody] RequestProgressImageDTO requestProgressImageDto)
     {
-        requestProgressImageDto.UserId = User.GetUserId();
+        requestProgressImageDto.SenderId = User.GetUserId();
         var result = _commissionService.RequestProgressImageRequest(requestProgressImageDto);
+        var clientResponse = ReturnStatusCodeToEndpoint(result);
+        return clientResponse;
+    }
+    [HttpPost("Receiver/Respond")]
+    public ActionResult RespondProgressImage([FromBody] RespondProgressImageDTO respondProgressImageDto)
+    {
+        respondProgressImageDto.ReceiverId = User.GetUserId();
+        var result = _commissionService.RespondProgressImageRequest(respondProgressImageDto);
         var clientResponse = ReturnStatusCodeToEndpoint(result);
         return clientResponse;
     }

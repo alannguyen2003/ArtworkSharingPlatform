@@ -21,12 +21,12 @@ public class CommissionService : ICommissionService
     private GetAllSenderCommissionsService _getAllSenderCommissionsService;
     private GetAllReceiverCommissionsService _getAllReceiverCommissionsService;
     private RequestProgressImageService _requestProgressImageService;
+    private RespondProgressImageService _respondProgressImageService;
     private readonly ICommissionRequestRepository _commissionRequestRepository;
     private readonly ICommissionStatusRepository _commissionStatusRepository;
     private readonly IGenreRepository _genreRepository;
     private readonly IUserRepository _userRepository;
-    private CreateCommissionRequestDTO? _createCommissionRequestDto;
-    private CommissionRequest? _commissionRequest;
+    private readonly ICommissionImagesRepository _commissionImagesRepository;
     private readonly IMapper _mapper;
 
     public CommissionService(
@@ -34,13 +34,15 @@ public class CommissionService : ICommissionService
         IMapper mapper,
         ICommissionStatusRepository commissionStatusRepository,
         IUserRepository userRepository,
-        IGenreRepository genreRepository)
+        IGenreRepository genreRepository,
+        ICommissionImagesRepository commissionImagesRepository)
     {
         _commissionRequestRepository = repository;
         _mapper = mapper;
         _commissionStatusRepository = commissionStatusRepository;
         _userRepository = userRepository;
         _genreRepository = genreRepository;
+        _commissionImagesRepository = commissionImagesRepository;
         InitializeChildServices();
     }
 
@@ -76,7 +78,7 @@ public class CommissionService : ICommissionService
 
     public CommissionServiceResponseDTO RespondProgressImageRequest(RespondProgressImageDTO respondProgressImageDto)
     {
-        return null;
+        return _respondProgressImageService.Respond(respondProgressImageDto);
     }
 
     private void InitializeChildServices()
@@ -90,16 +92,19 @@ public class CommissionService : ICommissionService
         _rejectCommissionService = new RejectCommissionService(
             _commissionRequestRepository);
         _getAllSenderCommissionsService = new GetAllSenderCommissionsService(
-            _commissionRequestRepository, _userRepository, 
+            _commissionRequestRepository, _userRepository,
             _genreRepository, _commissionStatusRepository, _mapper
         );
         _getAllReceiverCommissionsService = new GetAllReceiverCommissionsService(
-            _commissionRequestRepository, _userRepository, 
+            _commissionRequestRepository, _userRepository,
             _genreRepository, _commissionStatusRepository, _mapper
         );
         _requestProgressImageService = new RequestProgressImageService(
             _commissionRequestRepository
-            );
-
+        );
+        _respondProgressImageService = new RespondProgressImageService(
+            _commissionRequestRepository,
+            _commissionImagesRepository
+        );
     }
 }

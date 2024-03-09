@@ -39,7 +39,6 @@ public class GetAllSenderCommissionsService
     public async Task<CommissionServiceResponseDTO> Get(int senderId)
     {
         _senderId = senderId;
-
         await GetAllCommissionRequestsBySenderId();
         await MapCommissionRequestsToCommissionDTOs();
         return GetAllCommissionsSuccessResult();

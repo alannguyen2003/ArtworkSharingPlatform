@@ -22,8 +22,8 @@ public class RequestProgressImageService
     {
         _requestProgressImageDto = requestProgressImageDto;
         GetCommissionRequestById();
-        if (!IsSenderValid()) return InvalidSenderResult();
         if (!DoesCommissionRequestExist()) return CommissionRequestNotFoundResult();
+        if (!IsSenderValid()) return InvalidSenderResult();
         SetIsProgressStatusTrue();
         return SuccessRequestProgressImageResult();
     }
@@ -35,7 +35,7 @@ public class RequestProgressImageService
 
     private bool IsSenderValid()
     {
-        int userId = _requestProgressImageDto.UserId;
+        int userId = _requestProgressImageDto.SenderId;
         if (userId == 0 || userId == null ||
             userId != _commissionRequest.SenderId)
             return false;
@@ -57,8 +57,8 @@ public class RequestProgressImageService
         return new CommissionServiceResponseDTO()
         {
             Result = CommissionServiceEnum.SUCCESS,
-            Message = $"Sender with Id = {_commissionRequest.SenderId}" +
-                      $"has successfully requested progress image for receiver" +
+            Message = $"Sender with Id = {_commissionRequest.SenderId} " +
+                      $"has successfully requested progress image for receiver " +
                       $"with Id = {_commissionRequest.ReceiverId}"
         };
     }
@@ -75,7 +75,7 @@ public class RequestProgressImageService
         return new CommissionServiceResponseDTO()
         {
             Result = CommissionServiceEnum.FAILURE,
-            Message = $"Sender with Id = {_requestProgressImageDto.UserId} is not allowed to" +
+            Message = $"Sender with Id = {_requestProgressImageDto.SenderId} is not allowed to" +
                       $" modify this progress image request."
         };
     }
