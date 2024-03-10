@@ -6,6 +6,7 @@ using ArtworkSharingPlatform.Repository.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace ArtworkSharingPlatform.Application.Services
 {
@@ -50,64 +51,71 @@ namespace ArtworkSharingPlatform.Application.Services
 
         public async Task UserLike(ArtworkLikeDTO like)
 		{
-			try
-			{
+
 				var artworkLike = _mapper.Map<Like>(like);
 
 				await _artworkRepository.UserLike(artworkLike);
-			} catch (Exception ex) { }
+
 		}
 
         public async Task UserRating(ArtworkRatingDTO rating)
         {
-            try
-            {
+
                 var artworkRate = _mapper.Map<Rating>(rating);
 
                 await _artworkRepository.UserRating(artworkRate);
-            }
-            catch (Exception ex) { }
+
         }
 
         public async Task AddArtwork(ArtworkDTO _artwork)
         {
-            try
-            {
+
                 var artwork= _mapper.Map<Artwork>(_artwork);
 
                 await _artworkRepository.AddArtwork(artwork);
-            }
-            catch (Exception ex) { }
+
         }
 
         public async Task DeleteArtwork(int artworkId)
         {
-            try
-            {
+
                 await _artworkRepository.DeleteArtwork(artworkId);
-            }
-            catch (Exception ex) { }
+
         }
         public async Task UpdateArtwork(ArtworkDTO _artwork)
         {
-            try
-            {
+
                 var artwork = _mapper.Map<Artwork>(_artwork);
 
                 await _artworkRepository.UpdateArtwork(artwork);
-            }
-            catch (Exception ex) { }
+
         }
 
         public async Task UserFollow(UserFollowDTO follow)
         {
-            try
-            {
+
                 var artworkFollow = _mapper.Map<Follow>(follow);
 
                 await _artworkRepository.UserFollow(artworkFollow);
+
+        }
+
+        public async Task<IEnumerable<ArtworkLikeToShowDTO>> GetArtworksLike(UserParams userParams)
+        {
+            IList<ArtworkLikeToShowDTO> artworkLikeDTOList = new List<ArtworkLikeToShowDTO>();
+            var artworks = await _artworkRepository.GetArtworksAsync();
+
+
+            foreach (var artwork in artworks)
+            {
+                var artworkLikeDTO = new ArtworkLikeToShowDTO
+                {
+                    ArtworkId = artwork.Id,
+                    IsLiked = await _artworkRepository.HasUserLikedArtwork(userParams.CurrentUserId, artwork.Id)
+                };
+                artworkLikeDTOList.Add(artworkLikeDTO);
             }
-            catch (Exception ex) { }
+            return artworkLikeDTOList;
         }
     }
 }

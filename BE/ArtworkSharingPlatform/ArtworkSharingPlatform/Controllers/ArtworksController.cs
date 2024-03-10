@@ -49,5 +49,55 @@ namespace ArtworkSharingHost.Controllers
 			}
 			return Ok(artwork);
 		}
+
+        [HttpPost("like")]
+        public async Task<IActionResult> UserLike([FromBody] ArtworkLikeDTO like)
+        {
+            await _artworkService.UserLike(like);
+            return Ok(new { message = "Artwork liked successfully." });
+        }
+
+        [HttpPost("rating")]
+        public async Task<IActionResult> UserRating([FromBody] ArtworkRatingDTO rating)
+        {
+            await _artworkService.UserRating(rating);
+            return Ok(new { message = "Rating submitted successfully." });
+        }
+
+        [HttpPost("follow")]
+        public async Task<IActionResult> UserFollow([FromBody] UserFollowDTO follow)
+        {
+            await _artworkService.UserFollow(follow);
+            return Ok(new { message = "User followed successfully." });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddArtwork([FromBody] ArtworkDTO artwork)
+        {
+            await _artworkService.AddArtwork(artwork);
+            return CreatedAtAction(nameof(GetArtwork), new { id = artwork.Id }, new { message = "Artwork added successfully.", artwork });
+        }
+
+        [HttpDelete("{artworkId}")]
+        public async Task<IActionResult> DeleteArtwork(int artworkId)
+        {
+            await _artworkService.DeleteArtwork(artworkId);
+            return Ok(new { message = "Artwork deleted successfully." });
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateArtwork([FromBody] ArtworkDTO artwork)
+        {
+            await _artworkService.UpdateArtwork(artwork);
+            return Ok(new { message = "Artwork updated successfully." });
+        }
+
+        [HttpGet("likes")]
+        public async Task<ActionResult<IEnumerable<ArtworkLikeToShowDTO>>> GetArtworksLike([FromQuery] UserParams userParams)
+        {
+            var artworksLikes = await _artworkService.GetArtworksLike(userParams);
+            return Ok(artworksLikes);
+        }
+
     }
 }
