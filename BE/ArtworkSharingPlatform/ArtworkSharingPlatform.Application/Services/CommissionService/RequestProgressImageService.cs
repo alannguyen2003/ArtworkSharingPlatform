@@ -1,6 +1,6 @@
 ﻿using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.Commission;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response.Commission;
-using ArtworkSharingPlatform.Domain.Common.Enum;
+using ArtworkSharingPlatform.Domain.Common.Constants;
 using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -12,7 +12,7 @@ public class RequestProgressImageService
     private readonly ICommissionRequestRepository _commissionRequestRepository;
     private CommissionRequest _commissionRequest;
     private RequestProgressImageDTO _requestProgressImageDto;
-    
+
     public RequestProgressImageService(ICommissionRequestRepository commissionRequestRepository)
     {
         _commissionRequestRepository = commissionRequestRepository;
@@ -22,8 +22,6 @@ public class RequestProgressImageService
     {
         try
         {
-
-
             _requestProgressImageDto = requestProgressImageDto;
             GetCommissionRequestById();
             if (!DoesCommissionRequestExist()) return CommissionRequestNotFoundResult();
@@ -56,43 +54,52 @@ public class RequestProgressImageService
         if (_commissionRequest == null) return false;
         return true;
     }
+
     private void SetIsProgressStatusTrue()
     {
         _commissionRequest.IsProgressStatus = 1;
         _commissionRequestRepository.Update(_commissionRequest);
     }
+
     private CommissionServiceResponseDTO SuccessRequestProgressImageResult()
     {
         return new CommissionServiceResponseDTO()
         {
-            Result = CommissionServiceEnum.SUCCESS,
+            Result = CommissionServiceResult.SUCCESS,
+            StatusCode = CommissionServiceStatusCode.SUCCESS,
             Message = $"Sender with Id = {_commissionRequest.SenderId} " +
                       $"has successfully requested progress image for receiver " +
                       $"with Id = {_commissionRequest.ReceiverId}"
         };
     }
+
     private CommissionServiceResponseDTO CommissionRequestNotFoundResult()
     {
         return new CommissionServiceResponseDTO()
         {
-            Result = CommissionServiceEnum.FAILURE,
+            Result = CommissionServiceResult.COMMISSION_REQUEST_NOT_FOUND,
+            StatusCode = CommissionServiceStatusCode.COMMISSION_REQUEST_NOT_FOUND,
             Message = $"The commission with Id = {_requestProgressImageDto.CommissionRequestId} is not found!"
         };
     }
+
     private CommissionServiceResponseDTO InvalidSenderResult()
     {
         return new CommissionServiceResponseDTO()
         {
-            Result = CommissionServiceEnum.FAILURE,
+            Result = CommissionServiceResult.INVALID_SENDER,
+            StatusCode = CommissionServiceStatusCode.INVALID_SENDER,
             Message = $"Sender with Id = {_requestProgressImageDto.SenderId} is not allowed to" +
                       $" modify this progress image request."
         };
     }
+
     private CommissionServiceResponseDTO InternalServerErrorResult(Exception e)
     {
         return new CommissionServiceResponseDTO()
         {
-            Result = CommissionServiceEnum.FAILURE,
+            Result = CommissionServiceResult.INTERNAL_SERVER_ERROR,
+            StatusCode = CommissionServiceStatusCode.INTERNAL_SERVER_ERROR,
             Message = e.Message
         };
     }

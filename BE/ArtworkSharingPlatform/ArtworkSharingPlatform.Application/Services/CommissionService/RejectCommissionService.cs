@@ -1,7 +1,7 @@
 ﻿using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.Commission;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response.Commission;
-using ArtworkSharingPlatform.Domain.Common.Enum;
+using ArtworkSharingPlatform.Domain.Common.Constants;
 using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Domain.Helpers;
 using ArtworkSharingPlatform.Repository.Interfaces;
@@ -31,7 +31,7 @@ public class RejectCommissionService
             if (!DoesCommissionRequestExist()) return CommissionRequestNotFoundResult();
             if (!IsReceiverValid()) return InvalidReceiverResult();
             if (!IsReceiverAnArtist()) return NotAnArtistResult();
-            if (IsNotAcceptedReasonEmpty()) return NotAcceptedReasonEmptyResult();
+            if (IsNotAcceptedReasonEmpty()) return MissingNotAcceptedReasonResult();
             ChangeCommissionStatus();
             InsertNotAcceptedReason();
             SaveChanges();
@@ -93,23 +93,26 @@ public class RejectCommissionService
         _commissionRequestRepository.Update(_commissionRequest);
     }
 
-    private CommissionServiceResponseDTO NotAcceptedReasonEmptyResult()
-    {
-        return new CommissionServiceResponseDTO()
-        {
-            Result = CommissionServiceEnum.FAILURE,
-            Message = $"The not accepted reason can't be empty. Please try again."
-        };
-    }
 
     private CommissionServiceResponseDTO RejectCommissionSuccessResult()
     {
         return new CommissionServiceResponseDTO()
         {
-            Result = CommissionServiceEnum.SUCCESS,
+            Result = CommissionServiceResult.SUCCESS,
+            StatusCode = CommissionServiceStatusCode.SUCCESS,
             Message =
                 $"Successfully rejected the commission with Id = {_rejectCommissionRequestDto.CommissionRequestId}" +
                 $" and reason = {_rejectCommissionRequestDto.NotAcceptedReason}"
+        };
+    }
+
+    private CommissionServiceResponseDTO MissingNotAcceptedReasonResult()
+    {
+        return new CommissionServiceResponseDTO()
+        {
+            Result = CommissionServiceResult.MISSING_NOT_ACCEPTED_REASON,
+            StatusCode = CommissionServiceStatusCode.MISSING_NOT_ACCEPTED_REASON,
+            Message = $"The not accepted reason can't be empty. Please try again."
         };
     }
 
@@ -117,7 +120,8 @@ public class RejectCommissionService
     {
         return new CommissionServiceResponseDTO()
         {
-            Result = CommissionServiceEnum.FAILURE,
+            Result = CommissionServiceResult.NOT_AN_ARTIST,
+            StatusCode = CommissionServiceStatusCode.NOT_AN_ARTIST,
             Message = $"The user with Id = {_rejectCommissionRequestDto.ReceiverId} " +
                       $"is not a valid Artist. Try selecting another person."
         };
@@ -127,7 +131,8 @@ public class RejectCommissionService
     {
         return new CommissionServiceResponseDTO()
         {
-            Result = CommissionServiceEnum.FAILURE,
+            Result = CommissionServiceResult.INVALID_RECEIVER,
+            StatusCode = CommissionServiceStatusCode.INVALID_RECEIVER,
             Message = $"Receiver with Id = {_rejectCommissionRequestDto.ReceiverId} is not allowed to" +
                       $" modify this progress image request."
         };
@@ -137,7 +142,8 @@ public class RejectCommissionService
     {
         return new CommissionServiceResponseDTO()
         {
-            Result = CommissionServiceEnum.FAILURE,
+            Result = CommissionServiceResult.COMMISSION_REQUEST_NOT_FOUND,
+            StatusCode = CommissionServiceStatusCode.COMMISSION_REQUEST_NOT_FOUND,
             Message = $"The commission with Id = {_rejectCommissionRequestDto.CommissionRequestId} is not found!"
         };
     }
@@ -146,7 +152,8 @@ public class RejectCommissionService
     {
         return new CommissionServiceResponseDTO()
         {
-            Result = CommissionServiceEnum.FAILURE,
+            Result = CommissionServiceResult.INTERNAL_SERVER_ERROR,
+            StatusCode = CommissionServiceStatusCode.INTERNAL_SERVER_ERROR,
             Message = e.Message
         };
     }

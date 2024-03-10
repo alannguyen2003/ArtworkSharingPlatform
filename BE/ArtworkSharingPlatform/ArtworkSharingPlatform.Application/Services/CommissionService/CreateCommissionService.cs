@@ -2,7 +2,7 @@
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.Commission;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response.Commission;
-using ArtworkSharingPlatform.Domain.Common.Enum;
+using ArtworkSharingPlatform.Domain.Common.Constants;
 using ArtworkSharingPlatform.Domain.Entities.Artworks;
 using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Domain.Entities.Users;
@@ -88,7 +88,8 @@ public class CreateCommissionService
     {
         return new CommissionServiceResponseDTO()
         {
-            Result = CommissionServiceEnum.SUCCESS,
+            Result = CommissionServiceResult.SUCCESS,
+            StatusCode = CommissionServiceStatusCode.SUCCESS,
             Message = $"Successfully added the Commission " +
                       $"from Sender with Id = {_createCommissionRequestDto.SenderId} " +
                       $"to Receiver with Id = {_createCommissionRequestDto.ReceiverId}"
@@ -99,7 +100,8 @@ public class CreateCommissionService
     {
         return new CommissionServiceResponseDTO()
         {
-            Result = CommissionServiceEnum.FAILURE,
+            Result = CommissionServiceResult.NOT_AN_AUDIENCE,
+            StatusCode = CommissionServiceStatusCode.NOT_AN_AUDIENCE,
             Message = $"The user with Id = {_createCommissionRequestDto.SenderId} " +
                       $"is not a valid Audience. Try logging in again as an Audience."
         };
@@ -109,7 +111,8 @@ public class CreateCommissionService
     {
         return new CommissionServiceResponseDTO()
         {
-            Result = CommissionServiceEnum.FAILURE,
+            Result = CommissionServiceResult.NOT_AN_ARTIST,
+            StatusCode = CommissionServiceStatusCode.NOT_AN_ARTIST,
             Message = $"The user with Id = {_createCommissionRequestDto.ReceiverId} " +
                       $"is not a valid Artist. Try selecting another person."
         };
@@ -119,7 +122,8 @@ public class CreateCommissionService
     {
         return new CommissionServiceResponseDTO()
         {
-            Result = CommissionServiceEnum.FAILURE,
+            Result = CommissionServiceResult.INTERNAL_SERVER_ERROR,
+            StatusCode = CommissionServiceStatusCode.INTERNAL_SERVER_ERROR,
             Message = e.Message
         };
     }

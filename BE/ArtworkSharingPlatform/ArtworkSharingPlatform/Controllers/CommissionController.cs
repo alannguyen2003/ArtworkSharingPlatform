@@ -3,7 +3,6 @@ using ArtworkSharingPlatform.Application.Interfaces;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.Commission;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response.Commission;
-using ArtworkSharingPlatform.Domain.Common.Enum;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ArtworkSharingHost.Controllers;
@@ -78,12 +77,7 @@ public class CommissionController : ControllerBase
 
     private ObjectResult ReturnStatusCodeToEndpoint(CommissionServiceResponseDTO result)
     {
-        if (result.Result == CommissionServiceEnum.FAILURE)
-        {
-            return StatusCode(CommissionServiceStatusCode.INTERNAL_SERVER_ERROR,
-                result.Message);
-        }
-        return StatusCode(CommissionServiceStatusCode.SUCCESS, result);
+        return StatusCode(result.StatusCode, result);
     }
 
 }

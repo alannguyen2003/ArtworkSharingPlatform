@@ -85,6 +85,10 @@ namespace ArtworkSharingPlatform.Application.Helpers
         private void CommissionEntityToCommissionDTOMap()
         {
             CreateMap<CommissionRequest, CommissionDTO>()
+                .ForMember(dest => dest.Id,
+                    opt => opt.MapFrom(
+                        src => src.Id
+                    ))
                 .ForMember(dest => dest.MinPrice,
                     opt => opt.MapFrom(
                         src => src.MinPrice
@@ -102,7 +106,8 @@ namespace ArtworkSharingPlatform.Application.Helpers
                         src => src.NotAcceptedReason)
                 )
                 .ForMember(dest => dest.RequestDate,
-                    opt => opt.Ignore()
+                    opt => opt.MapFrom(
+                        src => src.RequestDate)
                 )
                 .ForMember(dest => dest.IsProgressStatus,
                     opt => opt.MapFrom(

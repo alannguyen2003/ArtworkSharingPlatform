@@ -1,6 +1,6 @@
 ﻿using ArtworkSharingPlatform.DataTransferLayer.Payload.Response;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response.Commission;
-using ArtworkSharingPlatform.Domain.Common.Enum;
+using ArtworkSharingPlatform.Domain.Common.Constants;
 using ArtworkSharingPlatform.Domain.Entities.Artworks;
 using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Domain.Entities.Users;
@@ -40,8 +40,6 @@ public class GetAllSenderCommissionsService
     {
         try
         {
-
-
             _senderId = senderId;
             await GetAllCommissionRequestsBySenderId();
             if (!AreCommissionRequestsAvailable()) return NoCommissionsFoundResult();
@@ -82,25 +80,6 @@ public class GetAllSenderCommissionsService
         }
     }
 
-    private CommissionServiceResponseDTO GetAllCommissionsSuccessResult()
-    {
-        return new CommissionServiceResponseDTO()
-        {
-            Result = CommissionServiceEnum.SUCCESS,
-            Message = $"Successfully retrieved all commissions of Sender with Id = {_senderId} ",
-            ReturnData = _commissionDTOs.ToList()
-        };
-    }
-
-    private CommissionServiceResponseDTO NoCommissionsFoundResult()
-    {
-        return new CommissionServiceResponseDTO()
-        {
-            Result = CommissionServiceEnum.SUCCESS,
-            Message = $"No commissions found for Sender with Id = {_senderId} ",
-        };
-    }
-
 
     private async Task<string> GetSenderNameById(int senderId)
     {
@@ -130,11 +109,34 @@ public class GetAllSenderCommissionsService
     {
         _commissionDTOs = new List<CommissionDTO>();
     }
+
+    private CommissionServiceResponseDTO GetAllCommissionsSuccessResult()
+    {
+        return new CommissionServiceResponseDTO()
+        {
+            Result = CommissionServiceResult.SUCCESS,
+            StatusCode = CommissionServiceStatusCode.SUCCESS,
+            Message = $"Successfully retrieved all commissions of Sender with Id = {_senderId} ",
+            ReturnData = _commissionDTOs.ToList()
+        };
+    }
+
+    private CommissionServiceResponseDTO NoCommissionsFoundResult()
+    {
+        return new CommissionServiceResponseDTO()
+        {
+            Result = CommissionServiceResult.NO_COMMISSIONS_FOUND,
+            StatusCode = CommissionServiceStatusCode.NO_COMMISSIONS_FOUND,
+            Message = $"No commissions found for Sender with Id = {_senderId} ",
+        };
+    }
+
     private CommissionServiceResponseDTO InternalServerErrorResult(Exception e)
     {
         return new CommissionServiceResponseDTO()
         {
-            Result = CommissionServiceEnum.FAILURE,
+            Result = CommissionServiceResult.INTERNAL_SERVER_ERROR,
+            StatusCode = CommissionServiceStatusCode.INTERNAL_SERVER_ERROR,
             Message = e.Message
         };
     }

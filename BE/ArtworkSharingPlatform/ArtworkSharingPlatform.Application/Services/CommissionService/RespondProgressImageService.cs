@@ -1,6 +1,6 @@
 ﻿using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.Commission;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response.Commission;
-using ArtworkSharingPlatform.Domain.Common.Enum;
+using ArtworkSharingPlatform.Domain.Common.Constants;
 using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Repository.Interfaces;
 
@@ -12,7 +12,7 @@ public class RespondProgressImageService
     private readonly ICommissionImagesRepository _commissionImagesRepository;
     private CommissionRequest _commissionRequest;
     private RespondProgressImageDTO _respondProgressImageDto;
-    
+
 
     public RespondProgressImageService(ICommissionRequestRepository commissionRequestRepository,
         ICommissionImagesRepository commissionImagesRepository)
@@ -44,6 +44,7 @@ public class RespondProgressImageService
     {
         _commissionRequest = _commissionRequestRepository.GetById(_respondProgressImageDto.CommissionRequestId);
     }
+
     private bool IsReceiverValid()
     {
         int userId = _respondProgressImageDto.ReceiverId;
@@ -52,11 +53,13 @@ public class RespondProgressImageService
             return false;
         return true;
     }
+
     private bool CommissionRequestExists()
     {
         if (_commissionRequest == null) return false;
         return true;
     }
+
     private void SetIsProgressStatusFalse()
     {
         _commissionRequest.IsProgressStatus = 0;
@@ -67,6 +70,7 @@ public class RespondProgressImageService
     {
         _commissionImagesRepository.DeleteAllByCommissionRequestId(_commissionRequest.Id);
     }
+
     private void AddProgressImagesToDb()
     {
         foreach (string url in _respondProgressImageDto.ImageUrls)
@@ -78,45 +82,52 @@ public class RespondProgressImageService
                 PublicId = null,
                 CreatedDate = DateTime.Now,
                 CommissionRequestId = _commissionRequest.Id
-
             };
             _commissionImagesRepository.Insert(image);
         }
     }
+
     private CommissionServiceResponseDTO CommissionRequestNotFoundResult()
     {
         return new CommissionServiceResponseDTO()
         {
-            Result = CommissionServiceEnum.FAILURE,
+            Result = CommissionServiceResult.COMMISSION_REQUEST_NOT_FOUND,
+            StatusCode = CommissionServiceStatusCode.COMMISSION_REQUEST_NOT_FOUND,
             Message = $"The commission with Id = {_respondProgressImageDto.CommissionRequestId} is not found!"
+        };
+    }
+
+    private CommissionServiceResponseDTO SuccessRespondProgressImageResult()
+    {
+        return new CommissionServiceResponseDTO()
+        {
+            Result = CommissionServiceResult.SUCCESS,
+            StatusCode = CommissionServiceStatusCode.SUCCESS,
+            Message = $"Receiver with Id = {_commissionRequest.ReceiverId} " +
+                      $"has successfully responded progress image(s) for sender " +
+                      $"with Id = {_commissionRequest.SenderId}"
         };
     }
     private CommissionServiceResponseDTO InvalidReceiverResult()
     {
         return new CommissionServiceResponseDTO()
         {
-            Result = CommissionServiceEnum.FAILURE,
+            Result = CommissionServiceResult.INVALID_RECEIVER,
+            StatusCode = CommissionServiceStatusCode.INVALID_RECEIVER,
             Message = $"Receiver with Id = {_respondProgressImageDto.ReceiverId} is not allowed to" +
                       $" modify this progress image request."
         };
     }
-    private CommissionServiceResponseDTO SuccessRespondProgressImageResult()
-    {
-        return new CommissionServiceResponseDTO()
-        {
-            Result = CommissionServiceEnum.SUCCESS,
-            Message = $"Receiver with Id = {_commissionRequest.ReceiverId} " +
-                      $"has successfully responded progress image(s) for sender " +
-                      $"with Id = {_commissionRequest.SenderId}"
-        };
-    }
+
+    
+
     private CommissionServiceResponseDTO InternalServerErrorResult(Exception e)
     {
         return new CommissionServiceResponseDTO()
         {
-            Result = CommissionServiceEnum.FAILURE,
+            Result = CommissionServiceResult.INTERNAL_SERVER_ERROR,
+            StatusCode = CommissionServiceStatusCode.INTERNAL_SERVER_ERROR,
             Message = e.Message
         };
     }
-    
 }
