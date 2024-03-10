@@ -54,27 +54,5 @@ namespace ArtworkSharingHost.Controllers
             }
             return Ok();
         }
-
-        [HttpPost("ForgotPassword")]
-        public async Task<IActionResult> ForgotPassword([FromBody] string email)
-        {
-            var code = await _userService.ForgotPassword(email);
-            var token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            return Ok(token);
-        }
-
-        [HttpPost("ResetPassword")]
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDTO resetPasswordDTO)
-        {
-            var resetPassword = new ResetPasswordDTO
-            {
-                Email = resetPasswordDTO.Email,
-                Password = resetPasswordDTO.Password,
-                ConfirmPassword = resetPasswordDTO.ConfirmPassword,
-                Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(resetPasswordDTO.Code))
-            };
-            await _userService.ResetPassword(resetPassword);
-            return Ok("Reset password successfully. Return to login");
-        }
     }
 }

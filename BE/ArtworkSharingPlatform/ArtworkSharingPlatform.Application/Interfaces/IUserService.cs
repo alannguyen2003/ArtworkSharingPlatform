@@ -14,7 +14,5 @@ namespace ArtworkSharingPlatform.Application.Interfaces
         Task UpdateUserAdmin(User user);
         Task DeleteUserAdmin(User user);
         Task UpdateUserDetail(User user);
-        Task<string> ForgotPassword(string email);
-        Task ResetPassword(ResetPasswordDTO resetPasswordDTO);
     }
 }
