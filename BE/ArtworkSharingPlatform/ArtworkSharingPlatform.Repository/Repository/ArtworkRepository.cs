@@ -31,9 +31,6 @@ namespace ArtworkSharingPlatform.Repository.Repository
         }
         public async Task UserLike(Like like)
         {
-            try
-            {                
-                
                 var isLike = await _context.Likes.AnyAsync(a => a.Artwork.Equals(like.Artwork) && a.User.Equals(like.User));
                 if (like != null && !isLike)
                 {
@@ -47,16 +44,10 @@ namespace ArtworkSharingPlatform.Repository.Repository
                     _context.Likes.AddAsync(like);
                     await _context.SaveChangesAsync();
                 }
-            } catch (Exception ex) 
-            {
-                
-            }
         }
 
         public async Task UserFollow(Follow follow)
         {
-            try
-            {
                 //var index = await _context.Likes.Where(a => a.Artwork.Equals(like.Artwork) && a.User.Equals(like.User)).FirstOrDefaultAsync();
                 var isFollow = await _context.Follows.AnyAsync(a => a.Artist.Equals(follow.Artist) && a.Follower.Equals(follow.Follower));
                 if (follow != null && !isFollow)
@@ -70,17 +61,9 @@ namespace ArtworkSharingPlatform.Repository.Repository
                     _context.Follows.AddAsync(follow);
                     await _context.SaveChangesAsync();
                 }
-            }
-            catch (Exception ex)
-            {
-
-            }
         }
         public async Task UserRating(Rating rate)
-        {
-            try
-            {
-                
+        {                
                 var isRate = await _context.Ratings.FirstOrDefaultAsync(a => a.Artwork.Equals(rate.Artwork) && a.User.Equals(rate.User));
                 if (rate != null && isRate != null)
                 {
@@ -94,60 +77,43 @@ namespace ArtworkSharingPlatform.Repository.Repository
                     _context.Ratings.AddAsync(rate);
                     await _context.SaveChangesAsync();
                 }
-            } catch (Exception ex)
-            {
 
-            }
         }
 
         public async Task UserComment (Comment comment)
         {
-            try
-            {                
+                
                 if (comment != null)
                 {
                     _context.Comments.AddAsync(comment);
                     await _context.SaveChangesAsync();
                 }
-            } catch (Exception ex)
-            {
 
-            }
         }
 
         public async Task<IEnumerable<Artwork>?> SearchArtwork(string search)
         {
-            try
-            {
+
                 var result = _context.Artworks.Where(x => x.Title.Equals(search.ToLower())).ToList();
                 return result;
-            } catch (Exception ex) 
-            {
-                return null;
-            }
+
         }
 
         public async Task AddArtwork(Artwork artwork)
         {
-            try
-            {
+
                 if (artwork != null)
                 {
                     _context.Artworks.AddAsync(artwork);
 
                     await _context.SaveChangesAsync();
                 }
-            }
-            catch (Exception ex)
-            {
-                
-            }
+            
+
         }
 
         public async Task DeleteArtwork(int artworkId)
         {
-            try
-            {
                 if (artworkId != null)
                 {
                     var index = await _context.Artworks.FindAsync(artworkId);
@@ -157,17 +123,11 @@ namespace ArtworkSharingPlatform.Repository.Repository
 
                     await _context.SaveChangesAsync();
                 }
-            }
-            catch (Exception ex)
-            {
 
-            }
         }
 
         public async Task UpdateArtwork(Artwork artwork)
         {
-            try
-            {
                 if (artwork != null)
                 {
                     var index = await _context.Artworks.FindAsync(artwork.Id);
@@ -176,11 +136,18 @@ namespace ArtworkSharingPlatform.Repository.Repository
 
                     await _context.SaveChangesAsync();
                 }
-            }
-            catch (Exception ex)
-            {
-
-            }
+            
         }
+
+        public async Task<bool> HasUserLikedArtwork(int userId, int artworkId)
+        {
+                return await _context.Likes.AnyAsync(a => a.User.Id == userId && a.Artwork.Id == artworkId);
+        }
+
+        public async Task<IEnumerable<Artwork>> GetArtworksAsync()
+        {
+            return await _context.Artworks.ToListAsync();
+        }
+
     }
 }

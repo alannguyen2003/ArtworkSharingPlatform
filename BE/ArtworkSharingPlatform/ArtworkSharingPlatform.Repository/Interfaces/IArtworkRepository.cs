@@ -14,5 +14,8 @@ namespace ArtworkSharingPlatform.Repository.Interfaces
 		Task AddArtwork(Artwork artwork);
 		Task DeleteArtwork(int artworkId);
 		Task UpdateArtwork(Artwork artwork);
-	}
+		Task<bool> HasUserLikedArtwork(int userId, int artworkId);
+		Task<IEnumerable<Artwork>> GetArtworksAsync();
+
+    }
 }
