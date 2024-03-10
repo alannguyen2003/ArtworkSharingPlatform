@@ -2,7 +2,7 @@
 using ArtworkSharingPlatform.Domain.Entities.Abstract;
 using ArtworkSharingPlatform.Domain.Entities.Configs;
 
-namespace ArtworkSharingPlatform.Domain.Entities.Packages;
+namespace ArtworkSharingPlatform.Domain.Entities.PackagesInfo;
 
 public class PackageInformation : BaseEntity
 {

@@ -1,5 +1,5 @@
 ﻿using ArtworkSharingPlatform.Domain.Entities.Abstract;
-using ArtworkSharingPlatform.Domain.Entities.Packages;
+using ArtworkSharingPlatform.Domain.Entities.PackagesInfo;
 using ArtworkSharingPlatform.Domain.Entities.Users;
 
 namespace ArtworkSharingPlatform.Domain.Entities.Transactions;

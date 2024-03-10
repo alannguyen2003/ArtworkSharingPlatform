@@ -3,10 +3,10 @@ using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Domain.Entities.Configs;
 using ArtworkSharingPlatform.Domain.Entities.Messages;
 using ArtworkSharingPlatform.Domain.Entities.Orders;
-using ArtworkSharingPlatform.Domain.Entities.Packages;
 using ArtworkSharingPlatform.Domain.Entities.Transactions;
 using Microsoft.AspNetCore.Identity;
 using System.Text.Json.Serialization;
+using ArtworkSharingPlatform.Domain.Entities.PackagesInfo;
 
 namespace ArtworkSharingPlatform.Domain.Entities.Users;
 
