@@ -17,29 +17,67 @@ public class AcceptCommissionService
 {
     private AcceptCommissionRequestDTO? _acceptCommissionRequestDto;
     private readonly ICommissionRequestRepository _commissionRequestRepository;
+    private readonly IUserRoleRepository _userRoleRepository;
     private CommissionRequest? _commissionRequest;
     private decimal _minPrice;
     private decimal _maxPrice;
     private decimal _actualPrice;
 
-    public AcceptCommissionService(ICommissionRequestRepository repository
+    public AcceptCommissionService(ICommissionRequestRepository repository,
+        IUserRoleRepository userRoleRepository
     )
     {
+        _userRoleRepository = userRoleRepository;
         _commissionRequestRepository = repository;
     }
 
     public CommissionServiceResponseDTO Accept(AcceptCommissionRequestDTO acceptCommissionRequestDto)
     {
-        _acceptCommissionRequestDto = acceptCommissionRequestDto;
-        GetCommissionRequestById();
-        if (!IsActualPriceBetweenMinAndMaxPrice())
-            return ActualPriceNotWithinMinAndMaxPriceResult();
-        ChangeCommissionStatus();
-        InsertActualPrice();
-        SaveChanges();
-        return AcceptCommissionSuccessResult();
+        try
+        {
+
+
+            _acceptCommissionRequestDto = acceptCommissionRequestDto;
+            GetCommissionRequestById();
+            if (!DoesCommissionRequestExist()) return CommissionRequestNotFoundResult();
+            if (!IsReceiverValid()) return InvalidReceiverResult();
+            if (!IsReceiverAnArtist()) return NotAnArtistResult();
+            if (!IsActualPriceBetweenMinAndMaxPrice())
+                return ActualPriceNotWithinMinAndMaxPriceResult();
+            ChangeCommissionStatus();
+            InsertActualPrice();
+            SaveChanges();
+            return AcceptCommissionSuccessResult();
+        }
+        catch (Exception e)
+        {
+            return InternalServerErrorResult(e);
+        }
+    }
+    private void GetCommissionRequestById()
+    {
+        _commissionRequest = _commissionRequestRepository.GetById(_acceptCommissionRequestDto!.CommissionRequestId);
+    }
+    private bool DoesCommissionRequestExist()
+    {
+        if (_commissionRequest == null) return false;
+        return true;
     }
 
+    private bool IsReceiverValid()
+    {
+        int userId = _acceptCommissionRequestDto.ReceiverId;
+        if (userId == 0 || userId == null ||
+            userId != _commissionRequest.ReceiverId)
+            return false;
+        return true;
+    }
+    private bool IsReceiverAnArtist()
+    {
+        List<string> roles = _userRoleRepository.GetRolesByUserId(_acceptCommissionRequestDto!.ReceiverId);
+        if (roles.Contains("Artist")) return true;
+        return false;
+    }
     private bool IsActualPriceBetweenMinAndMaxPrice()
     {
         _minPrice = _commissionRequest!.MinPrice;
@@ -49,11 +87,7 @@ public class AcceptCommissionService
         return false;
     }
 
-    private void GetCommissionRequestById()
-    {
-        _commissionRequest = _commissionRequestRepository.GetById(_acceptCommissionRequestDto!.CommissionRequestId);
-    }
-
+   
     private void ChangeCommissionStatus()
     {
         _commissionRequest!.CommissionStatusId = CommissionStatusConstants.ACCEPTED_ID;
@@ -89,6 +123,40 @@ public class AcceptCommissionService
                       $"from Sender with Id = {_commissionRequest!.SenderId} " +
                       $"to Receiver with Id = {_commissionRequest!.ReceiverId}" +
                       $"with the final price = {_acceptCommissionRequestDto!.ActualPrice}"
+        };
+    }
+    private CommissionServiceResponseDTO NotAnArtistResult()
+    {
+        return new CommissionServiceResponseDTO()
+        {
+            Result = CommissionServiceEnum.FAILURE,
+            Message = $"The user with Id = {_acceptCommissionRequestDto.ReceiverId} " +
+                      $"is not a valid Artist. Try selecting another person."
+        };
+    }
+    private CommissionServiceResponseDTO InvalidReceiverResult()
+    {
+        return new CommissionServiceResponseDTO()
+        {
+            Result = CommissionServiceEnum.FAILURE,
+            Message = $"Receiver with Id = {_acceptCommissionRequestDto.ReceiverId} is not allowed to" +
+                      $" modify this progress image request."
+        };
+    }
+    private CommissionServiceResponseDTO CommissionRequestNotFoundResult()
+    {
+        return new CommissionServiceResponseDTO()
+        {
+            Result = CommissionServiceEnum.FAILURE,
+            Message = $"The commission with Id = {_acceptCommissionRequestDto.CommissionRequestId} is not found!"
+        };
+    }
+    private CommissionServiceResponseDTO InternalServerErrorResult(Exception e)
+    {
+        return new CommissionServiceResponseDTO()
+        {
+            Result = CommissionServiceEnum.FAILURE,
+            Message = e.Message
         };
     }
 }

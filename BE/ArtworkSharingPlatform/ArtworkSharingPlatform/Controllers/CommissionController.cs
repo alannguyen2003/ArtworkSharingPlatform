@@ -22,6 +22,7 @@ public class CommissionController : ControllerBase
     [HttpPost("Create")]
     public ActionResult Create([FromBody] CreateCommissionRequestDTO requestDto)
     {
+        requestDto.SenderId = User.GetUserId();
         var result = _commissionService.CreateCommission(requestDto);
         var clientResponse = ReturnStatusCodeToEndpoint(result);
         return clientResponse;
@@ -29,28 +30,31 @@ public class CommissionController : ControllerBase
     [HttpPost("Accept")]
     public ActionResult Accept([FromBody] AcceptCommissionRequestDTO requestDto)
     {
+        requestDto.ReceiverId = User.GetUserId();
         var result = _commissionService.AcceptCommission(requestDto);
         var clientResponse = ReturnStatusCodeToEndpoint(result);
         return clientResponse;
     }
     [HttpPost("Reject")]
-    public ActionResult Reject([FromBody] RejectCommissionRequestDTO requestDto)
+    public ActionResult Reject([FromBody] RejectCommissionRequestDTO rejectCommissionRequestDto)
     {
-        var result = _commissionService.RejectCommission(requestDto);
+        rejectCommissionRequestDto.ReceiverId = User.GetUserId();        
+        var result = _commissionService.RejectCommission(rejectCommissionRequestDto);
         var clientResponse = ReturnStatusCodeToEndpoint(result);
         return clientResponse;
     }
-    [HttpGet("Sender/GetAll/{senderId}")]
-    public async Task<ActionResult> GetAllBySenderId([FromRoute] int senderId)
+    [HttpGet("Sender/GetAll")]
+    public async Task<ActionResult> GetAllBySenderId()
     {
-        
+        int senderId = User.GetUserId();
         var result = await _commissionService.GetAllSenderCommissions(senderId);
         var clientResponse = await Task.Run(()=>ReturnStatusCodeToEndpoint(result));
         return clientResponse;
     }
-    [HttpGet("Receiver/GetAll/{receiverId}")]
-    public async Task<ActionResult> GetAllByReceiverId([FromRoute] int receiverId )
+    [HttpGet("Receiver/GetAll")]
+    public async Task<ActionResult> GetAllByReceiverId()
     {
+        int receiverId = User.GetUserId();
         var result = await _commissionService.GetAllReceiverCommissions(receiverId);
         var clientResponse = ReturnStatusCodeToEndpoint(result);
         return clientResponse;

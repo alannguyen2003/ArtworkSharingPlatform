@@ -38,19 +38,34 @@ public class GetAllSenderCommissionsService
 
     public async Task<CommissionServiceResponseDTO> Get(int senderId)
     {
-        _senderId = senderId;
-        await GetAllCommissionRequestsBySenderId();
-        await MapCommissionRequestsToCommissionDTOs();
-        return GetAllCommissionsSuccessResult();
+        try
+        {
+
+
+            _senderId = senderId;
+            await GetAllCommissionRequestsBySenderId();
+            if (!AreCommissionRequestsAvailable()) return NoCommissionsFoundResult();
+            await MapCommissionRequestsToCommissionDTOs();
+            return GetAllCommissionsSuccessResult();
+        }
+        catch (Exception e)
+        {
+            return InternalServerErrorResult(e);
+        }
     }
-    
+
 
     private Task GetAllCommissionRequestsBySenderId()
     {
         return Task.Run(() => { _commissionRequests = _commissionRequestRepository.GetAllBySenderId(_senderId); });
     }
 
-   
+    private bool AreCommissionRequestsAvailable()
+    {
+        if (_commissionRequests.Count() == 0) return false;
+        return true;
+    }
+
     private async Task MapCommissionRequestsToCommissionDTOs()
     {
         foreach (CommissionRequest commissionRequest in _commissionRequests)
@@ -66,6 +81,7 @@ public class GetAllSenderCommissionsService
             });
         }
     }
+
     private CommissionServiceResponseDTO GetAllCommissionsSuccessResult()
     {
         return new CommissionServiceResponseDTO()
@@ -73,6 +89,15 @@ public class GetAllSenderCommissionsService
             Result = CommissionServiceEnum.SUCCESS,
             Message = $"Successfully retrieved all commissions of Sender with Id = {_senderId} ",
             ReturnData = _commissionDTOs.ToList()
+        };
+    }
+
+    private CommissionServiceResponseDTO NoCommissionsFoundResult()
+    {
+        return new CommissionServiceResponseDTO()
+        {
+            Result = CommissionServiceEnum.SUCCESS,
+            Message = $"No commissions found for Sender with Id = {_senderId} ",
         };
     }
 
@@ -104,5 +129,13 @@ public class GetAllSenderCommissionsService
     private void InitializeObjects()
     {
         _commissionDTOs = new List<CommissionDTO>();
+    }
+    private CommissionServiceResponseDTO InternalServerErrorResult(Exception e)
+    {
+        return new CommissionServiceResponseDTO()
+        {
+            Result = CommissionServiceEnum.FAILURE,
+            Message = e.Message
+        };
     }
 }

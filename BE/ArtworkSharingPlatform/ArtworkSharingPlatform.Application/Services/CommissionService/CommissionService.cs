@@ -26,6 +26,7 @@ public class CommissionService : ICommissionService
     private readonly ICommissionStatusRepository _commissionStatusRepository;
     private readonly IGenreRepository _genreRepository;
     private readonly IUserRepository _userRepository;
+    private readonly IUserRoleRepository _userRoleRepository;
     private readonly ICommissionImagesRepository _commissionImagesRepository;
     private readonly IMapper _mapper;
 
@@ -34,6 +35,7 @@ public class CommissionService : ICommissionService
         IMapper mapper,
         ICommissionStatusRepository commissionStatusRepository,
         IUserRepository userRepository,
+        IUserRoleRepository userRoleRepository,
         IGenreRepository genreRepository,
         ICommissionImagesRepository commissionImagesRepository)
     {
@@ -41,6 +43,7 @@ public class CommissionService : ICommissionService
         _mapper = mapper;
         _commissionStatusRepository = commissionStatusRepository;
         _userRepository = userRepository;
+        _userRoleRepository = userRoleRepository;
         _genreRepository = genreRepository;
         _commissionImagesRepository = commissionImagesRepository;
         InitializeChildServices();
@@ -86,11 +89,12 @@ public class CommissionService : ICommissionService
         _createCommissionService = new CreateCommissionService(
             _commissionRequestRepository,
             _mapper,
+            _userRoleRepository,
             _commissionStatusRepository);
         _acceptCommissionService = new AcceptCommissionService(
-            _commissionRequestRepository);
+            _commissionRequestRepository, _userRoleRepository);
         _rejectCommissionService = new RejectCommissionService(
-            _commissionRequestRepository);
+            _commissionRequestRepository,_userRoleRepository);
         _getAllSenderCommissionsService = new GetAllSenderCommissionsService(
             _commissionRequestRepository, _userRepository,
             _genreRepository, _commissionStatusRepository, _mapper

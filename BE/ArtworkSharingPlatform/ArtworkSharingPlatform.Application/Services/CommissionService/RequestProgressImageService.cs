@@ -20,12 +20,21 @@ public class RequestProgressImageService
 
     public CommissionServiceResponseDTO Request(RequestProgressImageDTO requestProgressImageDto)
     {
-        _requestProgressImageDto = requestProgressImageDto;
-        GetCommissionRequestById();
-        if (!DoesCommissionRequestExist()) return CommissionRequestNotFoundResult();
-        if (!IsSenderValid()) return InvalidSenderResult();
-        SetIsProgressStatusTrue();
-        return SuccessRequestProgressImageResult();
+        try
+        {
+
+
+            _requestProgressImageDto = requestProgressImageDto;
+            GetCommissionRequestById();
+            if (!DoesCommissionRequestExist()) return CommissionRequestNotFoundResult();
+            if (!IsSenderValid()) return InvalidSenderResult();
+            SetIsProgressStatusTrue();
+            return SuccessRequestProgressImageResult();
+        }
+        catch (Exception e)
+        {
+            return InternalServerErrorResult(e);
+        }
     }
 
     private void GetCommissionRequestById()
@@ -77,6 +86,14 @@ public class RequestProgressImageService
             Result = CommissionServiceEnum.FAILURE,
             Message = $"Sender with Id = {_requestProgressImageDto.SenderId} is not allowed to" +
                       $" modify this progress image request."
+        };
+    }
+    private CommissionServiceResponseDTO InternalServerErrorResult(Exception e)
+    {
+        return new CommissionServiceResponseDTO()
+        {
+            Result = CommissionServiceEnum.FAILURE,
+            Message = e.Message
         };
     }
 }

@@ -37,15 +37,29 @@ public class GetAllReceiverCommissionsService
 
     public async Task<CommissionServiceResponseDTO> Get(int receiverId)
     {
-        _receiverId = receiverId;
-        await GetAllCommissionRequestsByReceiverId();
-        await MapCommissionRequestsToCommissionDTOs();
-        return GetAllCommissionsSuccessResult();
+        try
+        {
+            _receiverId = receiverId;
+            await GetAllCommissionRequestsByReceiverId();
+            if (!AreCommissionRequestsAvailable()) return NoCommissionsFoundResult();
+            await MapCommissionRequestsToCommissionDTOs();
+            return GetAllCommissionsSuccessResult();
+        }
+        catch (Exception e)
+        {
+            return InternalServerErrorResult(e);
+        }
     }
 
     private Task GetAllCommissionRequestsByReceiverId()
     {
         return Task.Run(() => _commissionRequests = _commissionRequestRepository.GetAllByReceiverId(_receiverId));
+    }
+
+    private bool AreCommissionRequestsAvailable()
+    {
+        if (_commissionRequests.Count() == 0) return false;
+        return true;
     }
 
     private CommissionServiceResponseDTO GetAllCommissionsSuccessResult()
@@ -62,7 +76,7 @@ public class GetAllReceiverCommissionsService
     {
         foreach (CommissionRequest commissionRequest in _commissionRequests)
         {
-            CommissionDTO commissionDTO = await Task.Run(()=>_mapper.Map<CommissionDTO>(commissionRequest));
+            CommissionDTO commissionDTO = await Task.Run(() => _mapper.Map<CommissionDTO>(commissionRequest));
             commissionDTO.SenderName = await GetSenderNameById(commissionRequest.SenderId);
             commissionDTO.ReceiverName = await GetReceiverNameById(commissionRequest.ReceiverId);
             await Task.Run(() =>
@@ -72,6 +86,15 @@ public class GetAllReceiverCommissionsService
                 _commissionDTOs.Add(commissionDTO);
             });
         }
+    }
+
+    private CommissionServiceResponseDTO NoCommissionsFoundResult()
+    {
+        return new CommissionServiceResponseDTO()
+        {
+            Result = CommissionServiceEnum.SUCCESS,
+            Message = $"No commissions found for Receiver with Id = {_receiverId} ",
+        };
     }
 
     private async Task<string> GetSenderNameById(int senderId)
@@ -101,5 +124,14 @@ public class GetAllReceiverCommissionsService
     private void InitializeObjects()
     {
         _commissionDTOs = new List<CommissionDTO>();
+    }
+
+    private CommissionServiceResponseDTO InternalServerErrorResult(Exception e)
+    {
+        return new CommissionServiceResponseDTO()
+        {
+            Result = CommissionServiceEnum.FAILURE,
+            Message = e.Message
+        };
     }
 }
