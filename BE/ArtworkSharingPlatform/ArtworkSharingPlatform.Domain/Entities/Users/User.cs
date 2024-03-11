@@ -35,6 +35,6 @@ public class User : IdentityUser<int>
     public ICollection<Message>? MessageSent;
     public ICollection<CommissionRequest>? CommissionSent { get; set; }
     public ICollection<CommissionRequest>? CommissionReceived{ get; set; }
-    public ICollection<Follow>? FollowingArtists{ get; set; }
-    public ICollection<Follow>? FollowingAudiences{ get; set; }
+    public List<Follow> FollowedUsers { get; set; }
+    public List<Follow> IsFollowedByUsers { get; set; }
 }

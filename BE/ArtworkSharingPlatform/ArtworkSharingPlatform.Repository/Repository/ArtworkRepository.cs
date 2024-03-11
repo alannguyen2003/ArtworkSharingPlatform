@@ -5,6 +5,7 @@ using ArtworkSharingPlatform.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -34,7 +35,7 @@ namespace ArtworkSharingPlatform.Repository.Repository
                 var isLike = await _context.Likes.AnyAsync(a => a.ArtworkId == like.ArtworkId && a.UserId == like.UserId);
                 if (like != null && isLike)
                 {
-                    var index = await _context.Likes.Where(a => a.Artwork.Equals(like.Artwork) && a.User.Equals(like.User)).FirstOrDefaultAsync();
+                    var index = await _context.Likes.Where(a => a.ArtworkId == like.ArtworkId && a.UserId == like.UserId).FirstOrDefaultAsync();
                     _context.Likes.Remove(index);
                     await _context.SaveChangesAsync();
 
@@ -48,26 +49,25 @@ namespace ArtworkSharingPlatform.Repository.Repository
 
         public async Task UserFollow(Follow follow)
         {
-                //var index = await _context.Likes.Where(a => a.Artwork.Equals(like.Artwork) && a.User.Equals(like.User)).FirstOrDefaultAsync();
-                var isFollow = await _context.Follows.AnyAsync(a => a.Artist.Equals(follow.Artist) && a.Follower.Equals(follow.Follower));
-                if (follow != null && !isFollow)
+                var isFollow = await _context.Follows.AnyAsync(a => a.TargetUserId == follow.TargetUserId && a.SourceUserId == follow.SourceUserId);
+                if (follow != null && isFollow)
                 {
-                    var index = await _context.Follows.FirstOrDefaultAsync(a => a.Artist.Equals(follow.Artist) && a.Follower.Equals(follow.Follower));
+                    var index = await _context.Follows.Where(a => a.TargetUserId == follow.TargetUserId && a.SourceUserId == follow.SourceUserId).FirstOrDefaultAsync();
                     _context.Follows.Remove(index);
                     await _context.SaveChangesAsync();
                 }
                 else if (follow != null)
                 {
-                    _context.Follows.AddAsync(follow);
+                    await _context.Follows.AddAsync(follow);
                     await _context.SaveChangesAsync();
                 }
         }
         public async Task UserRating(Rating rate)
         {                
-                var isRate = await _context.Ratings.FirstOrDefaultAsync(a => a.Artwork.Equals(rate.Artwork) && a.User.Equals(rate.User));
-                if (rate != null && isRate != null)
+                var isRate = await _context.Ratings.AnyAsync(a => a.ArtworkId == rate.ArtworkId && a.UserId == rate.UserId);
+                if (rate != null && isRate)
                 {
-                    var index = await _context.Ratings.Where(a => a.Artwork.Equals(rate.Artwork) && a.User.Equals(rate.User)).FirstOrDefaultAsync();
+                    var index = await _context.Ratings.Where(a => a.ArtworkId == rate.ArtworkId && a.UserId == rate.UserId).FirstOrDefaultAsync();
                     _context.Entry(index).CurrentValues.SetValues(rate);
 
                     await _context.SaveChangesAsync();
@@ -91,11 +91,16 @@ namespace ArtworkSharingPlatform.Repository.Repository
 
         }
 
-        public async Task<IEnumerable<Artwork>?> SearchArtwork(string search)
+        public async Task<IList<Artwork>?> SearchArtwork(string search)
         {
 
-                var result = _context.Artworks.Where(x => x.Title.Equals(search.ToLower())).ToList();
-                return result;
+            IList<Artwork> artworks = new List<Artwork>();
+                artworks = await _context.Artworks
+                    .Include(a => a.Genre)
+                    .Include(a => a.Owner)
+                    .Include(a => a.ArtworkImages).Where(a => a.Title.Contains(search))
+                    .ToListAsync();
+            return artworks;
 
         }
 
@@ -104,11 +109,11 @@ namespace ArtworkSharingPlatform.Repository.Repository
 
                 if (artwork != null)
                 {
+                artwork.Status = 1;
                     _context.Artworks.AddAsync(artwork);
 
                     await _context.SaveChangesAsync();
                 }
-            
 
         }
 
@@ -144,9 +149,17 @@ namespace ArtworkSharingPlatform.Repository.Repository
                 return await _context.Likes.AnyAsync(a => a.User.Id == userId && a.Artwork.Id == artworkId);
         }
 
+
         public async Task<IEnumerable<Artwork>> GetArtworksAsync()
         {
             return await _context.Artworks.ToListAsync();
+        }
+        public async Task<IEnumerable<Artwork>?> SearchArtworkByGenre(int genreId)
+        {
+
+            var result = await _context.Artworks.Where(x => x.GenreId ==  genreId).ToListAsync();
+            return result;
+
         }
 
     }

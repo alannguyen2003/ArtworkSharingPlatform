@@ -17,6 +17,12 @@ namespace ArtworkSharingPlatform.Application.Helpers
     {
         public AutoMapperProfile()
         {
+
+            CreateMap<Like, ArtworkLikeDTO>().ReverseMap();
+            CreateMap<Follow, UserFollowDTO>().ReverseMap();
+            CreateMap<Comment, ArtworkCommentDTO>().ReverseMap();
+            CreateMap<Rating, ArtworkRatingDTO>().ReverseMap();
+
             CreateMap<User, ArtworkUserDTO>()
                 .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.UserImage.Url))
                 .ReverseMap();
@@ -24,7 +30,10 @@ namespace ArtworkSharingPlatform.Application.Helpers
 				.ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.UserImage.Url))
 				.ReverseMap();
 			CreateMap<Like, ArtworkLikeDTO>().ReverseMap();
+
             CreateMap<ArtworkImage, ArtworkImageDTO>().ReverseMap();
+            CreateMap<Artwork, ArtworkToAddDTO>().ReverseMap();
+            CreateMap<ArtworkImage, ArtworkImageToAddDTO>().ReverseMap();
             CreateMap<Artwork, ArtworkDTO>()
                 .ForMember(dest => dest.ImageUrl,
                     opt => opt.MapFrom(src => src.ArtworkImages.SingleOrDefault(x => x.IsThumbnail.Value).ImageUrl))

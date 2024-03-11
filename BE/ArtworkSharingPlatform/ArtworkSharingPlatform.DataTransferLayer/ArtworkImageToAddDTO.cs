@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace ArtworkSharingPlatform.DataTransferLayer
 {
-    public class ArtworkRatingDTO
+    public class ArtworkImageToAddDTO
     {
-        public int UserId { get; set; }
+        public string? ImageUrl { get; set; }
+        public string? PublicId { get; set; }
+        public bool? IsThumbnail { get; set; }
         public int ArtworkId { get; set; }
-        public int Score { get; set; }
     }
 }
