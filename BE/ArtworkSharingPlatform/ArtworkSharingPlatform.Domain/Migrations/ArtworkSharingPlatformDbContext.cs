@@ -73,6 +73,48 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
         modelBuilder.Entity<Like>().HasKey(
             k => new {k.UserId, k.ArtworkId} 
             );
+        modelBuilder.Entity<Like>()
+                .HasOne(a => a.Artwork)
+                .WithMany(a => a.Likes)
+                .OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<Like>()
+                .HasOne(a => a.User)
+                .WithMany(u => u.Likes)
+                .OnDelete(DeleteBehavior.NoAction);
+
+        modelBuilder.Entity<Comment>()
+                .HasOne(a => a.Artwork)
+                .WithMany(a => a.Comments)
+                .OnDelete(DeleteBehavior.NoAction);
+        modelBuilder.Entity<Comment>()
+            .HasOne(a => a.User)
+            .WithMany(u => u.Comments)
+            .OnDelete(DeleteBehavior.Cascade);
+        //--------------------------------------
+        modelBuilder.Entity<Follow>()
+                .HasKey(k => new { k.SourceUserId, k.TargetUserId });
+        modelBuilder.Entity<Follow>()
+            .HasOne(fl => fl.SourceUser)
+            .WithMany(u => u.FollowedUsers)
+            .HasForeignKey(u => u.SourceUserId)
+            .OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<Follow>()
+            .HasOne(fl => fl.TargetUser)
+            .WithMany(u => u.IsFollowedByUsers)
+            .HasForeignKey(u => u.TargetUserId)
+            .OnDelete(DeleteBehavior.NoAction);
+        //--------------------------------------
+        modelBuilder.Entity<Rating>().HasKey(
+            k => new { k.UserId, k.ArtworkId }
+            );
+        modelBuilder.Entity<Rating>()
+                .HasOne(a => a.Artwork)
+                .WithMany(a => a.Ratings)
+                .OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<Rating>()
+                .HasOne(a => a.User)
+                .WithMany(u => u.Ratings)
+                .OnDelete(DeleteBehavior.NoAction);
         modelBuilder.Entity<Artwork>()
             .HasMany(e => e.Likes)
             .WithOne(e => e.Artwork)
@@ -101,13 +143,6 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
         modelBuilder.Entity<PackageInformation>()
             .HasMany(e => e.ConfigManagers)
             .WithMany(e => e.PackageConfigs);
-
-        modelBuilder.Entity<Follow>()
-            .HasOne(e => e.Follower)
-            .WithMany(e => e.FollowingArtists);
-        modelBuilder.Entity<Follow>()
-            .HasOne(e => e.Artist)
-            .WithMany(e => e.FollowingAudiences);
 
 
         modelBuilder.Entity<Role>()

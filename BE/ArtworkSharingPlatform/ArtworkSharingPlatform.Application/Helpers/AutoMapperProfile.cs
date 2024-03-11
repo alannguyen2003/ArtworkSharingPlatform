@@ -18,7 +18,12 @@ namespace ArtworkSharingPlatform.Application.Helpers
         {
             CreateMap<User, ArtworkUserDTO>().ReverseMap();
             CreateMap<Like, ArtworkLikeDTO>().ReverseMap();
+            CreateMap<Follow, UserFollowDTO>().ReverseMap();
+            CreateMap<Comment, ArtworkCommentDTO>().ReverseMap();
+            CreateMap<Rating, ArtworkRatingDTO>().ReverseMap();
             CreateMap<ArtworkImage, ArtworkImageDTO>().ReverseMap();
+            CreateMap<Artwork, ArtworkToAddDTO>().ReverseMap();
+            CreateMap<ArtworkImage, ArtworkImageToAddDTO>().ReverseMap();
             CreateMap<Artwork, ArtworkDTO>()
                 .ForMember(dest => dest.ImageUrl,
                     opt => opt.MapFrom(src => src.ArtworkImages.SingleOrDefault(x => x.IsThumbnail.Value).ImageUrl))
