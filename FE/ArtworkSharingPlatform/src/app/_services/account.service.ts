@@ -55,7 +55,7 @@ export class AccountService {
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
     this.presenceService.stopHubConnection();
-  }
+  } 
 
   getDecodedToken(token: string){
     return JSON.parse(atob(token.split(".")[1]));
