@@ -1,6 +1,5 @@
 ﻿using System.Runtime.InteropServices;
 using ArtworkSharingPlatform.DataTransferLayer;
-using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.Commission;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response.Commission;
 using ArtworkSharingPlatform.Domain.Entities.Artworks;
@@ -9,6 +8,8 @@ using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Domain.Entities.Users;
 using AutoMapper;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.User;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
 
 namespace ArtworkSharingPlatform.Application.Helpers
 {
@@ -30,6 +31,9 @@ namespace ArtworkSharingPlatform.Application.Helpers
                     opt => opt.MapFrom(src => src.UserRoles.Any() ? src.UserRoles.First().Role.Name : null))
                 .ReverseMap();
             CreateMap<User, UserAdminDTO>()
+                .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.UserRoles.First().Role.Name))
+                .ReverseMap();
+            CreateMap<User, UserAdminCreateDTO>()
                 .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.UserRoles.First().Role.Name))
                 .ReverseMap();
             CreateMap<User, UserInfoAudienceDTO>()
