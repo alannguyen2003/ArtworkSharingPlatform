@@ -35,6 +35,9 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PackageId = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<byte>(type: "tinyint", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FacebookLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TwitterLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RemainingCredit = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -291,6 +294,27 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                         column: x => x.ManagerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserImage",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PublicId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserImage", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserImage_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -816,6 +840,12 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 name: "IX_Transactions_ManagerId",
                 table: "Transactions",
                 column: "ManagerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserImage_UserId",
+                table: "UserImage",
+                column: "UserId",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -868,6 +898,9 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
             migrationBuilder.DropTable(
                 name: "Ratings");
+
+            migrationBuilder.DropTable(
+                name: "UserImage");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

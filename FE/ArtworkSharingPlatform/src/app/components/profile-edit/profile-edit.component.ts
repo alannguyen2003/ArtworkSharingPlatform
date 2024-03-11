@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import {Router} from "@angular/router";
+import {User} from "../../_model/user.model";
+import {AccountService} from "../../_services/account.service";
+import {take} from "rxjs";
 
 @Component({
   selector: 'app-profile-edit',
@@ -7,8 +10,13 @@ import {Router} from "@angular/router";
   styleUrls: ['./profile-edit.component.css']
 })
 export class ProfileEditComponent {
-
-  constructor() {
+  user : User | undefined;
+  constructor(private accountService: AccountService) {
+    this.accountService.currentUser$.pipe(take(1)).subscribe({
+      next: user => {
+        if (user) this.user = user;
+      }
+    });
   }
 
 
