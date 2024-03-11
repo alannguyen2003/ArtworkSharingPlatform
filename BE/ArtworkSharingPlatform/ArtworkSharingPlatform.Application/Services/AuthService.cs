@@ -2,6 +2,9 @@
 using ArtworkSharingPlatform.DataTransferLayer;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
 using ArtworkSharingPlatform.Domain.Entities.Users;
+using ArtworkSharingPlatform.Repository.Interfaces;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -20,13 +23,21 @@ namespace ArtworkSharingPlatform.Application.Services
     public class AuthService : IAuthService
     {
         private readonly UserManager<User> _userManager;
-        private readonly IConfiguration _config;
+		private readonly IUserRepository _userRepository;
+		private readonly IConfiguration _config;
+		private readonly IMapper _mapper;
 
-        public AuthService(UserManager<User> userManager, IConfiguration config)
+		public AuthService(
+            UserManager<User> userManager,
+            IUserRepository userRepository,
+            IConfiguration config,
+            IMapper mapper)
         {
             _userManager = userManager;
-            _config = config;
-        }
+			_userRepository = userRepository;
+			_config = config;
+			_mapper = mapper;
+		}
 
         public async Task<IdentityResult> Register(RegisterDTO registerBody)
         {
@@ -91,16 +102,12 @@ namespace ArtworkSharingPlatform.Application.Services
 
 		public async Task<UserDTO> GetUserDTO(string email, string tokenString)
 		{
-            var user = await _userManager.FindByEmailAsync(email);
+            var user = await _userRepository.GetAll().Where(x => x.Email == email).ProjectTo<UserDTO>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
             if (user != null && !string.IsNullOrEmpty(tokenString))
             {
-                return new UserDTO
-                {
-                    Email = user.Email,
-                    Token = tokenString,
-                    PhoneNumber = user.PhoneNumber,
-                    Name = user.Name
-                };
+                var result = _mapper.Map<UserDTO>(user);
+                result.Token = tokenString;
+                return result;
             }
             return null;
 		}

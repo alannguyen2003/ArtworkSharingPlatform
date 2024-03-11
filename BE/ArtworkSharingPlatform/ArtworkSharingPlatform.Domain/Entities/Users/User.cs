@@ -15,6 +15,11 @@ public class User : IdentityUser<int>
     public string? Name { get; set; }
     public int PackageId { get; set; }
     public byte Status { get; set; }
+    public string Description { get; set; }
+    public string? FacebookLink{ get; set; }
+    public string? TwitterLink{ get; set; }
+    [JsonIgnore]
+    public UserImage UserImage { get; set; }
     public int RemainingCredit { get; set; }
     public ICollection<Artwork>? Artworks { get; set; }
     public ICollection<PreOrder>? PreOrders { get; set; }
