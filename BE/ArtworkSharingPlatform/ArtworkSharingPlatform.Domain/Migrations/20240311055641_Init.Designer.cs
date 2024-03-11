@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArtworkSharingPlatform.Domain.Migrations
 {
     [DbContext(typeof(ArtworkSharingPlatformDbContext))]
-    [Migration("20240308103736_Initial")]
-    partial class Initial
+    [Migration("20240311055641_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -158,23 +158,15 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Artworks.Like", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("ArtworkId")
+                    b.Property<int>("ArtworkId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("UserId", "ArtworkId");
 
                     b.HasIndex("ArtworkId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Likes");
                 });
@@ -473,7 +465,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.ToTable("PreOrders");
                 });
 
-            modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Packages.PackageBilling", b =>
+            modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.PackagesInfo.PackageBilling", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -502,7 +494,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.ToTable("PackageBilling");
                 });
 
-            modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Packages.PackageInformation", b =>
+            modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.PackagesInfo.PackageInformation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -861,11 +853,15 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 {
                     b.HasOne("ArtworkSharingPlatform.Domain.Entities.Artworks.Artwork", "Artwork")
                         .WithMany("Likes")
-                        .HasForeignKey("ArtworkId");
+                        .HasForeignKey("ArtworkId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.User", "User")
                         .WithMany("Likes")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Artwork");
 
@@ -993,7 +989,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.Navigation("Buyer");
                 });
 
-            modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Packages.PackageBilling", b =>
+            modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.PackagesInfo.PackageBilling", b =>
                 {
                     b.HasOne("ArtworkSharingPlatform.Domain.Entities.Transactions.Transaction", null)
                         .WithMany("PackageBillings")
@@ -1042,7 +1038,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.Packages.PackageInformation", null)
+                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.PackagesInfo.PackageInformation", null)
                         .WithMany()
                         .HasForeignKey("PackageConfigsId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1087,13 +1083,13 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
             modelBuilder.Entity("PackageBillingPackageInformation", b =>
                 {
-                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.Packages.PackageBilling", null)
+                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.PackagesInfo.PackageBilling", null)
                         .WithMany()
                         .HasForeignKey("PackageBillingsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.Packages.PackageInformation", null)
+                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.PackagesInfo.PackageInformation", null)
                         .WithMany()
                         .HasForeignKey("PackageInformationId")
                         .OnDelete(DeleteBehavior.Cascade)

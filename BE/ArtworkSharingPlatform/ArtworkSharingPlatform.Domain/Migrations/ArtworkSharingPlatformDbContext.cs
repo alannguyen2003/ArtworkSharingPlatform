@@ -62,7 +62,7 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
         optionsBuilder
             .UseSqlServer(
                 "Data Source=(local); database=ASPDatabase;" +
-                "uid=sa;pwd=1234567890;" +
+                "uid=sa;pwd=12345;" +
                 "TrustServerCertificate=True;" +
                 "MultipleActiveResultSets=True");
     }
@@ -70,9 +70,13 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<Like>().HasKey(
+            k => new {k.UserId, k.ArtworkId} 
+            );
         modelBuilder.Entity<Artwork>()
             .HasMany(e => e.Likes)
-            .WithOne(e => e.Artwork);
+            .WithOne(e => e.Artwork)
+            .OnDelete(DeleteBehavior.NoAction);
         modelBuilder.Entity<Artwork>()
             .HasMany(e => e.Ratings)
             .WithOne(e => e.Artwork);
