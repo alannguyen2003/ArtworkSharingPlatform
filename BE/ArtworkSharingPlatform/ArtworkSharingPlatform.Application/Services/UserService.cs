@@ -6,6 +6,7 @@ using ArtworkSharingPlatform.Domain.Entities.Users;
 using ArtworkSharingPlatform.Repository.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,5 +62,10 @@ namespace ArtworkSharingPlatform.Application.Services
         {
             await _userRepository.UpdateUserDetail(user);
         }
-    }
+
+		public async Task<UserProfileDTO> GetArtistProfileByEmail(string email)
+		{
+            return await _userRepository.GetAll().Where(x => x.Email == email).ProjectTo<UserProfileDTO>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
+		}
+	}
 }

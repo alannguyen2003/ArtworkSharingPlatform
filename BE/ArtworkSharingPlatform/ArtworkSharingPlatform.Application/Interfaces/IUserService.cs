@@ -9,6 +9,7 @@ namespace ArtworkSharingPlatform.Application.Interfaces
     {
         List<UserInfoDTO> GetAll();
         UserInfoDTO GetUserById(int id);
+        Task<UserProfileDTO>GetArtistProfileByEmail(string email);
         UserInfoAudienceDTO GetUserDetail(int id);
         Task CreateUserAdmin(User user);
         Task UpdateUserAdmin(User user);

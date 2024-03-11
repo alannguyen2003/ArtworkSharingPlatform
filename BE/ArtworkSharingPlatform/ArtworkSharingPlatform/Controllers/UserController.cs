@@ -20,6 +20,16 @@ namespace ArtworkSharingHost.Controllers
             _userService = userService;
             _mapper = mapper;
         }
+        [HttpGet("artist/{email}")]
+        public async Task<IActionResult> GetArtistProfile(string email)
+        {
+            var artistProfile = await _userService.GetArtistProfileByEmail(email);
+            if (artistProfile == null)
+            {
+                return NotFound("Artist Not Found");
+            }
+            return Ok(artistProfile);
+        }
 
         [HttpGet("/detail/{id}")]
         public async Task<IActionResult> GetDetail(int id)

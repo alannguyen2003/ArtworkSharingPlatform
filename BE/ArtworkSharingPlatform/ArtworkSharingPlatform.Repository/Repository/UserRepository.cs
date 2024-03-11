@@ -165,5 +165,5 @@ namespace ArtworkSharingPlatform.Repository.Repository
             var user = await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == phone);
             return user != null;
         }
-    }
+	}
 }

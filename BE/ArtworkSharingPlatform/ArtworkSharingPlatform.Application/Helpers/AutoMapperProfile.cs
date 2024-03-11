@@ -16,8 +16,13 @@ namespace ArtworkSharingPlatform.Application.Helpers
     {
         public AutoMapperProfile()
         {
-            CreateMap<User, ArtworkUserDTO>().ReverseMap();
-            CreateMap<Like, ArtworkLikeDTO>().ReverseMap();
+            CreateMap<User, ArtworkUserDTO>()
+                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.UserImage.Url))
+                .ReverseMap();
+			CreateMap<User, UserDTO>()
+				.ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.UserImage.Url))
+				.ReverseMap();
+			CreateMap<Like, ArtworkLikeDTO>().ReverseMap();
             CreateMap<ArtworkImage, ArtworkImageDTO>().ReverseMap();
             CreateMap<Artwork, ArtworkDTO>()
                 .ForMember(dest => dest.ImageUrl,
@@ -35,6 +40,9 @@ namespace ArtworkSharingPlatform.Application.Helpers
             CreateMap<User, UserInfoAudienceDTO>()
                 .ReverseMap();
             CreateMap<User, UserDetailUpdateDTO>()
+                .ReverseMap();
+            CreateMap<User, UserProfileDTO>()
+                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.UserImage.Url))
                 .ReverseMap();
             CreateCommissionRequestToCommissionEntityMap();
             CommissionEntityToCommissionDTOMap();
