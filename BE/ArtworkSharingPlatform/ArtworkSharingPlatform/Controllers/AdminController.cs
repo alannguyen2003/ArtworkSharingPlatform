@@ -1,5 +1,6 @@
 ﻿using ArtworkSharingPlatform.Application.Interfaces;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.User;
 using ArtworkSharingPlatform.Domain.Entities.Users;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -26,7 +27,7 @@ namespace ArtworkSharingHost.Controllers
         }
 
         [HttpPost("CreateUser")]
-        public async Task<IActionResult> CreateUserAdmin([FromBody] UserAdminDTO userDto)
+        public async Task<IActionResult> CreateUserAdmin([FromBody] UserAdminCreateDTO userDto)
         {
             try
             {
@@ -36,9 +37,10 @@ namespace ArtworkSharingHost.Controllers
                     PhoneNumber = userDto.PhoneNumber,
                     Name = userDto.Name,
                     UserName = userDto.Email,
-                    Status = userDto.Status,
-                    RemainingCredit = userDto.RemaningCredit,
-                    PackageId = userDto.PackageId
+                    Description = userDto.Description,
+                    Status = 1,
+                    RemainingCredit = 0,
+                    PackageId = 0
                 };
                 await _userService.CreateUserAdmin(user);
 
@@ -49,6 +51,12 @@ namespace ArtworkSharingHost.Controllers
                 };
 
                 user.UserRoles = new List<UserRole> { userRole };
+
+                user.UserImage = new UserImage
+                {
+                    UserId = user.Id,
+                    Url = "https://media.istockphoto.com/id/1341046662/vector/picture-profile-icon-human-or-people-sign-and-symbol-for-template-design.jpg?s=612x612&w=0&k=20&c=A7z3OK0fElK3tFntKObma-3a7PyO8_2xxW0jtmjzT78="
+                };
 
                 await _userService.UpdateUserAdmin(user);
 

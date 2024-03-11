@@ -46,12 +46,13 @@ namespace ArtworkSharingPlatform.Repository.Repository
             return _dbContext?.Users?.Where(user => user.Id == id)
                 .Include(u => u.UserRoles)
                 .ThenInclude(ur => ur.Role)
+                .Include(u => u.UserImage)
                 .FirstOrDefault()!;
         }
 
         public IQueryable<User> GetAll()
         {
-            return _dbContext.Users.Include(u => u.UserRoles);
+            return _dbContext.Users.Include(u => u.UserRoles).Include(u => u.UserImage);
         }
 
         public async Task CreateUserAdmin(User user)
@@ -66,8 +67,11 @@ namespace ArtworkSharingPlatform.Repository.Repository
                     {
                         throw new Exception("Phone is exist");
                     }
-                    await _userManager.CreateAsync(user, password);
-                    /*await _userManager.SetUserNameAsync(user, user.Email);*/
+                    var result = await _userManager.CreateAsync(user, password);
+                    if (!result.Succeeded)
+                    {
+                        throw new Exception("User creation failed");
+                    }
                 }
                 else
                 {
@@ -88,14 +92,16 @@ namespace ArtworkSharingPlatform.Repository.Repository
                 var u = await _userManager.FindByEmailAsync(user.Email);
                 if (u != null)
                 {
-                    u.Name = user.Name;
-                    u.Email = user.Email;
-                    u.PhoneNumber = user.PhoneNumber;
-                    if (await IsPhoneExistAsync(u.PhoneNumber))
+                    if (u.PhoneNumber != user.PhoneNumber && await IsPhoneExistAsync(user.PhoneNumber))
                     {
                         throw new Exception("Phone is exist");
                     }
+                    u.Name = user.Name;
+                    u.Email = user.Email;
+                    u.PhoneNumber = user.PhoneNumber;
                     u.UserRoles = user.UserRoles;
+                    u.UserImage = user.UserImage;
+                    u.Description = user.Description;
                     u.Status = user.Status;
                     u.RemainingCredit = user.RemainingCredit;
                     u.PackageId = user.PackageId;
@@ -140,13 +146,14 @@ namespace ArtworkSharingPlatform.Repository.Repository
                 var u = await _userManager.FindByEmailAsync(user.Email);
                 if (u != null)
                 {
-                    u.Name = user.Name;
-                    u.Email = user.Email;
-                    u.PhoneNumber = user.PhoneNumber;
-                    if (await IsPhoneExistAsync(u.PhoneNumber))
+                    if (u.PhoneNumber != user.PhoneNumber && await IsPhoneExistAsync(user.PhoneNumber))
                     {
                         throw new Exception("Phone is exist");
                     }
+                    u.Name = user.Name;
+                    u.Email = user.Email;
+                    u.PhoneNumber = user.PhoneNumber;
+                    u.Description = user.Description;
                     await _userManager.UpdateAsync(u);
                 }
                 else

@@ -1,5 +1,5 @@
 ﻿using ArtworkSharingPlatform.Application.Interfaces;
-using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.User;
 using ArtworkSharingPlatform.Domain.Entities.Users;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
