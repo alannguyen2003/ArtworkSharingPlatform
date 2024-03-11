@@ -2,8 +2,8 @@
   <div class="flex space-x-4">
     <img alt="artist image" src="" class="object-cover w-12 h-12 rounded-full shadow dark:bg-gray-500">
     <div class="flex flex-col space-y-1">
-      <a rel="noopener noreferrer" href="#" class="text-sm font-semibold">Leroy Jenkins</a>
-      <span class="text-xs dark:text-gray-400">{{artwork.createdDate}}</span>
+      <a rel="noopener noreferrer" href="#" class="text-sm font-semibold">{{artwork.user.name}}</a>
+      <span class="text-xs dark:text-gray-400">{{artwork.createdDate | timeago}}</span>
     </div>
   </div>
   <div>

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArtworkSharingPlatform.Domain.Migrations
 {
     [DbContext(typeof(ArtworkSharingPlatformDbContext))]
-    [Migration("20240311055641_Init")]
+    [Migration("20240311092220_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -591,12 +591,19 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FacebookLink")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -636,6 +643,9 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
 
+                    b.Property<string>("TwitterLink")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -654,6 +664,32 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Users.UserImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("PublicId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("UserImage");
                 });
 
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Users.UserRole", b =>
@@ -1011,6 +1047,17 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.Navigation("Manager");
                 });
 
+            modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Users.UserImage", b =>
+                {
+                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.User", "User")
+                        .WithOne("UserImage")
+                        .HasForeignKey("ArtworkSharingPlatform.Domain.Entities.Users.UserImage", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Users.UserRole", b =>
                 {
                     b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.Role", "Role")
@@ -1170,6 +1217,9 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.Navigation("Ratings");
 
                     b.Navigation("Transactions");
+
+                    b.Navigation("UserImage")
+                        .IsRequired();
 
                     b.Navigation("UserRoles");
                 });
