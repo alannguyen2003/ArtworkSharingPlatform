@@ -13,6 +13,7 @@ import {ArtworkDetailComponent} from "./components/artwork/artwork-detail/artwor
 import {artworkDetailResolver} from "./_resolvers/artwork-detail.resolver";
 import {ArtistMessageComponent} from "./components/artist/artist-message/artist-message.component";
 import {ProfileEditComponent} from "./components/profile-edit/profile-edit.component";
+import {ArtworkPostComponent} from "./components/artwork/artwork-post/artwork-post.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -22,6 +23,7 @@ const routes: Routes = [
       {path: 'artist/messages', component: ArtistMessageComponent},
       {path: 'artist/pricing', component: PricingComponent},
       {path: 'artwork', component: ArtworkComponent},
+      {path: 'artwork-post', component: ArtworkPostComponent},
       {path: 'artwork/:id', component: ArtworkDetailComponent, resolve: {artwork: artworkDetailResolver}},
       {path: 'profile-edit', component: ProfileEditComponent}
     ]
