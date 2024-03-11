@@ -29,6 +29,8 @@ import { MessagesComponent } from './components/messages/messages.component';
 import {MessageReceivedComponent} from "./components/messages/message-received/message-received.component";
 import {MessageSentComponent} from "./components/messages/message-sent/message-sent.component";
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
+import {ArtworkPostComponent} from "./components/artwork/artwork-post/artwork-post.component";
+import { PhotoEditorComponent } from './components/artwork/artwork-post/photo-editor/photo-editor.component';
 
 
 @NgModule({
@@ -50,7 +52,9 @@ import { ProfileEditComponent } from './components/profile-edit/profile-edit.com
     TruncatePipe,
     TextInputComponent,
     MessagesComponent,
-    ProfileEditComponent
+    ProfileEditComponent,
+    ArtworkPostComponent,
+    PhotoEditorComponent
   ],
   imports: [
     BrowserModule,

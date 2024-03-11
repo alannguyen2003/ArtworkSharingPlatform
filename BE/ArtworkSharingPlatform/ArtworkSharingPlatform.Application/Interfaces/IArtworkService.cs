@@ -14,7 +14,7 @@ namespace ArtworkSharingPlatform.Application.Interfaces
         Task AddArtwork(ArtworkDTO artwork);
         Task DeleteArtwork(int artworkId);
         Task UpdateArtwork(ArtworkDTO artwork);
-        Task<IEnumerable<ArtworkLikeToShowDTO>> GetArtworksLike(UserParams userParams)
+        Task<IEnumerable<ArtworkLikeToShowDTO>> GetArtworksLike(int userId);
 
     }
 }

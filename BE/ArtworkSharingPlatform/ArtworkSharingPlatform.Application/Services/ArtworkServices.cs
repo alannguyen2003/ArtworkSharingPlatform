@@ -100,7 +100,7 @@ namespace ArtworkSharingPlatform.Application.Services
 
         }
 
-        public async Task<IEnumerable<ArtworkLikeToShowDTO>> GetArtworksLike(UserParams userParams)
+        public async Task<IEnumerable<ArtworkLikeToShowDTO>> GetArtworksLike(int userId)
         {
             IList<ArtworkLikeToShowDTO> artworkLikeDTOList = new List<ArtworkLikeToShowDTO>();
             var artworks = await _artworkRepository.GetArtworksAsync();
@@ -111,7 +111,7 @@ namespace ArtworkSharingPlatform.Application.Services
                 var artworkLikeDTO = new ArtworkLikeToShowDTO
                 {
                     ArtworkId = artwork.Id,
-                    IsLiked = await _artworkRepository.HasUserLikedArtwork(userParams.CurrentUserId, artwork.Id)
+                    IsLiked = await _artworkRepository.HasUserLikedArtwork(userId, artwork.Id)
                 };
                 artworkLikeDTOList.Add(artworkLikeDTO);
             }

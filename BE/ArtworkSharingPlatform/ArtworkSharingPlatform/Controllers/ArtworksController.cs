@@ -93,9 +93,9 @@ namespace ArtworkSharingHost.Controllers
         }
 
         [HttpGet("likes")]
-        public async Task<ActionResult<IEnumerable<ArtworkLikeToShowDTO>>> GetArtworksLike([FromQuery] UserParams userParams)
+        public async Task<ActionResult<IEnumerable<ArtworkLikeToShowDTO>>> GetArtworksLike()
         {
-            var artworksLikes = await _artworkService.GetArtworksLike(userParams);
+            var artworksLikes = await _artworkService.GetArtworksLike(User.GetUserId());
             return Ok(artworksLikes);
         }
 
