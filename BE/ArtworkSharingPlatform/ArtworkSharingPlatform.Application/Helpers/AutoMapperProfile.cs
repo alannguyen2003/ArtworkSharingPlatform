@@ -34,6 +34,7 @@ namespace ArtworkSharingPlatform.Application.Helpers
             CreateMap<User, UserInfoDTO>()
                 .ForMember(dest => dest.Role,
                     opt => opt.MapFrom(src => src.UserRoles.Any() ? src.UserRoles.First().Role.Name : null))
+                .ForMember(dest => dest.UserImageUrl, opt => opt.MapFrom(src => src.UserImage.Url))
                 .ReverseMap();
             CreateMap<User, UserAdminDTO>()
                 .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.UserRoles.First().Role.Name))
