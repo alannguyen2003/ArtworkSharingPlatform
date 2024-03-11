@@ -108,12 +108,15 @@ namespace ArtworkSharingPlatform.Application.Services
 
             foreach (var artwork in artworks)
             {
-                var artworkLikeDTO = new ArtworkLikeToShowDTO
+                if(await _artworkRepository.HasUserLikedArtwork(userId, artwork.Id))
                 {
-                    ArtworkId = artwork.Id,
-                    IsLiked = await _artworkRepository.HasUserLikedArtwork(userId, artwork.Id)
-                };
-                artworkLikeDTOList.Add(artworkLikeDTO);
+					var artworkLikeDTO = new ArtworkLikeToShowDTO
+					{
+						ArtworkId = artwork.Id,
+						IsLiked = true
+					};
+					artworkLikeDTOList.Add(artworkLikeDTO);
+				}
             }
             return artworkLikeDTOList;
         }

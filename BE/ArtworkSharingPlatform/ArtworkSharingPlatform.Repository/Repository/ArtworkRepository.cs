@@ -31,8 +31,8 @@ namespace ArtworkSharingPlatform.Repository.Repository
         }
         public async Task UserLike(Like like)
         {
-                var isLike = await _context.Likes.AnyAsync(a => a.Artwork.Equals(like.Artwork) && a.User.Equals(like.User));
-                if (like != null && !isLike)
+                var isLike = await _context.Likes.AnyAsync(a => a.ArtworkId == like.ArtworkId && a.UserId == like.UserId);
+                if (like != null && isLike)
                 {
                     var index = await _context.Likes.Where(a => a.Artwork.Equals(like.Artwork) && a.User.Equals(like.User)).FirstOrDefaultAsync();
                     _context.Likes.Remove(index);
@@ -41,7 +41,7 @@ namespace ArtworkSharingPlatform.Repository.Repository
                 }
                 else if (like != null)
                 {
-                    _context.Likes.AddAsync(like);
+                    await _context.Likes.AddAsync(like);
                     await _context.SaveChangesAsync();
                 }
         }
