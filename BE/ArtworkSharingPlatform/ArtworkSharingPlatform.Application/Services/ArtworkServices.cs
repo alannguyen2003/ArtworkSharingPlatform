@@ -89,7 +89,7 @@ namespace ArtworkSharingPlatform.Application.Services
                 await _artworkRepository.DeleteArtwork(artworkId);
 
         }
-        public async Task UpdateArtwork(ArtworkToAddDTO _artwork)
+        public async Task UpdateArtwork(ArtworkUpdateDTO _artwork)
         {
 
                 var artwork = _mapper.Map<Artwork>(_artwork);
@@ -143,6 +143,21 @@ namespace ArtworkSharingPlatform.Application.Services
             var artworks = await _artworkRepository.SearchArtworkByGenre(genreId);
             var artworkDTOs = _mapper.Map<IList<ArtworkDTO>>(artworks);
             return artworkDTOs;
+        }
+        public async Task AddArtworkImage(ArtworkImageToAddDTO _artwork)
+        {
+
+            var artwork = _mapper.Map<ArtworkImage>(_artwork);
+
+            await _artworkRepository.AddArtworkImage(artwork);
+
+        }
+        public async Task UpdateArtworkImage(ArtworkImageToAddDTO _artwork)
+        {
+
+            var artwork = _mapper.Map<ArtworkImage>(_artwork);
+
+            await _artworkRepository.UpdateArtworkImage(artwork);
         }
     }
 }
