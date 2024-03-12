@@ -9,6 +9,7 @@ namespace ArtworkSharingPlatform.DataTransferLayer
     public class ArtworkLikeDTO
     {
         public int UserId { get; set; }
+        public string UserEmail { get; set; }
         public int ArtworkId { get; set; }
     }
 }

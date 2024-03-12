@@ -50,9 +50,13 @@ namespace ArtworkSharingHost.Controllers
         }
 
         [HttpPost("like")]
-        public async Task<IActionResult> UserLike([FromBody] ArtworkLikeDTO like)
+        public async Task<IActionResult> UserLike([FromBody]int artworkId)
         {
-            like.UserId = User.GetUserId();
+            var like = new ArtworkLikeDTO
+            {
+                UserId = User.GetUserId(),
+                ArtworkId = artworkId
+            };
             await _artworkService.UserLike(like);
             return Ok(new { message = "Artwork liked successfully." });
         }
