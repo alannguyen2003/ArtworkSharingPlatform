@@ -7,6 +7,8 @@ export interface Artwork {
   createdDate: Date;
   description: string;
   imageUrl: string;
+  genreId: number;
+  genreName: string
   price: number;
   releaseCount: number;
   user: User;

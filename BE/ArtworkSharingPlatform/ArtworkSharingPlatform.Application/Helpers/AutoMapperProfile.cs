@@ -38,6 +38,7 @@ namespace ArtworkSharingPlatform.Application.Helpers
                 .ForMember(dest => dest.ImageUrl,
                     opt => opt.MapFrom(src => src.ArtworkImages.SingleOrDefault(x => x.IsThumbnail.Value).ImageUrl))
                 .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.Owner))
+                .ForMember(dest => dest.GenreName, opt => opt.MapFrom(src => src.Genre.Name))
                 .ReverseMap();
             CreateMap<Message, MessageDTO>();
             CreateMap<User, UserInfoDTO>()

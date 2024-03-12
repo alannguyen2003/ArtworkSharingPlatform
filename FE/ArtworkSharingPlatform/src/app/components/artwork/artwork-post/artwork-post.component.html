@@ -1,40 +1,79 @@
-<section class="p-6 dark:bg-gray-800 dark:text-gray-50">
-  <form novalidate="" action="" class="container flex flex-col mx-auto space-y-12">
+<section class="p-6 w-full dark:bg-gray-800 dark:text-gray-50">
+  <form #postArtworkForm="ngForm" (ngSubmit)="postArtwork()" class="container flex flex-col space-y-12">
     <fieldset class="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm dark:bg-gray-900">
       <div class="space-y-2 col-span-full lg:col-span-1">
-        <p class="font-medium">Personal Inormation</p>
-        <p class="text-xs">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci fuga autem eum!</p>
+        <p class="font-medium">Artwork Information</p>
       </div>
       <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
         <div class="col-span-full">
           <label for="title" class="block text-sm font-medium">Title</label>
           <div class="flex">
-            <input type="number" name="price" id="title" class="text-right border-gray-500 sm:text-sm rounded-md focus:ri dark:border-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ri w-1/2">
+            <input type="text" name="title" id="title" [(ngModel)]="artwork.title"
+                   class=" border-gray-500 sm:text-sm rounded-md focus:ri dark:border-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ri w-1/2">
           </div>
         </div>
         <div class="col-span-full sm:col-span-3">
           <label for="releaseCount" class="block text-sm font-medium">Release Count</label>
           <div class="flex">
-            <input type="number" name="price" id="releaseCount" class="flex flex-1 text-right border-gray-500 sm:text-sm rounded-md focus:ri dark:border-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ri">
+            <input type="number" name="releaseCount" id="releaseCount" [(ngModel)]="artwork.releaseCount"
+                   class="flex flex-1 border-gray-500 sm:text-sm rounded-md focus:ri dark:border-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ri">
           </div>
         </div>
         <div class="col-span-full sm:col-span-3">
           <label for="price" class="block text-sm font-medium">Price</label>
           <div class="flex">
-            <input type="number" name="price" id="price" class="flex flex-1 text-right border-gray-500 sm:text-sm rounded-md focus:ri dark:border-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ri">
+            <input type="number" name="price" id="price" [(ngModel)]="artwork.price"
+                   class="flex flex-1 border-gray-500 sm:text-sm rounded-md focus:ri dark:border-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ri">
             <span class="flex items-center px-3 pointer-events-none sm:text-sm rounded-r-md dark:bg-gray-700">VNĐ</span>
           </div>
         </div>
         <div class="col-span-full">
           <label for="description" class="block text-sm font-medium">Description</label>
           <div class="flex">
-            <textarea name="price" id="description" class=" w-full flex flex-1 text-right border-gray-500 sm:text-sm rounded-md focus:ri dark:border-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ri"></textarea>
-<!--            <input type="number" name="price" id="description" class="flex flex-1 text-right border-gray-500 sm:text-sm rounded-l-md focus:ri dark:border-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ri">-->
+            <textarea name="description" id="description" rows="5" [(ngModel)]="artwork.description"
+                      class=" w-full flex flex-1 border-gray-500 sm:text-sm rounded-md focus:ri dark:border-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ri"></textarea>
+            <!--            <input type="number" name="price" id="description" class="flex flex-1 text-right border-gray-500 sm:text-sm rounded-l-md focus:ri dark:border-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ri">-->
           </div>
         </div>
-        <div class="col-span-full">
-          <app-photo-editor></app-photo-editor>
+        <div class="col-span-full sm:col-span-3">
+          <label for="genre" class="block text-sm font-medium">Genre</label>
+          <div class="flex">
+            <select
+              [(ngModel)]="artwork.genreId"
+              name="genre"
+              class="flex flex-1 border-gray-500 sm:text-sm rounded-md focus:ri dark:border-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ri"
+              id="genre">
+              <option *ngFor="let genre of genres" [value]="genre.id">
+                {{genre.name}}
+              </option>
+            </select>
+          </div>
         </div>
+        <div class="col-span-full" *ngIf="artworkImages.length > 0">
+          <section class="py-6 dark:bg-gray-800 dark:text-gray-50">
+            <div class="container grid grid-cols-2 gap-4 p-4 mx-auto md:grid-cols-4 artwork-img-card">
+              <div class="image-card w-full h-full rounded shadow-sm min-h-48 dark:bg-gray-500 aspect-square card-img-wrapper" *ngFor="let image of artworkImages">
+                <img class="w-full h-full card-img-top" src="{{image.imageUrl}}"/>
+                <ul class="list-inline set-main-button text-center">
+                  <li class="list-inline-item">
+                    <button class="btn btn-primary" *ngIf="image.isThumbnail">Thumbnail</button>
+                    <button class="btn btn-outline-primary" *ngIf="!image.isThumbnail" (click)="setThumbnailImage(image)">Thumbnail</button>
+                  </li>
+                  <li class="list-inline-item">
+                    <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="col-span-full">
+          <p class="text-sm font-medium">Select your artwork's main image</p>
+          <app-photo-editor (artworkImagesAdded)="onImageAdded($event)" [canUploadMultiple]="true"></app-photo-editor>
+        </div>
+      </div>
+      <div class="col-span-3">
+        <button type="submit" class="px-8 py-2 font-semibold rounded-full dark:bg-gray-100 dark:text-gray-800">Post</button>
       </div>
     </fieldset>
   </form>
