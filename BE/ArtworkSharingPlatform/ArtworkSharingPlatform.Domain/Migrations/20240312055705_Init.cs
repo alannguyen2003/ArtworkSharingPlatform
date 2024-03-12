@@ -254,22 +254,21 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 name: "Follows",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FollowerId = table.Column<int>(type: "int", nullable: true),
-                    ArtistId = table.Column<int>(type: "int", nullable: true)
+                    SourceUserId = table.Column<int>(type: "int", nullable: false),
+                    TargetUserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Follows", x => x.Id);
+                    table.PrimaryKey("PK_Follows", x => new { x.SourceUserId, x.TargetUserId });
                     table.ForeignKey(
-                        name: "FK_Follows_AspNetUsers_ArtistId",
-                        column: x => x.ArtistId,
+                        name: "FK_Follows_AspNetUsers_SourceUserId",
+                        column: x => x.SourceUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Follows_AspNetUsers_FollowerId",
-                        column: x => x.FollowerId,
+                        name: "FK_Follows_AspNetUsers_TargetUserId",
+                        column: x => x.TargetUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                 });
@@ -469,6 +468,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PublicId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsThumbnail = table.Column<bool>(type: "bit", nullable: true),
                     ArtworkId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -490,8 +490,8 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<int>(type: "int", nullable: true),
-                    ArtworkId = table.Column<int>(type: "int", nullable: true)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    ArtworkId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -505,7 +505,8 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                         name: "FK_Comments_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -527,8 +528,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                         name: "FK_Likes_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -598,20 +598,19 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 name: "Ratings",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Score = table.Column<int>(type: "int", nullable: false),
-                    ArtworkId = table.Column<int>(type: "int", nullable: true),
-                    UserId = table.Column<int>(type: "int", nullable: true)
+                    ArtworkId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Score = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ratings", x => x.Id);
+                    table.PrimaryKey("PK_Ratings", x => new { x.UserId, x.ArtworkId });
                     table.ForeignKey(
                         name: "FK_Ratings_Artworks_ArtworkId",
                         column: x => x.ArtworkId,
                         principalTable: "Artworks",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Ratings_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -771,14 +770,9 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 column: "GroupName");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Follows_ArtistId",
+                name: "IX_Follows_TargetUserId",
                 table: "Follows",
-                column: "ArtistId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Follows_FollowerId",
-                table: "Follows",
-                column: "FollowerId");
+                column: "TargetUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Likes_ArtworkId",
@@ -830,11 +824,6 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 name: "IX_Ratings_ArtworkId",
                 table: "Ratings",
                 column: "ArtworkId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Ratings_UserId",
-                table: "Ratings",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transactions_ManagerId",
