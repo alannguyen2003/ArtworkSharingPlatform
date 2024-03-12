@@ -85,4 +85,8 @@ export class ArtworkService {
   getGenreForArtwork() {
     return this.http.get<Genre[]>(this.baseUrl + 'genre');
   }
+
+  likeArtwork(artworkId: number) {
+    return this.http.post(this.baseUrl + 'artworks/like', artworkId);
+  }
 }

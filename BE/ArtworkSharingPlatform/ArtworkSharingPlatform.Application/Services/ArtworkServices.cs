@@ -58,13 +58,14 @@ namespace ArtworkSharingPlatform.Application.Services
         public async Task UserLike(ArtworkLikeDTO like)
 		{
 
-				var artworkLike = _mapper.Map<Like>(like);
+			var artworkLike = _mapper.Map<Like>(like);
+			artworkLike.User = null;
 
-				await _artworkRepository.UserLike(artworkLike);
+			await _artworkRepository.UserLike(artworkLike);
 
 		}
 
-        public async Task UserRating(ArtworkRatingDTO rating)
+		public async Task UserRating(ArtworkRatingDTO rating)
         {
 
                 var artworkRate = _mapper.Map<Rating>(rating);

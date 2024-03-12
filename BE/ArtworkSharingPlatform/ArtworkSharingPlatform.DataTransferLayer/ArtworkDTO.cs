@@ -15,5 +15,6 @@
 		public byte Status { get; set; }
         public List<ArtworkImageDTO> ArtworkImages { get; set; }
         public ArtworkUserDTO User { get; set; }
+        public List<ArtworkLikeDTO> Likes { get; set; }
     }
 }
