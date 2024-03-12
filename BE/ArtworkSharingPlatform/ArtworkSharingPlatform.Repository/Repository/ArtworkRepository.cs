@@ -109,8 +109,8 @@ namespace ArtworkSharingPlatform.Repository.Repository
 
                 if (artwork != null)
                 {
-                artwork.Status = 1;
-                    _context.Artworks.AddAsync(artwork);
+                    artwork.Status = 1;
+                    await _context.Artworks.AddAsync(artwork);
 
                     await _context.SaveChangesAsync();
                 }

@@ -8,6 +8,8 @@
 		public decimal Price { get; set; }
 		public int ReleaseCount { get; set; }
 		public int OwnerId { get; set; }
+		public int GenreId { get; set; }
+		public string GenreName{ get; set; }
 		public string ImageUrl{ get; set; }
 		public DateTime CreatedDate { get; set; }
 		public byte Status { get; set; }

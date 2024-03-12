@@ -1,22 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ArtworkSharingPlatform.DataTransferLayer
 {
-    public class ArtworkToAddDTO
+	public class ArtworkToAddDTO
     {
-        public int Id { get; set; }
+        [Required]
         public string Title { get; set; }
         public string? Description { get; set; }
+        [Required]
         public decimal Price { get; set; }
+        [Required]
         public int ReleaseCount { get; set; }
+        [Required]
         public int OwnerId { get; set; }
-        public string ImageUrl { get; set; }
+        [Required]
         public DateTime CreatedDate { get; set; }
+        [Required]
+        public int GenreId { get; set; }
         public byte Status { get; set; }
-        public ArtworkImageToAddDTO ArtworkImages { get; set; }
+        public List<ArtworkImageToAddDTO> ArtworkImages { get; set; }
     }
 }

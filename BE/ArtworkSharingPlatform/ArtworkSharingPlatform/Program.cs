@@ -1,8 +1,10 @@
+using ArtworkSharingHost.CloudinaryService;
 using ArtworkSharingHost.Middleware;
 using ArtworkSharingHost.SignalR;
 using ArtworkSharingPlatform.Application.Interfaces;
 using ArtworkSharingPlatform.Application.Services;
 using ArtworkSharingPlatform.Domain.Entities.Users;
+using ArtworkSharingPlatform.Domain.Helpers;
 using ArtworkSharingPlatform.Domain.Migrations;
 using ArtworkSharingPlatform.Infrastructure;
 using ArtworkSharingPlatform.Infrastructure.Configuration;
@@ -84,9 +86,11 @@ builder.Services.AddAuthentication(options =>
 //});
 builder.Services.AddSignalR();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IImageService, ImageService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

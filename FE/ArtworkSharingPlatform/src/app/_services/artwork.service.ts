@@ -7,6 +7,7 @@ import {map, of, take} from "rxjs";
 import {UserParams} from "../_model/userParams.model";
 import {getPaginatedResult, getPaginationHeaders} from "./pagination-helper.service";
 import {environment} from "../../environments/environment";
+import {Genre} from "../_model/genre.model";
 
 @Injectable({
   providedIn: 'root'
@@ -75,5 +76,13 @@ export class ArtworkService {
       .reduce((arr, elm) => arr.concat(elm.result), []).find((artwork: Artwork) => artwork.id == id);
     if (artwork) return of(artwork);
     return this.http.get<Artwork>(this.baseUrl + 'artworks/' + id);
+  }
+
+  addArtwork(artwork: Artwork) {
+    return this.http.post<Artwork>(this.baseUrl + 'artworks', artwork);
+  }
+
+  getGenreForArtwork() {
+    return this.http.get<Genre[]>(this.baseUrl + 'genre');
   }
 }
