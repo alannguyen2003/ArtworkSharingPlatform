@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace ArtworkSharingPlatform.DataTransferLayer
 {
-    public class ArtworkToAddDTO
+    public class ArtworkUpdateDTO
     {
+        public int Id { get; set; }
         public string Title { get; set; }
         public string? Description { get; set; }
         public decimal Price { get; set; }

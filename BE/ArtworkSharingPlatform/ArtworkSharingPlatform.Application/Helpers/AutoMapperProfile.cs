@@ -23,6 +23,7 @@ namespace ArtworkSharingPlatform.Application.Helpers
             CreateMap<Rating, ArtworkRatingDTO>().ReverseMap();
             CreateMap<ArtworkImage, ArtworkImageDTO>().ReverseMap();
             CreateMap<Artwork, ArtworkToAddDTO>().ReverseMap();
+            CreateMap<Artwork, ArtworkUpdateDTO>().ReverseMap();
             CreateMap<ArtworkImage, ArtworkImageToAddDTO>().ReverseMap();
             CreateMap<Artwork, ArtworkDTO>()
                 .ForMember(dest => dest.ImageUrl,

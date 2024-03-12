@@ -13,11 +13,13 @@ namespace ArtworkSharingPlatform.Application.Interfaces
         Task UserFollow(UserFollowDTO follow);
         Task AddArtwork(ArtworkToAddDTO artwork);
         Task DeleteArtwork(int artworkId);
-        Task UpdateArtwork(ArtworkToAddDTO artwork);
+        Task UpdateArtwork(ArtworkUpdateDTO artwork);
         Task<IEnumerable<ArtworkLikeToShowDTO>> GetArtworksLike(int userId);
         Task ArtworkComment(ArtworkCommentDTO comment);
         Task<IList<ArtworkDTO>> SearchArtworkByTitle(string search);
         Task<IEnumerable<ArtworkDTO>> SearchArtworkByGenre(int genreId);
+        Task AddArtworkImage(ArtworkImageToAddDTO _artwork);
+        Task UpdateArtworkImage(ArtworkImageToAddDTO _artwork);
 
     }
 }
