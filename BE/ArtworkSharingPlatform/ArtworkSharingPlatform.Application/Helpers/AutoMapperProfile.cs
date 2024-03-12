@@ -1,6 +1,5 @@
 ﻿using System.Runtime.InteropServices;
 using ArtworkSharingPlatform.DataTransferLayer;
-using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.Commission;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response.Commission;
 using ArtworkSharingPlatform.Domain.Entities.Artworks;
@@ -9,6 +8,8 @@ using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Domain.Entities.Users;
 using AutoMapper;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.User;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
 
 namespace ArtworkSharingPlatform.Application.Helpers
 {
@@ -16,11 +17,22 @@ namespace ArtworkSharingPlatform.Application.Helpers
     {
         public AutoMapperProfile()
         {
-            CreateMap<User, ArtworkUserDTO>().ReverseMap();
+
             CreateMap<Like, ArtworkLikeDTO>().ReverseMap();
             CreateMap<Follow, UserFollowDTO>().ReverseMap();
             CreateMap<Comment, ArtworkCommentDTO>().ReverseMap();
             CreateMap<Rating, ArtworkRatingDTO>().ReverseMap();
+
+            CreateMap<User, ArtworkUserDTO>()
+                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.UserImage.Url))
+                .ReverseMap();
+			CreateMap<User, UserDTO>()
+				.ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.UserImage.Url))
+				.ReverseMap();
+			CreateMap<Like, ArtworkLikeDTO>()
+                .ForMember(dest => dest.UserEmail, opt => opt.MapFrom(src => src.User.Email))
+                .ReverseMap();
+
             CreateMap<ArtworkImage, ArtworkImageDTO>().ReverseMap();
             CreateMap<Artwork, ArtworkToAddDTO>().ReverseMap();
             CreateMap<Artwork, ArtworkUpdateDTO>().ReverseMap();
@@ -29,20 +41,29 @@ namespace ArtworkSharingPlatform.Application.Helpers
                 .ForMember(dest => dest.ImageUrl,
                     opt => opt.MapFrom(src => src.ArtworkImages.SingleOrDefault(x => x.IsThumbnail.Value).ImageUrl))
                 .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.Owner))
+                .ForMember(dest => dest.GenreName, opt => opt.MapFrom(src => src.Genre.Name))
                 .ReverseMap();
             CreateMap<Message, MessageDTO>();
             CreateMap<User, UserInfoDTO>()
                 .ForMember(dest => dest.Role,
                     opt => opt.MapFrom(src => src.UserRoles.Any() ? src.UserRoles.First().Role.Name : null))
+                .ForMember(dest => dest.UserImageUrl, opt => opt.MapFrom(src => src.UserImage.Url))
                 .ReverseMap();
             CreateMap<User, UserAdminDTO>()
+                .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.UserRoles.First().Role.Name))
+                .ReverseMap();
+            CreateMap<User, UserAdminCreateDTO>()
                 .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.UserRoles.First().Role.Name))
                 .ReverseMap();
             CreateMap<User, UserInfoAudienceDTO>()
                 .ReverseMap();
             CreateMap<User, UserDetailUpdateDTO>()
                 .ReverseMap();
-            CreateCommissionRequestToCommissionEntityMap();
+            CreateMap<User, UserProfileDTO>()
+                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.UserImage.Url))
+                .ReverseMap();
+			CreateMap<User, UpdateProfileDTO>().ReverseMap();
+			CreateCommissionRequestToCommissionEntityMap();
             CommissionEntityToCommissionDTOMap();
         }
 

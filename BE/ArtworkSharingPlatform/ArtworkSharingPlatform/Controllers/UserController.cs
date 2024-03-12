@@ -1,5 +1,6 @@
 ﻿using ArtworkSharingPlatform.Application.Interfaces;
-using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
+using ArtworkSharingPlatform.DataTransferLayer;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.User;
 using ArtworkSharingPlatform.Domain.Entities.Users;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -19,6 +20,16 @@ namespace ArtworkSharingHost.Controllers
         {
             _userService = userService;
             _mapper = mapper;
+        }
+        [HttpGet("artist/{email}")]
+        public async Task<IActionResult> GetArtistProfile(string email)
+        {
+            var artistProfile = await _userService.GetArtistProfileByEmail(email);
+            if (artistProfile == null)
+            {
+                return NotFound("Artist Not Found");
+            }
+            return Ok(artistProfile);
         }
 
         [HttpGet("/detail/{id}")]
@@ -52,6 +63,14 @@ namespace ArtworkSharingHost.Controllers
             {
                 return BadRequest(ex.Message);
             }
+            return Ok();
+        }
+        [HttpPut("edit-profile")]
+        public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileDTO updateProfileDTO)
+        
+        {
+            var user = _mapper.Map<User>(updateProfileDTO);
+            await _userService.UpdateUserDetail(user);
             return Ok();
         }
     }

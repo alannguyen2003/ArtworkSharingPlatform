@@ -79,7 +79,8 @@ namespace ArtworkSharingPlatform.Infrastructure
                 Name = "admin",
                 Email = "admin@gmail.com",
                 Status = 1,
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                Description = "I am an admin"
             };
 
             var resultAdmin = await userManager.CreateAsync(admin, "Pa$$w0rd");
@@ -91,7 +92,8 @@ namespace ArtworkSharingPlatform.Infrastructure
                 Name = "manager",
                 Email = "manager@gmail.com",
                 Status = 1,
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                Description = "I am a manager"
             };
             await userManager.CreateAsync(manager, "Pa$$w0rd");
             await userManager.AddToRolesAsync(manager, new[] { "Manager", "Artist", "Audience" });
@@ -103,7 +105,12 @@ namespace ArtworkSharingPlatform.Infrastructure
                 Email = "picasso@gmail.com",
                 PhoneNumber = "0123456789",
                 Status = 1,
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                Description = "I am an artist",
+                UserImage = new UserImage
+                {
+                    Url = "https://images.pexels.com/photos/11098559/pexels-photo-11098559.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                }
             };
             await userManager.CreateAsync(artist, "Pa$$w0rd");
             await userManager.AddToRolesAsync(artist, new[] {"Artist", "Audience" });

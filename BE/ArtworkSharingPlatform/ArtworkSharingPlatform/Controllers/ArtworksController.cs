@@ -1,11 +1,7 @@
 ﻿using ArtworkSharingHost.Extensions;
 using ArtworkSharingPlatform.Application.Interfaces;
 using ArtworkSharingPlatform.DataTransferLayer;
-using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
-using ArtworkSharingPlatform.Domain.Entities.Users;
 using ArtworkSharingPlatform.Domain.Helpers;
-using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ArtworkSharingHost.Controllers
@@ -54,9 +50,13 @@ namespace ArtworkSharingHost.Controllers
         }
 
         [HttpPost("like")]
-        public async Task<IActionResult> UserLike([FromBody] ArtworkLikeDTO like)
+        public async Task<IActionResult> UserLike([FromBody]int artworkId)
         {
-            like.UserId = User.GetUserId();
+            var like = new ArtworkLikeDTO
+            {
+                UserId = User.GetUserId(),
+                ArtworkId = artworkId
+            };
             await _artworkService.UserLike(like);
             return Ok(new { message = "Artwork liked successfully." });
         }
@@ -84,8 +84,15 @@ namespace ArtworkSharingHost.Controllers
         [HttpPost]
         public async Task<IActionResult> AddArtwork([FromBody] ArtworkToAddDTO artwork)
         {
+            artwork.CreatedDate = DateTime.UtcNow;
+            artwork.OwnerId = User.GetUserId();
+            var flag = artwork.ArtworkImages.Any(x => x.IsThumbnail == true);
+            if(!flag)
+            {
+                artwork.ArtworkImages.First().IsThumbnail = true;
+            }
             await _artworkService.AddArtwork(artwork);
-            return Ok(new { message = "Artwork updated successfully." });
+            return Ok(artwork);
         }
 
         [HttpDelete("{artworkId}")]

@@ -5,6 +5,8 @@ import {BsDropdownModule} from "ngx-bootstrap/dropdown";
 import {ToastrModule} from "ngx-toastr";
 import {PaginationModule} from "ngx-bootstrap/pagination";
 import {TabsModule} from "ngx-bootstrap/tabs";
+import {TimeagoModule} from "ngx-timeago";
+import {FileUploadModule} from "ng2-file-upload";
 
 
 
@@ -18,14 +20,18 @@ import {TabsModule} from "ngx-bootstrap/tabs";
       positionClass: 'toast-bottom-right'
     }),
     PaginationModule.forRoot(),
-    TabsModule.forRoot()
+    TabsModule.forRoot(),
+    TimeagoModule.forRoot(),
+    FileUploadModule
   ],
   exports: [
     NgxSpinnerModule,
     BsDropdownModule,
     ToastrModule,
     PaginationModule,
-    TabsModule
+    TabsModule,
+    TimeagoModule,
+    FileUploadModule
   ]
 })
 export class SharedModule { }

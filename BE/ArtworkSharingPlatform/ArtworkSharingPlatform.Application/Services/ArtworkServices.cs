@@ -38,11 +38,17 @@ namespace ArtworkSharingPlatform.Application.Services
 
 			query = query.Where(x => x.Price >= userParams.MinPrice && x.Price <= userParams.MaxPrice);
 
+			if (userParams.GenreId != 0)
+			{
+				query = query.Where(x => x.GenreId == userParams.GenreId);
+			}
+
 			query = userParams.OrderBy switch
 			{
 				"lowPrice" => query.OrderBy(x => x.Price),
 				_ => query.OrderByDescending(x => x.Price)
 			};
+            
 
 			return await PagedList<ArtworkDTO>.CreateAsync(query.AsNoTracking().ProjectTo<ArtworkDTO>(_mapper.ConfigurationProvider),
 															userParams.PageNumber,
@@ -52,13 +58,14 @@ namespace ArtworkSharingPlatform.Application.Services
         public async Task UserLike(ArtworkLikeDTO like)
 		{
 
-				var artworkLike = _mapper.Map<Like>(like);
+			var artworkLike = _mapper.Map<Like>(like);
+			artworkLike.User = null;
 
-				await _artworkRepository.UserLike(artworkLike);
+			await _artworkRepository.UserLike(artworkLike);
 
 		}
 
-        public async Task UserRating(ArtworkRatingDTO rating)
+		public async Task UserRating(ArtworkRatingDTO rating)
         {
 
                 var artworkRate = _mapper.Map<Rating>(rating);

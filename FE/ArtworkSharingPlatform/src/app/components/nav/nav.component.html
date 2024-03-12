@@ -34,7 +34,7 @@
         <li *ngIf="(accountService.currentUser$ | async) as user">
           <div class="dropdown" dropdown>
             <div class="flex items-center space-x-4">
-              <img src="" alt="user photo" class="w-12 h-12 bg-center bg-cover rounded-full dark:bg-gray-500">
+              <img src="{{user.imageUrl}}" alt="user photo" class="w-12 h-12 bg-center bg-cover rounded-full dark:bg-gray-500">
               <div>
                 <p class="text-lg font-semibold">Welcome, {{user.name}}</p>
                 <p class="text-sm dark:text-gray-400">

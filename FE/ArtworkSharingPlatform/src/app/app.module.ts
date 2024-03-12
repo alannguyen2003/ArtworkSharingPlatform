@@ -31,6 +31,7 @@ import {MessageSentComponent} from "./components/messages/message-sent/message-s
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
 import {ArtworkPostComponent} from "./components/artwork/artwork-post/artwork-post.component";
 import { PhotoEditorComponent } from './components/artwork/artwork-post/photo-editor/photo-editor.component';
+import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { PhotoEditorComponent } from './components/artwork/artwork-post/photo-ed
     MessagesComponent,
     ProfileEditComponent,
     ArtworkPostComponent,
-    PhotoEditorComponent
+    PhotoEditorComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
