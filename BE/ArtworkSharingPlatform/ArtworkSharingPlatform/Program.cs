@@ -62,7 +62,7 @@ builder.Services.AddAuthentication(options =>
         {
             var accessToken = context.Request.Query["access_token"];
             var path = context.HttpContext.Request.Path;
-            if(!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hub"))
+            if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hub"))
             {
                 context.Token = accessToken;
             }
@@ -84,9 +84,6 @@ builder.Services.AddAuthentication(options =>
 //});
 builder.Services.AddSignalR();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IUserService, UserService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -126,6 +123,7 @@ try
     await Seed.SeedUser(userManager, roleManager);
     await Seed.SeedArtwork(context);
     await Seed.SeedCommissionStatus(context);
+    await Seed.SeedPackageInformation(context);
 }
 catch (Exception ex)
 {

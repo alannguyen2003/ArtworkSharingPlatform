@@ -123,7 +123,6 @@ namespace ArtworkSharingPlatform.Repository.Repository
 
                     await _context.SaveChangesAsync();
                 }
-
         }
 
         public async Task UpdateArtwork(Artwork artwork)
@@ -146,7 +145,7 @@ namespace ArtworkSharingPlatform.Repository.Repository
 
         public async Task<IEnumerable<Artwork>> GetArtworksAsync()
         {
-            return await _context.Artworks.ToListAsync();
+            return await _context.Artworks.Include(a => a.ArtworkImages).Include(a => a.Owner).ToListAsync();
         }
 
     }

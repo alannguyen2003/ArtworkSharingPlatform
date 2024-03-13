@@ -1,4 +1,5 @@
 ﻿using ArtworkSharingPlatform.DataTransferLayer;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Response;
 using ArtworkSharingPlatform.Domain.Entities.Artworks;
 using ArtworkSharingPlatform.Domain.Helpers;
 
@@ -15,6 +16,6 @@ namespace ArtworkSharingPlatform.Application.Interfaces
         Task DeleteArtwork(int artworkId);
         Task UpdateArtwork(ArtworkDTO artwork);
         Task<IEnumerable<ArtworkLikeToShowDTO>> GetArtworksLike(int userId);
-
+        Task<List<ArtworkAdminDTO>> GetArtworkAdmin();
     }
 }

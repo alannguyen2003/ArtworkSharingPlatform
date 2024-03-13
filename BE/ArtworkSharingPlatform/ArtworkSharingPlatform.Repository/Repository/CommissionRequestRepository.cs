@@ -13,6 +13,19 @@ public class CommissionRequestRepository : ICommissionRequestRepository
         _dbContext = dbContext;
     }
 
+    public async Task<List<CommissionRequest>> GetAllCommission()
+    {
+        List<CommissionRequest> commission = null;
+        try
+        {
+            commission = _dbContext.CommissionRequests.ToList();
+        }catch(Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+        return commission;
+    }
+
     public void Insert(CommissionRequest commissionRequest)
     {
         _dbContext.CommissionRequests.Add(commissionRequest);

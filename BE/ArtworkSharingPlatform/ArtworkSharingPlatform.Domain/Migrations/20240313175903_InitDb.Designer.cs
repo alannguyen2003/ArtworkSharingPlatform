@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArtworkSharingPlatform.Domain.Migrations
 {
     [DbContext(typeof(ArtworkSharingPlatformDbContext))]
-    [Migration("20240311092220_Init")]
-    partial class Init
+    [Migration("20240313175903_InitDb")]
+    partial class InitDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -505,11 +505,15 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.Property<int>("Credit")
                         .HasColumnType("int");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(10,2)");
 
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte?>("Status")
+                        .HasColumnType("tinyint");
 
                     b.HasKey("Id");
 
