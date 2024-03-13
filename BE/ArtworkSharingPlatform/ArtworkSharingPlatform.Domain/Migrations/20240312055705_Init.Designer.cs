@@ -12,13 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArtworkSharingPlatform.Domain.Migrations
 {
     [DbContext(typeof(ArtworkSharingPlatformDbContext))]
-<<<<<<<< HEAD:BE/ArtworkSharingPlatform/ArtworkSharingPlatform.Domain/Migrations/20240313175903_InitDb.Designer.cs
-    [Migration("20240313175903_InitDb")]
-    partial class InitDb
-========
     [Migration("20240312055705_Init")]
     partial class Init
->>>>>>>> main:BE/ArtworkSharingPlatform/ArtworkSharingPlatform.Domain/Migrations/20240312055705_Init.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
