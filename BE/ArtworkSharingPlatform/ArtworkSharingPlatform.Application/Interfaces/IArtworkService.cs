@@ -1,4 +1,5 @@
 ﻿using ArtworkSharingPlatform.DataTransferLayer;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Response;
 using ArtworkSharingPlatform.Domain.Entities.Artworks;
 using ArtworkSharingPlatform.Domain.Helpers;
 
@@ -15,11 +16,15 @@ namespace ArtworkSharingPlatform.Application.Interfaces
         Task DeleteArtwork(int artworkId);
         Task UpdateArtwork(ArtworkUpdateDTO artwork);
         Task<IEnumerable<ArtworkLikeToShowDTO>> GetArtworksLike(int userId);
+<<<<<<< HEAD
+        Task<List<ArtworkAdminDTO>> GetArtworkAdmin();
+=======
         Task ArtworkComment(ArtworkCommentDTO comment);
         Task<IList<ArtworkDTO>> SearchArtworkByTitle(string search);
         Task<IEnumerable<ArtworkDTO>> SearchArtworkByGenre(int genreId);
         Task AddArtworkImage(ArtworkImageToAddDTO _artwork);
         Task UpdateArtworkImage(ArtworkImageToAddDTO _artwork);
 
+>>>>>>> main
     }
 }

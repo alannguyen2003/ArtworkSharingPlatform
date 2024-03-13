@@ -27,6 +27,11 @@ public static class DependencyInjection
         services.AddScoped<IMessageRepository, MessageRepository>();
         services.AddScoped<IMessageService, MessageService>();
         services.AddScoped<ICommissionService, CommissionService>();
+        services.AddScoped<IPackageRepository, PackageRepository>();
+        services.AddScoped<IPackageService, PackageService>();
+        services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUserService, UserService>();
         return services;
     }
 }

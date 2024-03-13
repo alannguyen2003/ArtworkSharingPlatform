@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using ArtworkSharingPlatform.Domain.Entities.Commissions;
+using ArtworkSharingPlatform.Domain.Entities.PackagesInfo;
 
 namespace ArtworkSharingPlatform.Infrastructure
 {
@@ -118,6 +119,7 @@ namespace ArtworkSharingPlatform.Infrastructure
 
         public static async Task SeedCommissionStatus(ArtworkSharingPlatformDbContext context)
         {
+            if (await context.CommissionStatus.AnyAsync()) { return; }
             var commissionStatusList = new List<CommissionStatus>
             {
                 new CommissionStatus {Description = "Pending"},
@@ -128,6 +130,40 @@ namespace ArtworkSharingPlatform.Infrastructure
             foreach (var commissionStatus in commissionStatusList)
             {
                 await context.CommissionStatus.AddAsync(commissionStatus);
+            }
+            await context.SaveChangesAsync();
+        }
+
+        public static async Task SeedPackageInformation(ArtworkSharingPlatformDbContext context)
+        {
+            if (await context.PackageInformation.AnyAsync()) { return; }
+            var package = new List<PackageInformation>
+            {
+                new PackageInformation
+                {
+                    Name = "Basic",
+                    Credit = 5,
+                    Price = 20000,
+                    Status = 1
+                },
+                new PackageInformation
+                {
+                    Name = "Advance",
+                    Credit = 15,
+                    Price = 60000,
+                    Status = 1
+                },
+                new PackageInformation
+                {
+                    Name = "Super",
+                    Credit = 25,
+                    Price = 100000,
+                    Status = 1
+                }
+            };
+            foreach(var packageInformation in package)
+            {
+                await context.PackageInformation.AddAsync(packageInformation);
             }
             await context.SaveChangesAsync();
         }

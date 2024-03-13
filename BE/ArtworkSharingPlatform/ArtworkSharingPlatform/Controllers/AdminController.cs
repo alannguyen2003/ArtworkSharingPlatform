@@ -13,11 +13,15 @@ namespace ArtworkSharingHost.Controllers
     public class AdminController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IArtworkService _artworkService;
+        private readonly ICommissionService _commissionService;
         private readonly IMapper _mapper;
-        public AdminController(IUserService userService, IMapper mapper)
+        public AdminController(IUserService userService, IMapper mapper, IArtworkService artworkService, ICommissionService commissionService)
         {
             _userService = userService;
             _mapper = mapper;
+            _artworkService = artworkService;
+            _commissionService = commissionService;
         }
 
         [HttpGet("User")]
@@ -95,7 +99,7 @@ namespace ArtworkSharingHost.Controllers
                 var user = _mapper.Map<User>(userDto);
                 await _userService.UpdateUserAdmin(user);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -108,6 +112,25 @@ namespace ArtworkSharingHost.Controllers
             var user = _mapper.Map<User>(userDto);
             await _userService.DeleteUserAdmin(user);
             return Ok();
+        }
+
+        [HttpGet("Artworks")]
+        public async Task<IActionResult> GetAllArtwork()
+        {
+            return Ok(await _artworkService.GetArtworkAdmin());
+        }
+
+        [HttpDelete("{artworkId}")]
+        public async Task<IActionResult> DeleteArtwork(int artworkId)
+        {
+            await _artworkService.DeleteArtwork(artworkId);
+            return Ok(new { message = "Artwork deleted successfully." });
+        }
+
+        [HttpGet("Commissions")]
+        public async Task<IActionResult> GetAllCommission()
+        {
+            return Ok(await _commissionService.GetAllCommissionAdmin());
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ArtworkSharingPlatform.Application.Interfaces;
 using ArtworkSharingPlatform.DataTransferLayer;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Response;
 using ArtworkSharingPlatform.Domain.Entities.Artworks;
 using ArtworkSharingPlatform.Domain.Helpers;
 using ArtworkSharingPlatform.Repository.Interfaces;
@@ -30,7 +31,16 @@ namespace ArtworkSharingPlatform.Application.Services
 			return artwork;
 		}
 
-		public async Task<PagedList<ArtworkDTO>> GetArtworksAsync(UserParams userParams)
+        public async Task<List<ArtworkAdminDTO>> GetArtworkAdmin()
+        {
+            var artworks = await _artworkRepository.GetArtworksAsync();
+            var query = artworks.AsQueryable();
+
+            return query.ProjectTo<ArtworkAdminDTO>(_mapper.ConfigurationProvider).ToList();
+        }
+
+
+        public async Task<PagedList<ArtworkDTO>> GetArtworksAsync(UserParams userParams)
 		{
 			var query = _artworkRepository.GetArtworksAsQueryable();
 

@@ -9,4 +9,5 @@ public interface ICommissionRequestRepository
     IEnumerable<CommissionRequest> GetAllBySenderId(int senderId);
     IEnumerable<CommissionRequest> GetAllByReceiverId(int senderId);
     void Update(CommissionRequest commissionRequest);
+    Task<List<CommissionRequest>> GetAllCommission();
 }
