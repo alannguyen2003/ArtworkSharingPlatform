@@ -10,6 +10,6 @@ namespace ArtworkSharingPlatform.DataTransferLayer
     {
         public int UserId { get; set; }
         public int ArtworkId { get; set; }
-        public int Rating { get; set; }
+        public int Score { get; set; }
     }
 }

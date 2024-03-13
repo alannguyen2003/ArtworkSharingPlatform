@@ -7,11 +7,14 @@ using System.Threading.Tasks;
 
 namespace ArtworkSharingPlatform.DataTransferLayer
 {
-    public class UserFollowDTO
+    public class ArtworkImageToAddDTO
     {
         [Required]
-        public int TargetUserId { get; set; }
+        public string ImageUrl { get; set; }
         [Required]
-        public int SourceUserId { get; set; }
+        public string PublicId { get; set; }
+        [Required]
+        public bool IsThumbnail { get; set; }
+        public int ArtworkId { get; set; }
     }
 }

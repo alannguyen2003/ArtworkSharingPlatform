@@ -3,8 +3,10 @@ using ArtworkSharingPlatform.Domain.Entities.Users;
 
 namespace ArtworkSharingPlatform.Domain.Entities.Artworks;
 
-public class Follow:BaseEntity
+public class Follow
 {
-    public User? Follower { get; set; }
-    public User? Artist { get; set; }
+    public User SourceUser { get; set; }
+    public int SourceUserId { get; set; }
+    public User TargetUser { get; set; }
+    public int TargetUserId { get; set; }
 }

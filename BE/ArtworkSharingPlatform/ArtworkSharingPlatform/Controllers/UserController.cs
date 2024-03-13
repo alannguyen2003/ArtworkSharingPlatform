@@ -1,4 +1,5 @@
 ﻿using ArtworkSharingPlatform.Application.Interfaces;
+using ArtworkSharingPlatform.DataTransferLayer;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.User;
 using ArtworkSharingPlatform.Domain.Entities.Users;
 using AutoMapper;
@@ -62,6 +63,14 @@ namespace ArtworkSharingHost.Controllers
             {
                 return BadRequest(ex.Message);
             }
+            return Ok();
+        }
+        [HttpPut("edit-profile")]
+        public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileDTO updateProfileDTO)
+        
+        {
+            var user = _mapper.Map<User>(updateProfileDTO);
+            await _userService.UpdateUserDetail(user);
             return Ok();
         }
     }

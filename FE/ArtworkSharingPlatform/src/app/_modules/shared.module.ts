@@ -6,6 +6,7 @@ import {ToastrModule} from "ngx-toastr";
 import {PaginationModule} from "ngx-bootstrap/pagination";
 import {TabsModule} from "ngx-bootstrap/tabs";
 import {TimeagoModule} from "ngx-timeago";
+import {FileUploadModule} from "ng2-file-upload";
 
 
 
@@ -20,7 +21,8 @@ import {TimeagoModule} from "ngx-timeago";
     }),
     PaginationModule.forRoot(),
     TabsModule.forRoot(),
-    TimeagoModule.forRoot()
+    TimeagoModule.forRoot(),
+    FileUploadModule
   ],
   exports: [
     NgxSpinnerModule,
@@ -28,7 +30,8 @@ import {TimeagoModule} from "ngx-timeago";
     ToastrModule,
     PaginationModule,
     TabsModule,
-    TimeagoModule
+    TimeagoModule,
+    FileUploadModule
   ]
 })
 export class SharedModule { }

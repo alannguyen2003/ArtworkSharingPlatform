@@ -68,13 +68,14 @@ namespace ArtworkSharingPlatform.Application.Services
         public async Task UserLike(ArtworkLikeDTO like)
 		{
 
-				var artworkLike = _mapper.Map<Like>(like);
+			var artworkLike = _mapper.Map<Like>(like);
+			artworkLike.User = null;
 
-				await _artworkRepository.UserLike(artworkLike);
+			await _artworkRepository.UserLike(artworkLike);
 
 		}
 
-        public async Task UserRating(ArtworkRatingDTO rating)
+		public async Task UserRating(ArtworkRatingDTO rating)
         {
 
                 var artworkRate = _mapper.Map<Rating>(rating);
@@ -83,7 +84,7 @@ namespace ArtworkSharingPlatform.Application.Services
 
         }
 
-        public async Task AddArtwork(ArtworkDTO _artwork)
+        public async Task AddArtwork(ArtworkToAddDTO _artwork)
         {
 
                 var artwork= _mapper.Map<Artwork>(_artwork);
@@ -98,7 +99,7 @@ namespace ArtworkSharingPlatform.Application.Services
                 await _artworkRepository.DeleteArtwork(artworkId);
 
         }
-        public async Task UpdateArtwork(ArtworkDTO _artwork)
+        public async Task UpdateArtwork(ArtworkUpdateDTO _artwork)
         {
 
                 var artwork = _mapper.Map<Artwork>(_artwork);
@@ -114,6 +115,11 @@ namespace ArtworkSharingPlatform.Application.Services
 
                 await _artworkRepository.UserFollow(artworkFollow);
 
+        }
+        public async Task ArtworkComment(ArtworkCommentDTO comment)
+        {
+            var artwork = _mapper.Map<Comment>(comment);
+            await _artworkRepository.UserComment(artwork);
         }
 
         public async Task<IEnumerable<ArtworkLikeToShowDTO>> GetArtworksLike(int userId)
@@ -135,6 +141,33 @@ namespace ArtworkSharingPlatform.Application.Services
 				}
             }
             return artworkLikeDTOList;
+        }
+        public async Task<IList<ArtworkDTO>> SearchArtworkByTitle(string search)
+        {
+            var artworks = await _artworkRepository.SearchArtwork(search);
+            var artworkDTOs = _mapper.Map<IList<ArtworkDTO>>(artworks);
+            return artworkDTOs;
+        }
+        public async Task<IEnumerable<ArtworkDTO>> SearchArtworkByGenre(int genreId)
+        {
+            var artworks = await _artworkRepository.SearchArtworkByGenre(genreId);
+            var artworkDTOs = _mapper.Map<IList<ArtworkDTO>>(artworks);
+            return artworkDTOs;
+        }
+        public async Task AddArtworkImage(ArtworkImageToAddDTO _artwork)
+        {
+
+            var artwork = _mapper.Map<ArtworkImage>(_artwork);
+
+            await _artworkRepository.AddArtworkImage(artwork);
+
+        }
+        public async Task UpdateArtworkImage(ArtworkImageToAddDTO _artwork)
+        {
+
+            var artwork = _mapper.Map<ArtworkImage>(_artwork);
+
+            await _artworkRepository.UpdateArtworkImage(artwork);
         }
     }
 }

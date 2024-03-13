@@ -18,18 +18,31 @@ namespace ArtworkSharingPlatform.Application.Helpers
     {
         public AutoMapperProfile()
         {
+
+            CreateMap<Like, ArtworkLikeDTO>().ReverseMap();
+            CreateMap<Follow, UserFollowDTO>().ReverseMap();
+            CreateMap<Comment, ArtworkCommentDTO>().ReverseMap();
+            CreateMap<Rating, ArtworkRatingDTO>().ReverseMap();
+
             CreateMap<User, ArtworkUserDTO>()
                 .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.UserImage.Url))
                 .ReverseMap();
 			CreateMap<User, UserDTO>()
 				.ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.UserImage.Url))
 				.ReverseMap();
-			CreateMap<Like, ArtworkLikeDTO>().ReverseMap();
+			CreateMap<Like, ArtworkLikeDTO>()
+                .ForMember(dest => dest.UserEmail, opt => opt.MapFrom(src => src.User.Email))
+                .ReverseMap();
+
             CreateMap<ArtworkImage, ArtworkImageDTO>().ReverseMap();
+            CreateMap<Artwork, ArtworkToAddDTO>().ReverseMap();
+            CreateMap<Artwork, ArtworkUpdateDTO>().ReverseMap();
+            CreateMap<ArtworkImage, ArtworkImageToAddDTO>().ReverseMap();
             CreateMap<Artwork, ArtworkDTO>()
                 .ForMember(dest => dest.ImageUrl,
                     opt => opt.MapFrom(src => src.ArtworkImages.SingleOrDefault(x => x.IsThumbnail.Value).ImageUrl))
                 .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.Owner))
+                .ForMember(dest => dest.GenreName, opt => opt.MapFrom(src => src.Genre.Name))
                 .ReverseMap();
             CreateMap<Artwork, ArtworkAdminDTO>()
                 .ForMember(dest => dest.ImageUrl,
@@ -55,9 +68,12 @@ namespace ArtworkSharingPlatform.Application.Helpers
             CreateMap<User, UserProfileDTO>()
                 .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.UserImage.Url))
                 .ReverseMap();
+
             CreateMap<PackageInformation, PackageInformationDTO>()
                 .ReverseMap();
             CreateCommissionRequestToCommissionEntityMap();
+			CreateMap<User, UpdateProfileDTO>().ReverseMap();
+			CreateCommissionRequestToCommissionEntityMap();
             CommissionEntityToCommissionDTOMap();
         }
 

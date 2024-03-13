@@ -81,6 +81,9 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.Property<bool?>("IsThumbnail")
                         .HasColumnType("bit");
 
+                    b.Property<string>("PublicId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ArtworkId");
@@ -96,13 +99,13 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("ArtworkId")
+                    b.Property<int>("ArtworkId")
                         .HasColumnType("int");
 
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -116,23 +119,15 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Artworks.Follow", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("SourceUserId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("ArtistId")
+                    b.Property<int>("TargetUserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("FollowerId")
-                        .HasColumnType("int");
+                    b.HasKey("SourceUserId", "TargetUserId");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArtistId");
-
-                    b.HasIndex("FollowerId");
+                    b.HasIndex("TargetUserId");
 
                     b.ToTable("Follows");
                 });
@@ -170,26 +165,18 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Artworks.Rating", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("ArtworkId")
+                    b.Property<int>("ArtworkId")
                         .HasColumnType("int");
 
                     b.Property<int>("Score")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("UserId", "ArtworkId");
 
                     b.HasIndex("ArtworkId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Ratings");
                 });
@@ -860,11 +847,15 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 {
                     b.HasOne("ArtworkSharingPlatform.Domain.Entities.Artworks.Artwork", "Artwork")
                         .WithMany("Comments")
-                        .HasForeignKey("ArtworkId");
+                        .HasForeignKey("ArtworkId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.User", "User")
                         .WithMany("Comments")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Artwork");
 
@@ -873,17 +864,21 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Artworks.Follow", b =>
                 {
-                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.User", "Artist")
-                        .WithMany("FollowingAudiences")
-                        .HasForeignKey("ArtistId");
+                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.User", "SourceUser")
+                        .WithMany("FollowedUsers")
+                        .HasForeignKey("SourceUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.User", "Follower")
-                        .WithMany("FollowingArtists")
-                        .HasForeignKey("FollowerId");
+                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.User", "TargetUser")
+                        .WithMany("IsFollowedByUsers")
+                        .HasForeignKey("TargetUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.Navigation("Artist");
+                    b.Navigation("SourceUser");
 
-                    b.Navigation("Follower");
+                    b.Navigation("TargetUser");
                 });
 
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Artworks.Like", b =>
@@ -897,7 +892,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.User", "User")
                         .WithMany("Likes")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Artwork");
@@ -909,11 +904,15 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 {
                     b.HasOne("ArtworkSharingPlatform.Domain.Entities.Artworks.Artwork", "Artwork")
                         .WithMany("Ratings")
-                        .HasForeignKey("ArtworkId");
+                        .HasForeignKey("ArtworkId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.User", "User")
                         .WithMany("Ratings")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Artwork");
 
@@ -1201,9 +1200,9 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
                     b.Navigation("ConfigManagers");
 
-                    b.Navigation("FollowingArtists");
+                    b.Navigation("FollowedUsers");
 
-                    b.Navigation("FollowingAudiences");
+                    b.Navigation("IsFollowedByUsers");
 
                     b.Navigation("Likes");
 

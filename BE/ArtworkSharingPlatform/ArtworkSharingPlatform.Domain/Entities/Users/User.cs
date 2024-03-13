@@ -18,7 +18,6 @@ public class User : IdentityUser<int>
     public string Description { get; set; }
     public string? FacebookLink{ get; set; }
     public string? TwitterLink{ get; set; }
-    [JsonIgnore]
     public UserImage UserImage { get; set; }
     public int RemainingCredit { get; set; }
     public ICollection<Artwork>? Artworks { get; set; }
@@ -35,6 +34,6 @@ public class User : IdentityUser<int>
     public ICollection<Message>? MessageSent;
     public ICollection<CommissionRequest>? CommissionSent { get; set; }
     public ICollection<CommissionRequest>? CommissionReceived{ get; set; }
-    public ICollection<Follow>? FollowingArtists{ get; set; }
-    public ICollection<Follow>? FollowingAudiences{ get; set; }
+    public List<Follow> FollowedUsers { get; set; }
+    public List<Follow> IsFollowedByUsers { get; set; }
 }
