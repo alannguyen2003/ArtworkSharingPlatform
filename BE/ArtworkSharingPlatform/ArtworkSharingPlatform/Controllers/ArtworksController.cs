@@ -146,18 +146,6 @@ namespace ArtworkSharingHost.Controllers
             var results = await _artworkService.SearchArtworkByGenre(genreId);
             return Ok(results);
         }
-        [HttpPut("image")]
-        public async Task<IActionResult> UpdateArtworkImage([FromBody] ArtworkImageToAddDTO artwork)
-        {
-            await _artworkService.UpdateArtworkImage(artwork);
-            return Ok(new { message = "Artwork Image updated successfully." });
-        }
-        [HttpPost("image")]
-        public async Task<IActionResult> AddArtworkImage([FromBody] ArtworkImageToAddDTO artwork)
-        {
-            await _artworkService.AddArtworkImage(artwork);
-            return CreatedAtAction(nameof(GetArtwork), new { id = artwork.ArtworkId }, new { message = "Artwork added successfully.", artwork });
-        }
 
         [HttpGet("GetArtistArtwork")]
         public async Task<IActionResult> GetArtistArtwork()
