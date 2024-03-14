@@ -41,8 +41,8 @@
                 </div>
               </div>
               <ng-container *ngFor="let message of (messageService.messageThread$ | async)">
-                <div class="col-start-1 col-end-6 p-3 rounded-lg" *ngIf="message.senderEmail === artwork.user.email">
-                  <app-message-received [username]="message.senderEmail" [content]="message.content"></app-message-received>
+                <div class="col-start-1 col-end-6 p-3 rounded-lg" *ngIf="message.senderEmail !== user.email">
+                  <app-message-received [username]="message.senderEmail" [content]="message.content" [userImageUrl]="message.senderPhotoUrl"></app-message-received>
                 </div>
                 <div class="col-start-6 col-end-12 p-3 rounded-lg" *ngIf="message.senderEmail === user.email">
                   <app-message-sent [content]="message.content"></app-message-sent>

@@ -1,4 +1,5 @@
 ﻿using ArtworkSharingHost.CloudinaryService;
+using ArtworkSharingPlatform.DataTransferLayer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -29,15 +30,15 @@ namespace ArtworkSharingHost.Controllers
 
 		}
 		[HttpDelete]
-		public async Task<IActionResult> DeleteAsync(string publicId)
+		public async Task<IActionResult> DeleteAsync([FromBody] ArtworkImageDTO image)
 		{
-			var result = await _imageService.DeletePhotoAsync(publicId);
+			var result = await _imageService.DeletePhotoAsync(image.PublicId);
 			if (result == null)
 			{
 				ModelState.AddModelError("Delete image", "Something went wrong during deleting the image");
 				return Problem("Something went wrong", null, (int)HttpStatusCode.InternalServerError);
 			}
-			return Ok(new { message = "Image successfully deleted.", deletedPublicId = publicId });
+			return Ok(new { message = "Image successfully deleted.", deletedPublicId = image.PublicId });
 		}
 
 	}

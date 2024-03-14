@@ -35,6 +35,7 @@ namespace ArtworkSharingPlatform.Application.Helpers
 
             CreateMap<ArtworkImage, ArtworkImageDTO>().ReverseMap();
             CreateMap<Artwork, ArtworkToAddDTO>().ReverseMap();
+            CreateMap<Artwork, ArtworkUpdateDTO>().ReverseMap();
             CreateMap<ArtworkImage, ArtworkImageToAddDTO>().ReverseMap();
             CreateMap<Artwork, ArtworkDTO>()
                 .ForMember(dest => dest.ImageUrl,
@@ -42,7 +43,10 @@ namespace ArtworkSharingPlatform.Application.Helpers
                 .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.Owner))
                 .ForMember(dest => dest.GenreName, opt => opt.MapFrom(src => src.Genre.Name))
                 .ReverseMap();
-            CreateMap<Message, MessageDTO>();
+            CreateMap<Message, MessageDTO>()
+                .ForMember(dest => dest.SenderPhotoUrl, opt => opt.MapFrom(src => src.Sender.UserImage.Url))
+                .ForMember(dest => dest.RecipientPhotoUrl, opt => opt.MapFrom(src => src.Recipient.UserImage.Url))
+                .ReverseMap();
             CreateMap<User, UserInfoDTO>()
                 .ForMember(dest => dest.Role,
                     opt => opt.MapFrom(src => src.UserRoles.Any() ? src.UserRoles.First().Role.Name : null))
@@ -62,6 +66,10 @@ namespace ArtworkSharingPlatform.Application.Helpers
                 .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.UserImage.Url))
                 .ReverseMap();
 			CreateMap<User, UpdateProfileDTO>().ReverseMap();
+			CreateMap<Follow, UserProfileFollowDTO>()
+                .ForMember(dest => dest.SourceUserEmail, opt => opt.MapFrom(src => src.SourceUser.Email))
+                .ForMember(dest => dest.TargetUserEmail, opt => opt.MapFrom(src => src.TargetUser.Email))
+                .ReverseMap();
 			CreateCommissionRequestToCommissionEntityMap();
             CommissionEntityToCommissionDTOMap();
         }

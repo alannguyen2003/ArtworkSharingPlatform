@@ -10,14 +10,19 @@ namespace ArtworkSharingPlatform.Application.Interfaces
 		Task<ArtworkDTO> GetArtworkAsync(int id);
 		Task UserLike(ArtworkLikeDTO like);
         Task UserRating(ArtworkRatingDTO rating);
-        Task UserFollow(UserFollowDTO follow);
+        Task UserFollow(int soureUserId, string email);
         Task AddArtwork(ArtworkToAddDTO artwork);
         Task DeleteArtwork(int artworkId);
-        Task UpdateArtwork(ArtworkToAddDTO artwork);
+        Task UpdateArtwork(ArtworkUpdateDTO artwork);
         Task<IEnumerable<ArtworkLikeToShowDTO>> GetArtworksLike(int userId);
         Task ArtworkComment(ArtworkCommentDTO comment);
         Task<IList<ArtworkDTO>> SearchArtworkByTitle(string search);
+        Task<IList<ArtworkDTO>> GetArtistArtwork(int artistId);
         Task<IEnumerable<ArtworkDTO>> SearchArtworkByGenre(int genreId);
+        Task<bool> ConfirmSell(int artworkId, int userId);
+        Task<bool> SetThumbnail(int id);
+        Task<bool> DeleteArtworkImage(ArtworkImageDTO imageDTO);
+        Task<ArtworkImage> AddImageToArtwork(ArtworkImageDTO artworkImageDTO);
 
     }
 }

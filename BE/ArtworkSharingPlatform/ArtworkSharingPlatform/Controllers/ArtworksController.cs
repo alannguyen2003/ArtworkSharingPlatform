@@ -1,4 +1,5 @@
-﻿using ArtworkSharingHost.Extensions;
+﻿using ArtworkSharingHost.CloudinaryService;
+using ArtworkSharingHost.Extensions;
 using ArtworkSharingPlatform.Application.Interfaces;
 using ArtworkSharingPlatform.DataTransferLayer;
 using ArtworkSharingPlatform.Domain.Helpers;
@@ -11,11 +12,13 @@ namespace ArtworkSharingHost.Controllers
     public class ArtworksController : ControllerBase
     {
         private readonly IArtworkService _artworkService;
+		private readonly IImageService _imageService;
 
-        public ArtworksController(IArtworkService artworkService)
+		public ArtworksController(IArtworkService artworkService, IImageService imageService)
         {
             _artworkService = artworkService;
-        }
+			_imageService = imageService;
+		}
 
         [HttpGet]
         public async Task<ActionResult<PagedList<ArtworkDTO>>> GetArtworks([FromQuery] UserParams userParams)
@@ -49,7 +52,21 @@ namespace ArtworkSharingHost.Controllers
             return Ok(artwork);
         }
 
-        [HttpPost("like")]
+		[HttpPost]
+		public async Task<IActionResult> AddArtwork([FromBody] ArtworkToAddDTO artwork)
+		{
+			artwork.CreatedDate = DateTime.UtcNow;
+			artwork.OwnerId = User.GetUserId();
+			var flag = artwork.ArtworkImages.Any(x => x.IsThumbnail == true);
+			if (!flag)
+			{
+				artwork.ArtworkImages.First().IsThumbnail = true;
+			}
+			await _artworkService.AddArtwork(artwork);
+			return Ok(artwork);
+		}
+
+		[HttpPost("like")]
         public async Task<IActionResult> UserLike([FromBody]int artworkId)
         {
             var like = new ArtworkLikeDTO
@@ -58,7 +75,17 @@ namespace ArtworkSharingHost.Controllers
                 ArtworkId = artworkId
             };
             await _artworkService.UserLike(like);
-            return Ok(new { message = "Artwork liked successfully." });
+            return Ok();
+        }
+        [HttpPut("sell/{artworkId}")]
+        public async Task<IActionResult> ConfirmSell(int artworkId)
+        {
+            var isSuccess = await _artworkService.ConfirmSell(artworkId, User.GetUserId());
+            if (!isSuccess)
+            {
+                return BadRequest();
+            }
+            return Ok();
         }
 
         [HttpPost("rating")]
@@ -68,31 +95,23 @@ namespace ArtworkSharingHost.Controllers
             return Ok(new { message = "Rating submitted successfully." });
         }
 
-        [HttpPost("follow")]
-        public async Task<IActionResult> UserFollow([FromBody] UserFollowDTO follow)
+        [HttpPost("follow/{email}")]
+        public async Task<IActionResult> UserFollow(string email)
         {
-            await _artworkService.UserFollow(follow);
+            await _artworkService.UserFollow(User.GetUserId(), email);
             return Ok(new { message = "User followed successfully." });
         }
         [HttpPost("comment")]
-        public async Task<IActionResult> UserComment([FromBody] ArtworkCommentDTO comment)
+        public async Task<IActionResult> UserComment([FromBody] string content, int artworkId)
         {
+            var comment = new ArtworkCommentDTO
+            {
+                UserId = User.GetUserId(),
+                Content = content,
+                ArtworkId = artworkId
+            };
             await _artworkService.ArtworkComment(comment);
             return Ok(new { message = "User comment successfully." });
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddArtwork([FromBody] ArtworkToAddDTO artwork)
-        {
-            artwork.CreatedDate = DateTime.UtcNow;
-            artwork.OwnerId = User.GetUserId();
-            var flag = artwork.ArtworkImages.Any(x => x.IsThumbnail == true);
-            if(!flag)
-            {
-                artwork.ArtworkImages.First().IsThumbnail = true;
-            }
-            await _artworkService.AddArtwork(artwork);
-            return Ok(artwork);
         }
 
         [HttpDelete("{artworkId}")]
@@ -103,7 +122,7 @@ namespace ArtworkSharingHost.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateArtwork([FromBody] ArtworkToAddDTO artwork)
+        public async Task<IActionResult> UpdateArtwork([FromBody] ArtworkUpdateDTO artwork)
         {
             await _artworkService.UpdateArtwork(artwork);
             return Ok(new { message = "Artwork updated successfully." });
@@ -127,5 +146,35 @@ namespace ArtworkSharingHost.Controllers
             var results = await _artworkService.SearchArtworkByGenre(genreId);
             return Ok(results);
         }
-    }
+        [HttpGet("GetArtistArtwork")]
+        public async Task<IActionResult> GetArtistArtwork()
+        {
+            var result = await _artworkService.GetArtistArtwork(User.GetUserId());
+            return Ok(result);
+        }
+        [HttpPost("add-image")]
+		public async Task<IActionResult> AddImage([FromBody] ArtworkImageDTO artworkImage)
+		{
+			var result = await _artworkService.AddImageToArtwork(artworkImage);
+            if(result == null) return BadRequest("Error while adding image");
+			return Ok(result);
+		}
+		[HttpPut("set-thumbnail/{imageId}")]
+		public async Task<IActionResult> SetThumbnail(int imageId)
+		{
+			var result = await _artworkService.SetThumbnail(imageId);
+			if (!result) return BadRequest("Error while setting thumbnail image for artwork");
+			return Ok();
+		}
+        [HttpDelete("delete-image")]
+        public async Task<IActionResult> DeleteArtworkImage([FromBody] ArtworkImageDTO imageDTO)
+        {
+            var publicId = imageDTO.PublicId;
+            var result = await _artworkService.DeleteArtworkImage(imageDTO);
+            if(!result) return BadRequest("Error while deleting image");
+            await _imageService.DeletePhotoAsync(publicId);
+            return Ok();
+        }
+
+	}
 }

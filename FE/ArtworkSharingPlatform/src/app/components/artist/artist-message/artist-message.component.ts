@@ -10,6 +10,8 @@ import {Artwork} from "../../../_model/artwork.model";
 import {AccountService} from "../../../_services/account.service";
 import {take} from "rxjs";
 import {User} from "../../../_model/user.model";
+import {ArtworkService} from "../../../_services/artwork.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-artist-message',
@@ -28,7 +30,9 @@ export class ArtistMessageComponent implements OnInit{
   artwork: Artwork | undefined;
   audienceEmail: string = '';
   constructor(public messageService: MessageService,
-              private accountServce: AccountService) {
+              private accountServce: AccountService,
+              private artworkService: ArtworkService,
+              private toastr : ToastrService) {
     this.accountServce.currentUser$.pipe(take(1)).subscribe({
       next: user => {
         if (user) this.user = user
@@ -68,6 +72,15 @@ export class ArtistMessageComponent implements OnInit{
       this.messageForm?.reset();
     }).finally(() => {
       this.loading = false;
+    });
+  }
+
+  confirmSell() {
+    if (!this.artwork) return;
+    this.artworkService.confirmSell(this.artwork.id).subscribe({
+      next: _ => {
+        this.toastr.success('Confirm Successfully!');
+      }
     });
   }
 }

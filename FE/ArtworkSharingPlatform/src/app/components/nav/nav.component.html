@@ -51,8 +51,11 @@
             <!-- Dropdown menu -->
             <div class="dropdown-menu z-10 hidden font-normal divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600" *dropdownMenu>
               <ul class="py-2 text-sm text-gray-700 dark:text-gray-200 border-none" aria-labelledby="dropdownLargeButton">
-                <li *appHasRole="['Audience']">
+                <li>
                   <a routerLink="/profile-edit" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit profile</a>
+                </li>
+                <li>
+                  <a routerLink="/artist/gallery" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">My gallery</a>
                 </li>
                 <li>
                   <a routerLink="/artist/messages" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Messages</a>

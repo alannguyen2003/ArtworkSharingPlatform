@@ -65,3 +65,15 @@
   display: inline;
   margin-right: 5px; /* Adjust the spacing between buttons as needed */
 }
+
+input.ng-invalid.ng-touched{
+  border: 1px solid red;
+}
+textarea.ng-invalid.ng-touched{
+  border: 1px solid red;
+}
+
+.is-disabled {
+  border: 3px dotted red;
+  color: rgba(1,1,1,0.7);
+}

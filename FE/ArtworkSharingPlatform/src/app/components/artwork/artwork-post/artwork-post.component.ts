@@ -6,6 +6,7 @@ import {User} from "../../../_model/user.model";
 import {AccountService} from "../../../_services/account.service";
 import {take} from "rxjs";
 import {Genre} from "../../../_model/genre.model";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-artwork-post',
@@ -17,8 +18,11 @@ export class ArtworkPostComponent implements OnInit{
   artwork: Artwork = {} as Artwork;
   user: User | undefined;
   genres: Genre[] = [];
+  validationErrors : string[] = [];
 
-  constructor(private artworkService: ArtworkService, private accountService: AccountService) {
+  constructor(private artworkService: ArtworkService,
+              private accountService: AccountService,
+              private toastr: ToastrService) {
     this.accountService.currentUser$.pipe(take(1)).subscribe({
       next: user => {
         if (user) this.user = user;
@@ -41,11 +45,15 @@ export class ArtworkPostComponent implements OnInit{
 
   postArtwork() {
     if (!this.artwork || !this.user) return;
+    this.validationErrors = [];
     this.artwork.artworkImages = this.artworkImages;
+    if (this.artworkImages.length <= 0) {
+      this.validationErrors.push("You need to add at least one image to post an artwork");
+      return;
+    }
     this.artworkService.addArtwork(this.artwork).subscribe({
-      next: artwork => {
-        console.log(artwork);
-      }
+      next: artwork => this.toastr.success("Post artwork successfullly!"),
+      error: errs => this.validationErrors = errs
     });
   }
   loadGenres() {
@@ -54,6 +62,14 @@ export class ArtworkPostComponent implements OnInit{
         this.genres = genres;
       }
     });
+  }
+  deleteImage(image: ArtworkImage) {
+    this.artworkService.deleteImageDuringPostArtwork(image).subscribe({
+      next: _ => {
+        this.toastr.success('Image delete success');
+        this.artworkImages = this.artworkImages.filter(x => x.publicId != image.publicId);
+      }
+    })
   }
 
 }

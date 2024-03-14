@@ -2,10 +2,10 @@
   <div class="row p-3">
     <div class="col-4">
       <div class="flex flex-col justify-center max-w-xs p-6 shadow-md rounded-xl sm:px-12 dark:bg-gray-900 dark:text-gray-100">
-        <img src="https://source.unsplash.com/150x150/?portrait?3" alt="" class="w-32 h-32 mx-auto rounded-full dark:bg-gray-500 aspect-square">
+        <img src="'{{artwork.user.imageUrl}}'" alt="" class="w-32 h-32 mx-auto rounded-full dark:bg-gray-500 aspect-square">
         <div class="space-y-4 text-center divide-y dark:divide-gray-700">
           <div class="my-2 space-y-1">
-            <h2 class="text-xl font-semibold sm:text-2xl"><a routerLink="/artist/artist-detail">{{artwork.user.name}}</a></h2>
+            <h2 class="text-xl font-semibold sm:text-2xl"><a routerLink="/user/user-profile/{{artwork.user.email}}">{{artwork.user.name}}</a></h2>
             <p class="px-5 text-xs sm:text-base dark:text-gray-400">Artist</p>
           </div>
           <div class="flex justify-center pt-2 space-x-4 align-center">
@@ -40,7 +40,6 @@
           <p>{{artwork.description}}</p>
         </div>
       </div>
-      <button (click)="selectTab('Message')">Messages</button>
     </div>
     <div class="col-8">
       <tabset class="member-tabset" #artworkTabs>

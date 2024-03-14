@@ -18,6 +18,10 @@ namespace ArtworkSharingPlatform.Repository.Interfaces
 		Task<IEnumerable<Artwork>> GetArtworksAsync();
 		Task<IList<Artwork>?> SearchArtwork(string search);
         Task<IEnumerable<Artwork>?> SearchArtworkByGenre(int genreId);
+        Task<bool> ConfirmSell(int artworkId, int userId);
+        Task<bool> DeleteArtworkImage(ArtworkImage image);
+		Task<bool> SetThumbNail(int id);
+		Task<ArtworkImage> AddImageToArtwork(ArtworkImage artworkImage);
 
     }
 }
