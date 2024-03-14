@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArtworkSharingPlatform.DataTransferLayer.Payload.Response
+namespace ArtworkSharingPlatform.DataTransferLayer.Payload.Request.Package
 {
-    public class PackageInformationDTO
+    public class PackageUpdate
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public int Credit { get; set; }
         [Column(TypeName = "decimal(10,2)")] public decimal Price { get; set; }
-        public byte? Status { get; set; }
+        public byte Status { get; set; }
     }
 }

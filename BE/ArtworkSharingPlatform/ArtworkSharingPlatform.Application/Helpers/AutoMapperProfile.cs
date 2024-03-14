@@ -11,6 +11,7 @@ using ArtworkSharingPlatform.DataTransferLayer.Payload.Response;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.User;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
 using ArtworkSharingPlatform.Domain.Entities.PackagesInfo;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.Package;
 
 namespace ArtworkSharingPlatform.Application.Helpers
 {
@@ -68,9 +69,9 @@ namespace ArtworkSharingPlatform.Application.Helpers
             CreateMap<User, UserProfileDTO>()
                 .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.UserImage.Url))
                 .ReverseMap();
-
             CreateMap<PackageInformation, PackageInformationDTO>()
                 .ReverseMap();
+            CreateMap<PackageInformation, PackageUpdate>().ReverseMap();
             CreateCommissionRequestToCommissionEntityMap();
 			CreateMap<User, UpdateProfileDTO>().ReverseMap();
 			CreateCommissionRequestToCommissionEntityMap();
