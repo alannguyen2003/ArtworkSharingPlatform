@@ -65,7 +65,9 @@ namespace ArtworkSharingPlatform.Application.Services
             var query = _messageRepository.GetMessageAsQueryable();
             query = query.Where(
                 m => m.SenderEmail == currentEmail &&
-                m.RecipientEmail == recipientEmail ||
+                m.RecipientEmail == recipientEmail &&
+                m.ArtworkId == artworkId
+                ||
                 m.SenderEmail == recipientEmail &&
                 m.RecipientEmail == currentEmail &&
                 m.ArtworkId == artworkId
