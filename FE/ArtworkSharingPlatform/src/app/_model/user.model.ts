@@ -1,3 +1,5 @@
+import {Follow} from "./follow.model";
+
 export interface User {
   name: string;
   token: string;

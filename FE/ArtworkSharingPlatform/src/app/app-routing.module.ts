@@ -16,6 +16,8 @@ import {ProfileEditComponent} from "./components/profile-edit/profile-edit.compo
 import {ArtworkPostComponent} from "./components/artwork/artwork-post/artwork-post.component";
 import {userDetailResolver} from "./_resolvers/user-detail.resolver";
 import {UserProfileComponent} from "./components/user/user-profile/user-profile.component";
+import {ArtistGalleryComponent} from "./components/artist/artist-gallery/artist-gallery.component";
+import {ArtworkEditComponent} from "./components/artist/artist-gallery/artwork-edit/artwork-edit.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -24,10 +26,12 @@ const routes: Routes = [
     children: [
       {path: 'artist/messages', component: ArtistMessageComponent},
       {path: 'artist/pricing', component: PricingComponent},
+      {path: 'artist/gallery', component: ArtistGalleryComponent},
       {path: 'user/user-profile/:email', component: UserProfileComponent, resolve: {userProfile: userDetailResolver}},
       {path: 'artwork', component: ArtworkComponent},
       {path: 'artwork-post', component: ArtworkPostComponent},
       {path: 'artwork/:id', component: ArtworkDetailComponent, resolve: {artwork: artworkDetailResolver}},
+      {path: 'artwork-edit/:id', component: ArtworkEditComponent, resolve: {artwork: artworkDetailResolver}},
       {path: 'profile-edit', component: ProfileEditComponent}
     ]
   },

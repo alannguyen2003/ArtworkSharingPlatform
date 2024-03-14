@@ -2,10 +2,12 @@
 using ArtworkSharingPlatform.DataTransferLayer;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response;
 using ArtworkSharingPlatform.Domain.Entities.Artworks;
+using ArtworkSharingPlatform.Domain.Entities.Users;
 using ArtworkSharingPlatform.Domain.Helpers;
 using ArtworkSharingPlatform.Repository.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
@@ -14,11 +16,17 @@ namespace ArtworkSharingPlatform.Application.Services
 	public class ArtworkServices : IArtworkService
 	{
 		private readonly IArtworkRepository _artworkRepository;
+		private readonly UserManager<User> _userManager;
 		private readonly IMapper _mapper;
 
-		public ArtworkServices(IArtworkRepository artworkRepository, IMapper mapper)
+		public ArtworkServices(
+            IArtworkRepository artworkRepository, 
+            UserManager<User> userManager,
+            IMapper mapper
+            )
         {
 			_artworkRepository = artworkRepository;
+			_userManager = userManager;
 			_mapper = mapper;
 		}
 
@@ -99,24 +107,29 @@ namespace ArtworkSharingPlatform.Application.Services
                 await _artworkRepository.DeleteArtwork(artworkId);
 
         }
-        public async Task UpdateArtwork(ArtworkUpdateDTO _artwork)
+        public async Task UpdateArtwork(ArtworkUpdateDTO artwork)
         {
 
-                var artwork = _mapper.Map<Artwork>(_artwork);
+                var _artwork = _mapper.Map<Artwork>(artwork);
 
-                await _artworkRepository.UpdateArtwork(artwork);
+                await _artworkRepository.UpdateArtwork(_artwork);
 
         }
 
-        public async Task UserFollow(UserFollowDTO follow)
+        public async Task UserFollow(int sourceUserId, string email)
         {
+			var user = await _userManager.FindByEmailAsync(email);
+			var follow = new UserFollowDTO
+			{
+				SourceUserId = sourceUserId,
+				TargetUserId = user.Id
+			};
+			var artworkFollow = _mapper.Map<Follow>(follow);
 
-                var artworkFollow = _mapper.Map<Follow>(follow);
+			await _artworkRepository.UserFollow(artworkFollow);
 
-                await _artworkRepository.UserFollow(artworkFollow);
-
-        }
-        public async Task ArtworkComment(ArtworkCommentDTO comment)
+		}
+		public async Task ArtworkComment(ArtworkCommentDTO comment)
         {
             var artwork = _mapper.Map<Comment>(comment);
             await _artworkRepository.UserComment(artwork);
@@ -154,20 +167,34 @@ namespace ArtworkSharingPlatform.Application.Services
             var artworkDTOs = _mapper.Map<IList<ArtworkDTO>>(artworks);
             return artworkDTOs;
         }
-        public async Task AddArtworkImage(ArtworkImageToAddDTO _artwork)
-        {
 
-            var artwork = _mapper.Map<ArtworkImage>(_artwork);
+		public async Task<bool> ConfirmSell(int artworkId, int userId)
+		{
+			return await _artworkRepository.ConfirmSell(artworkId, userId);
+		}
 
-            await _artworkRepository.AddArtworkImage(artwork);
+		public async Task<IList<ArtworkDTO>> GetArtistArtwork(int artistId)
+		{
+			var query = _artworkRepository.GetArtworksAsQueryable();
+			query = query.Where(x => x.OwnerId == artistId && x.Status == 1);
+			return await query.ProjectTo<ArtworkDTO>(_mapper.ConfigurationProvider).ToListAsync();
+		}
 
-        }
-        public async Task UpdateArtworkImage(ArtworkImageToAddDTO _artwork)
-        {
+		public async Task<bool> SetThumbnail(int id)
+		{
+			return await _artworkRepository.SetThumbNail(id);
+		}
 
-            var artwork = _mapper.Map<ArtworkImage>(_artwork);
+		public async Task<ArtworkImage> AddImageToArtwork(ArtworkImageDTO artworkImageDTO)
+		{
+			var artworkImage = _mapper.Map<ArtworkImage>(artworkImageDTO);
+			return await _artworkRepository.AddImageToArtwork(artworkImage);
+		}
 
-            await _artworkRepository.UpdateArtworkImage(artwork);
-        }
-    }
+		public async Task<bool> DeleteArtworkImage(ArtworkImageDTO imageDTO)
+		{
+			var image = _mapper.Map<ArtworkImage>(imageDTO);
+			return await _artworkRepository.DeleteArtworkImage(image);
+		}
+	}
 }

@@ -15,14 +15,15 @@
     </a>
   </div>
   <div class="flex">
-    <p class="d-inline me-3">Followers: 100</p>
+    <p class="d-inline me-3">Followers: {{userProfile.isFollowedByUsers.length}}</p>
 <!--    <button type="button" class="px-8 py-2 font-semibold rounded-full dark:bg-gray-100 dark:text-gray-800">Followed</button>-->
-    <button type="button" class="px-8 py-2 font-semibold rounded-full border border-gray-50 dark:bg-transparent dark:text-gray-100">Follow</button>
+    <button type="button" class="px-8 py-2 font-semibold rounded-full border border-gray-50 dark:bg-transparent dark:text-gray-100" *ngIf="checkIsFollowed" (click)="follow()">Unfollow</button>
+    <button type="button" class="px-8 py-2 font-semibold rounded-full border border-gray-50 dark:bg-gray-100 dark:text-gray-900" *ngIf="!checkIsFollowed" (click)="follow()">Follow</button>
   </div>
 </div>
 <section class="py-6 dark:bg-gray-800 dark:text-gray-50">
   <div class="container grid grid-cols-2 gap-4 p-4 mx-auto md:grid-cols-4">
-    <img *ngFor="let artwork of userProfile?.artworks" src="{{artwork.imageUrl}}" class="w-full h-full rounded shadow-sm min-h-48 dark:bg-gray-500 aspect-square"/>
+    <a *ngFor="let artwork of userProfile?.artworks" routerLink="/artwork/{{artwork.id}}"><img src="{{artwork.imageUrl}}" class="w-full h-full rounded shadow-sm min-h-48 dark:bg-gray-500 aspect-square"/></a>
 <!--    <img src="https://source.unsplash.com/random/301x301/" alt="" class="w-full h-full col-span-2 row-span-2 rounded shadow-sm min-h-96 md:col-start-3 md:row-start-1 dark:bg-gray-500 aspect-square">-->
 <!--    <img alt="" class="w-full h-full rounded shadow-sm min-h-48 dark:bg-gray-500 aspect-square" src="https://source.unsplash.com/random/200x200/?0">-->
 <!--    <img alt="" class="w-full h-full rounded shadow-sm min-h-48 dark:bg-gray-500 aspect-square" src="https://source.unsplash.com/random/200x200/?1">-->

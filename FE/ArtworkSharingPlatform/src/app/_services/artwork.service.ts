@@ -6,8 +6,9 @@ import {AccountService} from "./account.service";
 import {map, of, take} from "rxjs";
 import {UserParams} from "../_model/userParams.model";
 import {getPaginatedResult, getPaginationHeaders} from "./pagination-helper.service";
-import {environment} from "../../environments/environment";
 import {Genre} from "../_model/genre.model";
+import {environment} from "../../environments/environment";
+import {ArtworkImage} from "../_model/artworkImage.model";
 
 @Injectable({
   providedIn: 'root'
@@ -88,5 +89,37 @@ export class ArtworkService {
 
   likeArtwork(artworkId: number) {
     return this.http.post(this.baseUrl + 'artworks/like', artworkId);
+  }
+
+  confirmSell(artworkId: number) {
+    return this.http.put(this.baseUrl + 'artworks/sell/' + artworkId, {});
+  }
+
+  getArtistArtwork() {
+    return this.http.get<Artwork[]>(this.baseUrl + 'artworks/GetArtistArtwork');
+  }
+  updateArtworkInformation(artwork: Artwork) {
+    return this.http.put(this.baseUrl + 'artworks', artwork);
+  }
+
+  setThumbNail(imageId: number) {
+    return this.http.put(this.baseUrl + 'artworks/set-thumbnail/' + imageId, {});
+  }
+
+  addImageToArtwork(image: ArtworkImage) {
+    return this.http.post<ArtworkImage>(this.baseUrl + 'artworks/add-image', image);
+  }
+  deleteArtworkImage(image: ArtworkImage) {
+    return this.http.delete(this.baseUrl + 'artworks/delete-image', {
+      body: image
+    });
+  }
+  deleteArtwork(artworkId: number) {
+    return this.http.delete(this.baseUrl + 'artworks/' + artworkId, {});
+  }
+  deleteImageDuringPostArtwork(artworkImage: ArtworkImage) {
+    return this.http.delete(this.baseUrl + 'image', {
+      body: artworkImage
+    });
   }
 }

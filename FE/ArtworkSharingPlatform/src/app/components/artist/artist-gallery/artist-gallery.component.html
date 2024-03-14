@@ -1,0 +1,8 @@
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4" *ngIf="artworks.length > 0">
+  <div *ngFor="let artwork of artworks">
+    <a routerLink="/artwork-edit/{{artwork.id}}">
+      <img class="h-auto max-w-full rounded-lg" src="{{artwork.imageUrl}}" alt="">
+    </a>
+  </div>
+</div>
+<h3 *ngIf="artworks.length == 0">You do not have any artwork</h3>
