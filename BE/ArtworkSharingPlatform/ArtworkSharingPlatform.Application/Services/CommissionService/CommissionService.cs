@@ -8,6 +8,7 @@ using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Domain.Entities.Users;
 using ArtworkSharingPlatform.Repository.Interfaces;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.Identity.Client;
 
 namespace ArtworkSharingPlatform.Application.Services.CommissionService;
@@ -81,6 +82,13 @@ public class CommissionService : ICommissionService
     public CommissionServiceResponseDTO RespondProgressImageRequest(RespondProgressImageDTO respondProgressImageDto)
     {
         return _respondProgressImageService.Respond(respondProgressImageDto);
+    }
+
+    public async Task<List<CommissionHistoryAdminDTO>> GetAllCommissionAdmin()
+    {
+        var commission = await _commissionRequestRepository.GetAllCommission();
+        var query = commission.AsQueryable();
+        return query.ProjectTo<CommissionHistoryAdminDTO>(_mapper.ConfigurationProvider).ToList();
     }
 
     private void InitializeChildServices()

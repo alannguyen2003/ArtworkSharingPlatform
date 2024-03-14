@@ -106,7 +106,6 @@ namespace ArtworkSharingPlatform.Repository.Repository
 
         public async Task AddArtwork(Artwork artwork)
         {
-
                 if (artwork != null)
                 {
                     artwork.Status = 1;
@@ -114,7 +113,6 @@ namespace ArtworkSharingPlatform.Repository.Repository
 
                     await _context.SaveChangesAsync();
                 }
-
         }
 
         public async Task DeleteArtwork(int artworkId)
@@ -128,7 +126,6 @@ namespace ArtworkSharingPlatform.Repository.Repository
 
                     await _context.SaveChangesAsync();
                 }
-
         }
 
         public async Task UpdateArtwork(Artwork artwork)
@@ -141,7 +138,6 @@ namespace ArtworkSharingPlatform.Repository.Repository
 
                     await _context.SaveChangesAsync();
                 }
-            
         }
 
         public async Task<bool> HasUserLikedArtwork(int userId, int artworkId)
@@ -152,7 +148,7 @@ namespace ArtworkSharingPlatform.Repository.Repository
 
         public async Task<IEnumerable<Artwork>> GetArtworksAsync()
         {
-            return await _context.Artworks.ToListAsync();
+            return await _context.Artworks.Include(a => a.ArtworkImages).Include(a => a.Owner).ToListAsync();
         }
         public async Task<IEnumerable<Artwork>?> SearchArtworkByGenre(int genreId)
         {
@@ -160,6 +156,34 @@ namespace ArtworkSharingPlatform.Repository.Repository
             var result = await _context.Artworks.Where(x => x.GenreId ==  genreId).ToListAsync();
             return result;
 
+        }
+        public async Task AddArtworkImage(ArtworkImage artwork)
+        {
+                if (artwork != null)
+                {
+                    _context.ArtworkImages.AddAsync(artwork);
+
+                    await _context.SaveChangesAsync();
+                }
+        }
+        public async Task UpdateArtworkImage(ArtworkImage artwork)
+        {
+                if (artwork != null)
+                {
+                    var index = await _context.ArtworkImages.Where(x => x.ArtworkId == artwork.ArtworkId).FirstOrDefaultAsync();
+
+                    if (index != null)
+                    {
+                        index.ImageUrl = artwork.ImageUrl;
+                        index.PublicId = artwork.PublicId;
+                        index.IsThumbnail = artwork.IsThumbnail;
+                        await _context.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        throw new KeyNotFoundException("An ArtworkImage with the specified ID could not be found.");
+                    }
+                }
         }
 
         public async Task<bool> ConfirmSell(int artworkId, int userId)
