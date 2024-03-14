@@ -28,5 +28,14 @@ namespace ArtworkSharingPlatform.Application.Services
             var list = packages.AsQueryable();
             return list.ProjectTo<PackageInformationDTO>(_mapper.ConfigurationProvider).ToList();
         }
+        public async Task UpdatePackage(PackageInformation packageInformation)
+        {
+            await _packageRepository.UpdatePackage(packageInformation);
+        }
+
+        public async Task DeletePackage(int id)
+        {
+            await _packageRepository.DeletePackage(id);
+        }
     }
 }
