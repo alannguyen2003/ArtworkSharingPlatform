@@ -28,7 +28,7 @@ export class ArtworkMessageComponent {
   sendMessage() {
     this.loading = true;
     if (!this.user) return;
-    this.messageService.sendMessage(this.user.email, this.messageContent, this.artwork.id).then(() => {
+    this.messageService.sendMessage(this.artwork.user.email, this.messageContent, this.artwork.id).then(() => {
       this.messageForm?.reset();
     }).finally(() => {
       this.loading = false;
