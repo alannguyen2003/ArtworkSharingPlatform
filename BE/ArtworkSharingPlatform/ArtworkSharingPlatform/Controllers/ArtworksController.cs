@@ -102,6 +102,12 @@ namespace ArtworkSharingHost.Controllers
             await _artworkService.UserFollow(User.GetUserId(), email);
             return Ok(new { message = "User followed successfully." });
         }
+        [HttpGet("comment/{artworkId}")]
+        public async Task<IActionResult> GetArtworkComments(int artworkId)
+        {
+            var comments = await _artworkService.GetArtworkComments(artworkId);
+            return Ok(comments);
+        }
         [HttpPost("comment")]
         public async Task<IActionResult> UserComment([FromBody] string content, int artworkId)
         {
@@ -182,6 +188,7 @@ namespace ArtworkSharingHost.Controllers
         public async Task<IActionResult> ReportArtwork([FromBody] ReportDTO reportDTO)
         {
             reportDTO.ReporterId = User.GetUserId();
+            reportDTO.CreatedDate = DateTime.UtcNow;
             await _artworkService.ReportArtwork(reportDTO);
             return Ok();
         }

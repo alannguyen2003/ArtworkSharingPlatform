@@ -36,7 +36,8 @@ import { ArtistGalleryComponent } from './components/artist/artist-gallery/artis
 import { ArtworkEditComponent } from './components/artist/artist-gallery/artwork-edit/artwork-edit.component';
 import {ArtworkMessageComponent} from "./components/artwork/artwork-message/artwork-message.component";
 import {GalleryComponent} from "ng-gallery";
-
+import { ReportModalComponent } from './components/modal/report-modal/report-modal.component';
+import 'froala-editor/js/plugins.pkgd.min.js';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import {GalleryComponent} from "ng-gallery";
     PhotoEditorComponent,
     UserProfileComponent,
     ArtistGalleryComponent,
-    ArtworkEditComponent
+    ArtworkEditComponent,
+    ReportModalComponent
   ],
   imports: [
     BrowserModule,
