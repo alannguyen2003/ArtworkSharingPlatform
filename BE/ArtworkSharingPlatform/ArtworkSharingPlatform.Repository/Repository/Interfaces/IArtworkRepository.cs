@@ -26,6 +26,7 @@ namespace ArtworkSharingPlatform.Repository.Interfaces
         Task<bool> DeleteArtworkImage(ArtworkImage image);
 		Task<bool> SetThumbNail(int id);
 		Task<ArtworkImage> AddImageToArtwork(ArtworkImage artworkImage);
+		Task<IEnumerable<Comment>> ListArtworkComments(int artworkId);
 
     }
 }
