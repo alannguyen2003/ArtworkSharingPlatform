@@ -40,16 +40,19 @@
               <div class="col">
                 <h2 class="text-xl font-semibold">{{artwork.title}}</h2>
               </div>
-              <div class="col ml-8">
-                <app-artwork-like-button></app-artwork-like-button>
+              <div class="col ml-1">               
+                  
+                    <app-artwork-like-button></app-artwork-like-button>                                                  
+                    <button class="btn btn-danger" (click)="openReportModal()">
+                      <i class="bi bi-flag"></i>
+                    </button>               
+                  
               </div>
+                        
             </div>           
           </div>
           <span class="block pb-2 text-sm dark:text-gray-400">Price: {{artwork.price}}</span>
           <p>{{artwork.description}}</p>
-        </div>
-        <div>
-          <button class="btn btn-danger" (click)="openReportModal()"><i class="bi bi-flag"></i></button>
         </div>
       </div>
     </div>
@@ -57,6 +60,8 @@
       <tabset class="member-tabset" #artworkTabs>
         <tab heading="Artwork Images" #imageTab="tab" (selectTab)="onTabActivated($event)">
           <gallery *ngIf="imageTab.active" [items]="images" class="gallery"></gallery>
+          <!--Comment Section-->
+          <app-artwork-comment-section [artwork]="artwork"></app-artwork-comment-section>       
         </tab>
         <tab heading="Artist Contact Information" (selectTab)="onTabActivated($event)"></tab>
         <tab heading="Messages" *ngIf="user" (selectTab)="onTabActivated($event)">
@@ -65,8 +70,7 @@
         </tab>
       </tabset>
      
-      <!--Comment Section-->
-      <app-artwork-comment-section></app-artwork-comment-section>                  
+                 
     </div>
   </div>
 </div>
