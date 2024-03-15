@@ -14,6 +14,5 @@ public interface ICommissionService
     Task<CommissionServiceResponseDTO> GetAllReceiverCommissions(int receiverId);
     CommissionServiceResponseDTO RequestProgressImageRequest(RequestProgressImageDTO requestProgressImageDto);
     CommissionServiceResponseDTO RespondProgressImageRequest(RespondProgressImageDTO respondProgressImageDto);
-
-
+    Task<List<CommissionHistoryAdminDTO>> GetAllCommissionAdmin();
 }

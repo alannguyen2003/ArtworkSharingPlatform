@@ -493,11 +493,15 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.Property<int>("Credit")
                         .HasColumnType("int");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(10,2)");
 
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte?>("Status")
+                        .HasColumnType("tinyint");
 
                     b.HasKey("Id");
 

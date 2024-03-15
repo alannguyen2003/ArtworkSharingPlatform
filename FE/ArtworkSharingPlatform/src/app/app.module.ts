@@ -32,6 +32,10 @@ import { ProfileEditComponent } from './components/profile-edit/profile-edit.com
 import {ArtworkPostComponent} from "./components/artwork/artwork-post/artwork-post.component";
 import { PhotoEditorComponent } from './components/artwork/artwork-post/photo-editor/photo-editor.component';
 import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
+import { ArtistGalleryComponent } from './components/artist/artist-gallery/artist-gallery.component';
+import { ArtworkEditComponent } from './components/artist/artist-gallery/artwork-edit/artwork-edit.component';
+import {ArtworkMessageComponent} from "./components/artwork/artwork-message/artwork-message.component";
+import {GalleryComponent} from "ng-gallery";
 
 
 @NgModule({
@@ -56,7 +60,9 @@ import { UserProfileComponent } from './components/user/user-profile/user-profil
     ProfileEditComponent,
     ArtworkPostComponent,
     PhotoEditorComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    ArtistGalleryComponent,
+    ArtworkEditComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +73,9 @@ import { UserProfileComponent } from './components/user/user-profile/user-profil
     ReactiveFormsModule,
     SharedModule,
     MessageReceivedComponent,
-    MessageSentComponent
+    MessageSentComponent,
+    ArtworkMessageComponent,
+    GalleryComponent
   ],
   providers: [
     {

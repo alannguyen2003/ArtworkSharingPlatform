@@ -13,6 +13,7 @@
     <p class="text-sm dark:text-gray-400">{{artwork.description | truncate:20}}</p>
   </div>
   <div>
+    <p class="dark:text-gray-200">Remaining: {{artwork.releaseCount}}</p>
     <button routerLink="/artwork/{{artwork.id}}" class="mt-2 mb-2 px-8 py-1.5 font-semibold border rounded dark:border-gray-100 dark:text-gray-100">Buy now</button>
   </div>
   <div class="flex flex-wrap justify-between">

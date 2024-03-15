@@ -9,4 +9,5 @@ import {Component, Input} from '@angular/core';
 export class MessageReceivedComponent {
   @Input() username: string | undefined;
   @Input() content: string | undefined;
+  @Input() userImageUrl: string | undefined;
 }

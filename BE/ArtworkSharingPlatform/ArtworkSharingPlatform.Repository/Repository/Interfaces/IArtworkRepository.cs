@@ -22,6 +22,10 @@ namespace ArtworkSharingPlatform.Repository.Interfaces
 		Task AddArtworkImage(ArtworkImage artwork);
 		Task UpdateArtworkImage(ArtworkImage artwork);
 		Task ArtworkReport(Report report);
+        Task<bool> ConfirmSell(int artworkId, int userId);
+        Task<bool> DeleteArtworkImage(ArtworkImage image);
+		Task<bool> SetThumbNail(int id);
+		Task<ArtworkImage> AddImageToArtwork(ArtworkImage artworkImage);
 
     }
 }

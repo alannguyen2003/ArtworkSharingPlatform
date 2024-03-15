@@ -64,7 +64,7 @@ builder.Services.AddAuthentication(options =>
         {
             var accessToken = context.Request.Query["access_token"];
             var path = context.HttpContext.Request.Path;
-            if(!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hub"))
+            if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hub"))
             {
                 context.Token = accessToken;
             }
@@ -86,6 +86,7 @@ builder.Services.AddAuthentication(options =>
 //});
 builder.Services.AddSignalR();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -133,6 +134,7 @@ try
     await Seed.SeedArtwork(context);
     await Seed.SeedCommissionStatus(context);
     await Seed.SeedPackage(context);
+    await Seed.SeedPackageInformation(context);
 }
 catch (Exception ex)
 {

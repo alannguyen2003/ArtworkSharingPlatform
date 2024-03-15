@@ -14,12 +14,16 @@ namespace ArtworkSharingHost.Controllers
     public class AdminController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IArtworkService _artworkService;
+        private readonly ICommissionService _commissionService;
         private readonly IMapper _mapper;
         private readonly IReportService _reportService;
-        public AdminController(IUserService userService, IMapper mapper, IReportService reportService)
+        public AdminController(IUserService userService, IMapper mapper, IReportService reportService, ICommissionService commissionService, IArtworkService artworkService)
         {
             _userService = userService;
             _mapper = mapper;
+            _artworkService = artworkService;
+            _commissionService = commissionService;
             _reportService = reportService;
         }
 
@@ -98,7 +102,7 @@ namespace ArtworkSharingHost.Controllers
                 var user = _mapper.Map<User>(userDto);
                 await _userService.UpdateUserAdmin(user);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -106,11 +110,30 @@ namespace ArtworkSharingHost.Controllers
         }
 
         [HttpDelete("DeleteUser")]
-        public async Task<IActionResult> DeleteUserAdmin([FromBody] UserDTO userDto)
+        public async Task<IActionResult> DeleteUserAdmin([FromBody] UserAdminDTO userDto)
         {
             var user = _mapper.Map<User>(userDto);
             await _userService.DeleteUserAdmin(user);
             return Ok();
+        }
+
+        [HttpGet("Artworks")]
+        public async Task<IActionResult> GetAllArtwork()
+        {
+            return Ok(await _artworkService.GetArtworkAdmin());
+        }
+
+        [HttpDelete("{artworkId}")]
+        public async Task<IActionResult> DeleteArtwork(int artworkId)
+        {
+            await _artworkService.DeleteArtwork(artworkId);
+            return Ok(new { message = "Artwork deleted successfully." });
+        }
+
+        [HttpGet("Commissions")]
+        public async Task<IActionResult> GetAllCommission()
+        {
+            return Ok(await _commissionService.GetAllCommissionAdmin());
         }
         [HttpGet("report")]
         public async Task<ActionResult<IEnumerable<ReportDTO>>> GetAllReport()
