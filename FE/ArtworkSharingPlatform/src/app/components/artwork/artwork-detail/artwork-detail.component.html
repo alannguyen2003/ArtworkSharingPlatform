@@ -5,7 +5,14 @@
         <img src="'{{artwork.user.imageUrl}}'" alt="" class="w-32 h-32 mx-auto rounded-full dark:bg-gray-500 aspect-square">
         <div class="space-y-4 text-center divide-y dark:divide-gray-700">
           <div class="my-2 space-y-1">
-            <h2 class="text-xl font-semibold sm:text-2xl"><a routerLink="/user/user-profile/{{artwork.user.email}}">{{artwork.user.name}}</a></h2>
+            <h2 class="text-xl font-semibold sm:text-2xl">
+              <a routerLink="/user/user-profile/{{artwork.user.email}}">
+                {{artwork.user.name}}
+                <span [class.is-online]="(presenceService.onlineUsers$ | async)?.includes(artwork.user.email)">
+                  <i class="fa fa-user me-2"></i>
+                </span>
+            </a>
+            </h2>
             <p class="px-5 text-xs sm:text-base dark:text-gray-400">Artist</p>
           </div>
           <div class="flex justify-center pt-2 space-x-4 align-center">
@@ -40,9 +47,7 @@
               <div class="col">
                 <h2 class="text-xl font-semibold">{{artwork.title}}</h2>
               </div>
-              <div class="col ml-1">               
-                  
-                    <app-artwork-like-button></app-artwork-like-button>                                                  
+              <div class="col ml-1">                                                                                                  
                     <button class="btn btn-danger" (click)="openReportModal()">
                       <i class="bi bi-flag"></i>
                     </button>               
@@ -53,6 +58,18 @@
           </div>
           <span class="block pb-2 text-sm dark:text-gray-400">Price: {{artwork.price}}</span>
           <p>{{artwork.description}}</p>
+        </div>
+        <div>
+          <button class="btn btn-danger" (click)="openReportModal()"><i class="bi bi-flag"></i></button>
+        </div>
+        <div class="text-center">
+          <h3 class="mb-3">Rating:</h3>
+          <rating [max]="x" [(ngModel)]="y" [customTemplate]="tt"></rating>
+          <ng-template #tt let-i="index" let-v="value">
+            <button class="btn btn-{{i < v ? 'warning' : 'default'}} text-blue-600" (click)="rating(v)">
+              {{i < v ? '&#9733;' : '&#9734;'}}
+            </button>
+          </ng-template>
         </div>
       </div>
     </div>

@@ -9,18 +9,22 @@ import {AccountService} from "../../../_services/account.service";
 import {take} from "rxjs";
 import {User} from "../../../_model/user.model";
 import {MessageService} from "../../../_services/message.service";
-import { ArtworkLikeButtonComponent } from '../artwork-interaction-buttons/like-button/artwork-like-button.component';
 import { ArtworkCommentSectionComponent } from '../artwork-interaction-buttons/comment-section/artwork-comment-section.component';
 import {BsModalRef, BsModalService, ModalModule} from "ngx-bootstrap/modal";
 import {ReportModalComponent} from "../../modal/report-modal/report-modal.component";
+import {RatingModule} from "ngx-bootstrap/rating";
+import {FormsModule} from "@angular/forms";
+import {ArtworkService} from "../../../_services/artwork.service";
+import {Rating} from "../../../_model/rating.model";
+import {ToastrService} from "ngx-toastr";
+import {PresenceService} from "../../../_services/presence.service";
 
 @Component({
   selector: 'app-artwork-detail',
   standalone: true,
   templateUrl: './artwork-detail.component.html',
   styleUrls: ['./artwork-detail.component.css'],
-  imports: [CommonModule, TabsModule, GalleryModule, RouterLink, ArtworkMessageComponent,
-    ArtworkLikeButtonComponent,ArtworkCommentSectionComponent]
+  imports: [CommonModule, TabsModule, FormsModule, GalleryModule, RouterLink, ArtworkMessageComponent, ModalModule, RatingModule,ArtworkCommentSectionComponent]
 })
 export class ArtworkDetailComponent implements OnInit, OnDestroy{
   @ViewChild('artworkTabs', {static: true}) artworkTabs? : TabsetComponent;
@@ -30,11 +34,15 @@ export class ArtworkDetailComponent implements OnInit, OnDestroy{
   user: User | undefined;
   activeTab?: TabDirective;
   bsModalRef: BsModalRef<ReportModalComponent> = new BsModalRef<ReportModalComponent>();
-
+  x = 5;
+  y = 0;
   constructor(private route: ActivatedRoute,
               private accountService: AccountService,
               private messageService: MessageService,
-              private modalService: BsModalService) {
+              private modalService: BsModalService,
+              private artworkService: ArtworkService,
+              public presenceService: PresenceService,
+              private toastr: ToastrService) {
     this.accountService.currentUser$.pipe(take(1)).subscribe({
       next: user => {
         if (user) this.user = user;
@@ -54,6 +62,16 @@ export class ArtworkDetailComponent implements OnInit, OnDestroy{
       }
     });
     this.getImages();
+    this.getRatingForUser();
+  }
+
+  getRatingForUser() {
+    if (!this.artwork) return;
+    this.artworkService.getArtworkRatingForUser(this.artwork.id).subscribe({
+      next: rating => {
+        this.y = rating;
+      }
+    });
   }
 
   onTabActivated(data: TabDirective) {
@@ -93,6 +111,18 @@ export class ArtworkDetailComponent implements OnInit, OnDestroy{
     this.bsModalRef = this.modalService.show(ReportModalComponent, config);
   }
 
+  rating(v: number) {
+    if (!this.artwork) return;
+    var rating: Rating = {
+      artworkId : this.artwork.id,
+      score : v
+    }
+    this.artworkService.rating(rating).subscribe({
+      next: _ => {
+        this.toastr.success('Rating successfully!');
+      }
+    });
+  }
 
   ngOnDestroy() {
     this.messageService.stopHubConnection();
