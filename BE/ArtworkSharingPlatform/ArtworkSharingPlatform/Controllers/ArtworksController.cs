@@ -182,6 +182,7 @@ namespace ArtworkSharingHost.Controllers
         public async Task<IActionResult> ReportArtwork([FromBody] ReportDTO reportDTO)
         {
             reportDTO.ReporterId = User.GetUserId();
+            reportDTO.CreatedDate = DateTime.UtcNow;
             await _artworkService.ReportArtwork(reportDTO);
             return Ok();
         }
