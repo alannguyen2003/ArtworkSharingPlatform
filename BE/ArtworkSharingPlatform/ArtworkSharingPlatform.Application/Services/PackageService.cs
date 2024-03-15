@@ -4,6 +4,7 @@ using ArtworkSharingPlatform.Domain.Entities.PackagesInfo;
 using ArtworkSharingPlatform.Repository.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,19 @@ namespace ArtworkSharingPlatform.Application.Services
         public async Task DeletePackage(int id)
         {
             await _packageRepository.DeletePackage(id);
+        }
+
+        public async Task<List<PackageBillingDTO>> GetAllPackageBilling()
+        {
+            var billing = await _packageRepository.GetAllPackageBilling();
+            var list = billing.AsQueryable();
+            return list.ProjectTo<PackageBillingDTO>(_mapper.ConfigurationProvider).ToList();
+        }
+
+        public async Task<PackageBillingDTO> GetPackageById(int id)
+        {
+            var billing = await _packageRepository.GetBillingById(id);
+            return _mapper.Map<PackageBillingDTO>(billing);
         }
     }
 }
