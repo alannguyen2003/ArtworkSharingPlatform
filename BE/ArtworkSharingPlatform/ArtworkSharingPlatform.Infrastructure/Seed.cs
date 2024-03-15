@@ -136,15 +136,16 @@ namespace ArtworkSharingPlatform.Infrastructure
         public static async Task SeedPackage(ArtworkSharingPlatformDbContext context)
         {
 
-            /*if (await context.PackageInformation.AnyAsync())
+            if (await context.PackageInformation.AnyAsync())
             {
                 return;
             }
             //Status Package: "Active", "Inactive", "Draft", "Deleted", "Modifying"
-            var packInfos = new List<PackageInformation>
+            /*var packInfos = new List<PackageInformation>
             {
                 new PackageInformation
                 {
+                    Name = "Basic",
                     Credit = 100,
                     Price = 100,
                     Status = 1,
@@ -153,6 +154,7 @@ namespace ArtworkSharingPlatform.Infrastructure
                 },
                 new PackageInformation
                 {
+                    Name = "Advance",
                     Credit = 100,
                     Price = 100,
                     Status = 0,
