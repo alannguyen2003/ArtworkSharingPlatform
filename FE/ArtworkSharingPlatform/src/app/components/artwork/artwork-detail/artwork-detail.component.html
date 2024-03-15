@@ -39,6 +39,9 @@
           <span class="block pb-2 text-sm dark:text-gray-400">Price: {{artwork.price}}</span>
           <p>{{artwork.description}}</p>
         </div>
+        <div>
+          <button class="btn btn-danger" (click)="openReportModal()"><i class="bi bi-flag"></i></button>
+        </div>
       </div>
     </div>
     <div class="col-8">
