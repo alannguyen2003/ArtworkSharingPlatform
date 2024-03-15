@@ -212,5 +212,17 @@ namespace ArtworkSharingPlatform.Application.Services
         {
             throw new NotImplementedException();
         }
-    }
+
+		public async Task<int> GetArtworkRatingForUser(int userId, int artworkId)
+		{
+			return await _artworkRepository.GetArtworkRatingForUser(userId, artworkId);
+		}
+	
+		public async Task<IEnumerable<ArtworkCommentDTO>> GetArtworkComments(int artworkId)
+		{
+			var Comments = await _artworkRepository.ListArtworkComments(artworkId);
+			var commentsDTO = _mapper.Map<IList<ArtworkCommentDTO>>(Comments);
+			return commentsDTO;
+		}
+  }
 }

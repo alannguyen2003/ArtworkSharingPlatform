@@ -28,6 +28,8 @@ namespace ArtworkSharingPlatform.Application.Interfaces
         Task AddArtworkImage(ArtworkImageToAddDTO _artwork);
         Task UpdateArtworkImage(ArtworkImageToAddDTO _artwork);
         Task ReportArtwork(ReportDTO _report);
+        Task<int> GetArtworkRatingForUser(int userId, int artworkId);
+        Task<IEnumerable<ArtworkCommentDTO>> GetArtworkComments(int artworkId);
 
     }
 }

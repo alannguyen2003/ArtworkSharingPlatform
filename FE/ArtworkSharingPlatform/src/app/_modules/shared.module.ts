@@ -7,6 +7,9 @@ import {PaginationModule} from "ngx-bootstrap/pagination";
 import {TabsModule} from "ngx-bootstrap/tabs";
 import {TimeagoModule} from "ngx-timeago";
 import {FileUploadModule} from "ng2-file-upload";
+import {FroalaEditorModule, FroalaViewModule} from "angular-froala-wysiwyg";
+import {ModalModule} from "ngx-bootstrap/modal";
+import {RatingModule} from "ngx-bootstrap/rating";
 
 
 
@@ -22,6 +25,10 @@ import {FileUploadModule} from "ng2-file-upload";
     PaginationModule.forRoot(),
     TabsModule.forRoot(),
     TimeagoModule.forRoot(),
+    FroalaViewModule.forRoot(),
+    FroalaEditorModule.forRoot(),
+    ModalModule.forRoot(),
+    RatingModule.forRoot(),
     FileUploadModule
   ],
   exports: [
@@ -31,6 +38,10 @@ import {FileUploadModule} from "ng2-file-upload";
     PaginationModule,
     TabsModule,
     TimeagoModule,
+    FroalaViewModule,
+    FroalaEditorModule,
+    ModalModule,
+    RatingModule,
     FileUploadModule
   ]
 })
