@@ -8,5 +8,7 @@ namespace ArtworkSharingPlatform.Repository.Interfaces
         Task<PackageInformation> GetPackageById(int id);
         Task UpdatePackage(PackageInformation packageInformation);
         Task DeletePackage(int id);
+        Task<List<PackageBilling>> GetAllPackageBilling();
+        Task<PackageBilling> GetBillingById(int id);
     }
 }
