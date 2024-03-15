@@ -1,4 +1,5 @@
 ﻿using ArtworkSharingPlatform.Domain.Entities.Artworks;
+using ArtworkSharingPlatform.Domain.Entities.Users;
 using ArtworkSharingPlatform.Domain.Helpers;
 
 namespace ArtworkSharingPlatform.Repository.Interfaces
@@ -20,6 +21,7 @@ namespace ArtworkSharingPlatform.Repository.Interfaces
         Task<IEnumerable<Artwork>?> SearchArtworkByGenre(int genreId);
 		Task AddArtworkImage(ArtworkImage artwork);
 		Task UpdateArtworkImage(ArtworkImage artwork);
+		Task ArtworkReport(Report report);
 
     }
 }

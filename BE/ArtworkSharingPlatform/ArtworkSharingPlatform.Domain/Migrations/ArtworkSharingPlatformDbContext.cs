@@ -55,6 +55,7 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
     public DbSet<Connection> Connections{ get; set; }
     public DbSet<Group> Groups{ get; set; }
     public DbSet<Follow> Follows { get; set; }
+    public DbSet<Report> Reports { get; set; }
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -90,6 +91,15 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
             .HasOne(a => a.User)
             .WithMany(u => u.Comments)
             .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Report>()
+                .HasOne(a => a.Artwork)
+                .WithMany(a => a.Reports)
+                .OnDelete(DeleteBehavior.NoAction);
+        modelBuilder.Entity<Report>()
+            .HasOne(a => a.Reporter)
+            .WithMany(u => u.Report)
+            .OnDelete(DeleteBehavior.Cascade);
         //--------------------------------------
         modelBuilder.Entity<Follow>()
                 .HasKey(k => new { k.SourceUserId, k.TargetUserId });
@@ -115,6 +125,22 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
                 .HasOne(a => a.User)
                 .WithMany(u => u.Ratings)
                 .OnDelete(DeleteBehavior.NoAction);
+
+        modelBuilder.Entity<Transaction>()
+                .HasKey(k => new { k.Id});
+        modelBuilder.Entity<Transaction>()
+            .HasOne(t => t.Sender)
+            .WithMany(u => u.TransactionSents)
+            .HasForeignKey(t => t.SenderId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Transaction>()
+        .HasOne(t => t.Receiver)
+        .WithMany(u => u.TransactionReceived)
+        .HasForeignKey(t => t.ReceiverId)
+        .IsRequired(false)
+        .OnDelete(DeleteBehavior.NoAction);
+
         modelBuilder.Entity<Artwork>()
             .HasMany(e => e.Likes)
             .WithOne(e => e.Artwork)
@@ -135,7 +161,15 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
         modelBuilder.Entity<Artwork>()
             .HasOne(e => e.Genre)
             .WithMany(e => e.Artworks);
+        modelBuilder.Entity<Artwork>()
+            .HasMany(e => e.Reports)
+            .WithOne(e => e.Artwork);
 
+        modelBuilder.Entity<PackageBilling>()
+        .HasOne(p => p.User)
+        .WithMany(p => p.PackageBillings) 
+        .HasForeignKey(p => p.UserId)
+        .OnDelete(DeleteBehavior.NoAction);
 
         modelBuilder.Entity<PackageInformation>()
             .HasMany(e => e.PackageBillings)
@@ -190,9 +224,6 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
         modelBuilder.Entity<User>()
             .HasMany(e => e.PackageBillings)
             .WithOne(e => e.User);
-        modelBuilder.Entity<User>()
-            .HasMany(e => e.Transactions)
-            .WithOne(e => e.Manager);
         modelBuilder.Entity<User>()
             .HasMany(e => e.ConfigManagers)
             .WithOne(e => e.Administrator);

@@ -139,5 +139,12 @@ namespace ArtworkSharingHost.Controllers
             await _artworkService.AddArtworkImage(artwork);
             return CreatedAtAction(nameof(GetArtwork), new { id = artwork.ArtworkId }, new { message = "Artwork added successfully.", artwork });
         }
+        [HttpPost("report")]
+        public async Task<IActionResult> ReportArtwork([FromBody] ReportDTO reportDTO)
+        {
+            reportDTO.ReporterId = User.GetUserId();
+            await _artworkService.ReportArtwork(reportDTO);
+            return Ok();
+        }
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using ArtworkSharingPlatform.Domain.Entities.Commissions;
+using ArtworkSharingPlatform.Domain.Entities.PackagesInfo;
 
 namespace ArtworkSharingPlatform.Infrastructure
 {
@@ -130,6 +131,63 @@ namespace ArtworkSharingPlatform.Infrastructure
                 await context.CommissionStatus.AddAsync(commissionStatus);
             }
             await context.SaveChangesAsync();
+        }
+        public static async Task SeedPackage(ArtworkSharingPlatformDbContext context)
+        {
+
+            if (await context.PackageInformation.AnyAsync())
+            {
+                return;
+            }
+            //Status Package: "Active", "Inactive", "Draft", "Deleted", "Modifying"
+            var packInfos = new List<PackageInformation>
+            {
+                new PackageInformation
+                {
+                    Credit = 100,
+                    Price = 100,
+                    Status = "Active",
+                    ConfigManagers = null,
+                    PackageBillings = null
+                },
+                new PackageInformation
+                {
+                    Credit = 100,
+                    Price = 100,
+                    Status = "Inactive",
+                    ConfigManagers = null,
+                    PackageBillings = null
+                }
+            };
+            foreach (var packInfo in packInfos)
+            {
+                await context.PackageInformation.AddAsync(packInfo);
+            }
+
+
+            if (await context.PackageBilling.AnyAsync())
+            {
+                return;
+            }
+            var packages = await File.ReadAllTextAsync("../ArtworkSharingPlatform.Infrastructure/PackageSeed.json");
+            var jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var packs = JsonSerializer.Deserialize<List<PackageBilling>>(packages, jsonOptions);
+            foreach (var pack in packs)
+            {
+                await context.PackageBilling.AddAsync(pack);
+            }
+            await context.SaveChangesAsync();
+            if (await context.Transactions.AnyAsync())
+            {
+                return;
+            }
+            var transaction = await File.ReadAllTextAsync("../ArtworkSharingPlatform.Infrastructure/TransationSeed.json");
+            var _jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var trans = JsonSerializer.Deserialize<List<PackageBilling>>(transaction, jsonOptions);
+            foreach (var tran in trans)
+            {
+                await context.PackageBilling.AddAsync(tran);
+            }
         }
     }
 }

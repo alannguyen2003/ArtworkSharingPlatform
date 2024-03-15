@@ -1,6 +1,7 @@
 ﻿using ArtworkSharingPlatform.Application.Interfaces;
 using ArtworkSharingPlatform.DataTransferLayer;
 using ArtworkSharingPlatform.Domain.Entities.Artworks;
+using ArtworkSharingPlatform.Domain.Entities.Users;
 using ArtworkSharingPlatform.Domain.Helpers;
 using ArtworkSharingPlatform.Repository.Interfaces;
 using AutoMapper;
@@ -158,6 +159,12 @@ namespace ArtworkSharingPlatform.Application.Services
             var artwork = _mapper.Map<ArtworkImage>(_artwork);
 
             await _artworkRepository.UpdateArtworkImage(artwork);
+        }
+
+        public async Task ReportArtwork(ReportDTO _report)
+        {
+            var report = _mapper.Map<Report>(_report);
+            await _artworkRepository.ArtworkReport(report);
         }
     }
 }

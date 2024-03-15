@@ -1,4 +1,5 @@
 ﻿using ArtworkSharingPlatform.Application.Interfaces;
+using ArtworkSharingPlatform.DataTransferLayer;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.User;
 using ArtworkSharingPlatform.Domain.Entities.Users;
@@ -14,10 +15,12 @@ namespace ArtworkSharingHost.Controllers
     {
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
-        public AdminController(IUserService userService, IMapper mapper)
+        private readonly IReportService _reportService;
+        public AdminController(IUserService userService, IMapper mapper, IReportService reportService)
         {
             _userService = userService;
             _mapper = mapper;
+            _reportService = reportService;
         }
 
         [HttpGet("User")]
@@ -103,11 +106,32 @@ namespace ArtworkSharingHost.Controllers
         }
 
         [HttpDelete("DeleteUser")]
-        public async Task<IActionResult> DeleteUserAdmin([FromBody] UserAdminDTO userDto)
+        public async Task<IActionResult> DeleteUserAdmin([FromBody] UserDTO userDto)
         {
             var user = _mapper.Map<User>(userDto);
             await _userService.DeleteUserAdmin(user);
             return Ok();
         }
+        [HttpGet("report")]
+        public async Task<ActionResult<IEnumerable<ReportDTO>>> GetAllReport()
+        {
+            var report = await _reportService.GetAllReport();
+            return Ok(report);
+        }
+        [HttpGet("reportDetail")]
+        public async Task<ActionResult<ReportDTO>> GetReportDetail(int reportId)
+        {
+            var report = await _reportService.GetReportById(reportId);
+            return Ok(report);
+        }
+
+        [HttpPut("report")]
+        public async Task<IActionResult> UpdateUserAdmin(int reportId, bool choice)
+        {
+            //choice: True mean yes, false mean No
+            await _reportService.AdminHandleReport(reportId, choice);
+            return Ok();
+        }
+
     }
 }

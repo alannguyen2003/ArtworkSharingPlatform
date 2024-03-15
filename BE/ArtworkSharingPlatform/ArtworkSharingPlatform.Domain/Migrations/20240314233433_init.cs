@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ArtworkSharingPlatform.Domain.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -274,25 +274,53 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PackageBilling",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TotalPrice = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PackageBilling", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PackageBilling_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Transactions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ReportName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ManagerId = table.Column<int>(type: "int", nullable: true)
+                    TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    SenderId = table.Column<int>(type: "int", nullable: false),
+                    ReceiverId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Transactions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Transactions_AspNetUsers_ManagerId",
-                        column: x => x.ManagerId,
+                        name: "FK_Transactions_AspNetUsers_ReceiverId",
+                        column: x => x.ReceiverId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Transactions_AspNetUsers_SenderId",
+                        column: x => x.SenderId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -436,29 +464,27 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PackageBilling",
+                name: "PackageBillingPackageInformation",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TotalPrice = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<int>(type: "int", nullable: true),
-                    TransactionId = table.Column<int>(type: "int", nullable: true)
+                    PackageBillingsId = table.Column<int>(type: "int", nullable: false),
+                    PackageInformationId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PackageBilling", x => x.Id);
+                    table.PrimaryKey("PK_PackageBillingPackageInformation", x => new { x.PackageBillingsId, x.PackageInformationId });
                     table.ForeignKey(
-                        name: "FK_PackageBilling_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        name: "FK_PackageBillingPackageInformation_PackageBilling_PackageBillingsId",
+                        column: x => x.PackageBillingsId,
+                        principalTable: "PackageBilling",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PackageBilling_Transactions_TransactionId",
-                        column: x => x.TransactionId,
-                        principalTable: "Transactions",
-                        principalColumn: "Id");
+                        name: "FK_PackageBillingPackageInformation_PackageInformation_PackageInformationId",
+                        column: x => x.PackageInformationId,
+                        principalTable: "PackageInformation",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -619,6 +645,34 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Reports",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ReporterId = table.Column<int>(type: "int", nullable: false),
+                    ArtworkId = table.Column<int>(type: "int", nullable: false),
+                    content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reports", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Reports_Artworks_ArtworkId",
+                        column: x => x.ArtworkId,
+                        principalTable: "Artworks",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Reports_AspNetUsers_ReporterId",
+                        column: x => x.ReporterId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CommissionImages",
                 columns: table => new
                 {
@@ -637,30 +691,6 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                         name: "FK_CommissionImages_CommissionRequests_CommissionRequestId",
                         column: x => x.CommissionRequestId,
                         principalTable: "CommissionRequests",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PackageBillingPackageInformation",
-                columns: table => new
-                {
-                    PackageBillingsId = table.Column<int>(type: "int", nullable: false),
-                    PackageInformationId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PackageBillingPackageInformation", x => new { x.PackageBillingsId, x.PackageInformationId });
-                    table.ForeignKey(
-                        name: "FK_PackageBillingPackageInformation_PackageBilling_PackageBillingsId",
-                        column: x => x.PackageBillingsId,
-                        principalTable: "PackageBilling",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PackageBillingPackageInformation_PackageInformation_PackageInformationId",
-                        column: x => x.PackageInformationId,
-                        principalTable: "PackageInformation",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -795,11 +825,6 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 column: "SenderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PackageBilling_TransactionId",
-                table: "PackageBilling",
-                column: "TransactionId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_PackageBilling_UserId",
                 table: "PackageBilling",
                 column: "UserId");
@@ -826,9 +851,24 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 column: "ArtworkId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transactions_ManagerId",
+                name: "IX_Reports_ArtworkId",
+                table: "Reports",
+                column: "ArtworkId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reports_ReporterId",
+                table: "Reports",
+                column: "ReporterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transactions_ReceiverId",
                 table: "Transactions",
-                column: "ManagerId");
+                column: "ReceiverId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transactions_SenderId",
+                table: "Transactions",
+                column: "SenderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserImage_UserId",
@@ -889,6 +929,12 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 name: "Ratings");
 
             migrationBuilder.DropTable(
+                name: "Reports");
+
+            migrationBuilder.DropTable(
+                name: "Transactions");
+
+            migrationBuilder.DropTable(
                 name: "UserImage");
 
             migrationBuilder.DropTable(
@@ -916,13 +962,10 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 name: "CommissionStatus");
 
             migrationBuilder.DropTable(
-                name: "Transactions");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Genres");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
         }
     }
 }

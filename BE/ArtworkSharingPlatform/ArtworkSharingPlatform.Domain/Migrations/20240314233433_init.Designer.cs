@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArtworkSharingPlatform.Domain.Migrations
 {
     [DbContext(typeof(ArtworkSharingPlatformDbContext))]
-    [Migration("20240312055705_Init")]
-    partial class Init
+    [Migration("20240314233433_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -460,21 +460,22 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(10,2)");
 
-                    b.Property<int?>("TransactionId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TransactionId");
 
                     b.HasIndex("UserId");
 
@@ -514,23 +515,59 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("ManagerId")
+                    b.Property<int?>("ReceiverId")
                         .HasColumnType("int");
 
                     b.Property<string>("ReportName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("SenderId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ManagerId");
+                    b.HasIndex("ReceiverId");
+
+                    b.HasIndex("SenderId");
 
                     b.ToTable("Transactions");
+                });
+
+            modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Users.Report", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ArtworkId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ReporterId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArtworkId");
+
+                    b.HasIndex("ReporterId");
+
+                    b.ToTable("Reports");
                 });
 
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Users.Role", b =>
@@ -1026,24 +1063,50 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.PackagesInfo.PackageBilling", b =>
                 {
-                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.Transactions.Transaction", null)
-                        .WithMany("PackageBillings")
-                        .HasForeignKey("TransactionId");
-
                     b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.User", "User")
                         .WithMany("PackageBillings")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Transactions.Transaction", b =>
                 {
-                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.User", "Manager")
-                        .WithMany("Transactions")
-                        .HasForeignKey("ManagerId");
+                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.User", "Receiver")
+                        .WithMany("TransactionReceived")
+                        .HasForeignKey("ReceiverId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
-                    b.Navigation("Manager");
+                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.User", "Sender")
+                        .WithMany("TransactionSents")
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Receiver");
+
+                    b.Navigation("Sender");
+                });
+
+            modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Users.Report", b =>
+                {
+                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.Artworks.Artwork", "Artwork")
+                        .WithMany("Reports")
+                        .HasForeignKey("ArtworkId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.User", "Reporter")
+                        .WithMany("Report")
+                        .HasForeignKey("ReporterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Artwork");
+
+                    b.Navigation("Reporter");
                 });
 
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Users.UserImage", b =>
@@ -1153,6 +1216,8 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.Navigation("PreOrder");
 
                     b.Navigation("Ratings");
+
+                    b.Navigation("Reports");
                 });
 
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Artworks.Genre", b =>
@@ -1175,11 +1240,6 @@ namespace ArtworkSharingPlatform.Domain.Migrations
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Messages.Group", b =>
                 {
                     b.Navigation("Connections");
-                });
-
-            modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Transactions.Transaction", b =>
-                {
-                    b.Navigation("PackageBillings");
                 });
 
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Users.Role", b =>
@@ -1215,7 +1275,11 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
                     b.Navigation("Ratings");
 
-                    b.Navigation("Transactions");
+                    b.Navigation("Report");
+
+                    b.Navigation("TransactionReceived");
+
+                    b.Navigation("TransactionSents");
 
                     b.Navigation("UserImage")
                         .IsRequired();

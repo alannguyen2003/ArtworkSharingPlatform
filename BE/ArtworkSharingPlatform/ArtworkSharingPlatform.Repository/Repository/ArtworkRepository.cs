@@ -1,4 +1,5 @@
 ﻿using ArtworkSharingPlatform.Domain.Entities.Artworks;
+using ArtworkSharingPlatform.Domain.Entities.Users;
 using ArtworkSharingPlatform.Domain.Helpers;
 using ArtworkSharingPlatform.Domain.Migrations;
 using ArtworkSharingPlatform.Repository.Interfaces;
@@ -186,6 +187,17 @@ namespace ArtworkSharingPlatform.Repository.Repository
                     }
                 }
         }
+
+        public async Task ArtworkReport (Report report)
+        {
+            if (report != null)
+            {
+                report.Status = "Pending";
+                await _context.Reports.AddAsync(report);
+                await _context.SaveChangesAsync();
+            }
+        }
+
 
     }
 }
