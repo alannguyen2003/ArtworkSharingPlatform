@@ -136,7 +136,7 @@ namespace ArtworkSharingPlatform.Infrastructure
         public static async Task SeedPackage(ArtworkSharingPlatformDbContext context)
         {
 
-            if (await context.PackageInformation.AnyAsync())
+            /*if (await context.PackageInformation.AnyAsync())
             {
                 return;
             }
@@ -163,7 +163,7 @@ namespace ArtworkSharingPlatform.Infrastructure
             foreach (var packInfo in packInfos)
             {
                 await context.PackageInformation.AddAsync(packInfo);
-            }
+            }*/
 
 
             if (await context.PackageBilling.AnyAsync())
