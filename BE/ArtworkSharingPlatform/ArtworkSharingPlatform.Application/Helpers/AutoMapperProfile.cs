@@ -77,6 +77,7 @@ namespace ArtworkSharingPlatform.Application.Helpers
             CreateMap<PackageInformation, PackageInformationDTO>()
                 .ReverseMap();
             CreateMap<PackageInformation, PackageUpdate>().ReverseMap();
+            CreateMap<PackageBilling, PackageBillingDTO>().ReverseMap();
             CreateCommissionRequestToCommissionEntityMap();
 			CreateMap<User, UpdateProfileDTO>().ReverseMap();
 			CreateMap<Follow, UserProfileFollowDTO>()
