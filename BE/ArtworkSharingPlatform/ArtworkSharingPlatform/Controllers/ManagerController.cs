@@ -47,5 +47,17 @@ namespace ArtworkSharingHost.Controllers
             await _packageService.DeletePackage(packageId);
             return Ok("Delete successfully");
         }
+
+        [HttpGet("packageBilling")]
+        public async Task<IActionResult> GetAllPackageBilling()
+        {
+            return Ok(await _packageService.GetAllPackageBilling());
+        }
+
+        [HttpGet("{packageBillingId}")]
+        public async Task<IActionResult> GetPackageBillingById(int packageBillingId)
+        {
+            return Ok(await _packageService.GetPackageById(packageBillingId));
+        }
     }
 }

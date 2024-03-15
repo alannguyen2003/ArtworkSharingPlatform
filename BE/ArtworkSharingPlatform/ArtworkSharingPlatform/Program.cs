@@ -133,9 +133,10 @@ try
     await Seed.SeedUser(userManager, roleManager);
     await Seed.SeedArtwork(context);
     await Seed.SeedCommissionStatus(context);
-    await Seed.SeedPackage(context);
     await Seed.SeedPackageInformation(context);
     await Seed.SeedTransaction(context);
+    await Seed.SeedPackage(context);
+
 }
 catch (Exception ex)
 {

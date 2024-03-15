@@ -52,8 +52,14 @@ namespace ArtworkSharingHost.Controllers
             }
             return Ok(artwork);
         }
+		[HttpGet("rating/{artworkId}")]
+		public async Task<ActionResult<int>> GetArtworkRatingForUser(int artworkId)
+		{
+			var rating = await _artworkService.GetArtworkRatingForUser(User.GetUserId(), artworkId);
+			return Ok(rating);
+		}
 
-        [HttpPost]
+		[HttpPost]
         public async Task<IActionResult> AddArtwork([FromBody] ArtworkToAddDTO artwork)
         {
             artwork.CreatedDate = DateTime.UtcNow;
@@ -92,6 +98,7 @@ namespace ArtworkSharingHost.Controllers
         [HttpPost("rating")]
         public async Task<IActionResult> UserRating([FromBody] ArtworkRatingDTO rating)
         {
+            rating.UserId = User.GetUserId();
             await _artworkService.UserRating(rating);
             return Ok(new { message = "Rating submitted successfully." });
         }
@@ -188,6 +195,7 @@ namespace ArtworkSharingHost.Controllers
         public async Task<IActionResult> ReportArtwork([FromBody] ReportDTO reportDTO)
         {
             reportDTO.ReporterId = User.GetUserId();
+            reportDTO.CreatedDate = DateTime.UtcNow;
             await _artworkService.ReportArtwork(reportDTO);
             return Ok();
         }

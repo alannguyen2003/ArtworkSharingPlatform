@@ -91,6 +91,12 @@ public class CommissionService : ICommissionService
         return query.ProjectTo<CommissionHistoryAdminDTO>(_mapper.ConfigurationProvider).ToList();
     }
 
+    public CommissionHistoryAdminDTO GetSingleCommission(int id)
+    {
+        var commission = _commissionRequestRepository.GetById(id);
+        return _mapper.Map<CommissionHistoryAdminDTO>(commission);
+    }
+
     private void InitializeChildServices()
     {
         _createCommissionService = new CreateCommissionService(
