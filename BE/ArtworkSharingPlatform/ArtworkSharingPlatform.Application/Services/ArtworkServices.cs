@@ -217,5 +217,12 @@ namespace ArtworkSharingPlatform.Application.Services
 		{
 			return await _artworkRepository.GetArtworkRatingForUser(userId, artworkId);
 		}
-	}
+	
+		public async Task<IEnumerable<ArtworkCommentDTO>> GetArtworkComments(int artworkId)
+		{
+			var Comments = await _artworkRepository.ListArtworkComments(artworkId);
+			var commentsDTO = _mapper.Map<IList<ArtworkCommentDTO>>(Comments);
+			return commentsDTO;
+		}
+  }
 }

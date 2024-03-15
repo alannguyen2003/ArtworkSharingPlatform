@@ -265,5 +265,16 @@ namespace ArtworkSharingPlatform.Repository.Repository
             if(rating == null)  return 0; 
 			return rating.Score;
 		}
-	}
+	
+        public async Task<IEnumerable<Comment>> ListArtworkComments(int artworkId)
+        {
+            if (artworkId == null)
+            {
+                return null;
+            }
+            
+            return await _context.Comments.Where(x => x.ArtworkId == artworkId).ToListAsync();
+        }
+        
+    }
 }

@@ -135,6 +135,11 @@ namespace ArtworkSharingHost.Controllers
         {
             return Ok(await _commissionService.GetAllCommissionAdmin());
         }
+        [HttpGet("{commissionId}")]
+        public async Task<IActionResult> GetSingleCommission(int commissionId)
+        {
+            return Ok(_commissionService.GetSingleCommission(commissionId));
+        }
         [HttpGet("report")]
         public async Task<ActionResult<IEnumerable<ReportDTO>>> GetAllReport()
         {

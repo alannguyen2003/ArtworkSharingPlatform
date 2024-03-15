@@ -109,6 +109,12 @@ namespace ArtworkSharingHost.Controllers
             await _artworkService.UserFollow(User.GetUserId(), email);
             return Ok(new { message = "User followed successfully." });
         }
+        [HttpGet("comment/{artworkId}")]
+        public async Task<IActionResult> GetArtworkComments(int artworkId)
+        {
+            var comments = await _artworkService.GetArtworkComments(artworkId);
+            return Ok(comments);
+        }
         [HttpPost("comment")]
         public async Task<IActionResult> UserComment([FromBody] string content, int artworkId)
         {

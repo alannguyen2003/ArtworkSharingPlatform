@@ -27,6 +27,7 @@ namespace ArtworkSharingPlatform.Repository.Interfaces
 		Task<bool> SetThumbNail(int id);
 		Task<ArtworkImage> AddImageToArtwork(ArtworkImage artworkImage);
 		Task<int> GetArtworkRatingForUser(int userId, int artworkId);
+		Task<IEnumerable<Comment>> ListArtworkComments(int artworkId);
 
     }
 }
