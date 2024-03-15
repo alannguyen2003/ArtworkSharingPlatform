@@ -9,13 +9,16 @@ import {AccountService} from "../../../_services/account.service";
 import {take} from "rxjs";
 import {User} from "../../../_model/user.model";
 import {MessageService} from "../../../_services/message.service";
+import { ArtworkLikeButtonComponent } from '../artwork-interaction-buttons/like-button/artwork-like-button.component';
+import { ArtworkCommentSectionComponent } from '../artwork-interaction-buttons/comment-section/artwork-comment-section.component';
 
 @Component({
   selector: 'app-artwork-detail',
   standalone: true,
   templateUrl: './artwork-detail.component.html',
   styleUrls: ['./artwork-detail.component.css'],
-  imports: [CommonModule, TabsModule, GalleryModule, RouterLink, ArtworkMessageComponent]
+  imports: [CommonModule, TabsModule, GalleryModule, RouterLink, ArtworkMessageComponent,
+    ArtworkLikeButtonComponent,ArtworkCommentSectionComponent]
 })
 export class ArtworkDetailComponent implements OnInit, OnDestroy{
   @ViewChild('artworkTabs', {static: true}) artworkTabs? : TabsetComponent;

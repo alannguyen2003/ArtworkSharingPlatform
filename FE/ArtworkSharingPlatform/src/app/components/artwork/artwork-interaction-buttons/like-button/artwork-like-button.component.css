@@ -1,0 +1,26 @@
+.navy-blue-button {
+    background-color:#5865f2;
+    color: white;
+    border-radius: 50%; /* Makes the button circular */
+    width: 40px; /* Adjust size as needed */
+    height: 40px; /* Adjust size as needed */
+    font-size: 24px; /* Adjust font size as needed */
+  }
+  
+.navy-blue-button-like{
+    background-color: white;
+    color: #000034;
+    border-radius: 50%; /* Makes the button circular */
+    width: 40px; /* Adjust size as needed */
+    height: 40px; /* Adjust size as needed */
+    font-size: 24px; /* Adjust font size as needed */
+}
+
+.navy-blue-button-unlike{
+    background-color:#000034 ;
+    color: white;
+    border-radius: 50%; /* Makes the button circular */
+    width: 40px; /* Adjust size as needed */
+    height: 40px; /* Adjust size as needed */
+    font-size: 24px; /* Adjust font size as needed */
+}

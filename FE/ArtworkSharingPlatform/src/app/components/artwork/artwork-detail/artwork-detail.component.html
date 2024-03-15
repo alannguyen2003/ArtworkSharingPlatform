@@ -35,7 +35,16 @@
       <div class="flex flex-col max-w-md mt-2 p-6 rounded-xl dark:bg-gray-900 dark:text-gray-100">
         <img src="{{artwork.imageUrl}}" alt="" class="flex-shrink-0 object-cover h-64 rounded-sm sm:h-96 dark:bg-gray-500 aspect-square">
         <div>
-          <h2 class="text-xl font-semibold">{{artwork.title}}</h2>
+          <div class="container">
+            <div class="row mt-3">
+              <div class="col">
+                <h2 class="text-xl font-semibold">{{artwork.title}}</h2>
+              </div>
+              <div class="col ml-8">
+                <app-artwork-like-button></app-artwork-like-button>
+              </div>
+            </div>           
+          </div>
           <span class="block pb-2 text-sm dark:text-gray-400">Price: {{artwork.price}}</span>
           <p>{{artwork.description}}</p>
         </div>
@@ -52,6 +61,9 @@
           <app-artwork-message [user]="user" [artwork]="artwork" ></app-artwork-message>
         </tab>
       </tabset>
+     
+      <!--Comment Section-->
+      <app-artwork-comment-section></app-artwork-comment-section>                  
     </div>
   </div>
 </div>
