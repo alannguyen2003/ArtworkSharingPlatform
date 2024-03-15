@@ -10,6 +10,7 @@ import {Genre} from "../_model/genre.model";
 import {environment} from "../../environments/environment";
 import {ArtworkImage} from "../_model/artworkImage.model";
 import {Report} from "../_model/report.model";
+import {Rating} from "../_model/rating.model";
 
 @Injectable({
   providedIn: 'root'
@@ -126,5 +127,11 @@ export class ArtworkService {
   report(report: Report) {
     console.log(this.baseUrl + 'report');
     return this.http.post(this.baseUrl + 'artworks/report', report);
+  }
+  getArtworkRatingForUser(artworkId: number) {
+    return this.http.get<number>(this.baseUrl + 'artworks/rating/' + artworkId);
+  }
+  rating(rating: Rating){
+    return this.http.post(this.baseUrl + 'artworks/rating', rating);
   }
 }

@@ -9,6 +9,7 @@ import {TimeagoModule} from "ngx-timeago";
 import {FileUploadModule} from "ng2-file-upload";
 import {FroalaEditorModule, FroalaViewModule} from "angular-froala-wysiwyg";
 import {ModalModule} from "ngx-bootstrap/modal";
+import {RatingModule} from "ngx-bootstrap/rating";
 
 
 
@@ -27,6 +28,7 @@ import {ModalModule} from "ngx-bootstrap/modal";
     FroalaViewModule.forRoot(),
     FroalaEditorModule.forRoot(),
     ModalModule.forRoot(),
+    RatingModule.forRoot(),
     FileUploadModule
   ],
   exports: [
@@ -39,6 +41,7 @@ import {ModalModule} from "ngx-bootstrap/modal";
     FroalaViewModule,
     FroalaEditorModule,
     ModalModule,
+    RatingModule,
     FileUploadModule
   ]
 })

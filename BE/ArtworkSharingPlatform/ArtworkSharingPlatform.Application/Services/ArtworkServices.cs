@@ -212,5 +212,10 @@ namespace ArtworkSharingPlatform.Application.Services
         {
             throw new NotImplementedException();
         }
-    }
+
+		public async Task<int> GetArtworkRatingForUser(int userId, int artworkId)
+		{
+			return await _artworkRepository.GetArtworkRatingForUser(userId, artworkId);
+		}
+	}
 }

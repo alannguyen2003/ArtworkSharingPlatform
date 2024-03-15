@@ -258,5 +258,12 @@ namespace ArtworkSharingPlatform.Repository.Repository
 			await _context.SaveChangesAsync();
 			return artworkImage;
 		}
+
+		public async Task<int> GetArtworkRatingForUser(int userId, int artworkId)
+		{
+            var rating = await _context.Ratings.SingleOrDefaultAsync(x => x.UserId == userId && x.ArtworkId == artworkId);
+            if(rating == null)  return 0; 
+			return rating.Score;
+		}
 	}
 }
