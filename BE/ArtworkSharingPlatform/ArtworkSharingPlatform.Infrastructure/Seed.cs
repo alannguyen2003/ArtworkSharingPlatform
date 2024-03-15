@@ -135,6 +135,7 @@ namespace ArtworkSharingPlatform.Infrastructure
             await context.SaveChangesAsync();
         }
         public static async Task SeedPackage(ArtworkSharingPlatformDbContext context)
+        { 
 
             if (await context.PackageBilling.AnyAsync())
             {
@@ -149,6 +150,7 @@ namespace ArtworkSharingPlatform.Infrastructure
             }
             await context.SaveChangesAsync();
         }
+
 
         public static async Task SeedTransaction(ArtworkSharingPlatformDbContext context)
         {

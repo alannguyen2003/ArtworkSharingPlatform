@@ -9,6 +9,7 @@ import {AccountService} from "../../../_services/account.service";
 import {take} from "rxjs";
 import {User} from "../../../_model/user.model";
 import {MessageService} from "../../../_services/message.service";
+import { ArtworkCommentSectionComponent } from '../artwork-interaction-buttons/comment-section/artwork-comment-section.component';
 import {BsModalRef, BsModalService, ModalModule} from "ngx-bootstrap/modal";
 import {ReportModalComponent} from "../../modal/report-modal/report-modal.component";
 import {RatingModule} from "ngx-bootstrap/rating";
@@ -23,7 +24,7 @@ import {PresenceService} from "../../../_services/presence.service";
   standalone: true,
   templateUrl: './artwork-detail.component.html',
   styleUrls: ['./artwork-detail.component.css'],
-  imports: [CommonModule, TabsModule, FormsModule, GalleryModule, RouterLink, ArtworkMessageComponent, ModalModule, RatingModule]
+  imports: [CommonModule, TabsModule, FormsModule, GalleryModule, RouterLink, ArtworkMessageComponent, ModalModule, RatingModule,ArtworkCommentSectionComponent]
 })
 export class ArtworkDetailComponent implements OnInit, OnDestroy{
   @ViewChild('artworkTabs', {static: true}) artworkTabs? : TabsetComponent;
