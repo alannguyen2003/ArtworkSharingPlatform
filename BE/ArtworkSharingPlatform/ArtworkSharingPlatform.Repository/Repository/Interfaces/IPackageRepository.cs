@@ -10,5 +10,6 @@ namespace ArtworkSharingPlatform.Repository.Interfaces
         Task DeletePackage(int id);
         Task<List<PackageBilling>> GetAllPackageBilling();
         Task<PackageBilling> GetBillingById(int id);
+        Task<decimal> GetTotalPackageBillingAmount();
     }
 }

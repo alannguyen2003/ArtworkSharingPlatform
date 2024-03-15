@@ -86,7 +86,7 @@ namespace ArtworkSharingPlatform.Infrastructure
             };
 
             var resultAdmin = await userManager.CreateAsync(admin, "Pa$$w0rd");
-            await userManager.AddToRolesAsync(admin, new[] {"Admin", "Artist", "Audience"});
+            await userManager.AddToRolesAsync(admin, new[] { "Admin", "Artist", "Audience" });
 
             var manager = new User
             {
@@ -115,7 +115,7 @@ namespace ArtworkSharingPlatform.Infrastructure
                 }
             };
             await userManager.CreateAsync(artist, "Pa$$w0rd");
-            await userManager.AddToRolesAsync(artist, new[] {"Artist", "Audience" });
+            await userManager.AddToRolesAsync(artist, new[] { "Artist", "Audience" });
         }
 
         public static async Task SeedCommissionStatus(ArtworkSharingPlatformDbContext context)
@@ -135,8 +135,7 @@ namespace ArtworkSharingPlatform.Infrastructure
             await context.SaveChangesAsync();
         }
         public static async Task SeedPackage(ArtworkSharingPlatformDbContext context)
-        { 
-
+        {
             if (await context.PackageBilling.AnyAsync())
             {
                 return;
@@ -195,7 +194,7 @@ namespace ArtworkSharingPlatform.Infrastructure
                     Status = 1
                 }
             };
-            foreach(var packageInformation in package)
+            foreach (var packageInformation in package)
             {
                 await context.PackageInformation.AddAsync(packageInformation);
             }

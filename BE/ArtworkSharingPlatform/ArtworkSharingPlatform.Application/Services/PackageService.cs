@@ -29,6 +29,11 @@ namespace ArtworkSharingPlatform.Application.Services
             var list = packages.AsQueryable();
             return list.ProjectTo<PackageInformationDTO>(_mapper.ConfigurationProvider).ToList();
         }
+        public async Task<PackageInformationDTO> GetPackageById(int id)
+        {
+            var package = await _packageRepository.GetPackageById(id);
+            return _mapper.Map<PackageInformationDTO>(package);
+        }
         public async Task UpdatePackage(PackageInformation packageInformation)
         {
             await _packageRepository.UpdatePackage(packageInformation);
@@ -46,10 +51,15 @@ namespace ArtworkSharingPlatform.Application.Services
             return list.ProjectTo<PackageBillingDTO>(_mapper.ConfigurationProvider).ToList();
         }
 
-        public async Task<PackageBillingDTO> GetPackageById(int id)
+        public async Task<PackageBillingDTO> GetPackageBillingById(int id)
         {
             var billing = await _packageRepository.GetBillingById(id);
             return _mapper.Map<PackageBillingDTO>(billing);
+        }
+
+        public async Task<decimal> GetTotalMoneyOfBilling()
+        {
+            return await _packageRepository.GetTotalPackageBillingAmount();
         }
     }
 }

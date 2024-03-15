@@ -5,6 +5,7 @@ using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Domain.Entities.Users;
 using ArtworkSharingPlatform.Repository.Interfaces;
 using ArtworkSharingPlatform.Repository.Repository;
+using ArtworkSharingPlatform.Repository.Repository.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Identity.Client;
 
@@ -32,6 +33,8 @@ public static class DependencyInjection
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<ITransactionRepository, TransactionRepository>();
+        services.AddScoped<ITransactionService, TransactionService>();
         return services;
     }
 }

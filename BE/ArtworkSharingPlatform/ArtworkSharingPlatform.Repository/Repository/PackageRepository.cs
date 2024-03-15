@@ -104,5 +104,22 @@ namespace ArtworkSharingPlatform.Repository.Repository
             }
             return billing;
         }
+
+        public async Task<decimal> GetTotalPackageBillingAmount()
+        {
+            decimal totalAmount = 0;
+            try
+            {
+                totalAmount = await _dbContext.PackageBilling
+                                    .Select(pb => pb.TotalPrice)
+                                    .SumAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return totalAmount;
+        }
+
     }
 }
