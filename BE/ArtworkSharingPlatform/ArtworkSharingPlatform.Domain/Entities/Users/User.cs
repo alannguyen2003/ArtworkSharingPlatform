@@ -23,7 +23,6 @@ public class User : IdentityUser<int>
     public ICollection<Artwork>? Artworks { get; set; }
     public ICollection<PreOrder>? PreOrders { get; set; }
     public ICollection<PackageBilling>? PackageBillings { get; set; }
-    public ICollection<Transaction>? Transactions { get; set; }
     public ICollection<ConfigManager>? ConfigManagers { get; set; }
     public ICollection<Like>? Likes { get; set; }
     public ICollection<Comment>? Comments { get; set; }
@@ -36,4 +35,8 @@ public class User : IdentityUser<int>
     public ICollection<CommissionRequest>? CommissionReceived{ get; set; }
     public List<Follow> FollowedUsers { get; set; }
     public List<Follow> IsFollowedByUsers { get; set; }
+    public List<Report>? Report { get; set; }
+    public List<Transaction> TransactionSents { get; set; }
+    public List<Transaction> TransactionReceived { get; set; }
+
 }

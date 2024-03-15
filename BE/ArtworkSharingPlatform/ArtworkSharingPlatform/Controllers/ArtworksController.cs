@@ -2,6 +2,7 @@
 using ArtworkSharingHost.Extensions;
 using ArtworkSharingPlatform.Application.Interfaces;
 using ArtworkSharingPlatform.DataTransferLayer;
+using ArtworkSharingPlatform.Domain.Entities.Users;
 using ArtworkSharingPlatform.Domain.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,13 +13,13 @@ namespace ArtworkSharingHost.Controllers
     public class ArtworksController : ControllerBase
     {
         private readonly IArtworkService _artworkService;
-		private readonly IImageService _imageService;
+        private readonly IImageService _imageService;
 
-		public ArtworksController(IArtworkService artworkService, IImageService imageService)
+        public ArtworksController(IArtworkService artworkService, IImageService imageService)
         {
             _artworkService = artworkService;
-			_imageService = imageService;
-		}
+            _imageService = imageService;
+        }
 
         [HttpGet]
         public async Task<ActionResult<PagedList<ArtworkDTO>>> GetArtworks([FromQuery] UserParams userParams)
@@ -52,22 +53,22 @@ namespace ArtworkSharingHost.Controllers
             return Ok(artwork);
         }
 
-		[HttpPost]
-		public async Task<IActionResult> AddArtwork([FromBody] ArtworkToAddDTO artwork)
-		{
-			artwork.CreatedDate = DateTime.UtcNow;
-			artwork.OwnerId = User.GetUserId();
-			var flag = artwork.ArtworkImages.Any(x => x.IsThumbnail == true);
-			if (!flag)
-			{
-				artwork.ArtworkImages.First().IsThumbnail = true;
-			}
-			await _artworkService.AddArtwork(artwork);
-			return Ok(artwork);
-		}
+        [HttpPost]
+        public async Task<IActionResult> AddArtwork([FromBody] ArtworkToAddDTO artwork)
+        {
+            artwork.CreatedDate = DateTime.UtcNow;
+            artwork.OwnerId = User.GetUserId();
+            var flag = artwork.ArtworkImages.Any(x => x.IsThumbnail == true);
+            if (!flag)
+            {
+                artwork.ArtworkImages.First().IsThumbnail = true;
+            }
+            await _artworkService.AddArtwork(artwork);
+            return Ok(artwork);
+        }
 
-		[HttpPost("like")]
-        public async Task<IActionResult> UserLike([FromBody]int artworkId)
+        [HttpPost("like")]
+        public async Task<IActionResult> UserLike([FromBody] int artworkId)
         {
             var like = new ArtworkLikeDTO
             {
@@ -154,28 +155,36 @@ namespace ArtworkSharingHost.Controllers
             return Ok(result);
         }
         [HttpPost("add-image")]
-		public async Task<IActionResult> AddImage([FromBody] ArtworkImageDTO artworkImage)
-		{
-			var result = await _artworkService.AddImageToArtwork(artworkImage);
-            if(result == null) return BadRequest("Error while adding image");
-			return Ok(result);
-		}
-		[HttpPut("set-thumbnail/{imageId}")]
-		public async Task<IActionResult> SetThumbnail(int imageId)
-		{
-			var result = await _artworkService.SetThumbnail(imageId);
-			if (!result) return BadRequest("Error while setting thumbnail image for artwork");
-			return Ok();
-		}
+        public async Task<IActionResult> AddImage([FromBody] ArtworkImageDTO artworkImage)
+        {
+            var result = await _artworkService.AddImageToArtwork(artworkImage);
+            if (result == null) return BadRequest("Error while adding image");
+            return Ok(result);
+        }
+        [HttpPut("set-thumbnail/{imageId}")]
+        public async Task<IActionResult> SetThumbnail(int imageId)
+        {
+            var result = await _artworkService.SetThumbnail(imageId);
+            if (!result) return BadRequest("Error while setting thumbnail image for artwork");
+            return Ok();
+        }
         [HttpDelete("delete-image")]
         public async Task<IActionResult> DeleteArtworkImage([FromBody] ArtworkImageDTO imageDTO)
         {
             var publicId = imageDTO.PublicId;
             var result = await _artworkService.DeleteArtworkImage(imageDTO);
-            if(!result) return BadRequest("Error while deleting image");
+            if (!result) return BadRequest("Error while deleting image");
             await _imageService.DeletePhotoAsync(publicId);
             return Ok();
         }
 
-	}
-}
+        [HttpPost("report")]
+        public async Task<IActionResult> ReportArtwork([FromBody] ReportDTO reportDTO)
+        {
+            reportDTO.ReporterId = User.GetUserId();
+            await _artworkService.ReportArtwork(reportDTO);
+            return Ok();
+        }
+    }
+}    
+

@@ -25,6 +25,9 @@ namespace ArtworkSharingPlatform.Application.Interfaces
         Task<bool> SetThumbnail(int id);
         Task<bool> DeleteArtworkImage(ArtworkImageDTO imageDTO);
         Task<ArtworkImage> AddImageToArtwork(ArtworkImageDTO artworkImageDTO);
+        Task AddArtworkImage(ArtworkImageToAddDTO _artwork);
+        Task UpdateArtworkImage(ArtworkImageToAddDTO _artwork);
+        Task ReportArtwork(ReportDTO _report);
 
     }
 }

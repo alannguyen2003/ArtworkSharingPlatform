@@ -6,10 +6,11 @@ namespace ArtworkSharingPlatform.Domain.Entities.Transactions;
 
 public class Transaction : BaseEntity
 {
-    public string? ReportName { get; set; }
-    public DateTime StartDate { get; set; }
-    public DateTime EndDate { get; set; }
+    public string? ReportName { get; set; }    
     public DateTime CreateDate { get; set; }
-    public ICollection<PackageBilling>? PackageBillings { get; set; }
-    public User? Manager { get; set; }
+    public decimal TotalPrice { get; set; }
+    public int SenderId { get; set; }
+    public User Sender { get; set; }
+    public int? ReceiverId { get; set; }
+    public User? Receiver { get; set; }
 }

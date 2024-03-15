@@ -1,4 +1,5 @@
 ﻿using ArtworkSharingPlatform.Application.Interfaces;
+using ArtworkSharingPlatform.DataTransferLayer;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.User;
 using ArtworkSharingPlatform.Domain.Entities.Users;
@@ -16,12 +17,14 @@ namespace ArtworkSharingHost.Controllers
         private readonly IArtworkService _artworkService;
         private readonly ICommissionService _commissionService;
         private readonly IMapper _mapper;
-        public AdminController(IUserService userService, IMapper mapper, IArtworkService artworkService, ICommissionService commissionService)
+        private readonly IReportService _reportService;
+        public AdminController(IUserService userService, IMapper mapper, IReportService reportService, ICommissionService commissionService, IArtworkService artworkService)
         {
             _userService = userService;
             _mapper = mapper;
             _artworkService = artworkService;
             _commissionService = commissionService;
+            _reportService = reportService;
         }
 
         [HttpGet("User")]
@@ -132,5 +135,26 @@ namespace ArtworkSharingHost.Controllers
         {
             return Ok(await _commissionService.GetAllCommissionAdmin());
         }
+        [HttpGet("report")]
+        public async Task<ActionResult<IEnumerable<ReportDTO>>> GetAllReport()
+        {
+            var report = await _reportService.GetAllReport();
+            return Ok(report);
+        }
+        [HttpGet("reportDetail")]
+        public async Task<ActionResult<ReportDTO>> GetReportDetail(int reportId)
+        {
+            var report = await _reportService.GetReportById(reportId);
+            return Ok(report);
+        }
+
+        [HttpPut("report")]
+        public async Task<IActionResult> UpdateUserAdmin(int reportId, bool choice)
+        {
+            //choice: True mean yes, false mean No
+            await _reportService.AdminHandleReport(reportId, choice);
+            return Ok();
+        }
+
     }
 }

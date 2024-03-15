@@ -191,10 +191,26 @@ namespace ArtworkSharingPlatform.Application.Services
 			return await _artworkRepository.AddImageToArtwork(artworkImage);
 		}
 
+        public async Task ReportArtwork(ReportDTO _report)
+        {
+            var report = _mapper.Map<Report>(_report);
+            await _artworkRepository.ArtworkReport(report);
+        }
+    
 		public async Task<bool> DeleteArtworkImage(ArtworkImageDTO imageDTO)
 		{
 			var image = _mapper.Map<ArtworkImage>(imageDTO);
 			return await _artworkRepository.DeleteArtworkImage(image);
 		}
-	}
+
+        public Task AddArtworkImage(ArtworkImageToAddDTO _artwork)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateArtworkImage(ArtworkImageToAddDTO _artwork)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

@@ -21,5 +21,6 @@ public class Artwork : BaseEntity
     public ICollection<Like>? Likes { get; set; }
     public ICollection<Comment>? Comments { get; set; }
     public ICollection<Rating>? Ratings { get; set; }
+    public ICollection<Report> Reports { get; set; }
     public Genre Genre { get; set; }
 }
