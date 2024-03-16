@@ -2,6 +2,7 @@
 using ArtworkSharingPlatform.DataTransferLayer;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.User;
+using ArtworkSharingPlatform.Domain.Entities.Configs;
 using ArtworkSharingPlatform.Domain.Entities.Users;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -18,13 +19,15 @@ namespace ArtworkSharingHost.Controllers
         private readonly ICommissionService _commissionService;
         private readonly IMapper _mapper;
         private readonly IReportService _reportService;
-        public AdminController(IUserService userService, IMapper mapper, IReportService reportService, ICommissionService commissionService, IArtworkService artworkService)
+        private readonly IConfigService _configService;
+        public AdminController(IUserService userService, IMapper mapper, IReportService reportService, ICommissionService commissionService, IArtworkService artworkService, IConfigService configService)
         {
             _userService = userService;
             _mapper = mapper;
             _artworkService = artworkService;
             _commissionService = commissionService;
             _reportService = reportService;
+            _configService = configService;
         }
 
         [HttpGet("User")]
@@ -161,5 +164,16 @@ namespace ArtworkSharingHost.Controllers
             return Ok();
         }
 
+        [HttpGet("config")]
+        public async Task<IActionResult> GetAllConfig()
+        {
+            return Ok(await _configService.GetAll());
+        }
+
+        [HttpGet("config/{configId}")]
+        public async Task<IActionResult> GetConfigById(int configId)
+        {
+            return Ok(await _configService.GetConfigById(configId));
+        }
     }
 }
