@@ -136,6 +136,7 @@ try
     await Seed.SeedPackageInformation(context);
     await Seed.SeedTransaction(context);
     await Seed.SeedPackage(context);
+    await Seed.SeedConfigManager(context);
 
 }
 catch (Exception ex)

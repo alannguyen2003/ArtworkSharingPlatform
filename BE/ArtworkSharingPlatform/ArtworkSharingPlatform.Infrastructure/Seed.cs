@@ -7,6 +7,7 @@ using System.Text.Json;
 using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Domain.Entities.PackagesInfo;
 using ArtworkSharingPlatform.Domain.Entities.Transactions;
+using ArtworkSharingPlatform.Domain.Entities.Configs;
 
 namespace ArtworkSharingPlatform.Infrastructure
 {
@@ -199,6 +200,32 @@ namespace ArtworkSharingPlatform.Infrastructure
                 await context.PackageInformation.AddAsync(packageInformation);
             }
             await context.SaveChangesAsync();
+        }
+
+        public static async Task SeedConfigManager(ArtworkSharingPlatformDbContext context)
+        {
+            if(await context.ConfigManagers.AnyAsync()) { return; }
+            var config = new ConfigManager
+            {
+                ConfigDate = DateTime.Now,
+                IsServicePackageConfig = true,
+                IsPhysicalImageConfig = true,
+                MaxReleaseCount = 10,
+                IsGeneralConfig = true,
+                LogoUrl = "",
+                MyPhoneNumber = "1234567893",
+                Address = "FPTU",
+                IsPagingConfig = true,
+                TotalItemPerPage = 10,
+                RowSize = 5,
+                IsAdvertisementConfig = true,
+                CompanyName = "FPTU",
+                CompanyPhoneNumber = "0999992123",
+                CompanyEmail = "fptu@fpt.edu.vn",
+                Administrator = context.Users.FirstOrDefault(u => u.Id == 11)
+            };
+            await context.ConfigManagers.AddAsync(config);
+            await context.SaveChangesAsync();   
         }
     }
 }
