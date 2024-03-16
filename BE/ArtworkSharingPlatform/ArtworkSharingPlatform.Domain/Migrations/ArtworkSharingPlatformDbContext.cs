@@ -63,7 +63,7 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
         optionsBuilder
             .UseSqlServer(
                 "Data Source=(local); database=ASPDatabase;" +
-                "uid=sa;pwd=1234567890;" +
+                "uid=sa;pwd=12345;" +
                 "TrustServerCertificate=True;" +
                 "MultipleActiveResultSets=True");
     }

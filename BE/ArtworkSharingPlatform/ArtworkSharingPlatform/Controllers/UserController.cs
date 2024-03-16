@@ -1,4 +1,5 @@
-﻿using ArtworkSharingPlatform.Application.Interfaces;
+﻿using ArtworkSharingHost.Extensions;
+using ArtworkSharingPlatform.Application.Interfaces;
 using ArtworkSharingPlatform.DataTransferLayer;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.User;
 using ArtworkSharingPlatform.Domain.Entities.Users;
@@ -64,6 +65,13 @@ namespace ArtworkSharingHost.Controllers
                 return BadRequest(ex.Message);
             }
             return Ok();
+        }
+        [HttpGet("get-profile")]
+        public async Task<IActionResult> GetProfile()
+        {
+
+            var result = await _userService.GetUserProfile(User.GetEmail());
+            return Ok(result);
         }
         [HttpPut("edit-profile")]
         public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileDTO updateProfileDTO)

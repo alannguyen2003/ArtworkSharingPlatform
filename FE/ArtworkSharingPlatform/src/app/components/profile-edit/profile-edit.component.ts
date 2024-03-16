@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {User} from "../../_model/user.model";
 import {AccountService} from "../../_services/account.service";
@@ -11,7 +11,7 @@ import {ToastrService} from "ngx-toastr";
   templateUrl: './profile-edit.component.html',
   styleUrls: ['./profile-edit.component.css']
 })
-export class ProfileEditComponent {
+export class ProfileEditComponent implements OnInit{
   user : User | undefined;
   validationErrors: string[] = [];
   constructor(private accountService: AccountService,
@@ -20,6 +20,15 @@ export class ProfileEditComponent {
     this.accountService.currentUser$.pipe(take(1)).subscribe({
       next: user => {
         if (user) this.user = user;
+      }
+    });
+  }
+
+  ngOnInit() {
+    if (!this.user) return;
+    this.accountService.getProfile().subscribe({
+      next: profile => {
+        this.user = profile;
       }
     });
   }

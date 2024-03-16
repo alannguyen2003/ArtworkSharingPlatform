@@ -154,6 +154,8 @@ namespace ArtworkSharingPlatform.Repository.Repository
                     u.Email = user.Email;
                     u.PhoneNumber = user.PhoneNumber;
                     u.Description = user.Description;
+                    u.TwitterLink = user.TwitterLink;
+                    u.FacebookLink = user.FacebookLink;
                     await _userManager.UpdateAsync(u);
                 }
                 else
