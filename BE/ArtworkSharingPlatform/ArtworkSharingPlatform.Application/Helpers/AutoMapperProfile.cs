@@ -41,6 +41,7 @@ namespace ArtworkSharingPlatform.Application.Helpers
             CreateMap<Artwork, ArtworkToAddDTO>().ReverseMap();
             CreateMap<Artwork, ArtworkUpdateDTO>().ReverseMap();
             CreateMap<ArtworkImage, ArtworkImageToAddDTO>().ReverseMap();
+            CreateMap<Report, ReportDTO>().ReverseMap();
             CreateMap<Artwork, ArtworkDTO>()
                 .ForMember(dest => dest.ImageUrl,
                     opt => opt.MapFrom(src => src.ArtworkImages.SingleOrDefault(x => x.IsThumbnail.Value).ImageUrl))
@@ -53,6 +54,10 @@ namespace ArtworkSharingPlatform.Application.Helpers
                 .ForMember(dest => dest.Owner, opt => opt.MapFrom(src => src.Owner.Name)).
                 ReverseMap();
             CreateMap<Message, MessageDTO>();
+            CreateMap<Message, MessageDTO>()
+                .ForMember(dest => dest.SenderPhotoUrl, opt => opt.MapFrom(src => src.Sender.UserImage.Url))
+                .ForMember(dest => dest.RecipientPhotoUrl, opt => opt.MapFrom(src => src.Recipient.UserImage.Url))
+                .ReverseMap();
             CreateMap<User, UserInfoDTO>()
                 .ForMember(dest => dest.Role,
                     opt => opt.MapFrom(src => src.UserRoles.Any() ? src.UserRoles.First().Role.Name : null))
@@ -74,8 +79,16 @@ namespace ArtworkSharingPlatform.Application.Helpers
             CreateMap<PackageInformation, PackageInformationDTO>()
                 .ReverseMap();
             CreateMap<PackageInformation, PackageUpdate>().ReverseMap();
+            CreateMap<PackageBilling, PackageBillingDTO>().ReverseMap();
+            CreateMap<ConfigManager, ConfigManagerAdminDTO>()
+                .ForMember(dest => dest.Administrator, opt => opt.MapFrom(src => src.Administrator != null ? src.Administrator.Name : null))
+                .ReverseMap();
             CreateCommissionRequestToCommissionEntityMap();
 			CreateMap<User, UpdateProfileDTO>().ReverseMap();
+			CreateMap<Follow, UserProfileFollowDTO>()
+                .ForMember(dest => dest.SourceUserEmail, opt => opt.MapFrom(src => src.SourceUser.Email))
+                .ForMember(dest => dest.TargetUserEmail, opt => opt.MapFrom(src => src.TargetUser.Email))
+                .ReverseMap();
 			CreateCommissionRequestToCommissionEntityMap();
             CommissionEntityToCommissionDTOMap();
         }

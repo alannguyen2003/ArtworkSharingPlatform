@@ -1,6 +1,8 @@
 ﻿using ArtworkSharingPlatform.Application.Interfaces;
+using ArtworkSharingPlatform.DataTransferLayer;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.User;
+using ArtworkSharingPlatform.Domain.Entities.Configs;
 using ArtworkSharingPlatform.Domain.Entities.Users;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -16,12 +18,16 @@ namespace ArtworkSharingHost.Controllers
         private readonly IArtworkService _artworkService;
         private readonly ICommissionService _commissionService;
         private readonly IMapper _mapper;
-        public AdminController(IUserService userService, IMapper mapper, IArtworkService artworkService, ICommissionService commissionService)
+        private readonly IReportService _reportService;
+        private readonly IConfigService _configService;
+        public AdminController(IUserService userService, IMapper mapper, IReportService reportService, ICommissionService commissionService, IArtworkService artworkService, IConfigService configService)
         {
             _userService = userService;
             _mapper = mapper;
             _artworkService = artworkService;
             _commissionService = commissionService;
+            _reportService = reportService;
+            _configService = configService;
         }
 
         [HttpGet("User")]
@@ -131,6 +137,43 @@ namespace ArtworkSharingHost.Controllers
         public async Task<IActionResult> GetAllCommission()
         {
             return Ok(await _commissionService.GetAllCommissionAdmin());
+        }
+        [HttpGet("{commissionId}")]
+        public async Task<IActionResult> GetSingleCommission(int commissionId)
+        {
+            return Ok(_commissionService.GetSingleCommission(commissionId));
+        }
+        [HttpGet("report")]
+        public async Task<ActionResult<IEnumerable<ReportDTO>>> GetAllReport()
+        {
+            var report = await _reportService.GetAllReport();
+            return Ok(report);
+        }
+        [HttpGet("reportDetail")]
+        public async Task<ActionResult<ReportDTO>> GetReportDetail(int reportId)
+        {
+            var report = await _reportService.GetReportById(reportId);
+            return Ok(report);
+        }
+
+        [HttpPut("report")]
+        public async Task<IActionResult> UpdateUserAdmin(int reportId, bool choice)
+        {
+            //choice: True mean yes, false mean No
+            await _reportService.AdminHandleReport(reportId, choice);
+            return Ok();
+        }
+
+        [HttpGet("config")]
+        public async Task<IActionResult> GetAllConfig()
+        {
+            return Ok(await _configService.GetAll());
+        }
+
+        [HttpGet("config/{configId}")]
+        public async Task<IActionResult> GetConfigById(int configId)
+        {
+            return Ok(await _configService.GetConfigById(configId));
         }
     }
 }

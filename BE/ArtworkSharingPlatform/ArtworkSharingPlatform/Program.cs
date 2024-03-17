@@ -87,8 +87,12 @@ builder.Services.AddSignalR();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
-
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IReportRepository, ReportRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<IReportService, ReportService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -129,6 +133,10 @@ try
     await Seed.SeedArtwork(context);
     await Seed.SeedCommissionStatus(context);
     await Seed.SeedPackageInformation(context);
+    await Seed.SeedTransaction(context);
+    await Seed.SeedPackage(context);
+    await Seed.SeedConfigManager(context);
+
 }
 catch (Exception ex)
 {

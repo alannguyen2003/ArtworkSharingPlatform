@@ -48,23 +48,24 @@ export class PresenceService {
     this.hubConnection.on('GetOnlineUsers', emails => {
       this.onlineUserSource.next(emails);
     });
-    this.hubConnection.on('NewMessageReceived', sender => {
+    this.hubConnection.on('NewMessageReceived', (email, artworkId) => {
+      console.log(user);
       if (user.roles.includes('Artist')) {
         this.toastr
-          .info(sender.email + ' has sent you a new message! Click me to see the message')
+          .info(email.email + ' has sent you a new message! Click me to see the message')
           .onTap
           .pipe(take(1))
           .subscribe({
-            next: () => this.router.navigateByUrl('/artist/' + sender.email + '?artworkId='+ sender.artworkId)
+            next: () => this.router.navigateByUrl('/artist/messages')
           });
       }
       else {
         this.toastr
-          .info(sender.name + ' has sent you a new message! Click me to see the message')
+          .info(email.email + ' has sent you a new message! Click me to see the message')
           .onTap
           .pipe(take(1))
           .subscribe({
-            next: () => this.router.navigateByUrl('/artwork/' + sender.artworkId + '?tab=Messages')
+            next: () => this.router.navigateByUrl('/artwork/' + email.artworkId + '?tab=Messages')
           });
       }
     })

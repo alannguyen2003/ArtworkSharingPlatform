@@ -1,0 +1,42 @@
+input.ng-invalid.ng-touched{
+  border: 1px solid red;
+}
+textarea.ng-invalid.ng-touched{
+  border: 1px solid red;
+}
+
+.is-disabled {
+  border: 3px dotted red!important;
+  color: rgba(234,229,217,0.7);
+}
+.image-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.image-card .set-main-button {
+  position: absolute;
+  bottom: 10px; /* Adjust as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.2s, opacity 0.2s ease-in-out;
+}
+
+.image-card:hover .set-main-button {
+  visibility: visible;
+  opacity: 1;
+}
+.animate {
+  transition: all 0.3s ease-in-out;
+}
+.list-inline {
+  padding-left: 0;
+  list-style: none;
+}
+
+.list-inline-item {
+  display: inline;
+  margin-right: 5px; /* Adjust the spacing between buttons as needed */
+}

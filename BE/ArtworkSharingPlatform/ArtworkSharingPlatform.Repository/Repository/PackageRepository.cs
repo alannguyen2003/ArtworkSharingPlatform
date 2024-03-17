@@ -78,5 +78,48 @@ namespace ArtworkSharingPlatform.Repository.Repository
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<List<PackageBilling>> GetAllPackageBilling()
+        {
+            List<PackageBilling> billing = null;
+            try
+            {
+                billing = await _dbContext.PackageBilling.ToListAsync();
+            }catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return billing;
+        }
+
+        public async Task<PackageBilling> GetBillingById(int id)
+        {
+            PackageBilling billing = null;
+            try
+            {
+                billing = await _dbContext.PackageBilling.FirstOrDefaultAsync(b => b.Id == id);
+            }catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return billing;
+        }
+
+        public async Task<decimal> GetTotalPackageBillingAmount()
+        {
+            decimal totalAmount = 0;
+            try
+            {
+                totalAmount = await _dbContext.PackageBilling
+                                    .Select(pb => pb.TotalPrice)
+                                    .SumAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return totalAmount;
+        }
+
     }
 }

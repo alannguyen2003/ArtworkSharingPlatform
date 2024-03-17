@@ -1,6 +1,8 @@
 ﻿using ArtworkSharingPlatform.Domain.Entities.Artworks;
+using ArtworkSharingPlatform.Domain.Entities.Users;
+using ArtworkSharingPlatform.Domain.Helpers;
 
-namespace ArtworkSharingPlatform.Repository.Repository.Interfaces
+namespace ArtworkSharingPlatform.Repository.Interfaces
 {
 	public interface IArtworkRepository
 	{
@@ -19,6 +21,13 @@ namespace ArtworkSharingPlatform.Repository.Repository.Interfaces
         Task<IEnumerable<Artwork>?> SearchArtworkByGenre(int genreId);
 		Task AddArtworkImage(ArtworkImage artwork);
 		Task UpdateArtworkImage(ArtworkImage artwork);
+		Task ArtworkReport(Report report);
+        Task<bool> ConfirmSell(int artworkId, int userId);
+        Task<bool> DeleteArtworkImage(ArtworkImage image);
+		Task<bool> SetThumbNail(int id);
+		Task<ArtworkImage> AddImageToArtwork(ArtworkImage artworkImage);
+		Task<int> GetArtworkRatingForUser(int userId, int artworkId);
+		Task<IEnumerable<Comment>> ListArtworkComments(int artworkId);
 
     }
 }

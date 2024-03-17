@@ -1,71 +1,54 @@
 <section class="py-20 dark:bg-gray-800 dark:text-gray-100">
-  <form #filterForm="ngForm" (ngSubmit)="loadArtworks()" autocomplete="off" class="container flex flex-col mx-auto space-y-12" *ngIf="userParams">
+  <form #filterForm="ngForm" (ngSubmit)="loadArtworks()" autocomplete="off"
+    class="container flex flex-col mx-auto space-y-12" *ngIf="userParams">
     <fieldset class="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm dark:bg-gray-900">
       <div class="space-y-2 col-span-full lg:col-span-1">
-        <p class="text-3xl font-medium">Filtering</p>
+        <p class="text-3xl font-medium">Price Filter</p>
+        <div class="flex items-center space-x-2 mt-5">
+          <button type="submit" class="px-4 py-2 border rounded-md dark:border-gray-100">Apply</button>
+        </div>
       </div>
       <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
-        <div class="col-span-full sm:col-span-3">
+        <div class="col-span-full sm:col-span-3 form-outline">
           <label class="text-sm">Min Price</label>
-          <input
-            type="number"
-            placeholder="Min Price"
-            name="minPrice"
-            [(ngModel)]="userParams.minPrice"
+          <input type="number" placeholder="Min Price" name="minPrice" [(ngModel)]="userParams.minPrice"
             #minPrice="ngModel"
-            class="w-full rounded-md h-2/3 focus:ring focus:ri focus:ri dark:border-gray-700 dark:text-gray-900">
+            class="form-control w-full rounded-md h-2/3 focus:ring focus:ri focus:ri dark:border-gray-700 dark:text-gray-900">
         </div>
         <div class="col-span-full sm:col-span-3">
           <label class="text-sm">Max Price</label>
-          <input
-            type="text"
-            placeholder="Max Price"
-            name="maxPrice"
-            [(ngModel)]="userParams.maxPrice"
+          <input type="text" placeholder="Max Price" name="maxPrice" [(ngModel)]="userParams.maxPrice"
             #maxPrice="ngModel"
-            class="w-full h-2/3 rounded-md focus:ring focus:ri focus:ri dark:border-gray-700 dark:text-gray-900">
+            class="form-control w-full h-2/3 rounded-md focus:ring focus:ri focus:ri dark:border-gray-700 dark:text-gray-900">
         </div>
         <div class="col-span-full">
           <label class="text-sm">Price Order</label>
-          <select
-            name="orderBy"
-            [(ngModel)]="userParams.orderBy"
-            class="w-full h-2/3 rounded-md focus:ring focus:ri focus:ri dark:border-gray-700 dark:text-gray-900"
-          >
+          <select name="orderBy" [(ngModel)]="userParams.orderBy"
+            class="form-control w-full h-2/3 rounded-md focus:ring focus:ri focus:ri dark:border-gray-700 dark:text-gray-900">
             <option *ngFor="let orderPrice of orderPriceList" [value]="orderPrice.value">
-                {{orderPrice.display}}
+              {{orderPrice.display}}
             </option>
           </select>
-        </div>
-        <div class="col-span-full">
-          <div class="flex items-center space-x-2">
-            <button type="submit" class="px-4 py-2 border rounded-md dark:border-gray-100">Apply</button>
-          </div>
         </div>
       </div>
     </fieldset>
   </form>
   <div class="container-fluid p-0 m-0" *ngIf="artworks.length > 0">
     <div class="row w-full justify-content-center">
-      <div class="flex col-3 max-w-lg p-6 space-y-6 overflow-hidden rounded-lg shadow-md dark:bg-gray-900 dark:text-gray-100 m-2" *ngFor="let artwork of artworks">
+      <div
+        class="flex col-3 max-w-lg p-6 space-y-6 overflow-hidden rounded-lg shadow-md dark:bg-gray-900 dark:text-gray-100 m-2"
+        *ngFor="let artwork of artworks">
         <app-artwork-card [artwork]="artwork"></app-artwork-card>
       </div>
-      </div>
+    </div>
   </div>
   <div *ngIf="artworks.length <= 0">
     <p>Artworks not found!</p>
   </div>
   <div class="d-flex justify-content-center" *ngIf="pagination">
-    <pagination [boundaryLinks]="true"
-                [totalItems]="pagination.totalItems"
-                [itemsPerPage]="pagination.itemsPerPage"
-                [maxSize]="10"
-                [(ngModel)]="pagination.currentPage"
-                (pageChanged)="pageChanged($event)"
-                previousText="&lsaquo;"
-                nextText="&rsaquo;"
-                firstText="&laquo;"
-                lastText="&raquo;">
+    <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
+      [maxSize]="10" [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+      nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
     </pagination>
   </div>
 </section>

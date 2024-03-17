@@ -67,5 +67,12 @@ namespace ArtworkSharingPlatform.Application.Services
 		{
             return await _userRepository.GetAll().Where(x => x.Email == email).ProjectTo<UserProfileDTO>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
 		}
+
+		public Task<UserProfileDTO> GetUserProfile(string email)
+		{
+            var query = _userRepository.GetAll();
+            var result = query.ProjectTo<UserProfileDTO>(_mapper.ConfigurationProvider).SingleOrDefaultAsync(x => x.Email == email);
+            return result;
+		}
 	}
 }

@@ -17,4 +17,8 @@ export class UserService {
   updateProfile(user: User) {
     return this.http.put(this.baseUrl + 'user/edit-profile', user);
   }
+
+  folowUser(email: string) {
+    return this.http.post(this.baseUrl + 'artworks/follow/' + email, {});
+  }
 }

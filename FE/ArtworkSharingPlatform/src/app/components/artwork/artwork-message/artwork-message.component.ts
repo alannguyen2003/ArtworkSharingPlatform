@@ -7,6 +7,7 @@ import {MessageReceivedComponent} from "../../messages/message-received/message-
 import {CommonModule} from "@angular/common";
 import {MessageService} from "../../../_services/message.service";
 import {FormsModule, NgForm} from "@angular/forms";
+import {Message} from "../../../_model/message.model";
 
 @Component({
   selector: 'app-artwork-message',
@@ -33,6 +34,15 @@ export class ArtworkMessageComponent {
     }).finally(() => {
       this.loading = false;
     });
+  }
+
+  getLastMessageReadStatus(messages: Message[], userEmail: string): boolean {
+    const lastUserSentMessage = messages.slice().reverse().find((message) => message.senderEmail === userEmail);
+    if (lastUserSentMessage) {
+      return !!lastUserSentMessage.dateRead;
+    } else {
+      return false;
+    }
   }
 
 }

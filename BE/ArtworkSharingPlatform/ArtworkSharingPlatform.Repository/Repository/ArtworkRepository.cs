@@ -1,4 +1,5 @@
 ﻿using ArtworkSharingPlatform.Domain.Entities.Artworks;
+using ArtworkSharingPlatform.Domain.Entities.Users;
 using ArtworkSharingPlatform.Domain.Helpers;
 using ArtworkSharingPlatform.Domain.Migrations;
 using Microsoft.EntityFrameworkCore;
@@ -186,5 +187,94 @@ namespace ArtworkSharingPlatform.Repository.Repository
                 }
         }
 
+        public async Task ArtworkReport (Report report)
+        {
+            if (report != null)
+            {
+                report.Status = "Pending";
+                await _context.Reports.AddAsync(report);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<bool> ConfirmSell(int artworkId, int userId)
+        {
+            var flag = false;
+            var artwork = await _context.Artworks.FindAsync(artworkId);
+            if (artwork.OwnerId != userId)
+            {
+                return flag;
+            }
+            if (artwork != null)
+            {
+                if(artwork.ReleaseCount > 0)
+                {
+					artwork.ReleaseCount--;
+				}
+            }
+            flag = await _context.SaveChangesAsync() > 0;
+            return flag;
+        }
+
+		public async Task<bool> SetThumbNail(int id)
+		{
+            var flag = false;
+            var image = await _context.ArtworkImages.FindAsync(id);
+            if (image == null)
+            {
+                return flag;
+            }
+            var thumbNailImage = await _context.ArtworkImages.SingleOrDefaultAsync(x => x.ArtworkId == image.ArtworkId && x.Id != id && x.IsThumbnail.Value);
+            if (thumbNailImage != null)
+            {
+                thumbNailImage.IsThumbnail = false;
+            }
+            image.IsThumbnail = true;
+            flag = await _context.SaveChangesAsync() > 0;
+            return flag;
+		}
+		public async Task<bool> DeleteArtworkImage(ArtworkImage image)
+		{
+			var flag = false;
+			if (image == null)
+			{
+				return flag;
+			}
+			if (image.IsThumbnail.Value)
+			{
+                return false;
+			}
+            _context.ArtworkImages.Remove(image);
+			flag = await _context.SaveChangesAsync() > 0;
+			return flag;
+		}
+		public async Task<ArtworkImage> AddImageToArtwork(ArtworkImage artworkImage)
+		{
+            if (artworkImage == null)
+            {
+                return null;
+            }
+            await _context.ArtworkImages.AddAsync(artworkImage);
+			await _context.SaveChangesAsync();
+			return artworkImage;
+		}
+
+		public async Task<int> GetArtworkRatingForUser(int userId, int artworkId)
+		{
+            var rating = await _context.Ratings.SingleOrDefaultAsync(x => x.UserId == userId && x.ArtworkId == artworkId);
+            if(rating == null)  return 0; 
+			return rating.Score;
+		}
+	
+        public async Task<IEnumerable<Comment>> ListArtworkComments(int artworkId)
+        {
+            if (artworkId == null)
+            {
+                return null;
+            }
+            
+            return await _context.Comments.Where(x => x.ArtworkId == artworkId).ToListAsync();
+        }
+        
     }
 }

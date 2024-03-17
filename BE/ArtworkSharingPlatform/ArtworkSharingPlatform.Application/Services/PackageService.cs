@@ -3,6 +3,7 @@ using ArtworkSharingPlatform.DataTransferLayer.Payload.Response;
 using ArtworkSharingPlatform.Domain.Entities.PackagesInfo;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,11 @@ namespace ArtworkSharingPlatform.Application.Services
             var list = packages.AsQueryable();
             return list.ProjectTo<PackageInformationDTO>(_mapper.ConfigurationProvider).ToList();
         }
+        public async Task<PackageInformationDTO> GetPackageById(int id)
+        {
+            var package = await _packageRepository.GetPackageById(id);
+            return _mapper.Map<PackageInformationDTO>(package);
+        }
         public async Task UpdatePackage(PackageInformation packageInformation)
         {
             await _packageRepository.UpdatePackage(packageInformation);
@@ -36,6 +42,24 @@ namespace ArtworkSharingPlatform.Application.Services
         public async Task DeletePackage(int id)
         {
             await _packageRepository.DeletePackage(id);
+        }
+
+        public async Task<List<PackageBillingDTO>> GetAllPackageBilling()
+        {
+            var billing = await _packageRepository.GetAllPackageBilling();
+            var list = billing.AsQueryable();
+            return list.ProjectTo<PackageBillingDTO>(_mapper.ConfigurationProvider).ToList();
+        }
+
+        public async Task<PackageBillingDTO> GetPackageBillingById(int id)
+        {
+            var billing = await _packageRepository.GetBillingById(id);
+            return _mapper.Map<PackageBillingDTO>(billing);
+        }
+
+        public async Task<decimal> GetTotalMoneyOfBilling()
+        {
+            return await _packageRepository.GetTotalPackageBillingAmount();
         }
     }
 }

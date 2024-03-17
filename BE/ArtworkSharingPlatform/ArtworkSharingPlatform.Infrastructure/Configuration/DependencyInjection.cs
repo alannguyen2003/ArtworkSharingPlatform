@@ -32,6 +32,10 @@ public static class DependencyInjection
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<ITransactionRepository, TransactionRepository>();
+        services.AddScoped<ITransactionService, TransactionService>();
+        services.AddScoped<IConfigRepository, ConfigRepository>();
+        services.AddScoped<IConfigService, ConfigService>();
         return services;
     }
 }

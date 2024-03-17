@@ -5,42 +5,76 @@
         <p class="font-medium">Artwork Information</p>
       </div>
       <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
+        <div class="col-span-full" *ngIf="validationErrors.length > 0">
+          <ul class="text-danger">
+            <li *ngFor="let error of validationErrors">
+              {{error}}
+            </li>
+          </ul>
+        </div>
         <div class="col-span-full">
           <label for="title" class="block text-sm font-medium">Title</label>
+          <span class="text text-danger" *ngIf="title.invalid && title.touched">Please enter a title</span>
           <div class="flex">
-            <input type="text" name="title" id="title" [(ngModel)]="artwork.title"
+            <input type="text"
+                   name="title"
+                   id="title"
+                   #title="ngModel"
+                   [(ngModel)]="artwork.title"
+                   required
                    class=" border-gray-500 sm:text-sm rounded-md focus:ri dark:border-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ri w-1/2">
           </div>
         </div>
         <div class="col-span-full sm:col-span-3">
           <label for="releaseCount" class="block text-sm font-medium">Release Count</label>
+          <span class="text text-danger" *ngIf="releaseCount.invalid && releaseCount.touched">Please enter release count for this artwork</span>
           <div class="flex">
-            <input type="number" name="releaseCount" id="releaseCount" [(ngModel)]="artwork.releaseCount"
+            <input type="number"
+                   name="releaseCount"
+                   id="releaseCount"
+                   #releaseCount="ngModel"
+                   [(ngModel)]="artwork.releaseCount"
+                   required
                    class="flex flex-1 border-gray-500 sm:text-sm rounded-md focus:ri dark:border-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ri">
           </div>
         </div>
         <div class="col-span-full sm:col-span-3">
           <label for="price" class="block text-sm font-medium">Price</label>
+          <span class="text text-danger" *ngIf="price.invalid && price.touched">Please enter valid price</span>
           <div class="flex">
-            <input type="number" name="price" id="price" [(ngModel)]="artwork.price"
+            <input type="number"
+                   name="price"
+                   id="price"
+                   [(ngModel)]="artwork.price"
+                   #price="ngModel"
+                   required
+                   min="0"
                    class="flex flex-1 border-gray-500 sm:text-sm rounded-md focus:ri dark:border-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ri">
             <span class="flex items-center px-3 pointer-events-none sm:text-sm rounded-r-md dark:bg-gray-700">VNĐ</span>
           </div>
         </div>
         <div class="col-span-full">
           <label for="description" class="block text-sm font-medium">Description</label>
+          <span class="text text-danger" *ngIf="description.invalid && description.touched">Please enter description</span>
           <div class="flex">
-            <textarea name="description" id="description" rows="5" [(ngModel)]="artwork.description"
+            <textarea name="description"
+                      id="description"
+                      rows="5"
+                      [(ngModel)]="artwork.description"
+                      #description="ngModel"
+                      required
                       class=" w-full flex flex-1 border-gray-500 sm:text-sm rounded-md focus:ri dark:border-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ri"></textarea>
-            <!--            <input type="number" name="price" id="description" class="flex flex-1 text-right border-gray-500 sm:text-sm rounded-l-md focus:ri dark:border-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ri">-->
           </div>
         </div>
         <div class="col-span-full sm:col-span-3">
           <label for="genre" class="block text-sm font-medium">Genre</label>
+          <span class="text text-danger" *ngIf="genre.invalid && genre.touched">Please select a genre</span>
           <div class="flex">
             <select
               [(ngModel)]="artwork.genreId"
               name="genre"
+              #genre="ngModel"
+              required
               class="flex flex-1 border-gray-500 sm:text-sm rounded-md focus:ri dark:border-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ri"
               id="genre">
               <option *ngFor="let genre of genres" [value]="genre.id">
@@ -60,7 +94,7 @@
                     <button class="btn btn-outline-primary" *ngIf="!image.isThumbnail" (click)="setThumbnailImage(image)">Thumbnail</button>
                   </li>
                   <li class="list-inline-item">
-                    <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                    <button class="btn btn-danger" (click)="deleteImage(image)"><i class="fa fa-trash"></i></button>
                   </li>
                 </ul>
               </div>
@@ -73,7 +107,7 @@
         </div>
       </div>
       <div class="col-span-3">
-        <button type="submit" class="px-8 py-2 font-semibold rounded-full dark:bg-gray-100 dark:text-gray-800">Post</button>
+        <button type="submit" [disabled]="postArtworkForm.invalid" class="px-8 py-2 font-semibold rounded-full dark:bg-gray-100 dark:text-gray-800" [class.is-disabled]="postArtworkForm.invalid" >Post</button>
       </div>
     </fieldset>
   </form>

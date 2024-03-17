@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Domain.Entities.PackagesInfo;
+using ArtworkSharingPlatform.Domain.Entities.Transactions;
+using ArtworkSharingPlatform.Domain.Entities.Configs;
 
 namespace ArtworkSharingPlatform.Infrastructure
 {
@@ -85,7 +87,7 @@ namespace ArtworkSharingPlatform.Infrastructure
             };
 
             var resultAdmin = await userManager.CreateAsync(admin, "Pa$$w0rd");
-            await userManager.AddToRolesAsync(admin, new[] {"Admin", "Artist", "Audience"});
+            await userManager.AddToRolesAsync(admin, new[] { "Admin", "Artist", "Audience" });
 
             var manager = new User
             {
@@ -114,7 +116,7 @@ namespace ArtworkSharingPlatform.Infrastructure
                 }
             };
             await userManager.CreateAsync(artist, "Pa$$w0rd");
-            await userManager.AddToRolesAsync(artist, new[] {"Artist", "Audience" });
+            await userManager.AddToRolesAsync(artist, new[] { "Artist", "Audience" });
         }
 
         public static async Task SeedCommissionStatus(ArtworkSharingPlatformDbContext context)
@@ -130,6 +132,38 @@ namespace ArtworkSharingPlatform.Infrastructure
             foreach (var commissionStatus in commissionStatusList)
             {
                 await context.CommissionStatus.AddAsync(commissionStatus);
+            }
+            await context.SaveChangesAsync();
+        }
+        public static async Task SeedPackage(ArtworkSharingPlatformDbContext context)
+        {
+            if (await context.PackageBilling.AnyAsync())
+            {
+                return;
+            }
+            var packages = await File.ReadAllTextAsync("../ArtworkSharingPlatform.Infrastructure/PackageSeed.json");
+            var jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var packs = JsonSerializer.Deserialize<List<PackageBilling>>(packages, jsonOptions);
+            foreach (var pack in packs)
+            {
+                await context.PackageBilling.AddAsync(pack);
+            }
+            await context.SaveChangesAsync();
+        }
+
+
+        public static async Task SeedTransaction(ArtworkSharingPlatformDbContext context)
+        {
+            if (await context.Transactions.AnyAsync())
+            {
+                return;
+            }
+            var transaction = await File.ReadAllTextAsync("../ArtworkSharingPlatform.Infrastructure/TransationSeed.json");
+            var jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var trans = JsonSerializer.Deserialize<List<Transaction>>(transaction, jsonOptions);
+            foreach (var tran in trans)
+            {
+                await context.Transactions.AddAsync(tran);
             }
             await context.SaveChangesAsync();
         }
@@ -161,11 +195,37 @@ namespace ArtworkSharingPlatform.Infrastructure
                     Status = 1
                 }
             };
-            foreach(var packageInformation in package)
+            foreach (var packageInformation in package)
             {
                 await context.PackageInformation.AddAsync(packageInformation);
             }
             await context.SaveChangesAsync();
+        }
+
+        public static async Task SeedConfigManager(ArtworkSharingPlatformDbContext context)
+        {
+            if(await context.ConfigManagers.AnyAsync()) { return; }
+            var config = new ConfigManager
+            {
+                ConfigDate = DateTime.Now,
+                IsServicePackageConfig = true,
+                IsPhysicalImageConfig = true,
+                MaxReleaseCount = 10,
+                IsGeneralConfig = true,
+                LogoUrl = "",
+                MyPhoneNumber = "1234567893",
+                Address = "FPTU",
+                IsPagingConfig = true,
+                TotalItemPerPage = 10,
+                RowSize = 5,
+                IsAdvertisementConfig = true,
+                CompanyName = "FPTU",
+                CompanyPhoneNumber = "0999992123",
+                CompanyEmail = "fptu@fpt.edu.vn",
+                Administrator = context.Users.FirstOrDefault(u => u.Id == 11)
+            };
+            await context.ConfigManagers.AddAsync(config);
+            await context.SaveChangesAsync();   
         }
     }
 }

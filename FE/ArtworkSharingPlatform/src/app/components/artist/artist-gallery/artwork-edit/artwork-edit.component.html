@@ -1,0 +1,134 @@
+<div class="container" *ngIf="artwork">
+  <div class="row p-3">
+    <div class="col-4">
+      <div class="flex flex-col max-w-md mt-2 p-6 rounded-xl dark:bg-gray-900 dark:text-gray-100">
+        <img src="{{artwork.imageUrl}}" alt="" class="flex-shrink-0 object-cover h-64 rounded-sm sm:h-96 dark:bg-gray-500 aspect-square">
+        <div>
+          <h2 class="text-xl font-semibold">{{artwork.title}}</h2>
+          <span class="block pb-2 text-sm dark:text-gray-400">Price: {{artwork.price}}</span>
+          <p>{{artwork.description}}</p>
+        </div>
+        <button class="btn btn-danger" (click)="deleteArtwork()">Delete</button>
+      </div>
+    </div>
+    <div class="col-8">
+      <tabset class="member-tabset" #artworkTabs>
+        <tab heading="Artwork Information" (selectTab)="onTabActivated($event)">
+          <section class="p-6 dark:bg-gray-800 dark:text-gray-50">
+            <form #editForm="ngForm" (ngSubmit)="editArtwork()" class="container flex flex-col mx-auto space-y-12">
+              <fieldset class="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm dark:bg-gray-900">
+                <div class="space-y-2 col-span-full lg:col-span-1">
+                  <p class="font-medium">Edit Information</p>
+                </div>
+                <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
+                  <div class="col-span-full" *ngIf="validationErrors.length > 0">
+                    <ul class="text-danger">
+                      <li *ngFor="let error of validationErrors">
+                        {{error}}
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-span-full sm:col-span-3">
+                    <label for="title" class="text-sm">Title</label>
+                    <input
+                      id="title"
+                      type="text"
+                      placeholder="Title"
+                      name="title"
+                      [(ngModel)]="artwork.title"
+                      #title="ngModel"
+                      required
+                      class="w-full rounded-md focus:ring focus:ring-opacity-75 focus:dark:ring-blue-400 dark:border-gray-700 dark:text-gray-900">
+                    <span class="text text-danger" *ngIf="title.invalid && title.touched">Please enter a valid title</span>
+                  </div>
+                  <div class="col-span-full">
+                    <label for="price" class="text-sm">Price</label>
+                    <input
+                      id="price"
+                      type="number"
+                      placeholder="VNĐ"
+                      name="price"
+                      [(ngModel)]="artwork.price"
+                      required
+                      #price="ngModel"
+                      min="0"
+                      class="w-full rounded-md focus:ring focus:ring-opacity-75 focus:dark:ring-blue-400 dark:border-gray-700 dark:text-gray-900">
+                    <span class="text text-danger" *ngIf="price.invalid && price.touched">Please enter a valid price</span>
+                  </div>
+                  <div class="col-span-full">
+                    <label for="releaseCount" class="text-sm">Release Count</label>
+                    <input
+                      id="releaseCount"
+                      type="number"
+                      placeholder=""
+                      name="releaseCount"
+                      [(ngModel)]="artwork.releaseCount"
+                      required
+                      #releaseCount="ngModel"
+                      min="0"
+                      class="w-full rounded-md focus:ring focus:ring-opacity-75 focus:dark:ring-blue-400 dark:border-gray-700 dark:text-gray-900">
+                    <span class="text text-danger" *ngIf="releaseCount.invalid && releaseCount.touched">Please enter a valid price</span>
+                  </div>
+                  <div class="col-span-full">
+                    <label for="description" class="text-sm">Description</label>
+                    <textarea id="description"
+                              placeholder=""
+                              [(ngModel)]="artwork.description"
+                              name="description"
+                              #description="ngModel"
+                              required
+                              class="w-full rounded-md focus:ring focus:ring-opacity-75 focus:dark:ring-blue-400 dark:border-gray-700 dark:text-gray-900"></textarea>
+                    <span class="text text-danger" *ngIf="description.invalid && description.touched">Please enter a valid description</span>
+                  </div>
+                  <div class="col-span-full sm:col-span-3">
+                    <label for="genre" class="block text-sm font-medium">Genre</label>
+                    <span class="text text-danger" *ngIf="genre.invalid && genre.touched">Please select a genre</span>
+                    <div class="flex">
+                      <select
+                        [(ngModel)]="artwork.genreId"
+                        name="genre"
+                        #genre="ngModel"
+                        required
+                        class="flex flex-1 border-gray-500 sm:text-sm rounded-md focus:ri dark:border-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ri"
+                        id="genre">
+                        <option *ngFor="let genre of genres" [value]="genre.id">
+                          {{genre.name}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-span-full">
+                    <div class="flex items-center space-x-2">
+                      <button type="submit" class="px-4 py-2 rounded-md border dark:border-gray-50 dark:text-gray-100" [disabled]="editForm.invalid" [class.is-disabled]="editForm.invalid">Submit</button>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+            </form>
+          </section>
+        </tab>
+        <tab heading="Artwork Images" #imageTab="tab" (selectTab)="onTabActivated($event)">
+          <div class="col-span-full" *ngIf="this.artwork && this.artwork.artworkImages.length > 0">
+            <section class="py-6 dark:bg-gray-800 dark:text-gray-50">
+              <div class="container grid grid-cols-2 gap-4 p-4 mx-auto md:grid-cols-4 artwork-img-card">
+                <div class="image-card w-full h-full rounded shadow-sm min-h-48 dark:bg-gray-500 aspect-square card-img-wrapper" *ngFor="let image of this.artwork?.artworkImages">
+                  <img class="w-full h-full card-img-top" src="{{image.imageUrl}}"/>
+                  <ul class="list-inline set-main-button text-center">
+                    <li class="list-inline-item">
+                      <button class="btn btn-primary" *ngIf="image.isThumbnail">Thumbnailed</button>
+                      <button class="btn btn-outline-primary" *ngIf="!image.isThumbnail" (click)="setThumbnailImage(image)">Thumbnail</button>
+                    </li>
+                    <li class="list-inline-item">
+                      <button class="btn btn-danger" [disabled]="image.isThumbnail" (click)="deleteArtworkImage(image)"><i class="fa fa-trash"></i></button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+          </div>
+          <app-photo-editor (artworkImagesAdded)="onArtworkImageAdd($event)"></app-photo-editor>
+        </tab>
+      </tabset>
+    </div>
+  </div>
+</div>
