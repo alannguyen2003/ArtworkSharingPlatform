@@ -1,13 +1,13 @@
 ﻿using ArtworkSharingPlatform.Domain.Entities.Artworks;
 using ArtworkSharingPlatform.Domain.Migrations;
-using ArtworkSharingPlatform.Repository.Interfaces;
+using ArtworkSharingPlatform.Repository.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace ArtworkSharingPlatform.Repository.Repository;
 
 public class GenreRepository:IGenreRepository
 {
-    private ArtworkSharingPlatformDbContext _dbContext;
+    private readonly ArtworkSharingPlatformDbContext _dbContext;
 
     public GenreRepository(ArtworkSharingPlatformDbContext dbContext)
     {

@@ -10,6 +10,7 @@ using AutoMapper;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.User;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.ConfigManager;
 using ArtworkSharingPlatform.Domain.Entities.PackagesInfo;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.Package;
 using ArtworkSharingPlatform.Domain.Entities.Configs;
@@ -216,6 +217,62 @@ namespace ArtworkSharingPlatform.Application.Helpers
                 .ForMember(dest => dest.CommissionStatus,
                     opt => opt.Ignore()
                 );
+        }
+         /*Nhớ gọi hàm này ở hàm Constructor của AutoMapperProfile.*/
+ private void NewConfigManagerRequestToConfigManagerEntityMap()
+        {
+            CreateMap<NewConfigManagerRequest, ConfigManager>()
+                .ForMember(dest => dest.ConfigDate,
+                    opt => opt.Ignore()
+                )
+                .ForMember(dest => dest.IsServicePackageConfig,
+                    opt => opt.MapFrom(
+                        src => src.IsServicePackageConfig
+                    ))
+                .ForMember(dest => dest.IsPhysicalImageConfig,
+                    opt => opt.MapFrom(
+                        src => src.IsPhysicalImageConfig
+                    ))
+                .ForMember(dest => dest.MaxReleaseCount,
+                    opt => opt.Ignore())
+                .ForMember(dest => dest.IsGeneralConfig,
+                    opt => opt.MapFrom(
+                        src => src.IsGeneralConfig)
+                )
+                .ForMember(dest => dest.LogoUrl,
+                    opt => opt.MapFrom(
+                        src => src.LogoUrl)
+                )
+                .ForMember(dest => dest.MyPhoneNumber,
+                    opt => opt.MapFrom(
+                        src => src.MyPhoneNumber))
+                .ForMember(dest => dest.Address,
+                    opt => opt.MapFrom(
+                        src => src.Address))
+                .ForMember(dest => dest.IsPagingConfig,
+                    opt => opt.MapFrom(
+                        src => src.IsPagingConfig))
+                .ForMember(dest => dest.TotalItemPerPage,
+                    opt => opt.MapFrom(
+                        src => src.TotalItemPerPage))
+                .ForMember(dest => dest.RowSize,
+                    opt => opt.MapFrom(
+                        src => src.RowSize))
+                .ForMember(dest => dest.IsAdvertisementConfig,
+                    opt => opt.MapFrom(
+                        src => src.IsAdvertisementConfig))
+                .ForMember(dest => dest.CompanyName,
+                    opt => opt.MapFrom(
+                        src => src.CompanyName))
+                .ForMember(dest => dest.CompanyPhoneNumber,
+                    opt => opt.MapFrom(
+                        src => src.CompanyPhoneNumber))
+                .ForMember(dest => dest.CompanyEmail,
+                    opt => opt.MapFrom(
+                        src => src.CompanyEmail))
+                .ForMember(dest => dest.AdministratorId,
+                    opt => opt.MapFrom(
+                        src => src.AdministratorId));
         }
     }
 }
