@@ -77,5 +77,11 @@ namespace ArtworkSharingPlatform.Repository.Repository
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task Insert(ConfigManager configManager)
+        {
+            await _dbContext.ConfigManagers.AddAsync(configManager);
+            _dbContext.SaveChanges();
+        }
     }
 }
