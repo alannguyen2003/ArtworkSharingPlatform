@@ -22,7 +22,9 @@ namespace ArtworkSharingPlatform.Repository.Repository
             List<PackageInformation> packages = null;
             try
             {
-                packages = await _dbContext.PackageInformation.ToListAsync();
+                packages = await _dbContext.PackageInformation
+                    .Where(package => package.Status == 1)
+                    .ToListAsync();
             }
             catch (Exception ex)
             {
