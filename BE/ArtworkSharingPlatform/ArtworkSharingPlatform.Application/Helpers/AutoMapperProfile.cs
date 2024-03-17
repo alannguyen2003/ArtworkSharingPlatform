@@ -85,6 +85,7 @@ namespace ArtworkSharingPlatform.Application.Helpers
                 .ReverseMap();
             CreateCommissionRequestToCommissionEntityMap();
 			CreateMap<User, UpdateProfileDTO>().ReverseMap();
+			CreateMap<UserImage, UserImageDTO>().ReverseMap();
 			CreateMap<Follow, UserProfileFollowDTO>()
                 .ForMember(dest => dest.SourceUserEmail, opt => opt.MapFrom(src => src.SourceUser.Email))
                 .ForMember(dest => dest.TargetUserEmail, opt => opt.MapFrom(src => src.TargetUser.Email))

@@ -1,0 +1,16 @@
+<div class="col-span-full" *ngIf="userImage">
+  <section class="py-6 dark:bg-gray-800 dark:text-gray-50">
+    <div class="container grid grid-cols-2 gap-4 p-4 mx-auto md:grid-cols-4 artwork-img-card">
+      <div class="image-card w-full h-full rounded shadow-sm min-h-48 dark:bg-gray-500 aspect-square card-img-wrapper">
+        <img class="w-full h-full card-img-top" src="{{userImage.url}}"/>
+      </div>
+    </div>
+    <div class="w-full">
+      <button type="button" (click)="saveAvatar()" class="px-8 py-3 font-semibold rounded-full dark:bg-gray-100 dark:text-gray-800">Save</button>
+    </div>
+  </section>
+</div>
+<div class="col-span-full">
+  <p class="text-sm font-medium">Select your user's avatar</p>
+  <app-photo-editor (artworkImagesAdded)="onImageAdded($event)" [canUploadMultiple]="false"></app-photo-editor>
+</div>

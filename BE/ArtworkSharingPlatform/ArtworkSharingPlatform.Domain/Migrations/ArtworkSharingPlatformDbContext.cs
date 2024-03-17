@@ -57,6 +57,7 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
     public DbSet<Group> Groups{ get; set; }
     public DbSet<Follow> Follows { get; set; }
     public DbSet<Report> Reports { get; set; }
+    public DbSet<UserImage> UserImages{ get; set; }
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -70,7 +71,7 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
         IConfiguration configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", true, true)
             .Build();
-        return configuration.GetConnectionString(AppSettingsEnum.DatabaseConnectionString) ?? string.Empty;
+        return "Data Source=(local);database=ASPDatabase;uid=sa;pwd=12345;TrustServerCertificate=True;MultipleActiveResultSets=True";
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
