@@ -292,7 +292,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("AdministratorId")
+                    b.Property<int>("AdministratorId")
                         .HasColumnType("int");
 
                     b.Property<string>("CompanyEmail")
@@ -1006,7 +1006,9 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                 {
                     b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.User", "Administrator")
                         .WithMany("ConfigManagers")
-                        .HasForeignKey("AdministratorId");
+                        .HasForeignKey("AdministratorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Administrator");
                 });

@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Security.AccessControl;
+using ArtworkSharingPlatform.Domain.Common.Enum;
 using ArtworkSharingPlatform.Domain.Entities.Artworks;
 using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Domain.Entities.Configs;
@@ -61,11 +62,15 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder
-            .UseSqlServer(
-                "Data Source=(local); database=ASPDatabase;" +
-                "uid=sa;pwd=12345;" +
-                "TrustServerCertificate=True;" +
-                "MultipleActiveResultSets=True");
+            .UseSqlServer(GetConnectionString());
+    }
+
+    private string GetConnectionString()
+    {
+        IConfiguration configuration = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json", true, true)
+            .Build();
+        return configuration.GetConnectionString(AppSettingsEnum.DatabaseConnectionString) ?? string.Empty;
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

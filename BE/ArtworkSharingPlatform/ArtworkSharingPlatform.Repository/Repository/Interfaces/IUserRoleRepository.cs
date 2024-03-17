@@ -1,6 +1,4 @@
-﻿using ArtworkSharingPlatform.Domain.Entities.Users;
-
-namespace ArtworkSharingPlatform.Repository.Interfaces;
+﻿namespace ArtworkSharingPlatform.Repository.Repository.Interfaces;
 
 public interface IUserRoleRepository
 {

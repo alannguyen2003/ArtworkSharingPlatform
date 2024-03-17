@@ -1,18 +1,13 @@
 ﻿using ArtworkSharingPlatform.Domain.Entities.Artworks;
 using ArtworkSharingPlatform.Domain.Entities.Users;
-using ArtworkSharingPlatform.Domain.Helpers;
 using ArtworkSharingPlatform.Domain.Migrations;
 using ArtworkSharingPlatform.Repository.Interfaces;
+using ArtworkSharingPlatform.Repository.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ArtworkSharingPlatform.Repository.Repository
 {
-    public class ArtworkRepository : IArtworkRepository
+	public class ArtworkRepository : IArtworkRepository
     {
         private readonly ArtworkSharingPlatformDbContext _context;
         private readonly IUserRepository _userRepository;

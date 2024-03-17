@@ -1,6 +1,6 @@
 ﻿using ArtworkSharingPlatform.Domain.Entities.Artworks;
 
-namespace ArtworkSharingPlatform.Repository.Interfaces;
+namespace ArtworkSharingPlatform.Repository.Repository.Interfaces;
 
 public interface IGenreRepository
 {

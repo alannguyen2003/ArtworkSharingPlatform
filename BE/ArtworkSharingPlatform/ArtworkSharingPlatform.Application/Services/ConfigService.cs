@@ -4,15 +4,10 @@ using ArtworkSharingPlatform.Domain.Entities.Configs;
 using ArtworkSharingPlatform.Repository.Repository.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ArtworkSharingPlatform.Application.Services
 {
-    public class ConfigService : IConfigService
+	public class ConfigService : IConfigService
     {
         private readonly IConfigRepository _configRepository;
         private readonly IMapper _mapper;

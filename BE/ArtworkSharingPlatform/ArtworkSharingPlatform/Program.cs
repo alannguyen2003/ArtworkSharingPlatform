@@ -10,6 +10,7 @@ using ArtworkSharingPlatform.Infrastructure;
 using ArtworkSharingPlatform.Infrastructure.Configuration;
 using ArtworkSharingPlatform.Repository.Interfaces;
 using ArtworkSharingPlatform.Repository.Repository;
+using ArtworkSharingPlatform.Repository.Repository.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

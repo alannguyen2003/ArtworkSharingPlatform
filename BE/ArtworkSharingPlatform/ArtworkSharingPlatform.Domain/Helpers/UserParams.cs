@@ -6,6 +6,6 @@
 		public decimal MinPrice { get; set; } = 0;
 		public decimal MaxPrice { get; set; } = 10000000;
 		public string? OrderBy { get; set; }
-        public int GenreId { get; set; }
+        public int[]? GenreIds { get; set; }
     }
 }

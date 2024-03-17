@@ -24,7 +24,8 @@ export class ArtworkService {
     maxPrice: 10000000,
     orderBy: 'lowPrice',
     pageNumber: 1,
-    pageSize: 6
+    pageSize: 6,
+    genreIds: []
   };
   artworkCache = new Map();
   artworks: Artwork[] = [];
