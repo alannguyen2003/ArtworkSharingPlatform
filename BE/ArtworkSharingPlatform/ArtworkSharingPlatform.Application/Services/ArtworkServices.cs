@@ -4,6 +4,7 @@ using ArtworkSharingPlatform.DataTransferLayer.Payload.Response;
 using ArtworkSharingPlatform.Domain.Entities.Artworks;
 using ArtworkSharingPlatform.Domain.Entities.Users;
 using ArtworkSharingPlatform.Domain.Helpers;
+using ArtworkSharingPlatform.Repository.Interfaces;
 using ArtworkSharingPlatform.Repository.Repository.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
