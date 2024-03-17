@@ -59,11 +59,11 @@ namespace ArtworkSharingPlatform.Application.Services
 
 			if (userParams.GenreIds != null && userParams.GenreIds.Length > 0)
 			{
-				foreach(var genreId in userParams.GenreIds)
-				{
-                    query = query.Where(x => x.GenreId == genreId);
-                }
+				query = query.Where(x => userParams.GenreIds.Contains(x.GenreId));
 			}
+
+			if(!string.IsNullOrEmpty(userParams.Search))
+				query = query.Where(x => x.Title.Contains(userParams.Search));
 
 			query = userParams.OrderBy switch
 			{
