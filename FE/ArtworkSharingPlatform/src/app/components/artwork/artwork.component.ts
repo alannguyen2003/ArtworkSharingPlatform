@@ -17,6 +17,7 @@ export class ArtworkComponent implements OnInit{
   orderPriceList = [{value: 'lowPrice', display: 'Low to High'},
     {value: 'highPrice', display: 'High to Low'}];
   genres: Genre[] = [];
+  selectedGenres: any[] = [];
   constructor(private artworkService: ArtworkService) {
     this.userParams = this.artworkService.getUserParams();
   }
@@ -36,6 +37,8 @@ export class ArtworkComponent implements OnInit{
 
   loadArtworks() {
     if (this.userParams) {
+      this.userParams.genreIds = this.selectedGenres;
+      console.log(this.userParams);
       this.artworkService.setUserParams(this.userParams);
       this.artworkService.getArtworks(this.userParams).subscribe({
         next: response => {
@@ -59,5 +62,15 @@ export class ArtworkComponent implements OnInit{
       this.artworkService.setUserParams(this.userParams);
       this.loadArtworks();
     }
+  }
+
+  onGenreSelected(genreId: number) {
+    const index = this.selectedGenres.indexOf(genreId);
+    index !== -1 ? this.selectedGenres.splice(index, 1) : this.selectedGenres.push(genreId);
+    console.log(this.selectedGenres);
+  }
+
+  isSelectedGenre(genreId: number) {
+    return this.selectedGenres.some(x => x== genreId);
   }
 }
