@@ -38,6 +38,8 @@ import {ArtworkMessageComponent} from "./components/artwork/artwork-message/artw
 import {GalleryComponent} from "ng-gallery";
 import { ReportModalComponent } from './components/modal/report-modal/report-modal.component';
 import 'froala-editor/js/plugins.pkgd.min.js';
+import { OrderConfirmationComponent } from './components/checkout/order-confirmation/order-confirmation.component';
+import { OrderConfirmationFailedComponent } from './components/checkout/order-confirmation-failed/order-confirmation-failed.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +66,9 @@ import 'froala-editor/js/plugins.pkgd.min.js';
     UserProfileComponent,
     ArtistGalleryComponent,
     ArtworkEditComponent,
-    ReportModalComponent
+    ReportModalComponent,
+    OrderConfirmationComponent,
+    OrderConfirmationFailedComponent
   ],
   imports: [
     BrowserModule,

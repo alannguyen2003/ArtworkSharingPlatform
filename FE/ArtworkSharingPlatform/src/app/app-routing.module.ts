@@ -18,6 +18,10 @@ import {userDetailResolver} from "./_resolvers/user-detail.resolver";
 import {UserProfileComponent} from "./components/user/user-profile/user-profile.component";
 import {ArtistGalleryComponent} from "./components/artist/artist-gallery/artist-gallery.component";
 import {ArtworkEditComponent} from "./components/artist/artist-gallery/artwork-edit/artwork-edit.component";
+import {OrderConfirmationComponent} from "./components/checkout/order-confirmation/order-confirmation.component";
+import {
+  OrderConfirmationFailedComponent
+} from "./components/checkout/order-confirmation-failed/order-confirmation-failed.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -36,6 +40,8 @@ const routes: Routes = [
     ]
   },
   {path: 'contact', component: ContactComponent},
+  {path: 'checkout', component: OrderConfirmationComponent},
+  {path: 'checkout-fail', component: OrderConfirmationFailedComponent},
   {path: 'login', component: LoginComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'test-error', component: TestErrorComponent},

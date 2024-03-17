@@ -3,6 +3,7 @@ import {Artwork} from "../../_model/artwork.model";
 import {ArtworkService} from "../../_services/artwork.service";
 import {UserParams} from "../../_model/userParams.model";
 import {Pagination} from "../../_model/pagination.model";
+import {Genre} from "../../_model/genre.model";
 
 @Component({
   selector: 'app-artwork',
@@ -15,12 +16,22 @@ export class ArtworkComponent implements OnInit{
   pagination: Pagination | undefined;
   orderPriceList = [{value: 'lowPrice', display: 'Low to High'},
     {value: 'highPrice', display: 'High to Low'}];
+  genres: Genre[] = [];
   constructor(private artworkService: ArtworkService) {
     this.userParams = this.artworkService.getUserParams();
   }
   ngOnInit() {
     this.loadArtworks();
+    this.loadGenres();
     console.log(this.artworks);
+  }
+
+  loadGenres() {
+    this.artworkService.getGenreForArtwork().subscribe({
+      next: genres => {
+        this.genres = genres;
+      }
+    });
   }
 
   loadArtworks() {

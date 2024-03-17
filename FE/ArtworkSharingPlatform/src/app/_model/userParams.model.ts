@@ -4,4 +4,5 @@ export interface UserParams {
   pageSize: number ;
   minPrice: number;
   maxPrice: number;
+  genreIds: number[];
 }
