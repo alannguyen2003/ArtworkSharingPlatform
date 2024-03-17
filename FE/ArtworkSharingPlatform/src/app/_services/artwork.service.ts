@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import {Artwork} from "../_model/artwork.model";
-import {User} from "../_model/user.model";
-import {HttpClient} from "@angular/common/http";
-import {AccountService} from "./account.service";
-import {map, of, take} from "rxjs";
-import {UserParams} from "../_model/userParams.model";
-import {getPaginatedResult, getPaginationHeaders} from "./pagination-helper.service";
-import {Genre} from "../_model/genre.model";
-import {environment} from "../../environments/environment";
-import {ArtworkImage} from "../_model/artworkImage.model";
-import {Report} from "../_model/report.model";
-import {Rating} from "../_model/rating.model";
+import { Artwork } from "../_model/artwork.model";
+import { User } from "../_model/user.model";
+import { HttpClient } from "@angular/common/http";
+import { AccountService } from "./account.service";
+import { map, of, take } from "rxjs";
+import { UserParams } from "../_model/userParams.model";
+import { getPaginatedResult, getPaginationHeaders } from "./pagination-helper.service";
+import { Genre } from "../_model/genre.model";
+import { environment } from "../../environments/environment";
+import { ArtworkImage } from "../_model/artworkImage.model";
+import { Report } from "../_model/report.model";
+import { Rating } from "../_model/rating.model";
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +29,7 @@ export class ArtworkService {
   };
   artworkCache = new Map();
   artworks: Artwork[] = [];
-  constructor(private http: HttpClient, private accountService: AccountService)
-  {
+  constructor(private http: HttpClient, private accountService: AccountService) {
     this.accountService.currentUser$.pipe(take(1)).subscribe({
       next: user => {
         if (user) {
@@ -60,7 +59,7 @@ export class ArtworkService {
 
   getArtworks(userParams: UserParams) {
     const response = this.artworkCache.get(Object.values(userParams).join('-'));
-    if(response) return of(response);
+    if (response) return of(response);
 
     if (userParams.pageSize == null) userParams.pageSize = this.fakeUserParams.pageSize;
     let params = getPaginationHeaders(userParams.pageNumber, userParams.pageSize);
@@ -74,12 +73,15 @@ export class ArtworkService {
       })
     );
   }
-
   getArtwork(id: number) {
-    const artwork =[...this.artworkCache.values()]
+    const artwork = [...this.artworkCache.values()]
       .reduce((arr, elm) => arr.concat(elm.result), []).find((artwork: Artwork) => artwork.id == id);
     if (artwork) return of(artwork);
     return this.http.get<Artwork>(this.baseUrl + 'artworks/' + id);
+  }
+  getArtworksByGenreId(genreId: number, pageNumber: number, pageSize: number) {
+    const url = `Artworks/genre?GenreId=${genreId}&PageNumber=${pageNumber}&PageSize=${pageSize}`
+    return this.http.get<Artwork[]>(this.baseUrl + url);
   }
 
   addArtwork(artwork: Artwork) {
@@ -132,7 +134,7 @@ export class ArtworkService {
   getArtworkRatingForUser(artworkId: number) {
     return this.http.get<number>(this.baseUrl + 'artworks/rating/' + artworkId);
   }
-  rating(rating: Rating){
+  rating(rating: Rating) {
     return this.http.post(this.baseUrl + 'artworks/rating', rating);
   }
 }

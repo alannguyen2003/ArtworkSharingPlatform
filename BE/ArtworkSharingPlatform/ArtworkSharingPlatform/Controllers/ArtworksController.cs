@@ -2,6 +2,7 @@
 using ArtworkSharingHost.Extensions;
 using ArtworkSharingPlatform.Application.Interfaces;
 using ArtworkSharingPlatform.DataTransferLayer;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.Artwork;
 using ArtworkSharingPlatform.Domain.Entities.Users;
 using ArtworkSharingPlatform.Domain.Helpers;
 using Microsoft.AspNetCore.Mvc;
@@ -42,6 +43,14 @@ namespace ArtworkSharingHost.Controllers
             return Ok(artworks);
         }
 
+        [HttpGet("genre")]
+        public async Task<ActionResult<List<ArtworkDTO>>> GetArtworksByGenre([FromQuery] ArtworkByGenreRequestDTO requestDto)
+        {
+            var artworks = await _artworkService.GetArtworksByGenre(requestDto.GenreId);
+            var paginatedArtworks = artworks.Skip((requestDto.PageNumber - 1) * requestDto.PageSize)
+                .Take(requestDto.PageSize).ToList();
+            return Ok(paginatedArtworks);
+        }
         [HttpGet("{id}")]
         public async Task<ActionResult<ArtworkDTO>> GetArtwork(int id)
         {

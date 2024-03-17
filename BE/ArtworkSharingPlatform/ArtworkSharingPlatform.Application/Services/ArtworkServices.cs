@@ -39,7 +39,14 @@ namespace ArtworkSharingPlatform.Application.Services
 			var artwork = await query.Where(x => x.Id == id).ProjectTo<ArtworkDTO>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
 			return artwork;
 		}
+		public async Task<List<ArtworkDTO>> GetArtworksByGenre(int genreId)
+		{
+			var query = _artworkRepository.GetArtworksAsQueryable();
 
+			var artwork = await query.Where(x => x.GenreId == genreId).ProjectTo<ArtworkDTO>(_mapper.ConfigurationProvider)
+				.ToListAsync();
+			return artwork;
+		}
         public async Task<List<ArtworkAdminDTO>> GetArtworkAdmin()
         {
             var artworks = await _artworkRepository.GetArtworksAsync();
