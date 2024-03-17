@@ -31,6 +31,10 @@ namespace ArtworkSharingPlatform.Application.Interfaces
         Task ReportArtwork(ReportDTO _report);
         Task<int> GetArtworkRatingForUser(int userId, int artworkId);
         Task<IEnumerable<ArtworkCommentDTO>> GetArtworkComments(int artworkId);
+        Task<IEnumerable<PurchaseDTO>> ListPurchaseArtwork(int UserId);
+        Task AddPurchase(PurchaseDTO purchaseDTO);
+        Task<IEnumerable<PurchaseDTO>> ListHistoryPurchaseArtwork(int artworkId);
+        Task ActiveArtworkStatus(int artworkId);
 
     }
 }

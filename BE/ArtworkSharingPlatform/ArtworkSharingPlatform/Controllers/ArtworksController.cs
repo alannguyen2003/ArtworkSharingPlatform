@@ -26,8 +26,21 @@ namespace ArtworkSharingHost.Controllers
         public async Task<ActionResult<PagedList<ArtworkDTO>>> GetArtworks([FromQuery] UserParams userParams)
         {
             var currentUserId = User.GetUserId();
-            //var currentUserId = 7;
-            userParams.CurrentUserId = currentUserId;
+			string genreIds = Request.Query["genres"]; 
+            if(!string.IsNullOrEmpty(genreIds))
+            {
+                try
+                {
+					int[] genreIdsArray = genreIds?.Split(',').Select(int.Parse).ToArray();
+                    userParams.GenreIds = genreIdsArray;
+				}
+                catch (Exception ex)
+                {
+                    return BadRequest("Invalid genres");
+                }
+                
+			}
+			userParams.CurrentUserId = currentUserId;
 
             if (userParams.MinPrice > userParams.MaxPrice)
             {
@@ -206,6 +219,32 @@ namespace ArtworkSharingHost.Controllers
             reportDTO.ReporterId = User.GetUserId();
             reportDTO.CreatedDate = DateTime.UtcNow;
             await _artworkService.ReportArtwork(reportDTO);
+            return Ok();
+        }
+        [HttpGet("GetListBoughtArtwork")]
+        public async Task<IActionResult> GetListBoughtArtwork()
+        {
+            var result = await _artworkService.ListPurchaseArtwork(User.GetUserId());
+            return Ok(result);
+        }
+        [HttpGet("GetListHistoryPurchaseArtwork/{artworkId}")]
+        public async Task<IActionResult> GetListHistoryPurchaseArtwork(int artworkId)
+        {
+            var result = await _artworkService.ListHistoryPurchaseArtwork(artworkId);
+            return Ok(result);
+        }
+        [HttpPost("buy-artwork")]
+        public async Task<IActionResult> BuyArtwork([FromBody] PurchaseDTO purchaseDTO)
+        {
+            purchaseDTO.BuyUserId = User.GetUserId();
+            purchaseDTO.BuyDate = DateTime.UtcNow;
+            await _artworkService.AddPurchase(purchaseDTO);
+            return Ok();
+        }
+        [HttpPut("active-artwork/{artworkId}")]
+        public async Task<IActionResult> ActiveArtwork(int artworkId)
+        {
+            await _artworkService.ActiveArtworkStatus(artworkId);
             return Ok();
         }
     }

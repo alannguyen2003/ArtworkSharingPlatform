@@ -16,5 +16,7 @@ namespace ArtworkSharingPlatform.Application.Interfaces
         Task UpdateUserAdmin(User user);
         Task DeleteUserAdmin(User user);
         Task UpdateUserDetail(User user);
+        Task<UserImageDTO> GetCurrentUserAvatar(int userId);
+        Task ChangeAvatar(UserImageDTO imageDto);
     }
 }

@@ -4,6 +4,7 @@ using ArtworkSharingPlatform.Domain.Migrations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArtworkSharingPlatform.Domain.Migrations
 {
     [DbContext(typeof(ArtworkSharingPlatformDbContext))]
-    partial class ArtworkSharingPlatformDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240317093752_UpdateUserImageTable")]
+    partial class UpdateUserImageTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -161,32 +164,6 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.HasIndex("ArtworkId");
 
                     b.ToTable("Likes");
-                });
-
-            modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Artworks.Purchase", b =>
-                {
-                    b.Property<int>("ArtworkId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SellUserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BuyUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("BuyDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("BuyPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("ArtworkId", "SellUserId", "BuyUserId");
-
-                    b.HasIndex("BuyUserId");
-
-                    b.HasIndex("SellUserId");
-
-                    b.ToTable("Purchases");
                 });
 
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Artworks.Rating", b =>
@@ -963,33 +940,6 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Artworks.Purchase", b =>
-                {
-                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.Artworks.Artwork", "Artwork")
-                        .WithMany("Purchases")
-                        .HasForeignKey("ArtworkId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.User", "BuyUser")
-                        .WithMany("ArtworkHasBought")
-                        .HasForeignKey("BuyUserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.User", "SellUser")
-                        .WithMany("ArtworkHasSold")
-                        .HasForeignKey("SellUserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Artwork");
-
-                    b.Navigation("BuyUser");
-
-                    b.Navigation("SellUser");
-                });
-
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Artworks.Rating", b =>
                 {
                     b.HasOne("ArtworkSharingPlatform.Domain.Entities.Artworks.Artwork", "Artwork")
@@ -1271,8 +1221,6 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
                     b.Navigation("PreOrder");
 
-                    b.Navigation("Purchases");
-
                     b.Navigation("Ratings");
 
                     b.Navigation("Reports");
@@ -1307,10 +1255,6 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Users.User", b =>
                 {
-                    b.Navigation("ArtworkHasBought");
-
-                    b.Navigation("ArtworkHasSold");
-
                     b.Navigation("Artworks");
 
                     b.Navigation("Comments");

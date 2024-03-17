@@ -19,7 +19,9 @@ namespace ArtworkSharingPlatform.Repository.Repository
         private readonly UserManager<User> _userManager;
 
 
-        public UserRepository(ArtworkSharingPlatformDbContext context, UserManager<User> userManager)
+        public UserRepository(
+            ArtworkSharingPlatformDbContext context, 
+            UserManager<User> userManager)
         {
             _dbContext = context;
             _userManager = userManager;
@@ -174,5 +176,23 @@ namespace ArtworkSharingPlatform.Repository.Repository
             var user = await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == phone);
             return user != null;
         }
+
+        public async Task<UserImage> GetUserCurrentAvatar(int userId)
+        {
+            return await _dbContext.UserImages.SingleOrDefaultAsync(x => x.UserId == userId);
+        }
+        
+		public async Task ChangeAvatar(UserImage image)
+		{
+            var currentAvatar = await _dbContext.UserImages.SingleOrDefaultAsync(x => x.UserId == image.UserId);
+            if (currentAvatar != null)
+            {
+                _dbContext.Remove(currentAvatar);
+                await _dbContext.SaveChangesAsync();
+            }
+            
+            _dbContext.Add(image);
+            await _dbContext.SaveChangesAsync();
+		}
 	}
 }

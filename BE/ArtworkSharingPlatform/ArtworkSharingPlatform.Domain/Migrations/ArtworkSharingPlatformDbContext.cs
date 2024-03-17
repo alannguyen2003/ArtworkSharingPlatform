@@ -57,6 +57,8 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
     public DbSet<Group> Groups{ get; set; }
     public DbSet<Follow> Follows { get; set; }
     public DbSet<Report> Reports { get; set; }
+    public DbSet<UserImage> UserImages{ get; set; }
+    public DbSet<Purchase> Purchases { get; set; }
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -70,7 +72,7 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
         IConfiguration configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", true, true)
             .Build();
-        return configuration.GetConnectionString(AppSettingsEnum.DatabaseConnectionString) ?? string.Empty;
+        return "Data Source=(local);database=ASPDatabase;uid=sa;pwd=12345;TrustServerCertificate=True;MultipleActiveResultSets=True";
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -145,6 +147,22 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
         .HasForeignKey(t => t.ReceiverId)
         .IsRequired(false)
         .OnDelete(DeleteBehavior.NoAction);
+
+        modelBuilder.Entity<Purchase>()
+                .HasKey(k => new { k.ArtworkId, k.SellUserId, k.BuyUserId });
+        modelBuilder.Entity<Purchase>()
+            .HasOne(p => p.Artwork)
+            .WithMany(a => a.Purchases)
+            .OnDelete(DeleteBehavior.NoAction);
+        modelBuilder.Entity<Purchase>()
+            .HasOne(p => p.BuyUser)
+            .WithMany(a => a.ArtworkHasBought)
+            .OnDelete(DeleteBehavior.NoAction);
+        modelBuilder.Entity<Purchase>()
+            .HasOne(p => p.SellUser)
+            .WithMany(a => a.ArtworkHasSold)
+            .OnDelete(DeleteBehavior.NoAction);
+
 
         modelBuilder.Entity<Artwork>()
             .HasMany(e => e.Likes)

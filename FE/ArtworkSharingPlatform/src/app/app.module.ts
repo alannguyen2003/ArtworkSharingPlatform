@@ -40,6 +40,7 @@ import { ReportModalComponent } from './components/modal/report-modal/report-mod
 import 'froala-editor/js/plugins.pkgd.min.js';
 import { OrderConfirmationComponent } from './components/checkout/order-confirmation/order-confirmation.component';
 import { OrderConfirmationFailedComponent } from './components/checkout/order-confirmation-failed/order-confirmation-failed.component';
+import { ChangeAvatarComponent } from './components/profile-edit/change-avatar/change-avatar.component';
 import { CommonModule } from '@angular/common';
 import { ArtworkCarouselComponent } from './components/home/artwork-carousel/artwork-carousel.component';
 
@@ -71,6 +72,7 @@ import { ArtworkCarouselComponent } from './components/home/artwork-carousel/art
     ReportModalComponent,
     OrderConfirmationComponent,
     OrderConfirmationFailedComponent,
+    ChangeAvatarComponent,
     ArtworkCarouselComponent
 
   ],

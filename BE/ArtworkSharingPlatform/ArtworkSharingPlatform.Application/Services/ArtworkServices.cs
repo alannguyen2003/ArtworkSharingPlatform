@@ -66,11 +66,11 @@ namespace ArtworkSharingPlatform.Application.Services
 
 			if (userParams.GenreIds != null && userParams.GenreIds.Length > 0)
 			{
-				foreach(var genreId in userParams.GenreIds)
-				{
-                    query = query.Where(x => x.GenreId == genreId);
-                }
+				query = query.Where(x => userParams.GenreIds.Contains(x.GenreId));
 			}
+
+			if(!string.IsNullOrEmpty(userParams.Search))
+				query = query.Where(x => x.Title.Contains(userParams.Search));
 
 			query = userParams.OrderBy switch
 			{
@@ -234,6 +234,27 @@ namespace ArtworkSharingPlatform.Application.Services
 			var Comments = await _artworkRepository.ListArtworkComments(artworkId);
 			var commentsDTO = _mapper.Map<IList<ArtworkCommentDTO>>(Comments);
 			return commentsDTO;
+		}
+		public async Task<IEnumerable<PurchaseDTO>> ListPurchaseArtwork(int UserId)
+		{
+			var boughtArtworks = await _artworkRepository.ListBoughtArtwork(UserId);
+			var purchaseDTO = _mapper.Map<IList<PurchaseDTO>>(boughtArtworks);
+			return purchaseDTO;
+		}
+		public async Task AddPurchase(PurchaseDTO purchaseDTO)
+		{
+			var purchase = _mapper.Map<Purchase>(purchaseDTO);
+			await _artworkRepository.AddPurchase(purchase);
+		}
+		public async Task<IEnumerable<PurchaseDTO>> ListHistoryPurchaseArtwork(int artworkId)
+		{
+            var Artworks = await _artworkRepository.ListHistoryPurchaseArtwork(artworkId);
+            var purchaseDTO = _mapper.Map<IList<PurchaseDTO>>(Artworks);
+            return purchaseDTO;
+        }
+		public async Task ActiveArtworkStatus(int artworkId)
+		{
+			await _artworkRepository.ActiveArtworkStatus(artworkId);
 		}
   }
 }

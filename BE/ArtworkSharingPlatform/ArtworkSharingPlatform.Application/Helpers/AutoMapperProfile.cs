@@ -26,7 +26,7 @@ namespace ArtworkSharingPlatform.Application.Helpers
             CreateMap<Follow, UserFollowDTO>().ReverseMap();
             CreateMap<Comment, ArtworkCommentDTO>().ReverseMap();
             CreateMap<Rating, ArtworkRatingDTO>().ReverseMap();
-
+            NewConfigManagerRequestToConfigManagerEntityMap();
             CreateMap<User, ArtworkUserDTO>()
                 .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.UserImage.Url))
                 .ReverseMap();
@@ -42,6 +42,7 @@ namespace ArtworkSharingPlatform.Application.Helpers
             CreateMap<Artwork, ArtworkUpdateDTO>().ReverseMap();
             CreateMap<ArtworkImage, ArtworkImageToAddDTO>().ReverseMap();
             CreateMap<Report, ReportDTO>().ReverseMap();
+            CreateMap<Purchase, PurchaseDTO>().ReverseMap();
             CreateMap<Artwork, ArtworkDTO>()
                 .ForMember(dest => dest.ImageUrl,
                     opt => opt.MapFrom(src => src.ArtworkImages.SingleOrDefault(x => x.IsThumbnail.Value).ImageUrl))
@@ -85,6 +86,7 @@ namespace ArtworkSharingPlatform.Application.Helpers
                 .ReverseMap();
             CreateCommissionRequestToCommissionEntityMap();
 			CreateMap<User, UpdateProfileDTO>().ReverseMap();
+			CreateMap<UserImage, UserImageDTO>().ReverseMap();
 			CreateMap<Follow, UserProfileFollowDTO>()
                 .ForMember(dest => dest.SourceUserEmail, opt => opt.MapFrom(src => src.SourceUser.Email))
                 .ForMember(dest => dest.TargetUserEmail, opt => opt.MapFrom(src => src.TargetUser.Email))
@@ -218,8 +220,7 @@ namespace ArtworkSharingPlatform.Application.Helpers
                     opt => opt.Ignore()
                 );
         }
-         /*Nhớ gọi hàm này ở hàm Constructor của AutoMapperProfile.*/
- private void NewConfigManagerRequestToConfigManagerEntityMap()
+        private void NewConfigManagerRequestToConfigManagerEntityMap()
         {
             CreateMap<NewConfigManagerRequest, ConfigManager>()
                 .ForMember(dest => dest.ConfigDate,

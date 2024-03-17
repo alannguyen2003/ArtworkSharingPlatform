@@ -121,5 +121,21 @@ namespace ArtworkSharingPlatform.Repository.Repository
             return totalAmount;
         }
 
+        public async Task<bool> UserBuyPackage(int userId, int packageId)
+        {
+            if (userId == 0 && packageId == 0) { return false; }
+            var user = _dbContext.Users.Where(x => x.Id == userId).FirstOrDefault();
+            var package = _dbContext.PackageInformation.Where(x => x.Id == packageId).FirstOrDefault();
+            
+            if (user  != null && package != null) 
+            {
+                user.RemainingCredit += package.Credit;
+                user.PackageId = packageId;
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+
     }
 }
