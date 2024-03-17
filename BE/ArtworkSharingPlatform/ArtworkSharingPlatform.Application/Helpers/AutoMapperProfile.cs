@@ -26,7 +26,7 @@ namespace ArtworkSharingPlatform.Application.Helpers
             CreateMap<Follow, UserFollowDTO>().ReverseMap();
             CreateMap<Comment, ArtworkCommentDTO>().ReverseMap();
             CreateMap<Rating, ArtworkRatingDTO>().ReverseMap();
-
+            NewConfigManagerRequestToConfigManagerEntityMap();
             CreateMap<User, ArtworkUserDTO>()
                 .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.UserImage.Url))
                 .ReverseMap();
@@ -219,8 +219,7 @@ namespace ArtworkSharingPlatform.Application.Helpers
                     opt => opt.Ignore()
                 );
         }
-         /*Nhớ gọi hàm này ở hàm Constructor của AutoMapperProfile.*/
- private void NewConfigManagerRequestToConfigManagerEntityMap()
+        private void NewConfigManagerRequestToConfigManagerEntityMap()
         {
             CreateMap<NewConfigManagerRequest, ConfigManager>()
                 .ForMember(dest => dest.ConfigDate,
