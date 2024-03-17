@@ -176,22 +176,22 @@ namespace ArtworkSharingPlatform.Infrastructure
                 new PackageInformation
                 {
                     Name = "Basic",
-                    Credit = 5,
-                    Price = 20000,
+                    Credit = 3,
+                    Price = 50000,
                     Status = 1
                 },
                 new PackageInformation
                 {
                     Name = "Advance",
-                    Credit = 15,
-                    Price = 60000,
+                    Credit = 12,
+                    Price = 100000,
                     Status = 1
                 },
                 new PackageInformation
                 {
                     Name = "Super",
                     Credit = 25,
-                    Price = 100000,
+                    Price = 200000,
                     Status = 1
                 }
             };
