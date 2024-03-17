@@ -11,5 +11,6 @@ namespace ArtworkSharingPlatform.Repository.Repository.Interfaces
         Task<List<PackageBilling>> GetAllPackageBilling();
         Task<PackageBilling> GetBillingById(int id);
         Task<decimal> GetTotalPackageBillingAmount();
+        Task<bool> UserBuyPackage(int userId, int packageId);
     }
 }

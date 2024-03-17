@@ -61,5 +61,9 @@ namespace ArtworkSharingPlatform.Application.Services
         {
             return await _packageRepository.GetTotalPackageBillingAmount();
         }
+        public async Task<bool> UserBuyPackage(int userId, int packageId)
+        {
+            return await _packageRepository.UserBuyPackage(userId, packageId);
+        }
     }
 }

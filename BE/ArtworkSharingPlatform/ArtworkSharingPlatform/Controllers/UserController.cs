@@ -19,14 +19,17 @@ namespace ArtworkSharingHost.Controllers
         private readonly IUserService _userService;
 		private readonly IImageService _imageService;
 		private readonly IMapper _mapper;
+        private readonly IPackageService _packageService;
         public UserController(
             IUserService userService, 
             IImageService imageService,
-            IMapper mapper)
+            IMapper mapper,
+            IPackageService packageService)
         {
             _userService = userService;
 			_imageService = imageService;
 			_mapper = mapper;
+            _packageService = packageService;
         }
         [HttpGet("artist/{email}")]
         public async Task<IActionResult> GetArtistProfile(string email)
@@ -102,6 +105,13 @@ namespace ArtworkSharingHost.Controllers
             }
 			return Ok();
 		}
+        [HttpPut("buy-package/{packageId}")]
+        public async Task<IActionResult> BuyPackage(int packageId)
+        {
+            int userId = User.GetUserId();
+            var buyPackage = await _packageService.UserBuyPackage(userId, packageId);
+            return Ok(buyPackage);
+        }
 
-	}
+    }
 }
