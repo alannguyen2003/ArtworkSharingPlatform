@@ -11,6 +11,7 @@ import {environment} from "../../environments/environment";
 import {ArtworkImage} from "../_model/artworkImage.model";
 import {Report} from "../_model/report.model";
 import {Rating} from "../_model/rating.model";
+import {UserImage} from "../_model/userImage.model";
 
 @Injectable({
   providedIn: 'root'
@@ -130,6 +131,7 @@ export class ArtworkService {
       body: artworkImage
     });
   }
+
   report(report: Report) {
     console.log(this.baseUrl + 'report');
     return this.http.post(this.baseUrl + 'artworks/report', report);
