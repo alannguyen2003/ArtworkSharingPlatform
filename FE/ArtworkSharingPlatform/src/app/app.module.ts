@@ -40,6 +40,7 @@ import { ReportModalComponent } from './components/modal/report-modal/report-mod
 import 'froala-editor/js/plugins.pkgd.min.js';
 import { OrderConfirmationComponent } from './components/checkout/order-confirmation/order-confirmation.component';
 import { OrderConfirmationFailedComponent } from './components/checkout/order-confirmation-failed/order-confirmation-failed.component';
+import { ChangeAvatarComponent } from './components/profile-edit/change-avatar/change-avatar.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { OrderConfirmationFailedComponent } from './components/checkout/order-co
     ArtworkEditComponent,
     ReportModalComponent,
     OrderConfirmationComponent,
-    OrderConfirmationFailedComponent
+    OrderConfirmationFailedComponent,
+    ChangeAvatarComponent
   ],
   imports: [
     BrowserModule,

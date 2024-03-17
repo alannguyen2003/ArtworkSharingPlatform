@@ -1,4 +1,5 @@
-﻿using ArtworkSharingHost.Extensions;
+﻿using ArtworkSharingHost.CloudinaryService;
+using ArtworkSharingHost.Extensions;
 using ArtworkSharingPlatform.Application.Interfaces;
 using ArtworkSharingPlatform.DataTransferLayer;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.User;
@@ -16,11 +17,16 @@ namespace ArtworkSharingHost.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly IMapper _mapper;
-        public UserController(IUserService userService, IMapper mapper)
+		private readonly IImageService _imageService;
+		private readonly IMapper _mapper;
+        public UserController(
+            IUserService userService, 
+            IImageService imageService,
+            IMapper mapper)
         {
             _userService = userService;
-            _mapper = mapper;
+			_imageService = imageService;
+			_mapper = mapper;
         }
         [HttpGet("artist/{email}")]
         public async Task<IActionResult> GetArtistProfile(string email)
@@ -81,5 +87,21 @@ namespace ArtworkSharingHost.Controllers
             await _userService.UpdateUserDetail(user);
             return Ok();
         }
-    }
+
+		[HttpPut("change-avatar")]
+		public async Task<IActionResult> ChangeAvatar([FromBody] UserImageDTO userImageDTO)
+
+		{
+            if (string.IsNullOrEmpty(userImageDTO.PublicId)) return BadRequest("Change your image first in order to save");
+            var currentAvatar = await _userService.GetCurrentUserAvatar(User.GetUserId());
+            userImageDTO.UserId = User.GetUserId();
+            await _userService.ChangeAvatar(userImageDTO);
+            if (currentAvatar != null && !string.IsNullOrEmpty(currentAvatar.PublicId))
+            {
+                await _imageService.DeletePhotoAsync(currentAvatar.PublicId);
+            }
+			return Ok();
+		}
+
+	}
 }
