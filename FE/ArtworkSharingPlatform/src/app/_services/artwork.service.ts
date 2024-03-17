@@ -25,7 +25,8 @@ export class ArtworkService {
     orderBy: 'lowPrice',
     pageNumber: 1,
     pageSize: 6,
-    genreIds: []
+    genreIds: [],
+    search: ''
   };
   artworkCache = new Map();
   artworks: Artwork[] = [];
@@ -67,6 +68,10 @@ export class ArtworkService {
     params = params.append('minPrice', userParams.minPrice);
     params = params.append('maxPrice', userParams.maxPrice);
     params = params.append('orderBy', userParams.orderBy);
+    params = params.append('search', userParams.search);
+    if (userParams.genreIds.length > 0) {
+      params = params.append('genres', userParams.genreIds.join(','));
+    }
     return getPaginatedResult<Artwork[]>(this.baseUrl + 'artworks', params, this.http).pipe(
       map(response => {
         this.artworkCache.set(Object.values(userParams).join('-'), response);

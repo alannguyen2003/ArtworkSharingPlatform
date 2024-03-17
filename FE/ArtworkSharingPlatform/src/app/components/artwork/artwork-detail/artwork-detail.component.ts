@@ -76,8 +76,6 @@ export class ArtworkDetailComponent implements OnInit, OnDestroy{
 
   onTabActivated(data: TabDirective) {
     this.activeTab = data;
-    console.log(this.activeTab.heading);
-    console.log(this.activeTab.heading == "Messages" && this.user && this.artwork);
     if (this.activeTab.heading == "Messages" && this.user && this.artwork) {
       this.messageService.createHubConnection(this.user, this.artwork.user.email, this.artwork.id);
     }

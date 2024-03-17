@@ -25,8 +25,21 @@ namespace ArtworkSharingHost.Controllers
         public async Task<ActionResult<PagedList<ArtworkDTO>>> GetArtworks([FromQuery] UserParams userParams)
         {
             var currentUserId = User.GetUserId();
-            //var currentUserId = 7;
-            userParams.CurrentUserId = currentUserId;
+			string genreIds = Request.Query["genres"]; 
+            if(!string.IsNullOrEmpty(genreIds))
+            {
+                try
+                {
+					int[] genreIdsArray = genreIds?.Split(',').Select(int.Parse).ToArray();
+                    userParams.GenreIds = genreIdsArray;
+				}
+                catch (Exception ex)
+                {
+                    return BadRequest("Invalid genres");
+                }
+                
+			}
+			userParams.CurrentUserId = currentUserId;
 
             if (userParams.MinPrice > userParams.MaxPrice)
             {
