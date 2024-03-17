@@ -1,7 +1,6 @@
 ﻿using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
 using ArtworkSharingPlatform.Domain.Entities.Users;
 using ArtworkSharingPlatform.Domain.Migrations;
-using ArtworkSharingPlatform.Repository.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,6 +9,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using ArtworkSharingPlatform.Repository.Repository.Interfaces;
 
 namespace ArtworkSharingPlatform.Repository.Repository
 {

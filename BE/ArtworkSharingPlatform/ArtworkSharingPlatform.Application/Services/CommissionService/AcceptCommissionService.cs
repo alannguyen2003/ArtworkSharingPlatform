@@ -6,7 +6,7 @@ using ArtworkSharingPlatform.Domain.Common.Constants;
 using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Domain.Entities.Users;
 using ArtworkSharingPlatform.Domain.Helpers;
-using ArtworkSharingPlatform.Repository.Interfaces;
+using ArtworkSharingPlatform.Repository.Repository.Interfaces;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Identity.Client;

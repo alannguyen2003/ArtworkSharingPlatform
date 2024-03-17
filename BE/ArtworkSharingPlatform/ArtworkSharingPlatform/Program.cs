@@ -8,7 +8,6 @@ using ArtworkSharingPlatform.Domain.Helpers;
 using ArtworkSharingPlatform.Domain.Migrations;
 using ArtworkSharingPlatform.Infrastructure;
 using ArtworkSharingPlatform.Infrastructure.Configuration;
-using ArtworkSharingPlatform.Repository.Interfaces;
 using ArtworkSharingPlatform.Repository.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;

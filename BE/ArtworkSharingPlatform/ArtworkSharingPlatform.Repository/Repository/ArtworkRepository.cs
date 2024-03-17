@@ -1,12 +1,12 @@
 ﻿using ArtworkSharingPlatform.Domain.Entities.Artworks;
 using ArtworkSharingPlatform.Domain.Helpers;
 using ArtworkSharingPlatform.Domain.Migrations;
-using ArtworkSharingPlatform.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
+using ArtworkSharingPlatform.Repository.Repository.Interfaces;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ArtworkSharingPlatform.Repository.Repository

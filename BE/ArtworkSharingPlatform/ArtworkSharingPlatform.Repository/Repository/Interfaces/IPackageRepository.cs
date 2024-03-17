@@ -1,6 +1,6 @@
 ﻿using ArtworkSharingPlatform.Domain.Entities.PackagesInfo;
 
-namespace ArtworkSharingPlatform.Repository.Interfaces
+namespace ArtworkSharingPlatform.Repository.Repository.Interfaces
 {
     public interface IPackageRepository
     {

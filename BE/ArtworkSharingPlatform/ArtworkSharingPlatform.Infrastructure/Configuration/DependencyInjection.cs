@@ -3,8 +3,8 @@ using ArtworkSharingPlatform.Application.Services;
 using ArtworkSharingPlatform.Application.Services.CommissionService;
 using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Domain.Entities.Users;
-using ArtworkSharingPlatform.Repository.Interfaces;
 using ArtworkSharingPlatform.Repository.Repository;
+using ArtworkSharingPlatform.Repository.Repository.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Identity.Client;
 

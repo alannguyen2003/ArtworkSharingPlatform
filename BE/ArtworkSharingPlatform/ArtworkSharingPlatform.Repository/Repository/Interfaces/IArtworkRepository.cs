@@ -1,7 +1,6 @@
 ﻿using ArtworkSharingPlatform.Domain.Entities.Artworks;
-using ArtworkSharingPlatform.Domain.Helpers;
 
-namespace ArtworkSharingPlatform.Repository.Interfaces
+namespace ArtworkSharingPlatform.Repository.Repository.Interfaces
 {
 	public interface IArtworkRepository
 	{
