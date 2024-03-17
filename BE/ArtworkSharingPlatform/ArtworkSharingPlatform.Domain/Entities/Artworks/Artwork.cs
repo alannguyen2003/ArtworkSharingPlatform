@@ -23,4 +23,5 @@ public class Artwork : BaseEntity
     public ICollection<Rating>? Ratings { get; set; }
     public ICollection<Report> Reports { get; set; }
     public Genre Genre { get; set; }
+    public List<Purchase> Purchases { get; set; }
 }

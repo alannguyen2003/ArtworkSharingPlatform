@@ -47,7 +47,8 @@ namespace ArtworkSharingPlatform.Application.Services
                 Email = registerBody.Email,
                 Name = registerBody.Name,
                 PhoneNumber = registerBody.PhoneNumber,
-                Status = 1
+                Description = "",
+                Status = 1,
             };
             if (await IsPhoneExistAsync(user.PhoneNumber))
             {
