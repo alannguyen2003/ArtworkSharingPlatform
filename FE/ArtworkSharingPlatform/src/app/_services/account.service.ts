@@ -6,6 +6,7 @@ import {environment} from "../../environments/environment";
 import {ToastrService} from "ngx-toastr";
 import {Router} from "@angular/router";
 import {PresenceService} from "./presence.service";
+import {DecodedToken} from "../_model/decodeToken.model";
 
 @Injectable({
   providedIn: 'root'
@@ -43,12 +44,19 @@ export class AccountService {
   }
 
   setCurrentUser(user: User) {
-    user.roles = [];
-    const roles = this.getDecodedToken(user.token).role;
-    Array.isArray(roles) ? user.roles = roles : user.roles.push(roles);
-    localStorage.setItem('user', JSON.stringify(user));
-    this.currentUserSource.next(user);
-    this.presenceService.createHubConnection(user);
+    const expiry = this.getDecodedToken(user.token).exp;
+    const now = Math.floor(new Date().getTime() / 1000);
+    if (expiry < now) {
+      localStorage.removeItem('user');
+      this.router.navigateByUrl('/login');
+    } else {
+      user.roles = [];
+      const roles = this.getDecodedToken(user.token).role;
+      Array.isArray(roles) ? user.roles = roles : user.roles.push(roles);
+      localStorage.setItem('user', JSON.stringify(user));
+      this.currentUserSource.next(user);
+      this.presenceService.createHubConnection(user);
+    }
   }
 
   logout() {
@@ -57,7 +65,7 @@ export class AccountService {
     this.presenceService.stopHubConnection();
   }
 
-  getDecodedToken(token: string){
+  getDecodedToken(token: string) : DecodedToken{
     return JSON.parse(atob(token.split(".")[1]));
   }
 
