@@ -10,19 +10,20 @@ import { ArtworkCarouselComponent } from './artwork-carousel/artwork-carousel.co
 })
 export class HomeComponent implements OnInit {
   pageNumber: number = 1
-  pageSize: number = 4
+  pageSize: number = 15
   animeArtworks: Artwork[] = [];
 
-  constructor(private artworkService: ArtworkService) { }
-  ngOnInit(): void {
+  constructor(private artworkService: ArtworkService) {
     this.getAnimeArtworks()
+  }
+  ngOnInit(): void {
+
   }
   async getAnimeArtworks() {
     this.artworkService.getArtworksByGenreId(1, this.pageNumber, this.pageSize)
       .subscribe({
         next: animeArtworks => {
           this.animeArtworks = animeArtworks;
-          console.log(this.animeArtworks)
         }
       }
       );
