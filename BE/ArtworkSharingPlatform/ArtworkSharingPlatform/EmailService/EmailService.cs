@@ -1,4 +1,6 @@
-﻿using sib_api_v3_sdk.Api;
+﻿using ArtworkSharingHost.EmailService.Settings;
+using Microsoft.Extensions.Options;
+using sib_api_v3_sdk.Api;
 using sib_api_v3_sdk.Client;
 using sib_api_v3_sdk.Model;
 using System.Net.Http.Headers;
@@ -7,10 +9,16 @@ namespace ArtworkSharingHost.EmailService
 {
 	public class EmailService : IEmailService
 	{
+		private readonly IOptions<SendInBlue> _sendInBlue;
 
-		public async Task<string> SendAsync(string from, string to, string subject, string body)
+		public EmailService(IOptions<SendInBlue> sendInBlue)
+        {
+			_sendInBlue = sendInBlue;
+		}
+
+        public async Task<string> SendAsync(string from, string to, string subject, string body)
 		{
-			Configuration.Default.ApiKey["api-key"] = "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";
+			Configuration.Default.ApiKey["api-key"] = _sendInBlue.Value.ApiKey;
 			string message;
 			var apiInstance = new TransactionalEmailsApi();
 			string SenderName = "Test Auto Email";

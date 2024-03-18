@@ -1,5 +1,6 @@
 using ArtworkSharingHost.CloudinaryService;
 using ArtworkSharingHost.EmailService;
+using ArtworkSharingHost.EmailService.Settings;
 using ArtworkSharingHost.Middleware;
 using ArtworkSharingHost.SignalR;
 using ArtworkSharingPlatform.Application.Interfaces;
@@ -88,6 +89,7 @@ builder.Services.AddAuthentication(options =>
 //});
 builder.Services.AddSignalR();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.Configure<SendInBlue>(builder.Configuration.GetSection("SendInBlue"));
 
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 builder.Services.AddScoped<IAuthService, AuthService>();
