@@ -21,6 +21,7 @@ using System.Text;
 using ArtworkSharingHost.StripePaymentService;
 using ArtworkSharingHost.StripePaymentService.Interfaces;
 using Stripe;
+using ArtworkSharingHost.StripePaymentService.Settings;
 
 //const string artworkSharingPlatformCors = "_artworkSharingPlatformCors";
 var builder = WebApplication.CreateBuilder(args);
@@ -93,6 +94,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddSignalR();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.Configure<SendInBlue>(builder.Configuration.GetSection("SendInBlue"));
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 builder.Services.AddScoped<IAuthService, AuthService>();
