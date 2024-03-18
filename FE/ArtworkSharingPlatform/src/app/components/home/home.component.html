@@ -71,14 +71,32 @@
         </section>
 
         <section>
-          <span class="block mb-2 text-3xl font-medium tracki uppercase lg:text-center dark:text-blue-400">
+          <span class="block mb-5 text-3xl font-medium tracki uppercase lg:text-center dark:text-blue-400">
             Anime Artworks
           </span>
-
           <app-artwork-carousel [artworks]="animeArtworks"></app-artwork-carousel>
-
-
         </section>
+
+        <section>
+          <span class="block mb-5 text-3xl font-medium tracki uppercase lg:text-center dark:text-blue-400">
+            Natural Landscapes
+          </span>
+          <app-artwork-carousel [artworks]="landscapeArtworks"></app-artwork-carousel>
+        </section>
+        <section>
+          <span class="block mb-5 text-3xl font-medium tracki uppercase lg:text-center dark:text-blue-400">
+            Stunning Portraits
+          </span>
+          <app-artwork-carousel [artworks]="portraitArtworks"></app-artwork-carousel>
+        </section>
+
+        <section>
+          <span class="block mb-5 text-3xl font-medium tracki uppercase lg:text-center dark:text-blue-400">
+            Fictional Works
+          </span>
+          <app-artwork-carousel [artworks]="fictionArtworks"></app-artwork-carousel>
+        </section>
+
         <section>
           <div class="container p-6 py-20 mx-auto rounded lg:px-8 dark:bg-gray-900">
             <h2 class="text-5xl font-bold text-center">Our team is here to help you.</h2>
