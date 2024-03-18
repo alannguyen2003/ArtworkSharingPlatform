@@ -3,8 +3,9 @@ import { NgbCarousel, NgbCarouselModule, NgbSlideEvent, NgbSlideEventSource } fr
 import { ArtworkService } from 'src/app/_services/artwork.service';
 import { Artwork } from 'src/app/_model/artwork.model';
 import { CommonModule } from '@angular/common';
-
-
+import { AccountService } from 'src/app/_services/account.service';
+import { User } from 'src/app/_model/user.model';
+import { take } from "rxjs";
 
 @Component({
     selector: 'app-artwork-carousel',
@@ -18,11 +19,15 @@ export class ArtworkCarouselComponent implements OnInit {
     pauseOnHover = true;
     pauseOnFocus = true;
     chunkSize: number = 4;
+    user: User;
     artworkChunks: Artwork[][] = [];
     @Input() artworks: Artwork[] = []
 
     @ViewChild('carousel', { static: true }) carousel: NgbCarousel;
 
+    constructor(private accountService: AccountService) {
+        this.getUserStatus()
+    }
     ngOnInit(): void {
 
 
@@ -33,6 +38,13 @@ export class ArtworkCarouselComponent implements OnInit {
         }
     }
 
+    getUserStatus() {
+        this.accountService.currentUser$.pipe(take(1)).subscribe({
+            next: user => {
+                if (user) this.user = user;
+            }
+        });
+    }
     divideArtworksIntoCarouselChunks(arr: any[], chunkSize: number): Artwork[][] {
         const chunks = [];
         for (let i = 0; i < arr.length; i += chunkSize) {

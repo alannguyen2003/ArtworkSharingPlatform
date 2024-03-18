@@ -47,6 +47,11 @@ namespace ArtworkSharingHost.Controllers
                 return BadRequest("Minimum price cannot exceed maximum price");
             }
 
+            if (userParams.MinPrice < 0 || userParams.MaxPrice< 0)
+            {
+                return BadRequest("Minimum price or Maximum Price must not be below 0.");
+            }
+
             var artworks = await _artworkService.GetArtworksAsync(userParams);
 
             Response.AddPaginationHeader(new PaginationHeader(artworks.CurrentPage,
