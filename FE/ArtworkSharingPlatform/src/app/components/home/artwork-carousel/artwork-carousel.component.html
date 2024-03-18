@@ -13,8 +13,14 @@
                         <p class="card-text" style="color:white">{{artwork.description |truncate:15}}</p>
                     </div>
                     <div class="card-footer">
-                        <a href="/artwork/{{artwork.id}}" class="mt-3 btn btn-primary" style="color:white">View
-                            Details</a>
+                        <div *ngIf="user;else no_user_is_logged_in">
+                            <a href="/artwork/{{artwork.id}}" class="mt-3 btn btn-primary" style="color:white">View
+                                Details</a>
+                        </div>
+                        <ng-template #no_user_is_logged_in>
+                            <a href="/login" class="mt-3 btn btn-primary" style="color:white">View
+                                Details</a>
+                        </ng-template>
                     </div>
                 </div>
             </div>
