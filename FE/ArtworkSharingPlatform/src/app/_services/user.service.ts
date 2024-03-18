@@ -31,4 +31,11 @@ export class UserService {
   changeAvatar(userImage: UserImage) {
     return this.http.put(this.baseUrl+ 'user/change-avatar', userImage);
   }
+
+  forgotPassword(email: string) {
+    return this.http.post(this.baseUrl + 'auth/forgotpassword/' + email, {});
+  }
+  resetPassword(model: any) {
+    return this.http.post(this.baseUrl + 'auth/resetPassword', model);
+  }
 }

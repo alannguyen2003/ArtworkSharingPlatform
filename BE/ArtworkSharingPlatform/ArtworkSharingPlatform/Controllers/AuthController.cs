@@ -1,4 +1,5 @@
-﻿using ArtworkSharingPlatform.Application.Interfaces;
+﻿using ArtworkSharingHost.EmailService;
+using ArtworkSharingPlatform.Application.Interfaces;
 using ArtworkSharingPlatform.Application.Services;
 using ArtworkSharingPlatform.DataTransferLayer;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
@@ -14,10 +15,13 @@ namespace ArtworkSharingHost.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
-        public AuthController(IAuthService authService)
+		private readonly IEmailService _emailService;
+
+		public AuthController(IAuthService authService, IEmailService emailService)
         {
             _authService = authService;
-        }
+			_emailService = emailService;
+		}
         [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginDTO loginDTO)
         {
@@ -37,26 +41,45 @@ namespace ArtworkSharingHost.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> Register(RegisterDTO registerDTO)
         {
-            var result = await _authService.Register(registerDTO);
-
-			if (result.Succeeded){
-                var loginDto = new LoginDTO
-                {
-                    Email = registerDTO.Email,
-                    Password = registerDTO.Password
-                };
-                var tokenString = await _authService.GenerateTokenString(loginDto);
-                var userDto = await _authService.GetUserDTO(loginDto.Email, tokenString);
-                return Ok(userDto);
-            } 
-            return BadRequest(result.Errors);
+            try
+            {
+				if (await _emailService.ValidateEmail(registerDTO.Email))
+				{
+					return BadRequest("Your email is invalid");
+				}
+				var result = await _authService.Register(registerDTO);
+				if (result.Succeeded)
+				{
+					var loginDto = new LoginDTO
+					{
+						Email = registerDTO.Email,
+						Password = registerDTO.Password
+					};
+					var tokenString = await _authService.GenerateTokenString(loginDto);
+					var userDto = await _authService.GetUserDTO(loginDto.Email, tokenString);
+					return Ok(userDto);
+				}
+				return BadRequest(result.Errors);
+			}
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        [HttpPost("ForgotPassword")]
-        public async Task<IActionResult> ForgotPassword([FromBody] string email)
+        [HttpPost("ForgotPassword/{email}")]
+        public async Task<IActionResult> ForgotPassword(string email)
         {
-            var code = await _authService.ForgotPassword(email);
-            var token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            return Ok(token);
+            try
+            {
+				var code = await _authService.ForgotPassword(email);
+				var token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+				await _emailService.SendAsync("autoemail62@gmail.com", email, "Reset Password Confirmation", $"Please enter this code to reset your password: {token}");
+			}
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            return Ok();
         }
 
         [HttpPost("ResetPassword")]
@@ -69,8 +92,16 @@ namespace ArtworkSharingHost.Controllers
                 ConfirmPassword = resetPasswordDTO.ConfirmPassword,
                 Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(resetPasswordDTO.Code))
             };
-            await _authService.ResetPassword(resetPassword);
-            return Ok("Reset password successfully. Return to login");
+            try
+            {
+				await _authService.ResetPassword(resetPassword);
+			}
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
+            return Ok();
         }
     }
 }
