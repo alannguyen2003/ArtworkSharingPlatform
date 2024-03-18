@@ -1,5 +1,6 @@
 ﻿using ArtworkSharingPlatform.Application.Interfaces;
 using ArtworkSharingPlatform.DataTransferLayer;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.Artwork;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response;
 using ArtworkSharingPlatform.Domain.Entities.Artworks;
 using ArtworkSharingPlatform.Domain.Entities.Users;
@@ -17,17 +18,23 @@ namespace ArtworkSharingPlatform.Application.Services
 	public class ArtworkServices : IArtworkService
 	{
 		private readonly IArtworkRepository _artworkRepository;
+		private readonly IUserRepository _userRepository;
+		private readonly IUserImageRepository _userImageRepository;
 		private readonly UserManager<User> _userManager;
 		private readonly IMapper _mapper;
 
 		public ArtworkServices(
             IArtworkRepository artworkRepository, 
+            IUserRepository userRepository,
+            IUserImageRepository userImageRepository,
             UserManager<User> userManager,
             IMapper mapper
             )
         {
 			_artworkRepository = artworkRepository;
+			_userRepository = userRepository;
 			_userManager = userManager;
+			_userImageRepository = userImageRepository;
 			_mapper = mapper;
 		}
 
@@ -39,7 +46,14 @@ namespace ArtworkSharingPlatform.Application.Services
 			var artwork = await query.Where(x => x.Id == id).ProjectTo<ArtworkDTO>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
 			return artwork;
 		}
+		public async Task<List<ArtworkDTO>> GetArtworksByGenre(int genreId)
+		{
+			var query = _artworkRepository.GetArtworksAsQueryable();
 
+			var artwork = await query.Where(x => x.GenreId == genreId).ProjectTo<ArtworkDTO>(_mapper.ConfigurationProvider)
+				.ToListAsync();
+			return artwork;
+		}
         public async Task<List<ArtworkAdminDTO>> GetArtworkAdmin()
         {
             var artworks = await _artworkRepository.GetArtworksAsync();
@@ -222,11 +236,31 @@ namespace ArtworkSharingPlatform.Application.Services
 			return await _artworkRepository.GetArtworkRatingForUser(userId, artworkId);
 		}
 	
-		public async Task<IEnumerable<ArtworkCommentDTO>> GetArtworkComments(int artworkId)
+		public async Task<IEnumerable<GetArtworkCommentDTO>> GetArtworkComments(int artworkId)
 		{
-			var Comments = await _artworkRepository.ListArtworkComments(artworkId);
-			var commentsDTO = _mapper.Map<IList<ArtworkCommentDTO>>(Comments);
-			return commentsDTO;
+			var comments = await _artworkRepository.ListArtworkComments(artworkId);
+			List<GetArtworkCommentDTO> res = new List<GetArtworkCommentDTO>();
+			foreach (var comment in comments)
+			{
+				User user = _userRepository.GetById(comment.UserId);
+				UserImage userImage =  _userImageRepository.GetByUserId(user.Id);
+				string userName = user.UserName;
+				string avatarUrl = null;
+				if (userImage != null)
+				{
+					avatarUrl = userImage.Url;
+				}
+				
+				res.Add(new GetArtworkCommentDTO()
+				{
+					ArtworkId = comment.ArtworkId,
+					AvatarUrl = avatarUrl,
+					UserId = comment.UserId,
+					UserName = userName,
+					Content = comment.Content
+				});
+			}
+			return res;
 		}
 		public async Task<IEnumerable<PurchaseDTO>> ListPurchaseArtwork(int UserId)
 		{

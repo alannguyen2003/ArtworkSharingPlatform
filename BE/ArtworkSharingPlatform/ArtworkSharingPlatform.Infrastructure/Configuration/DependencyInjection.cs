@@ -1,6 +1,7 @@
 ﻿using ArtworkSharingPlatform.Application.Interfaces;
 using ArtworkSharingPlatform.Application.Services;
 using ArtworkSharingPlatform.Application.Services.CommissionService;
+using ArtworkSharingPlatform.Domain.Entities.Users;
 using ArtworkSharingPlatform.Repository.Interfaces;
 using ArtworkSharingPlatform.Repository.Repository;
 using ArtworkSharingPlatform.Repository.Repository.Interfaces;
@@ -17,6 +18,7 @@ public static class DependencyInjection
         services.AddScoped<ICommissionRequestRepository, CommissionRequestRepository>();
         services.AddScoped<ICommissionImagesRepository, CommissionImagesRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUserImageRepository, UserImageRepository>();
         services.AddScoped<IUserRoleRepository, UserRoleRepository>();
         services.AddScoped<IGenreRepository, GenreRepository>();
         services.AddScoped<IGenreService, GenreService>();
