@@ -28,17 +28,7 @@ export class ArtworkCommentSectionComponent implements OnInit {
         console.log("Trying to retrieve the latest comments for this artwork...")
         this.commentService.getComments(this.artwork?.id as number)
             .subscribe((response) => {
-
-                let tempArr = response as ArtworkComment[]
-                for (let i = 0; i < tempArr.length; i++) {
-                    let jsonComment = tempArr[i];
-                    let eachComment = {
-                        userId: jsonComment["userId"],
-                        artworkId: jsonComment["artworkId"],
-                        content: jsonComment["content"]
-                    }
-                    this.commentsData.push(eachComment)
-                }
+                this.commentsData = response as ArtworkComment[]
             }
             )
     }

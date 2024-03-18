@@ -1,4 +1,5 @@
 ﻿using ArtworkSharingPlatform.DataTransferLayer;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.Artwork;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response;
 using ArtworkSharingPlatform.Domain.Entities.Artworks;
 using ArtworkSharingPlatform.Domain.Helpers;
@@ -30,7 +31,7 @@ namespace ArtworkSharingPlatform.Application.Interfaces
         Task UpdateArtworkImage(ArtworkImageToAddDTO _artwork);
         Task ReportArtwork(ReportDTO _report);
         Task<int> GetArtworkRatingForUser(int userId, int artworkId);
-        Task<IEnumerable<ArtworkCommentDTO>> GetArtworkComments(int artworkId);
+        Task<IEnumerable<GetArtworkCommentDTO>> GetArtworkComments(int artworkId);
         Task<IEnumerable<PurchaseDTO>> ListPurchaseArtwork(int UserId);
         Task AddPurchase(PurchaseDTO purchaseDTO);
         Task<IEnumerable<PurchaseDTO>> ListHistoryPurchaseArtwork(int artworkId);

@@ -43,6 +43,8 @@ import { OrderConfirmationFailedComponent } from './components/checkout/order-co
 import { ChangeAvatarComponent } from './components/profile-edit/change-avatar/change-avatar.component';
 import { CommonModule } from '@angular/common';
 import { ArtworkCarouselComponent } from './components/home/artwork-carousel/artwork-carousel.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   declarations: [
@@ -88,7 +90,8 @@ import { ArtworkCarouselComponent } from './components/home/artwork-carousel/art
     MessageSentComponent,
     ArtworkMessageComponent,
     GalleryComponent,
-    CommonModule
+    CommonModule,
+    NgbModule,
   ],
   providers: [
     {

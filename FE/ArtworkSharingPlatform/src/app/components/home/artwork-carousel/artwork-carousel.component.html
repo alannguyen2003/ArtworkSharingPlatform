@@ -1,36 +1,50 @@
-<div id="artwork-carousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <div class="row">
-                <div *ngFor="let artwork of artworks" class="card mx-4 dark:bg-gray-900" style="width: 16.5rem;">
-                    <img class="card-img-top"
-                        src="https://i.pinimg.com/564x/5b/80/3a/5b803a8d8967ad5d295623f82066f1d1.jpg"
-                        alt="Card image cap" style="width: auto; height: 280px;">
-                    <div class="card-body">
-                        <h3 class="card-title font-bold" style="color:white">{{artwork.title}}</h3>
-                        <p class="card-text" style="color:white">{{artwork.description |truncate:10}}</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="#" class="mt-3 btn btn-primary" style="color:white">Go somewhere</a>
-                    </div>
+<ngb-carousel #carousel [interval]="3000" [pauseOnHover]="pauseOnHover" [pauseOnFocus]="pauseOnFocus"
+    (slide)="onSlide($event)" [showNavigationIndicators]="false" [style]="">
+    <ng-template ngbSlide>
+        <div class="row mx-3">
+            <div *ngFor="let artwork of artworks" class="card mx-3 col-span-12 dark:bg-gray-900"
+                style="width: 16.5rem;">
+                <img class="card-img-top" src="{{artwork.artworkImages[0].imageUrl}}" alt="Card image cap"
+                    style="width: 16.5rem; height: 200px;">
+                <div class="card-body">
+                    <h3 class="card-title font-bold" style="color:white">{{artwork.title}}</h3>
+                    <p class="card-text" style="color:white">{{artwork.description |truncate:15}}</p>
+                </div>
+                <div class="card-footer">
+                    <a href="/artwork/{{artwork.id}}" class="mt-3 btn btn-primary" style="color:white">View Details</a>
                 </div>
             </div>
         </div>
-        <div class="carousel-item">
+    </ng-template>
+    <ng-template ngbSlide>
+        <div class="row mx-3">
+            <div *ngFor="let artwork of artworks" class="card mx-3 dark:bg-gray-900" style="width: 16.5rem;">
+                <img class="card-img-top" src="{{artwork.artworkImages[0].imageUrl}}" alt="Card image cap"
+                    style="width: 16.5rem; height: 200px;">
+                <div class="card-body">
+                    <h3 class="card-title font-bold" style="color:white">{{artwork.title}}</h3>
+                    <p class="card-text" style="color:white">{{artwork.description |truncate:15}}</p>
+                </div>
+                <div class="card-footer">
+                    <a href="/artwork/{{artwork.id}}" class="mt-3 btn btn-primary" style="color:white">View Details</a>
+                </div>
+            </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
-</div>
+    </ng-template>
+</ngb-carousel>
 
-<script>
-    $("#artwork-carousel").on('slide.bs.carousel', function () {
-        alert("Next carousel is about to be shown!")
-    });
-</script>
+
+
+<button type="button" (click)="togglePaused()" class="btn btn-outline-dark btn-sm">
+    {{ paused ? "Cycle" : "Pause" }}
+</button>
+
+<style>
+    ::ng-deep .carousel-control-prev {
+        margin-left: -80px;
+    }
+
+    ::ng-deep .carousel-control-next {
+        margin-right: -60px;
+    }
+</style>
