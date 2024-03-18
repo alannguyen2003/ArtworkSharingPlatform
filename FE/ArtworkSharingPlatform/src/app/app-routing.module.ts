@@ -22,6 +22,7 @@ import {OrderConfirmationComponent} from "./components/checkout/order-confirmati
 import {
   OrderConfirmationFailedComponent
 } from "./components/checkout/order-confirmation-failed/order-confirmation-failed.component";
+import {ForgotPasswordComponent} from "./components/forgot-password/forgot-password.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -43,6 +44,7 @@ const routes: Routes = [
   {path: 'checkout', component: OrderConfirmationComponent},
   {path: 'checkout-fail', component: OrderConfirmationFailedComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'forgot-password', component: ForgotPasswordComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'test-error', component: TestErrorComponent},
   {path: 'server-error', component: ServerErrorComponent},

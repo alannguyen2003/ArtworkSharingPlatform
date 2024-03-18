@@ -44,6 +44,7 @@ import { ChangeAvatarComponent } from './components/profile-edit/change-avatar/c
 import { CommonModule } from '@angular/common';
 import { ArtworkCarouselComponent } from './components/home/artwork-carousel/artwork-carousel.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 
 @NgModule({
@@ -75,8 +76,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     OrderConfirmationComponent,
     OrderConfirmationFailedComponent,
     ChangeAvatarComponent,
-    ArtworkCarouselComponent
-
+    ArtworkCarouselComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,
