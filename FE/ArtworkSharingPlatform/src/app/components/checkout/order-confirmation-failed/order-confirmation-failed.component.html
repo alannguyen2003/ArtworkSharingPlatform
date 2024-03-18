@@ -1,1 +1,16 @@
-<p>order-confirmation-failed works!</p>
+<div class="container mx-auto p-6 min-h-screen flex items-center justify-center">
+  <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+    <div class="text-center">
+      <svg class="mx-auto mb-4 w-16 h-16 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      <h1 class="text-2xl font-bold text-red-500 mb-6">Order submission failed!</h1>
+    </div>
+    <div class="mb-4">
+      <p class="text-gray-600">We encountered a problem while processing your order. Please try again or contact customer support if the issue persists.</p>
+    </div>
+    <div class="text-center">
+      <a routerLink="/artist/pricing" class="inline-block text-white bg-red-500 hover:bg-red-600 font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300">
+        Try Again
+      </a>
+    </div>
+  </div>
+</div>

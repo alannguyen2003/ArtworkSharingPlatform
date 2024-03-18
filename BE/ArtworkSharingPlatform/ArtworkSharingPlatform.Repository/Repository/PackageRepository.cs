@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ArtworkSharingPlatform.Repository.Repository.Interfaces;
+using ArtworkSharingPlatform.Domain.Entities.Users;
 
 namespace ArtworkSharingPlatform.Repository.Repository
 {
@@ -139,5 +140,6 @@ namespace ArtworkSharingPlatform.Repository.Repository
             return false;
         }
 
-    }
+
+	}
 }
