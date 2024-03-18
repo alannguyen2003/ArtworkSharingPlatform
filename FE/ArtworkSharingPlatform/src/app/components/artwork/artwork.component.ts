@@ -42,6 +42,7 @@ export class ArtworkComponent implements OnInit{
       this.artworkService.setUserParams(this.userParams);
       this.artworkService.getArtworks(this.userParams).subscribe({
         next: response => {
+          console.log(response)
           if (response?.result && response.pagination) {
             this.artworks = response.result;
             this.pagination = response.pagination;

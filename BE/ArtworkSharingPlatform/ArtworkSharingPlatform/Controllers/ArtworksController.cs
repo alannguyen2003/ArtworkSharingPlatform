@@ -86,6 +86,7 @@ namespace ArtworkSharingHost.Controllers
         {
             artwork.CreatedDate = DateTime.UtcNow;
             artwork.OwnerId = User.GetUserId();
+            artwork.Status = 1;
             var flag = artwork.ArtworkImages.Any(x => x.IsThumbnail == true);
             if (!flag)
             {
