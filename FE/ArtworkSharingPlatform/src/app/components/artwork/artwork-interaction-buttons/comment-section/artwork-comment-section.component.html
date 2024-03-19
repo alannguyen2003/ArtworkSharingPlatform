@@ -1,0 +1,35 @@
+<div class="row d-flex justify-content-center mt-3">
+  <div class="col-md-8 col-lg-12 ">
+    <div class="card shadow-0 border bg-gray-900">
+      <div class="card-body  p-4">
+        <form (ngSubmit)="addComment()">
+          <div class="input-group mb-3">
+            <input type="text" name="commentInput" class="form-control" [(ngModel)]="commentInput"
+              placeholder="Share us your thoughts..." />
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="submit">
+                <i class="bi bi-send"></i>
+              </button>
+            </div>
+
+          </div>
+        </form>
+
+        <div class="overflow-auto" style="max-height:21rem;">
+          <div *ngFor="let commentData of commentsData" class="card mb-4">
+            <div class="card-body">
+              <p class="mb-4 lead font-bold">{{commentData.content}}</p>
+              <div class="d-flex justify-content-between">
+                <div class="d-flex flex-row align-items-center">
+                  <img class="rounded-full" src="{{commentData.avatarUrl}}" alt="avatar" width="50" height="50" />
+                  <p class="fs-4 mb-0 ms-2 display-6">{{commentData.userName}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

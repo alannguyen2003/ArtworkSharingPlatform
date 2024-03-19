@@ -1,18 +1,13 @@
 ﻿using ArtworkSharingPlatform.Domain.Entities.Artworks;
 using ArtworkSharingPlatform.Domain.Entities.Users;
-using ArtworkSharingPlatform.Domain.Helpers;
 using ArtworkSharingPlatform.Domain.Migrations;
 using ArtworkSharingPlatform.Repository.Interfaces;
+using ArtworkSharingPlatform.Repository.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ArtworkSharingPlatform.Repository.Repository
 {
-    public class ArtworkRepository : IArtworkRepository
+	public class ArtworkRepository : IArtworkRepository
     {
         private readonly ArtworkSharingPlatformDbContext _context;
         private readonly IUserRepository _userRepository;
@@ -114,6 +109,12 @@ namespace ArtworkSharingPlatform.Repository.Repository
 
                     await _context.SaveChangesAsync();
                 }
+            var user = _userRepository.GetById(artwork.OwnerId);
+            if (user != null)
+            {
+                user.RemainingCredit -= 1;
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task DeleteArtwork(int artworkId)
@@ -275,6 +276,82 @@ namespace ArtworkSharingPlatform.Repository.Repository
             
             return await _context.Comments.Where(x => x.ArtworkId == artworkId).ToListAsync();
         }
-        
+
+        public async Task<IEnumerable<Purchase>> ListBoughtArtwork(int buyUserId)
+        {
+            if (buyUserId == null)
+            {
+                return null;
+            }
+
+            return await _context.Purchases.Where(x => x.BuyUserId == buyUserId).ToListAsync();
+        }
+        public async Task<IEnumerable<Purchase>> ListSoldArtwork(int soldUserId)
+        {
+            if (soldUserId == null)
+            {
+                return null;
+            }
+
+            return await _context.Purchases.Where(x => x.SellUserId == soldUserId).ToListAsync();
+        }
+        public async Task AddPurchase(Purchase purchase)
+        {
+            var artwork = await _context.Artworks.Where(x => x.Id == purchase.ArtworkId)
+                .FirstOrDefaultAsync();
+            
+            if (purchase == null)
+            {
+                return ;
+            }
+            if (artwork == null)
+            {
+                return;
+            }
+
+            purchase.BuyPrice = artwork.Price;
+            await _context.Purchases.AddAsync(purchase);
+            await _context.SaveChangesAsync();
+            
+            
+            artwork.Status = 0;
+            await _context.SaveChangesAsync();
+        }
+        public async Task<bool> CreditAvailable (int userId)
+        {
+            if (userId == 0 && userId == null) { return false; }
+            var user = await _context.Users.Where(x => x.Id == userId)
+                .FirstOrDefaultAsync();
+            if (user.RemainingCredit >= 1)
+            {
+                user.RemainingCredit -= 1;
+                return true;
+            }
+            return false;
+        }
+        public async Task ActiveArtworkStatus(int artworkId, int userId)
+        {
+            if (artworkId == null && artworkId ==0 && userId==0)
+            {
+                return;
+            }
+
+            var user = await _context.Users.Where(x => x.Id == userId)
+                .FirstOrDefaultAsync();
+            var artwork = await _context.Artworks.Where(x => x.Id == artworkId)
+                .FirstOrDefaultAsync();
+            if (user == null && artwork == null) { return; }
+                artwork.Status = 1;
+                await _context.SaveChangesAsync();
+        }
+        public async Task<IEnumerable<Purchase>> ListHistoryPurchaseArtwork (int artworkId)
+        {
+            if (artworkId == null && artworkId == 0)
+            {
+                return null;
+            }
+
+            return await _context.Purchases.Where(x => x.ArtworkId == artworkId).Include(x => x.Artwork).ToListAsync();
+        }
     }
 }

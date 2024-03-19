@@ -3,6 +3,7 @@ import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {UserProfile} from "../_model/userProfile.model";
 import {User} from "../_model/user.model";
+import {UserImage} from "../_model/userImage.model";
 
 @Injectable({
   providedIn: 'root'
@@ -19,5 +20,21 @@ export class UserService {
 
   folowUser(email: string) {
     return this.http.post(this.baseUrl + 'artworks/follow/' + email, {});
+  }
+  deleteImageDuringChangeAvatar(userImage: UserImage) {
+    return this.http.delete(this.baseUrl + 'image/user-image', {
+      body: userImage
+    });
+  }
+
+  changeAvatar(userImage: UserImage) {
+    return this.http.put(this.baseUrl+ 'user/change-avatar', userImage);
+  }
+
+  forgotPassword(email: string) {
+    return this.http.post(this.baseUrl + 'auth/forgotpassword/' + email, {});
+  }
+  resetPassword(model: any) {
+    return this.http.post(this.baseUrl + 'auth/resetPassword', model);
   }
 }

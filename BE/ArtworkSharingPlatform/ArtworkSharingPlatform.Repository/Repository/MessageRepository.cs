@@ -1,6 +1,6 @@
 ﻿using ArtworkSharingPlatform.Domain.Entities.Messages;
 using ArtworkSharingPlatform.Domain.Migrations;
-using ArtworkSharingPlatform.Repository.Interfaces;
+using ArtworkSharingPlatform.Repository.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace ArtworkSharingPlatform.Repository.Repository

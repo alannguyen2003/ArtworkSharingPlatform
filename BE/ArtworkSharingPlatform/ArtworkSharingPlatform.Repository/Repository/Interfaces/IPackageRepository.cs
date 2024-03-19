@@ -1,6 +1,6 @@
 ﻿using ArtworkSharingPlatform.Domain.Entities.PackagesInfo;
 
-namespace ArtworkSharingPlatform.Repository.Interfaces
+namespace ArtworkSharingPlatform.Repository.Repository.Interfaces
 {
     public interface IPackageRepository
     {
@@ -10,5 +10,7 @@ namespace ArtworkSharingPlatform.Repository.Interfaces
         Task DeletePackage(int id);
         Task<List<PackageBilling>> GetAllPackageBilling();
         Task<PackageBilling> GetBillingById(int id);
+        Task<decimal> GetTotalPackageBillingAmount();
+        Task<bool> UserBuyPackage(int userId, int packageId);
     }
 }

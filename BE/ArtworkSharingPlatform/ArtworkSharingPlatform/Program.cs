@@ -1,4 +1,6 @@
 using ArtworkSharingHost.CloudinaryService;
+using ArtworkSharingHost.EmailService;
+using ArtworkSharingHost.EmailService.Settings;
 using ArtworkSharingHost.Middleware;
 using ArtworkSharingHost.SignalR;
 using ArtworkSharingPlatform.Application.Interfaces;
@@ -10,11 +12,16 @@ using ArtworkSharingPlatform.Infrastructure;
 using ArtworkSharingPlatform.Infrastructure.Configuration;
 using ArtworkSharingPlatform.Repository.Interfaces;
 using ArtworkSharingPlatform.Repository.Repository;
+using ArtworkSharingPlatform.Repository.Repository.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using ArtworkSharingHost.StripePaymentService;
+using ArtworkSharingHost.StripePaymentService.Interfaces;
+using Stripe;
+using ArtworkSharingHost.StripePaymentService.Settings;
 
 //const string artworkSharingPlatformCors = "_artworkSharingPlatformCors";
 var builder = WebApplication.CreateBuilder(args);
@@ -86,6 +93,8 @@ builder.Services.AddAuthentication(options =>
 //});
 builder.Services.AddSignalR();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.Configure<SendInBlue>(builder.Configuration.GetSection("SendInBlue"));
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 builder.Services.AddScoped<IAuthService, AuthService>();
@@ -94,7 +103,8 @@ builder.Services.AddScoped<IReportRepository, ReportRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IReportService, ReportService>();
-
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -109,6 +119,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
 app.UseHttpsRedirection();
 app.UseCors(builder => builder
 .AllowAnyHeader()
@@ -134,7 +145,10 @@ try
     await Seed.SeedArtwork(context);
     await Seed.SeedCommissionStatus(context);
     await Seed.SeedPackageInformation(context);
+    await Seed.SeedTransaction(context);
     await Seed.SeedPackage(context);
+    await Seed.SeedConfigManager(context);
+
 }
 catch (Exception ex)
 {

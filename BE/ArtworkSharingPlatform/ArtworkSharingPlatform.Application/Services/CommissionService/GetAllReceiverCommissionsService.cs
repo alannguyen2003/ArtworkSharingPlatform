@@ -4,7 +4,7 @@ using ArtworkSharingPlatform.Domain.Common.Constants;
 using ArtworkSharingPlatform.Domain.Entities.Artworks;
 using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Domain.Entities.Users;
-using ArtworkSharingPlatform.Repository.Interfaces;
+using ArtworkSharingPlatform.Repository.Repository.Interfaces;
 using AutoMapper;
 
 namespace ArtworkSharingPlatform.Application.Services.CommissionService;

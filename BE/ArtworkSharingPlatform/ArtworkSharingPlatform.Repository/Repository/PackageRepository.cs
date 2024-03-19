@@ -1,12 +1,13 @@
 ﻿using ArtworkSharingPlatform.Domain.Entities.PackagesInfo;
 using ArtworkSharingPlatform.Domain.Migrations;
-using ArtworkSharingPlatform.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ArtworkSharingPlatform.Repository.Repository.Interfaces;
+using ArtworkSharingPlatform.Domain.Entities.Users;
 
 namespace ArtworkSharingPlatform.Repository.Repository
 {
@@ -22,7 +23,9 @@ namespace ArtworkSharingPlatform.Repository.Repository
             List<PackageInformation> packages = null;
             try
             {
-                packages = await _dbContext.PackageInformation.ToListAsync();
+                packages = await _dbContext.PackageInformation
+                    .Where(package => package.Status == 1)
+                    .ToListAsync();
             }
             catch (Exception ex)
             {
@@ -104,5 +107,39 @@ namespace ArtworkSharingPlatform.Repository.Repository
             }
             return billing;
         }
-    }
+
+        public async Task<decimal> GetTotalPackageBillingAmount()
+        {
+            decimal totalAmount = 0;
+            try
+            {
+                totalAmount = await _dbContext.PackageBilling
+                                    .Select(pb => pb.TotalPrice)
+                                    .SumAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return totalAmount;
+        }
+
+        public async Task<bool> UserBuyPackage(int userId, int packageId)
+        {
+            if (userId == 0 && packageId == 0) { return false; }
+            var user = _dbContext.Users.Where(x => x.Id == userId).FirstOrDefault();
+            var package = _dbContext.PackageInformation.Where(x => x.Id == packageId).FirstOrDefault();
+            
+            if (user  != null && package != null) 
+            {
+                user.RemainingCredit += package.Credit;
+                user.PackageId = packageId;
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+
+
+	}
 }

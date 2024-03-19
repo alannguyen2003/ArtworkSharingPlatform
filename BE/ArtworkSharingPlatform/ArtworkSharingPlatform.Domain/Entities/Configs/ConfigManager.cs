@@ -23,4 +23,5 @@ public class ConfigManager : BaseEntity
     public string? CompanyEmail { get; set; }
     public User? Administrator { get; set; }
     public ICollection<PackageInformation>? PackageConfigs { get; set; }
+    public int AdministratorId { get; set; }
 }

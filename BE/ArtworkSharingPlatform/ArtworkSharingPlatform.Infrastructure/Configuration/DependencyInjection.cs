@@ -1,12 +1,11 @@
 ﻿using ArtworkSharingPlatform.Application.Interfaces;
 using ArtworkSharingPlatform.Application.Services;
 using ArtworkSharingPlatform.Application.Services.CommissionService;
-using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Domain.Entities.Users;
 using ArtworkSharingPlatform.Repository.Interfaces;
 using ArtworkSharingPlatform.Repository.Repository;
+using ArtworkSharingPlatform.Repository.Repository.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Identity.Client;
 
 namespace ArtworkSharingPlatform.Infrastructure.Configuration;
 
@@ -19,6 +18,7 @@ public static class DependencyInjection
         services.AddScoped<ICommissionRequestRepository, CommissionRequestRepository>();
         services.AddScoped<ICommissionImagesRepository, CommissionImagesRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUserImageRepository, UserImageRepository>();
         services.AddScoped<IUserRoleRepository, UserRoleRepository>();
         services.AddScoped<IGenreRepository, GenreRepository>();
         services.AddScoped<IGenreService, GenreService>();
@@ -32,6 +32,10 @@ public static class DependencyInjection
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<ITransactionRepository, TransactionRepository>();
+        services.AddScoped<ITransactionService, TransactionService>();
+        services.AddScoped<IConfigRepository, ConfigRepository>();
+        services.AddScoped<IConfigService, ConfigService>();
         return services;
     }
 }

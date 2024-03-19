@@ -1,12 +1,12 @@
 ﻿using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Domain.Migrations;
-using ArtworkSharingPlatform.Repository.Interfaces;
+using ArtworkSharingPlatform.Repository.Repository.Interfaces;
 
 namespace ArtworkSharingPlatform.Repository.Repository;
 
 public class CommissionImagesRepository : ICommissionImagesRepository
 {
-    public ArtworkSharingPlatformDbContext _dbContext;
+    private readonly ArtworkSharingPlatformDbContext _dbContext;
 
     public CommissionImagesRepository(ArtworkSharingPlatformDbContext dbContext)
     {

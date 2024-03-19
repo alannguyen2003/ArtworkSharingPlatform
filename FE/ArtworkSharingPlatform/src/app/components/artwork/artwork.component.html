@@ -1,71 +1,94 @@
-<section class="py-20 dark:bg-gray-800 dark:text-gray-100">
-  <form #filterForm="ngForm" (ngSubmit)="loadArtworks()" autocomplete="off" class="container flex flex-col mx-auto space-y-12" *ngIf="userParams">
-    <fieldset class="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm dark:bg-gray-900">
-      <div class="space-y-2 col-span-full lg:col-span-1">
-        <p class="text-3xl font-medium">Filtering</p>
-      </div>
-      <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
-        <div class="col-span-full sm:col-span-3">
-          <label class="text-sm">Min Price</label>
-          <input
-            type="number"
-            placeholder="Min Price"
-            name="minPrice"
-            [(ngModel)]="userParams.minPrice"
-            #minPrice="ngModel"
-            class="w-full rounded-md h-2/3 focus:ring focus:ri focus:ri dark:border-gray-700 dark:text-gray-900">
-        </div>
-        <div class="col-span-full sm:col-span-3">
-          <label class="text-sm">Max Price</label>
-          <input
-            type="text"
-            placeholder="Max Price"
-            name="maxPrice"
-            [(ngModel)]="userParams.maxPrice"
-            #maxPrice="ngModel"
-            class="w-full h-2/3 rounded-md focus:ring focus:ri focus:ri dark:border-gray-700 dark:text-gray-900">
-        </div>
-        <div class="col-span-full">
-          <label class="text-sm">Price Order</label>
-          <select
-            name="orderBy"
-            [(ngModel)]="userParams.orderBy"
-            class="w-full h-2/3 rounded-md focus:ring focus:ri focus:ri dark:border-gray-700 dark:text-gray-900"
-          >
-            <option *ngFor="let orderPrice of orderPriceList" [value]="orderPrice.value">
-                {{orderPrice.display}}
-            </option>
-          </select>
-        </div>
-        <div class="col-span-full">
-          <div class="flex items-center space-x-2">
-            <button type="submit" class="px-4 py-2 border rounded-md dark:border-gray-100">Apply</button>
+<section class="dark:bg-gray-800 dark:text-gray-100">
+  <form #filterForm="ngForm" (ngSubmit)="loadArtworks()" autocomplete="off" class=" flex flex-col mx-0 space-y-12"
+    *ngIf="userParams">
+    <fieldset class="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm dark:bg-gray-950">
+      <div class="space-y-2 col-span-full lg:col-span-12">
+        <div class="row">
+          <!--Search bar-->
+          <p class="text-3xl font-medium col-3 pl-16">Artworks</p>
+          <div class="input-group col-3 w-3/5 rounded p-0">
+            <div
+              class="rounded-lg absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none input-group-addon border-0">
+
+              <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M3 5v10M3 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0V6a3 3 0 0 0-3-3H9m1.5-2-2 2 2 2" />
+              </svg>
+            </div>
+            <input type="text" name="search" id="search" [(ngModel)]="userParams.search"
+              class=" rounded form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 
+               dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search by title"
+              style="font-size: 1.2rem;" />
+            <div class="input-group-append h-auto">
+              <button class="btn btn-outline-primary" type="submit" style="font-size: 1.2rem;">Search</button>
+            </div>
           </div>
+
+          <!--Price Filter dropdown-->
+          <div ngbDropdown class="dropdown col-1">
+            <button class="btn btn-secondary" id="priceFilterDropdown" ngbDropdownToggle>Price Filter</button>
+            <div ngbDropdownMenu aria-labelledby="priceFilterDropdown">
+              <!-- Filter Order -->
+              <select name="orderBy" [(ngModel)]="userParams.orderBy"
+                class="form-control w-full h-2/3 rounded-md focus:ring focus:ri focus:ri border-0 dark:text-gray-900">
+                <option *ngFor="let orderPrice of orderPriceList" [value]="orderPrice.value">
+                  {{orderPrice.display}}
+                </option>
+              </select>
+              <div class="dropdown-divider"></div>
+              <!-- Price Range -->
+              <div class="px-4 py-3">
+                <div class="mb-3">
+                  <label for="minPrice" class="form-label">Min Price</label>
+                  <input type="number" placeholder="Min Price" name="minPrice" [(ngModel)]="userParams.minPrice"
+                    #minPrice="ngModel">
+                </div>
+                <div class="mb-3">
+                  <label for="maxPrice" class="form-label">Max Price</label>
+                  <input type="number" placeholder="Max Price" name="maxPrice" [(ngModel)]="userParams.maxPrice"
+                    #maxPrice="ngModel">
+                </div>
+                <button type="submit" class="btn btn-primary text-blue-950">Apply</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="lg:col-span-12">
+        <div class="flex flex-wrap items-start justify-center mt-3 px-0">
+          <a *ngFor="let genre of genres" style="cursor:pointer;" (click)="onGenreSelected(genre.id)"
+            [class.is-selected]="isSelectedGenre(genre.id)" class="flex pt-2 align-middle justify-center 
+                          mx-3 my-1 text-sm rounded-md shadow-sm sm:py-2 w-48 h-10
+                          sm:text-base ring ring-transparent group md:px-3 hover:ring hover:ring-opacity-50 
+                          focus:ring-opacity-50 hover:ring-blue-400 text-gray-50 bg-gray-600 no-underline">
+            <span style="font-size: 1.2rem;">
+              {{genre.name}}
+            </span>
+          </a>
         </div>
       </div>
     </fieldset>
   </form>
   <div class="container-fluid p-0 m-0" *ngIf="artworks.length > 0">
     <div class="row w-full justify-content-center">
-      <div class="flex col-3 max-w-lg p-6 space-y-6 overflow-hidden rounded-lg shadow-md dark:bg-gray-900 dark:text-gray-100 m-2" *ngFor="let artwork of artworks">
+      <div
+        class="flex col-3 max-w-lg p-6 space-y-6 overflow-hidden rounded-lg shadow-md dark:bg-gray-900 dark:text-gray-100 m-2"
+        *ngFor="let artwork of artworks">
         <app-artwork-card [artwork]="artwork"></app-artwork-card>
       </div>
-      </div>
+    </div>
   </div>
   <div *ngIf="artworks.length <= 0">
     <p>Artworks not found!</p>
   </div>
   <div class="d-flex justify-content-center" *ngIf="pagination">
-    <pagination [boundaryLinks]="true"
-                [totalItems]="pagination.totalItems"
-                [itemsPerPage]="pagination.itemsPerPage"
-                [maxSize]="10"
-                [(ngModel)]="pagination.currentPage"
-                (pageChanged)="pageChanged($event)"
-                previousText="&lsaquo;"
-                nextText="&rsaquo;"
-                firstText="&laquo;"
-                lastText="&raquo;">
+    <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
+      [maxSize]="10" [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+      nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
     </pagination>
   </div>
 </section>

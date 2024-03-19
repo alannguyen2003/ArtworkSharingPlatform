@@ -1,7 +1,6 @@
 ﻿using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
 using ArtworkSharingPlatform.Domain.Entities.Users;
 using ArtworkSharingPlatform.Domain.Migrations;
-using ArtworkSharingPlatform.Repository.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,6 +9,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using ArtworkSharingPlatform.Repository.Repository.Interfaces;
 
 namespace ArtworkSharingPlatform.Repository.Repository
 {
@@ -19,7 +19,9 @@ namespace ArtworkSharingPlatform.Repository.Repository
         private readonly UserManager<User> _userManager;
 
 
-        public UserRepository(ArtworkSharingPlatformDbContext context, UserManager<User> userManager)
+        public UserRepository(
+            ArtworkSharingPlatformDbContext context, 
+            UserManager<User> userManager)
         {
             _dbContext = context;
             _userManager = userManager;
@@ -185,6 +187,8 @@ namespace ArtworkSharingPlatform.Repository.Repository
                     u.Email = user.Email;
                     u.PhoneNumber = user.PhoneNumber;
                     u.Description = user.Description;
+                    u.TwitterLink = user.TwitterLink;
+                    u.FacebookLink = user.FacebookLink;
                     await _userManager.UpdateAsync(u);
                 }
                 else
@@ -203,5 +207,23 @@ namespace ArtworkSharingPlatform.Repository.Repository
             var user = await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == phone);
             return user != null;
         }
+
+        public async Task<UserImage> GetUserCurrentAvatar(int userId)
+        {
+            return await _dbContext.UserImages.SingleOrDefaultAsync(x => x.UserId == userId);
+        }
+        
+		public async Task ChangeAvatar(UserImage image)
+		{
+            var currentAvatar = await _dbContext.UserImages.SingleOrDefaultAsync(x => x.UserId == image.UserId);
+            if (currentAvatar != null)
+            {
+                _dbContext.Remove(currentAvatar);
+                await _dbContext.SaveChangesAsync();
+            }
+            
+            _dbContext.Add(image);
+            await _dbContext.SaveChangesAsync();
+		}
 	}
 }

@@ -3,7 +3,6 @@ using ArtworkSharingPlatform.DataTransferLayer;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response;
 using ArtworkSharingPlatform.Domain.Entities.Users;
-using ArtworkSharingPlatform.Repository.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ArtworkSharingPlatform.Repository.Repository.Interfaces;
 
 namespace ArtworkSharingPlatform.Application.Services
 {
@@ -77,6 +77,24 @@ namespace ArtworkSharingPlatform.Application.Services
 		public async Task<UserProfileDTO> GetArtistProfileByEmail(string email)
 		{
             return await _userRepository.GetAll().Where(x => x.Email == email).ProjectTo<UserProfileDTO>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
+		}
+
+		public Task<UserProfileDTO> GetUserProfile(string email)
+		{
+            var query = _userRepository.GetAll();
+            var result = query.ProjectTo<UserProfileDTO>(_mapper.ConfigurationProvider).SingleOrDefaultAsync(x => x.Email == email);
+            return result;
+		}
+
+		public async Task<UserImageDTO> GetCurrentUserAvatar(int userId)
+		{
+            var image = await _userRepository.GetUserCurrentAvatar(userId);
+            return _mapper.Map<UserImageDTO>(image); 
+		}
+
+		public async Task ChangeAvatar(UserImageDTO imageDto)
+		{
+            await _userRepository.ChangeAvatar(_mapper.Map<UserImage>(imageDto));
 		}
 	}
 }

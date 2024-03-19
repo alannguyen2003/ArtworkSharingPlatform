@@ -1,7 +1,6 @@
 ﻿using ArtworkSharingPlatform.Application.Interfaces;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response;
 using ArtworkSharingPlatform.Domain.Entities.PackagesInfo;
-using ArtworkSharingPlatform.Repository.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ArtworkSharingPlatform.Repository.Repository.Interfaces;
 
 namespace ArtworkSharingPlatform.Application.Services
 {
@@ -29,6 +29,11 @@ namespace ArtworkSharingPlatform.Application.Services
             var list = packages.AsQueryable();
             return list.ProjectTo<PackageInformationDTO>(_mapper.ConfigurationProvider).ToList();
         }
+        public async Task<PackageInformationDTO> GetPackageById(int id)
+        {
+            var package = await _packageRepository.GetPackageById(id);
+            return _mapper.Map<PackageInformationDTO>(package);
+        }
         public async Task UpdatePackage(PackageInformation packageInformation)
         {
             await _packageRepository.UpdatePackage(packageInformation);
@@ -46,10 +51,22 @@ namespace ArtworkSharingPlatform.Application.Services
             return list.ProjectTo<PackageBillingDTO>(_mapper.ConfigurationProvider).ToList();
         }
 
-        public async Task<PackageBillingDTO> GetPackageById(int id)
+        public async Task<PackageBillingDTO> GetPackageBillingById(int id)
         {
             var billing = await _packageRepository.GetBillingById(id);
             return _mapper.Map<PackageBillingDTO>(billing);
         }
-    }
+
+        public async Task<decimal> GetTotalMoneyOfBilling()
+        {
+            return await _packageRepository.GetTotalPackageBillingAmount();
+        }
+        public async Task<bool> UserBuyPackage(int userId, int packageId)
+        {
+            return await _packageRepository.UserBuyPackage(userId, packageId);
+        }
+
+
+
+	}
 }

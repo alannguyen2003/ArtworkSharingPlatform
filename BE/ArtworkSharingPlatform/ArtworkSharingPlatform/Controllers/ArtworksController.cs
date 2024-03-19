@@ -2,6 +2,7 @@
 using ArtworkSharingHost.Extensions;
 using ArtworkSharingPlatform.Application.Interfaces;
 using ArtworkSharingPlatform.DataTransferLayer;
+using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.Artwork;
 using ArtworkSharingPlatform.Domain.Entities.Users;
 using ArtworkSharingPlatform.Domain.Helpers;
 using Microsoft.AspNetCore.Mvc;
@@ -25,12 +26,30 @@ namespace ArtworkSharingHost.Controllers
         public async Task<ActionResult<PagedList<ArtworkDTO>>> GetArtworks([FromQuery] UserParams userParams)
         {
             var currentUserId = User.GetUserId();
-            //var currentUserId = 7;
-            userParams.CurrentUserId = currentUserId;
+			string genreIds = Request.Query["genres"]; 
+            if(!string.IsNullOrEmpty(genreIds))
+            {
+                try
+                {
+					int[] genreIdsArray = genreIds?.Split(',').Select(int.Parse).ToArray();
+                    userParams.GenreIds = genreIdsArray;
+				}
+                catch (Exception ex)
+                {
+                    return BadRequest("Invalid genres");
+                }
+                
+			}
+			userParams.CurrentUserId = currentUserId;
 
             if (userParams.MinPrice > userParams.MaxPrice)
             {
                 return BadRequest("Minimum price cannot exceed maximum price");
+            }
+
+            if (userParams.MinPrice < 0 || userParams.MaxPrice< 0)
+            {
+                return BadRequest("Minimum price or Maximum Price must not be below 0.");
             }
 
             var artworks = await _artworkService.GetArtworksAsync(userParams);
@@ -42,6 +61,14 @@ namespace ArtworkSharingHost.Controllers
             return Ok(artworks);
         }
 
+        [HttpGet("genre")]
+        public async Task<ActionResult<List<ArtworkDTO>>> GetArtworksByGenre([FromQuery] ArtworkByGenreRequestDTO requestDto)
+        {
+            var artworks = await _artworkService.GetArtworksByGenre(requestDto.GenreId);
+            var paginatedArtworks = artworks.Skip((requestDto.PageNumber - 1) * requestDto.PageSize)
+                .Take(requestDto.PageSize).ToList();
+            return Ok(paginatedArtworks);
+        }
         [HttpGet("{id}")]
         public async Task<ActionResult<ArtworkDTO>> GetArtwork(int id)
         {
@@ -64,6 +91,7 @@ namespace ArtworkSharingHost.Controllers
         {
             artwork.CreatedDate = DateTime.UtcNow;
             artwork.OwnerId = User.GetUserId();
+            artwork.Status = 1;
             var flag = artwork.ArtworkImages.Any(x => x.IsThumbnail == true);
             if (!flag)
             {
@@ -197,6 +225,35 @@ namespace ArtworkSharingHost.Controllers
             reportDTO.ReporterId = User.GetUserId();
             reportDTO.CreatedDate = DateTime.UtcNow;
             await _artworkService.ReportArtwork(reportDTO);
+            return Ok();
+        }
+        [HttpGet("GetListBoughtArtwork")]
+        public async Task<IActionResult> GetListBoughtArtwork()
+        {
+            var result = await _artworkService.ListPurchaseArtwork(User.GetUserId());
+            return Ok(result);
+        }
+        [HttpGet("GetListHistoryPurchaseArtwork/{artworkId}")]
+        public async Task<IActionResult> GetListHistoryPurchaseArtwork(int artworkId)
+        {
+            var userId = User.GetUserId();
+            var result = await _artworkService.ListHistoryPurchaseArtwork(artworkId);
+            return Ok(result);
+        }
+        [HttpPost("buy-artwork/{buyUserId}")]
+        public async Task<IActionResult> BuyArtwork([FromBody] PurchaseDTO purchaseDTO, int buyUserId)
+        {
+            purchaseDTO.SellUserId = User.GetUserId();
+            purchaseDTO.BuyUserId = buyUserId;
+            purchaseDTO.BuyDate = DateTime.UtcNow;
+            await _artworkService.AddPurchase(purchaseDTO);
+            return Ok();
+        }
+        [HttpPut("active-artwork/{artworkId}")]
+        public async Task<IActionResult> ActiveArtwork(int artworkId)
+        {
+            var userId = User.GetUserId();
+            await _artworkService.ActiveArtworkStatus(artworkId, userId);
             return Ok();
         }
     }

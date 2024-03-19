@@ -1,0 +1,45 @@
+<ng-container *ngIf="artworkChunks.length > 0">
+    <ngb-carousel #carousel [interval]="3000" [pauseOnHover]="pauseOnHover" [pauseOnFocus]="pauseOnFocus"
+        (slide)="onSlide($event)" [showNavigationIndicators]="false" [style]="">
+        <ng-template ngbSlide *ngFor="let chunk of artworkChunks">
+
+            <div class="row mx-3">
+                <div *ngFor="let artwork of chunk" class="card mx-3 col-span-12 dark:bg-gray-900"
+                    style="width: 16.5rem;">
+                    <img class="card-img-top" src="{{artwork.artworkImages[0].imageUrl}}" alt="Card image cap"
+                        style="width: 16.5rem; height: 200px;">
+                    <div class="card-body">
+                        <h3 class="card-title font-bold" style="color:white">{{artwork.title}}</h3>
+                        <p class="card-text" style="color:white">{{artwork.description |truncate:15}}</p>
+                    </div>
+                    <div class="card-footer">
+                        <div *ngIf="user;else no_user_is_logged_in">
+                            <a href="/artwork/{{artwork.id}}" class="mt-3 btn btn-primary" style="color:white">View
+                                Details</a>
+                        </div>
+                        <ng-template #no_user_is_logged_in>
+                            <a href="/login" class="mt-3 btn btn-primary" style="color:white">View
+                                Details</a>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </ngb-carousel>
+
+
+
+    <button type="button" (click)="togglePaused()" class="btn btn-outline-dark btn-sm">
+        {{ paused ? "Cycle" : "Pause" }}
+    </button>
+
+    <style>
+        ::ng-deep .carousel-control-prev {
+            margin-left: -80px;
+        }
+
+        ::ng-deep .carousel-control-next {
+            margin-right: -60px;
+        }
+    </style>
+</ng-container>

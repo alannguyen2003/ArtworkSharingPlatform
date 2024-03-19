@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Domain.Entities.PackagesInfo;
+using ArtworkSharingPlatform.Domain.Entities.Transactions;
+using ArtworkSharingPlatform.Domain.Entities.Configs;
 
 namespace ArtworkSharingPlatform.Infrastructure
 {
@@ -21,8 +23,17 @@ namespace ArtworkSharingPlatform.Infrastructure
             {
                 new Genre {Name = "Landscape"},
                 new Genre {Name = "Portrait"},
-                new Genre {Name = "Anime"},
-                new Genre {Name = "Fiction"}
+                new Genre {Name = "Sculpture"},
+                new Genre {Name = "Illustration"},
+                new Genre {Name = "Textile Art"},
+                new Genre {Name = "Wood Sculpture"},
+                new Genre {Name = "Expressionism"},
+                new Genre {Name = "Abstract Art"},
+                new Genre {Name = "Surrealism"},
+                new Genre {Name = "Realism Art"},
+                new Genre {Name = "Animal Art"},
+                new Genre {Name = "History Painting"}
+
             };
             foreach (var genre in genres)
             {
@@ -85,7 +96,7 @@ namespace ArtworkSharingPlatform.Infrastructure
             };
 
             var resultAdmin = await userManager.CreateAsync(admin, "Pa$$w0rd");
-            await userManager.AddToRolesAsync(admin, new[] {"Admin", "Artist", "Audience"});
+            await userManager.AddToRolesAsync(admin, new[] { "Admin", "Artist", "Audience" });
 
             var manager = new User
             {
@@ -114,7 +125,7 @@ namespace ArtworkSharingPlatform.Infrastructure
                 }
             };
             await userManager.CreateAsync(artist, "Pa$$w0rd");
-            await userManager.AddToRolesAsync(artist, new[] {"Artist", "Audience" });
+            await userManager.AddToRolesAsync(artist, new[] { "Artist", "Audience" });
         }
 
         public static async Task SeedCommissionStatus(ArtworkSharingPlatformDbContext context)
@@ -135,37 +146,6 @@ namespace ArtworkSharingPlatform.Infrastructure
         }
         public static async Task SeedPackage(ArtworkSharingPlatformDbContext context)
         {
-
-            /*if (await context.PackageInformation.AnyAsync())
-            {
-                return;
-            }
-            //Status Package: "Active", "Inactive", "Draft", "Deleted", "Modifying"
-            var packInfos = new List<PackageInformation>
-            {
-                new PackageInformation
-                {
-                    Credit = 100,
-                    Price = 100,
-                    Status = 1,
-                    ConfigManagers = null,
-                    PackageBillings = null
-                },
-                new PackageInformation
-                {
-                    Credit = 100,
-                    Price = 100,
-                    Status = 0,
-                    ConfigManagers = null,
-                    PackageBillings = null
-                }
-            };
-            foreach (var packInfo in packInfos)
-            {
-                await context.PackageInformation.AddAsync(packInfo);
-            }*/
-
-
             if (await context.PackageBilling.AnyAsync())
             {
                 return;
@@ -178,17 +158,23 @@ namespace ArtworkSharingPlatform.Infrastructure
                 await context.PackageBilling.AddAsync(pack);
             }
             await context.SaveChangesAsync();
+        }
+
+
+        public static async Task SeedTransaction(ArtworkSharingPlatformDbContext context)
+        {
             if (await context.Transactions.AnyAsync())
             {
                 return;
             }
             var transaction = await File.ReadAllTextAsync("../ArtworkSharingPlatform.Infrastructure/TransationSeed.json");
-            var _jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            var trans = JsonSerializer.Deserialize<List<PackageBilling>>(transaction, jsonOptions);
+            var jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var trans = JsonSerializer.Deserialize<List<Transaction>>(transaction, jsonOptions);
             foreach (var tran in trans)
             {
-                await context.PackageBilling.AddAsync(tran);
+                await context.Transactions.AddAsync(tran);
             }
+            await context.SaveChangesAsync();
         }
 
         public static async Task SeedPackageInformation(ArtworkSharingPlatformDbContext context)
@@ -199,30 +185,56 @@ namespace ArtworkSharingPlatform.Infrastructure
                 new PackageInformation
                 {
                     Name = "Basic",
-                    Credit = 5,
-                    Price = 20000,
+                    Credit = 3,
+                    Price = 50000,
                     Status = 1
                 },
                 new PackageInformation
                 {
                     Name = "Advance",
-                    Credit = 15,
-                    Price = 60000,
+                    Credit = 12,
+                    Price = 100000,
                     Status = 1
                 },
                 new PackageInformation
                 {
                     Name = "Super",
                     Credit = 25,
-                    Price = 100000,
+                    Price = 200000,
                     Status = 1
                 }
             };
-            foreach(var packageInformation in package)
+            foreach (var packageInformation in package)
             {
                 await context.PackageInformation.AddAsync(packageInformation);
             }
             await context.SaveChangesAsync();
+        }
+
+        public static async Task SeedConfigManager(ArtworkSharingPlatformDbContext context)
+        {
+            if(await context.ConfigManagers.AnyAsync()) { return; }
+            var config = new ConfigManager
+            {
+                ConfigDate = DateTime.Now,
+                IsServicePackageConfig = true,
+                IsPhysicalImageConfig = true,
+                MaxReleaseCount = 10,
+                IsGeneralConfig = true,
+                LogoUrl = "",
+                MyPhoneNumber = "1234567893",
+                Address = "FPTU",
+                IsPagingConfig = true,
+                TotalItemPerPage = 10,
+                RowSize = 5,
+                IsAdvertisementConfig = true,
+                CompanyName = "FPTU",
+                CompanyPhoneNumber = "0999992123",
+                CompanyEmail = "fptu@fpt.edu.vn",
+                Administrator = context.Users.FirstOrDefault(u => u.Id == 11)
+            };
+            await context.ConfigManagers.AddAsync(config);
+            await context.SaveChangesAsync();   
         }
     }
 }
