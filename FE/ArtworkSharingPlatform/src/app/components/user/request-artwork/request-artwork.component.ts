@@ -54,7 +54,7 @@ export class RequestArtworkComponent {
         console.log(this.userProfile)
       }
     });
-    this.userService.getUserWithEmail()
+    // this.userService.getUserWithEmail()
   }
   request() {
     this.requestArtwork.genreId = this.genreSelected;

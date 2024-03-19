@@ -12,15 +12,15 @@ namespace ArtworkSharingHost.Controllers
 		private readonly IGenreService _genreService;
 
 		public GenreController(IGenreService genreService)
-        {
+		{
 			_genreService = genreService;
 		}
-		
+
 		[HttpGet]
-    [Authorize]
-    public async Task<IActionResult> GetAll()
+		[Authorize]
+		public async Task<IActionResult> GetAll()
 		{
 			return Ok(await _genreService.GetAll());
 		}
-   }
+	}
 }
