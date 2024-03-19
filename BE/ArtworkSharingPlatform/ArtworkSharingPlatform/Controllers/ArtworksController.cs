@@ -25,7 +25,6 @@ namespace ArtworkSharingHost.Controllers
         [HttpGet]
         public async Task<ActionResult<PagedList<ArtworkDTO>>> GetArtworks([FromQuery] UserParams userParams)
         {
-            var currentUserId = User.GetUserId();
 			string genreIds = Request.Query["genres"]; 
             if(!string.IsNullOrEmpty(genreIds))
             {
@@ -40,7 +39,6 @@ namespace ArtworkSharingHost.Controllers
                 }
                 
 			}
-			userParams.CurrentUserId = currentUserId;
 
             if (userParams.MinPrice > userParams.MaxPrice)
             {
@@ -141,6 +139,7 @@ namespace ArtworkSharingHost.Controllers
         [HttpPost("follow/{email}")]
         public async Task<IActionResult> UserFollow(string email)
         {
+            if(email == User.GetEmail()) return BadRequest("You cannot follow yourself");
             await _artworkService.UserFollow(User.GetUserId(), email);
             return Ok(new { message = "User followed successfully." });
         }
