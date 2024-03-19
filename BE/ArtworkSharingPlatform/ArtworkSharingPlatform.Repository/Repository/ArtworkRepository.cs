@@ -133,15 +133,16 @@ namespace ArtworkSharingPlatform.Repository.Repository
 
         public async Task UpdateArtwork(Artwork artwork)
         {
-                if (artwork != null)
-                {
-                    var index = await _context.Artworks.FindAsync(artwork.Id);
+			if (artwork != null)
+			{
+				var index = await _context.Artworks.FindAsync(artwork.Id);
+				index.Status = 1;
 
-                    _context.Entry(index).CurrentValues.SetValues(artwork);
+				_context.Entry(index).CurrentValues.SetValues(artwork);
 
-                    await _context.SaveChangesAsync();
-                }
-        }
+				await _context.SaveChangesAsync();
+			}
+		}
 
         public async Task<bool> HasUserLikedArtwork(int userId, int artworkId)
         {

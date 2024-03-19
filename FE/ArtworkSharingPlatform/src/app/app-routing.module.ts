@@ -27,18 +27,25 @@ import { AdminLayoutComponent } from './components/admin/admin-layout/admin-layo
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 import { CommissionListComponent } from './components/admin/commission-management/commission-list/commission-list.component';
 import { ConfigCreateComponent } from './components/admin/config-magement/config-create/config-create.component';
+import { CommissionDetailComponent } from './components/admin/commission-management/commission-detail/commission-detail.component';
+import { ReportDetailComponent } from './components/admin/report-management/report-detail/report-detail.component';
+import { ReportListComponent } from './components/admin/report-management/report-list/report-list.component';
+import { ReportUpdateComponent } from './components/admin/report-management/report-update/report-update.component';
 import {OrderConfirmationComponent} from "./components/checkout/order-confirmation/order-confirmation.component";
 import {
   OrderConfirmationFailedComponent
 } from "./components/checkout/order-confirmation-failed/order-confirmation-failed.component";
 import {ForgotPasswordComponent} from "./components/forgot-password/forgot-password.component";
-import { CommissionDetailComponent } from './components/admin/commission-management/commission-detail/commission-detail.component';
-
+import {authGuard} from "./_guards/auth.guard";
+import {adminGuard} from "./_guards/admin.guard";
+import {preventUnsavedChangesUserGuard} from "./_guards/prevent-unsaved-changes-user.guard";
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   {
     path: 'admin',
+    // runGuardsAndResolvers: 'always',
+    // canActivate: [adminGuard],
     component: AdminLayoutComponent,
     children: [
       { path: 'dashboard', component: AdminDashboardComponent },
@@ -49,12 +56,15 @@ const routes: Routes = [
       { path: 'config-management/config-create', component: ConfigCreateComponent },
       { path: 'commission-management/commission-list', component: CommissionListComponent },
       { path: 'commission-detail/:commissionId', component: CommissionDetailComponent},
+      { path: 'report-management/report-list', component: ReportListComponent },
     ],
   },
-  
+
   //Phần này dành cho những route cần Guard
   {
     path: '',
+    runGuardsAndResolvers: 'always',
+    canActivate: [authGuard],
     children: [
       { path: 'artist/messages', component: ArtistMessageComponent },
       { path: 'artist/pricing', component: PricingComponent },
@@ -76,7 +86,10 @@ const routes: Routes = [
         component: ArtworkEditComponent,
         resolve: { artwork: artworkDetailResolver },
       },
-      { path: 'profile-edit', component: ProfileEditComponent },
+      { path: 'profile-edit',
+        component: ProfileEditComponent,
+        canDeactivate: [preventUnsavedChangesUserGuard]
+      },
     ],
   },
   {path: 'contact', component: ContactComponent},

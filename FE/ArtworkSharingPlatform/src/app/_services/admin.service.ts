@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { ArtworkAdminDTO } from '../_model/artworkAdminDTO.model';
 import { ConfigManagerRequest } from '../_model/configManagerRequest.model';
 import { CommissionHistoryAdmin } from '../_model/commissionHistoryAdmin.model';
+import { ReportDTO } from '../_model/reportDTO.model';
 
 @Injectable({
   providedIn: 'root',
@@ -44,9 +45,16 @@ export class AdminService {
   getAllCommissions(): Observable<CommissionHistoryAdmin[]>{
     return this.http.get<CommissionHistoryAdmin[]>(`${this.baseUrl}admin/Commissions`);
   }
+  
   getSingleCommission(commissionId: number): Observable<CommissionHistoryAdmin> {
-    return this.http.get<CommissionHistoryAdmin>(`${this.baseUrl}admin/Commissions/${commissionId}`);
+    return this.http.get<CommissionHistoryAdmin>(`${this.baseUrl}admin/${commissionId}`);
   }
+  getAllReports(): Observable<ReportDTO[]> {
+    return this.http.get<ReportDTO[]>(`${this.baseUrl}admin/report`);
+  }
+  getReportDetail(reportId: number): Observable<ReportDTO> {
+    return this.http.get<ReportDTO>(`${this.baseUrl}admin/reportDetail?reportId=${reportId}`);
+  }  
   createConfig(newConfig: ConfigManagerRequest): Observable<any> {
     return this.http.post(`${this.baseUrl}api/ConfigManager/Create`, newConfig);
   }

@@ -52,10 +52,13 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { AdminLayoutComponent } from './components/admin/admin-layout/admin-layout.component';
 import { AdminSidebarComponent } from './components/admin/admin-sidebar/admin-sidebar.component';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
+import { ConfirmDialogComponent } from './components/modal/confirm-dialog/confirm-dialog.component';
 import { ConfigCreateComponent } from './components/admin/config-magement/config-create/config-create.component';
 import { ReportListComponent } from './components/admin/report-management/report-list/report-list.component';
 import { CommissionListComponent } from './components/admin/commission-management/commission-list/commission-list.component';
 import { CommissionDetailComponent } from './components/admin/commission-management/commission-detail/commission-detail.component';
+import { ReportDetailComponent } from './components/admin/report-management/report-detail/report-detail.component';
+import { ReportUpdateComponent } from './components/admin/report-management/report-update/report-update.component';
 
 
 @NgModule({
@@ -100,7 +103,11 @@ import { CommissionDetailComponent } from './components/admin/commission-managem
     ConfigCreateComponent,
     ReportListComponent,
     CommissionListComponent,
-    CommissionDetailComponent
+    CommissionDetailComponent,
+    ConfirmDialogComponent,
+    ConfigCreateComponent,
+    ReportDetailComponent,
+    ReportUpdateComponent
   ],
   imports: [
     BrowserModule,

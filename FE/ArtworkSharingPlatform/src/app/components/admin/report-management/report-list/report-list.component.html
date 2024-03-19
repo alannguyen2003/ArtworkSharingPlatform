@@ -1,1 +1,28 @@
-<p>report-list works!</p>
+<div *ngIf="reports.length > 0" class="container mx-auto mt-8 p-4 bg-gray-800 rounded-lg shadow">
+    <h2 class="text-white text-3xl font-bold mb-4">Report List</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm text-left text-white">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-700">
+          <tr>
+            <th scope="col" class="py-3 px-6">Reporter ID</th>
+            <th scope="col" class="py-3 px-6">Artwork ID</th>
+            <th scope="col" class="py-3 px-6">Content</th>
+            <th scope="col" class="py-3 px-6">Created Date</th>
+            <th scope="col" class="py-3 px-6">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let report of reports" class="bg-gray-800 border-b border-gray-700">
+            <td class="py-4 px-6">{{report.reporterId}}</td>
+            <td class="py-4 px-6">{{report.artworkId}}</td>
+            <td class="py-4 px-6">{{report.content}}</td>
+            <td class="py-4 px-6">{{report.createdDate | date:'medium'}}</td>
+            <td class="py-4 px-6">
+                <a routerLink="/admin/user-detail/{{report.reporterId}}" class="text-blue-500 hover:text-blue-700">View</a>
+              </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

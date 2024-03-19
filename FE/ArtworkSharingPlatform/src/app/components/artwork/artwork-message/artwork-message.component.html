@@ -34,7 +34,7 @@
                       <img src="{{artwork.imageUrl}}" class="w-1/3 h-32 pe-1.5 d-inline">
                       <div class="d-inline-flex flex-col h-auto">
                         <p><strong>Title:</strong> {{artwork.title}}</p>
-                        <p><strong>Price: </strong>{{artwork.price}}</p>
+                        <p><strong>Price: </strong>{{artwork.price | currency: 'VND'}}</p>
                       </div>
                     </div>
                   </a>

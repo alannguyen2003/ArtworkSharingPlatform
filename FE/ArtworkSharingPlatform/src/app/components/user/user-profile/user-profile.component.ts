@@ -56,4 +56,23 @@ export class UserProfileComponent implements OnInit{
       }
     });
   }
+
+  requestArtwork() {
+    if (!this.userProfile) return;
+    this.userService.folowUser(this.userProfile.email).subscribe({
+      next: _ => {
+        var index = this.userProfile?.isFollowedByUsers.findIndex(x => x.sourceUserEmail == this.user?.email);
+
+        if (index! >= 0) {
+          this.userProfile?.isFollowedByUsers.splice(index!, 1);
+          this.toastr.success('Unfollow Successfully');
+        }
+        else {
+          this.userProfile?.isFollowedByUsers.push({targetUserEmail : this.userProfile?.email, sourceUserEmail: this.user?.email} as Follow)
+          this.toastr.success('Follow Successfully');
+        }
+        this.checkIsFollowed = !this.checkIsFollowed;
+      }
+    });
+  }
 }

@@ -9,18 +9,18 @@
         Add New User
       </button>
     </div>
-  <table class="table-auto w-full mt-2 rounded-md">
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-auto w-full mt-2 rounded-md">
     <thead class="bg-gray-700 text-white">
       <tr>
         <th class="px-4 py-2">No.</th>
         <!-- Thêm cột số thứ tự -->
-        <th class="px-4 py-2 text-center">Name</th>
-        <th class="px-4 py-2 text-center">Email</th>
-        <th class="px-4 py-2 text-center ">Phone Number</th>
-        <th class="px-4 py-2 text-center">Description</th>
-        <th class="px-4 py-2 text-center">Role</th>
-        <th class="px-4 py-2 text-center">Status</th>
-        <th class="px-4 py-2 text-center">Actions</th>
+        <th class="px-4 py-2 text-center text-md">Name</th>
+        <th class="px-4 py-2 text-center text-md">Email</th>
+        <th class="px-4 py-2 text-center text-md ">Phone Number</th>
+        <th class="px-4 py-2 text-center text-md">Description</th>
+        <th class="px-4 py-2 text-center text-md">Role</th>
+        <th class="px-4 py-2 text-center text-md">Status</th>
+        <th class="px-4 py-2 text-center text-md">Actions</th>
         <!-- Thêm cột Actions cho nút Edit -->
       </tr>
     </thead>
@@ -32,20 +32,20 @@
         <!-- Tăng độ đậm của đường kẻ -->
         <td class="px-4 py-2">{{ i + 1 }}</td>
         <!-- Hiển thị số thứ tự -->
-        <td class="px-4 py-2 text-center">{{ user.name }}</td>
+        <td class="px-4 py-2 text-center text-md">{{ user.name }}</td>
         <td class="px-4 py-2">{{ user.email }}</td>
         <td class="px-4 py-2">{{ user.phoneNumber }}</td>
         <td class="px-4 py-2">{{ user.description }}</td>
         <td class="px-4 py-2">{{ user.role }}</td>
         <!-- For Status -->
-        <td class="px-4 py-2 text-center">
+        <td class="px-4 py-2 text-center text-md">
           <span [ngClass]="{'bg-green-500': user.status === 1, 'bg-red-500': user.status === 0}" class="relative inline-block px-3 py-1 font-semibold text-white leading-tight rounded-full">
             <span aria-hidden="true" class="absolute inset-0 opacity-50 rounded-full"></span>
             <span class="relative">{{ user.status === 1 ? 'Available' : 'Unavailable' }}</span>
           </span>
-        </td>       
+        </td>
         <!-- For Actions -->
-        <td class="px-4 py-2 text-sm text-center">
+        <td class="px-4 py-2 text-sm text-center text-md">
           <div class="inline-flex gap-2">
             <a routerLink="/admin/user-detail/{{user.email}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline text-xs">View</a>
             <a routerLink="/admin/user-update/{{user.email}}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline text-xs">Edit</a>

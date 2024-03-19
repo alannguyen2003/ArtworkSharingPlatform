@@ -36,6 +36,7 @@ export class ArtworkDetailComponent implements OnInit, OnDestroy{
   bsModalRef: BsModalRef<ReportModalComponent> = new BsModalRef<ReportModalComponent>();
   x = 5;
   y = 0;
+  phoneNumberButtonState = 0;
   constructor(private route: ActivatedRoute,
               private accountService: AccountService,
               private messageService: MessageService,
@@ -55,6 +56,7 @@ export class ArtworkDetailComponent implements OnInit, OnDestroy{
         this.artwork = data['artwork'];
       }
     });
+    console.log(this.artwork);
     this.route.queryParams.subscribe({
       next: params => {
         console.log(params);
@@ -120,6 +122,25 @@ export class ArtworkDetailComponent implements OnInit, OnDestroy{
         this.toastr.success('Rating successfully!');
       }
     });
+  }
+
+  displayPhoneNumber() {
+    // Change state to loading
+    this.phoneNumberButtonState= 1;
+
+    // Emulate a delay of 1 second and then display the phone number
+    setTimeout(() => {
+      this.phoneNumberButtonState = 2;
+    }, 1000);
+  }
+  hidePhoneNumber() {
+    // Change state to loading
+    this.phoneNumberButtonState= 1;
+
+    // Emulate a delay of 1 second and then display the phone number
+    setTimeout(() => {
+      this.phoneNumberButtonState = 0;
+    }, 1000);
   }
 
   ngOnDestroy() {

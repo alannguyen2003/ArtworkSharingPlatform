@@ -1,1 +1,72 @@
-<p>commission-detail works!</p>
+<div
+  *ngIf="commission"
+  class="container mx-auto mt-8 p-6 bg-gray-800 rounded-xl shadow-lg max-w-4xl"
+>
+  <h2 class="text-white text-3xl font-bold mb-6 text-center">
+    Commission Detail
+  </h2>
+  <div class="bg-gray-900 p-5 rounded-lg">
+    <table class="min-w-full divide-x divide-y divide-gray-700 text-white">
+      <tbody class="divide-y divide-gray-700 rounded-lg">
+        <tr>
+          <td class="px-6 py-4 font-semibold">ID:</td>
+          <td class="px-6 py-4">{{ commission.id }}</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 font-semibold">Min Price:</td>
+          <td class="px-6 py-4">{{ commission.minPrice | currency }}</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 font-semibold">Max Price:</td>
+          <td class="px-6 py-4">{{ commission.maxPrice | currency }}</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 font-semibold">Actual Price:</td>
+          <td class="px-6 py-4">{{ commission.actualPrice | currency }}</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 font-semibold">Description:</td>
+          <td class="px-6 py-4">{{ commission.requestDescription }}</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 font-semibold">Request Date:</td>
+          <td class="px-6 py-4">
+            {{ commission.requestDate | date : "mediumDate" }}
+          </td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 font-semibold">Status:</td>
+          <td class="px-6 py-4">
+            <span
+              [ngClass]="{
+                'bg-green-500': commission.commissionStatus === 'Completed',
+                'bg-red-500': commission.commissionStatus === 'Rejected',
+                'bg-yellow-500': commission.commissionStatus === 'Pending',
+                'bg-purple-500': commission.commissionStatus === 'Accepted'
+              }"
+              class="relative inline-block px-3 py-1 font-semibold text-white leading-tight rounded-full"
+            >
+              <span
+                aria-hidden="true"
+                class="absolute inset-0 opacity-50 rounded-full"
+              ></span>
+              <span class="relative">{{ commission.commissionStatus }}</span>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 font-semibold">Sender:</td>
+          <td class="px-6 py-4">{{ commission.senderName }}</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 font-semibold">Receiver:</td>
+          <td class="px-6 py-4">{{ commission.receiverName }}</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 font-semibold rounded-bl-xl">Genre:</td>
+          <td class="px-6 py-4 rounded-br-xl">{{ commission.genreName }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

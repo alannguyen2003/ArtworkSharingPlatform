@@ -22,7 +22,7 @@ export class ArtworkService {
   userParams: UserParams | undefined;
   fakeUserParams: UserParams = {
     minPrice: 0,
-    maxPrice: 10000000,
+    maxPrice: 1000000000,
     orderBy: 'lowPrice',
     pageNumber: 1,
     pageSize: 6,

@@ -1,8 +1,15 @@
-<div class="grid grid-cols-2 md:grid-cols-3 gap-4" *ngIf="artworks.length > 0">
-  <div *ngFor="let artwork of artworks">
-    <a routerLink="/artwork-edit/{{artwork.id}}">
-      <img class="h-auto max-w-full rounded-lg" src="{{artwork.imageUrl}}" alt="">
+<!--<div class="grid grid-cols-2 md:grid-cols-3 gap-4" *ngIf="artworks.length > 0">-->
+<!--  <div *ngFor="let artwork of artworks">-->
+<!--    <a routerLink="/artwork-edit/{{artwork.id}}">-->
+<!--      <img class="h-auto max-w-full rounded-lg" src="{{artwork.imageUrl}}" alt="">-->
+<!--    </a>-->
+<!--  </div>-->
+<!--</div>-->
+<section class="py-6 dark:bg-gray-800 dark:text-gray-50">
+  <div class="container grid grid-cols-2 gap-4 p-4 mx-auto md:grid-cols-4">
+    <a routerLink="/artwork-edit/{{artwork.id}}" *ngFor="let artwork of artworks">
+      <img class="w-full h-full rounded shadow-sm min-h-48 dark:bg-gray-500 aspect-square" src="{{artwork.imageUrl}}" alt="">
     </a>
   </div>
-</div>
+</section>
 <h3 *ngIf="artworks.length == 0">You do not have any artwork</h3>
