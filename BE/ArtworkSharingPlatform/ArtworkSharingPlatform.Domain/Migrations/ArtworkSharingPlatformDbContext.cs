@@ -58,8 +58,6 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
     public DbSet<Follow> Follows { get; set; }
     public DbSet<Report> Reports { get; set; }
     public DbSet<UserImage> UserImages{ get; set; }
-    public DbSet<Purchase> Purchases { get; set; }
-
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -155,7 +153,6 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
             .HasOne(p => p.SellUser)
             .WithMany(a => a.ArtworkHasSold)
             .OnDelete(DeleteBehavior.NoAction);
-
 
         modelBuilder.Entity<Artwork>()
             .HasMany(e => e.Likes)

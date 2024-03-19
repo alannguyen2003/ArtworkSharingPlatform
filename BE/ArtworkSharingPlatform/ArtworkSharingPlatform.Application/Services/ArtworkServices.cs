@@ -259,23 +259,6 @@ namespace ArtworkSharingPlatform.Application.Services
 			}
 			return res;
 		}
-		public async Task<IEnumerable<PurchaseDTO>> ListPurchaseArtwork(int UserId)
-		{
-			var boughtArtworks = await _artworkRepository.ListBoughtArtwork(UserId);
-			var purchaseDTO = _mapper.Map<IList<PurchaseDTO>>(boughtArtworks);
-			return purchaseDTO;
-		}
-		public async Task AddPurchase(PurchaseDTO purchaseDTO)
-		{
-			var purchase = _mapper.Map<Purchase>(purchaseDTO);
-			await _artworkRepository.AddPurchase(purchase);
-		}
-		public async Task<IEnumerable<PurchaseDTO>> ListHistoryPurchaseArtwork(int artworkId)
-		{
-            var Artworks = await _artworkRepository.ListHistoryPurchaseArtwork(artworkId);
-            var purchaseDTO = _mapper.Map<IList<PurchaseDTO>>(Artworks);
-            return purchaseDTO;
-        }
 		public async Task ActiveArtworkStatus(int artworkId, int userId)
 		{
 			await _artworkRepository.ActiveArtworkStatus(artworkId, userId);

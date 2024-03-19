@@ -179,7 +179,7 @@ namespace ArtworkSharingHost.Controllers
             var report = await _reportService.GetAllReport();
             return Ok(report);
         }
-        [HttpGet("reportDetail")]
+        [HttpGet("reportDetail/{reportId}")]
         public async Task<ActionResult<ReportDTO>> GetReportDetail(int reportId)
         {
             var report = await _reportService.GetReportById(reportId);

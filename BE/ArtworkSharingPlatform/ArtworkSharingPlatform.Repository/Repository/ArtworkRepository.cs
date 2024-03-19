@@ -211,16 +211,6 @@ namespace ArtworkSharingPlatform.Repository.Repository
             {
                 artwork.Status = 0;
             }
-            var buyUser = await _context.Users.Where(x => x.Email == buyUserEmail).SingleOrDefaultAsync();
-            var purchase = new Purchase
-            {
-                BuyUserId = buyUser.Id,
-                SellUserId = userId,
-                ArtworkId = artwork.Id,
-                BuyPrice = artwork.Price,
-                BuyDate = DateTime.UtcNow
-            };
-            _context.Purchases.Add(purchase);
             flag = await _context.SaveChangesAsync() > 0;
             return flag;
         }
@@ -284,47 +274,6 @@ namespace ArtworkSharingPlatform.Repository.Repository
             
             return await _context.Comments.Where(x => x.ArtworkId == artworkId).ToListAsync();
         }
-
-        public async Task<IEnumerable<Purchase>> ListBoughtArtwork(int sellUserId)
-        {
-            if (sellUserId == null)
-            {
-                return null;
-            }
-
-            return await _context.Purchases.Where(x => x.SellUserId == sellUserId).ToListAsync();
-        }
-        public async Task<IEnumerable<Purchase>> ListSoldArtwork(int soldUserId)
-        {
-            if (soldUserId == null)
-            {
-                return null;
-            }
-
-            return await _context.Purchases.Where(x => x.SellUserId == soldUserId).ToListAsync();
-        }
-        public async Task AddPurchase(Purchase purchase)
-        {
-            var artwork = await _context.Artworks.Where(x => x.Id == purchase.ArtworkId)
-                .FirstOrDefaultAsync();
-            
-            if (purchase == null)
-            {
-                return;
-            }
-            if (artwork == null)
-            {
-                return;
-            }
-
-            purchase.BuyPrice = artwork.Price;
-            await _context.Purchases.AddAsync(purchase);
-            await _context.SaveChangesAsync();
-            
-            
-            artwork.Status = 0;
-            await _context.SaveChangesAsync();
-        }
         public async Task<bool> CreditAvailable (int userId)
         {
             if (userId == 0 && userId == null) { return false; }
@@ -351,15 +300,6 @@ namespace ArtworkSharingPlatform.Repository.Repository
             if (user == null && artwork == null) { return; }
                 artwork.Status = 1;
                 await _context.SaveChangesAsync();
-        }
-        public async Task<IEnumerable<Purchase>> ListHistoryPurchaseArtwork (int artworkId)
-        {
-            if (artworkId == null && artworkId == 0)
-            {
-                return null;
-            }
-
-            return await _context.Purchases.Where(x => x.ArtworkId == artworkId).Include(x => x.Artwork).ToListAsync();
         }
 
 		public async Task<bool> CheckArtworkAvailability(int artworkId)
