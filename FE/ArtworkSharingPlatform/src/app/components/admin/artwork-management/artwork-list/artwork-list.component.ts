@@ -3,6 +3,7 @@ import { AdminService } from '../../../../_services/admin.service';
 import { ArtworkAdminDTO } from 'src/app/_model/artworkAdminDTO.model';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-artwork-list',
@@ -11,6 +12,10 @@ import { Router } from '@angular/router';
 })
 export class ArtworkListComponent implements OnInit {
   artworks: ArtworkAdminDTO[] = [];
+  dtOptions: DataTables.Settings = {
+    pagingType: 'full_numbers'
+   }
+   dtTrigger: Subject<any> = new Subject<any>();
 
   constructor(private adminService: AdminService) { }
 
@@ -22,6 +27,7 @@ export class ArtworkListComponent implements OnInit {
     this.adminService.getAllArtworks().subscribe({
       next: (artworks) => {
         this.artworks = artworks;
+        this.dtTrigger.next(null);
       },
       error: (error) => {
         console.error('There was an error!', error);

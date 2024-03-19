@@ -3,35 +3,30 @@
     "ReportName": "Buy Package",
     "CreateDate": "2024-03-15",
     "TotalPrice": 50000,
-    "SenderId": 2,
-    "ReceiverId": 12
+    "SenderId": 2
   },
   {
     "ReportName": "Buy Package",
     "CreateDate": "2024-03-15",
     "TotalPrice": 50000,
-    "SenderId": 5,
-    "ReceiverId":  12
+    "SenderId": 5
   },
   {
     "ReportName": "Buy Package",
     "CreateDate": "2024-03-15",
     "TotalPrice": 50000,
-    "SenderId": 6,
-    "ReceiverId": 12
+    "SenderId": 6
   },
   {
     "ReportName": "Buy Package",
     "CreateDate": "2024-03-15",
     "TotalPrice": 50000,
-    "SenderId": 7,
-    "ReceiverId": 12
+    "SenderId": 7
   },
   {
     "ReportName": "Buy Package",
     "CreateDate": "2024-03-15",
     "TotalPrice": 50000,
-    "SenderId": 4,
-    "ReceiverId": 12
+    "SenderId": 4
   }
 ]
