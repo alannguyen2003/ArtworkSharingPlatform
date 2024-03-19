@@ -69,6 +69,7 @@ export class RequestArtworkComponent {
     }
     this.requestArtwork.receiverId = this.artistInfo.id;
     this.commissionService.addCommission(this.requestArtwork).subscribe(response => {
+      console.log(response)
       this.toastrService.success('Your request has just sent, please check My PreOrder.');
       this.router.navigate(['/']);
     })

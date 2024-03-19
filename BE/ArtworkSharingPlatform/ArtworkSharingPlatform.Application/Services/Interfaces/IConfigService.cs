@@ -9,6 +9,7 @@ namespace ArtworkSharingPlatform.Application.Interfaces
     {
         Task<List<ConfigManagerAdminDTO>> GetAll();
         Task<ConfigManagerAdminDTO> GetConfigById(int id);
+        Task<ConfigManagerAdminDTO> GetLastestConfig();
         ConfigManagerServiceResponse Create(NewConfigManagerRequest newConfigManagerRequest);
     }
 }
