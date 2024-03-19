@@ -30,7 +30,7 @@ export class AdminService {
       userDto
     );
   }
-  updateUserAdmin(userDto: UserAdmin): Observable<UserAdmin> {
+  updateUserAdmin(userDto: UserAdmin){
     return this.http.put<UserAdmin>(`${this.baseUrl}admin/UpdateUser`, userDto);
   }
   deleteUserAdminByEmail(email: string) {

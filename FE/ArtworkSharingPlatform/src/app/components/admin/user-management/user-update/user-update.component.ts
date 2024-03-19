@@ -12,18 +12,21 @@ import { UserAdmin } from 'src/app/_model/userAdmin.model';
 export class UserUpdateComponent implements OnInit {
   updateUserForm: FormGroup;
   user: UserAdmin = {} as UserAdmin;
+  errorMessage: string = '';
+
 
   constructor(
     private adminService: AdminService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    
   ) {
     this.updateUserForm = this.fb.group({
       id: ['', Validators.required],
-      email: [{ value: '', disabled: true }, Validators.required],
+      email: ['', Validators.required],
       name: ['', Validators.required],
-      phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      phoneNumber: ['', Validators.required],
       description: [''],
       status: ['', Validators.required],
       role: ['', Validators.required],
@@ -37,6 +40,7 @@ export class UserUpdateComponent implements OnInit {
       const email = params['email'];
       this.adminService.getUserByEmail(email).subscribe((user) => {
         this.user = user;
+        console.log(user);
         this.updateUserForm.patchValue({
           id: user.id,
           email: user.email,
@@ -53,16 +57,16 @@ export class UserUpdateComponent implements OnInit {
   }
 
   onUpdate() {
-    if (!this.updateUserForm.valid) {
+    if (this.updateUserForm.valid) {
       const formData = this.updateUserForm.getRawValue();
       const userDto: UserAdmin = {
         id: formData.id,
         name: formData.name,
         phoneNumber: formData.phoneNumber,
-        email: formData.email, 
+        email: formData.email,
         description: formData.description,
         status: formData.status,
-        role: +formData.role,
+        role: this.convertRoleToNumber(formData.role),
         remaningCredit: formData.remaningCredit,
         packageId: formData.packageId,
         userImageUrl: '',
@@ -73,10 +77,28 @@ export class UserUpdateComponent implements OnInit {
           this.router.navigate(['/admin/user-management/user-list']);
         },
         error: (error) => {
-          console.error('Update user failed: ', error);
+          this.errorMessage = 'Update user failed: ' + error;
         },
       });
+    } else {
+      // Xử lý trường hợp form không hợp lệ, có thể hiển thị thông báo lỗi
+      this.errorMessage = 'Form is not valid. Please check your input.';
     }
   }
   
+  private convertRoleToNumber(role: string): number {
+    switch (role) {
+      case 'Audience':
+        return 0;
+      case 'Artist':
+        return 1;
+      case 'Manager':
+        return 2;
+      case 'Admin':
+        return 3;
+      default:
+        return -1; // Hoặc một giá trị mặc định phản ánh không khớp với bất kỳ vai trò nào
+    }
+  }
+ 
 }
