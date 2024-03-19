@@ -43,6 +43,11 @@ namespace ArtworkSharingPlatform.Application.Services
             var config = await _configRepository.GetConfigById(id);
             return _mapper.Map<ConfigManagerAdminDTO>(config);
         }
+        public async Task<ConfigManagerAdminDTO> GetLastestConfig()
+        {
+            var config = await _configRepository.GetLastestConfig();
+            return _mapper.Map<ConfigManagerAdminDTO>(config);
+        }
 
         public ConfigManagerServiceResponse Create(NewConfigManagerRequest newConfigManagerRequest)
         {

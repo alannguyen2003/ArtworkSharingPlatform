@@ -52,26 +52,25 @@ export class UserUpdateComponent implements OnInit {
     });
   }
 
-  updateUser() {
+  onUpdate() {
     if (!this.updateUserForm.valid) {
       const formData = this.updateUserForm.getRawValue();
-      // Tạo đối tượng UserAdminDTO từ dữ liệu form và bao gồm userImageUrl từ this.user
       const userDto: UserAdmin = {
         id: formData.id,
         name: formData.name,
         phoneNumber: formData.phoneNumber,
-        email: formData.email, // Email không thay đổi nhưng vẫn cần gửi lại cho server
+        email: formData.email, 
         description: formData.description,
         status: formData.status,
-        role: +formData.role, // Chú ý: Đảm bảo rằng giá trị của role là số
+        role: +formData.role,
         remaningCredit: formData.remaningCredit,
         packageId: formData.packageId,
-        userImageUrl: this.user.userImageUrl, // Sử dụng giá trị từ this.user
+        userImageUrl: '',
       };
   
       this.adminService.updateUserAdmin(userDto).subscribe({
         next: () => {
-          this.router.navigate(['/admin/user-list']); // Điều hướng về trang danh sách người dùng sau khi cập nhật thành công
+          this.router.navigate(['/admin/user-management/user-list']);
         },
         error: (error) => {
           console.error('Update user failed: ', error);
