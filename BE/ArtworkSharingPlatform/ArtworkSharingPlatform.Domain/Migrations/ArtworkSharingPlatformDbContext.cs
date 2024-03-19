@@ -144,7 +144,6 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
         modelBuilder.Entity<Transaction>()
         .HasOne(t => t.Receiver)
         .WithMany(u => u.TransactionReceived)
-        .HasForeignKey(t => t.ReceiverId)
         .IsRequired(false)
         .OnDelete(DeleteBehavior.NoAction);
 
