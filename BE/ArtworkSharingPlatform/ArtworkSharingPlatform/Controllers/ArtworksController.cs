@@ -219,6 +219,14 @@ namespace ArtworkSharingHost.Controllers
             await _artworkService.ReportArtwork(reportDTO);
             return Ok();
         }
+
+        //[HttpPut("active-artwork/{artworkId}")]
+       // public async Task<IActionResult> ActiveArtwork(int artworkId)
+       // {
+        //    var userId = User.GetUserId();
+        //    await _artworkService.ActiveArtworkStatus(artworkId, userId);
+         //   return Ok();
+        //}
     }
 }    
 

@@ -4,6 +4,7 @@ using ArtworkSharingPlatform.Domain.Migrations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArtworkSharingPlatform.Domain.Migrations
 {
     [DbContext(typeof(ArtworkSharingPlatformDbContext))]
-    partial class ArtworkSharingPlatformDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240319164702_RemovePurchase")]
+    partial class RemovePurchase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -162,7 +165,6 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
                     b.ToTable("Likes");
                 });
-
 
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Artworks.Rating", b =>
                 {
@@ -517,6 +519,9 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("ReceiverId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ReportName")
                         .HasColumnType("nvarchar(max)");
 
@@ -527,6 +532,8 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ReceiverId");
 
                     b.HasIndex("SenderId");
 
@@ -1073,11 +1080,18 @@ namespace ArtworkSharingPlatform.Domain.Migrations
 
             modelBuilder.Entity("ArtworkSharingPlatform.Domain.Entities.Transactions.Transaction", b =>
                 {
+                    b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.User", "Receiver")
+                        .WithMany("TransactionReceived")
+                        .HasForeignKey("ReceiverId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.HasOne("ArtworkSharingPlatform.Domain.Entities.Users.User", "Sender")
                         .WithMany("TransactionSents")
                         .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Receiver");
 
                     b.Navigation("Sender");
                 });
@@ -1268,6 +1282,8 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     b.Navigation("Ratings");
 
                     b.Navigation("Report");
+
+                    b.Navigation("TransactionReceived");
 
                     b.Navigation("TransactionSents");
 

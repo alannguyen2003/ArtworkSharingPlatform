@@ -28,11 +28,7 @@ namespace ArtworkSharingPlatform.Repository.Interfaces
 		Task<ArtworkImage> AddImageToArtwork(ArtworkImage artworkImage);
 		Task<int> GetArtworkRatingForUser(int userId, int artworkId);
 		Task<IEnumerable<Comment>> ListArtworkComments(int artworkId);
-		Task<IEnumerable<Purchase>> ListBoughtArtwork(int buyUserId);
-		Task<IEnumerable<Purchase>> ListSoldArtwork(int soldUserId);
-		Task AddPurchase(Purchase purchase);
 		Task ActiveArtworkStatus(int artworkId, int userId);
-		Task<IEnumerable<Purchase>> ListHistoryPurchaseArtwork(int artworkId);
 		Task<bool> CreditAvailable(int userId);
 		Task<bool> CheckArtworkAvailability(int artworkId);
 

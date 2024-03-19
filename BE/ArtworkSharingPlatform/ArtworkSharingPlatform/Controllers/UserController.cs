@@ -112,6 +112,7 @@ namespace ArtworkSharingHost.Controllers
 			return Ok();
 		}
         [HttpPut("buy-package/{packageId}")]
+        [Authorize]
         public async Task<IActionResult> BuyPackage(int packageId)
         {
             int userId = User.GetUserId();
