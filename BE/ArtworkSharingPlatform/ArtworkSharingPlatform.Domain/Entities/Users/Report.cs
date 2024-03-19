@@ -10,7 +10,6 @@ namespace ArtworkSharingPlatform.Domain.Entities.Users
 {
     public class Report : BaseEntity
     {
-        public int Id { get; set; }
         public int ReporterId { get; set; }
         public User Reporter { get; set; }
         public int ArtworkId { get; set; }
