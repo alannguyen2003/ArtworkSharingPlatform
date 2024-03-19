@@ -37,4 +37,6 @@ export class UserService {
   resetPassword(model: any) {
     return this.http.post(this.baseUrl + 'auth/resetPassword', model);
   }
+
+
 }
