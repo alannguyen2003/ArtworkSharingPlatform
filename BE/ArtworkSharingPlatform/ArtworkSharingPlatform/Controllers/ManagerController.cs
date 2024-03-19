@@ -4,6 +4,7 @@ using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.Package;
 using ArtworkSharingPlatform.Domain.Entities.PackagesInfo;
 using ArtworkSharingPlatform.Domain.Entities.Users;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace ArtworkSharingHost.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = "RequireManagerRole")]
     public class ManagerController : ControllerBase
     {
         private readonly IPackageService _packageService;
