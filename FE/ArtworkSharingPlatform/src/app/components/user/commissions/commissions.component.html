@@ -20,9 +20,9 @@
       <tbody class="text-white">
       <tr *ngFor="let commission of commissionsItem.returnData">
         <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.id}}</td>
-        <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.minPrice | currency}}</td>
-        <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.maxPrice | currency}}</td>
-        <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.actualPrice | currency}}</td>
+        <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.minPrice | currency:"đ":true}}</td>
+        <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.maxPrice | currency:"đ":true}}</td>
+        <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.actualPrice | currency:"đ":true}}</td>
         <td class=" truncatepx-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.requestDescription}}</td>
         <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.requestDate | date:'mediumDate'}}</td>
         <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">
@@ -40,7 +40,7 @@
         <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.receiverName}}</td>
         <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.genreName}}</td>
         <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm text-right sticky-action-column">
-          <a routerLink="#" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded text-center text-sm">View</a>
+          <a routerLink="/pre-orders/{{commission.id}}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded text-center text-sm">View</a>
         </td>
       </tr>
       </tbody>
