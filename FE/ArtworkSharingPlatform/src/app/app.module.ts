@@ -49,6 +49,9 @@ import { CommonModule } from '@angular/common';
 import { ArtworkCarouselComponent } from './components/home/artwork-carousel/artwork-carousel.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { AdminLayoutComponent } from './components/admin/admin-layout/admin-layout.component';
+import { AdminSidebarComponent } from './components/admin/admin-sidebar/admin-sidebar.component';
+import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 
 
 @NgModule({
@@ -87,7 +90,10 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
     OrderConfirmationFailedComponent,
     ChangeAvatarComponent,
     ArtworkCarouselComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    AdminLayoutComponent,
+    AdminSidebarComponent,
+    AdminDashboardComponent
   ],
   imports: [
     BrowserModule,

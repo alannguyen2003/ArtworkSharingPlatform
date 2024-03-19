@@ -23,6 +23,8 @@ import { UserDetailComponent } from './components/admin/user-management/user-det
 import { UserCreateComponent } from './components/admin/user-management/user-create/user-create.component';
 import { ArtworkListComponent } from './components/admin/artwork-management/artwork-list/artwork-list.component';
 import { UserUpdateComponent } from './components/admin/user-management/user-update/user-update.component';
+import { AdminLayoutComponent } from './components/admin/admin-layout/admin-layout.component';
+import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 import {OrderConfirmationComponent} from "./components/checkout/order-confirmation/order-confirmation.component";
 import {
   OrderConfirmationFailedComponent
@@ -33,16 +35,17 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   {
     path: 'admin',
+    component: AdminLayoutComponent,
     children: [
+      { path: 'dashboard', component: AdminDashboardComponent },
       { path: 'user-management/user-list', component: UserListComponent },
-      { path: 'user-detail/:email', component: UserDetailComponent },
       { path: 'user-management/user-create', component: UserCreateComponent },
       { path: 'user-update/:email', component: UserUpdateComponent },
-      { path: 'artwork-management/artwork-list', component: ArtworkListComponent }
-
-
+      { path: 'artwork-management/artwork-list', component: ArtworkListComponent },
+      // thêm các route khác tại đây...
     ],
   },
+  
   //Phần này dành cho những route cần Guard
   {
     path: '',
