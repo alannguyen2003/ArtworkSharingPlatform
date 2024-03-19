@@ -57,8 +57,6 @@ export class ArtworkService {
     }
     return;
   }
-
-
   getArtworks(userParams: UserParams) {
     const response = this.artworkCache.get(Object.values(userParams).join('-'));
     if (response) return of(response);

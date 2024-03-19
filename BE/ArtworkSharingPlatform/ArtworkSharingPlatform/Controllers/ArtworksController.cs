@@ -23,7 +23,6 @@ namespace ArtworkSharingHost.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<ActionResult<PagedList<ArtworkDTO>>> GetArtworks([FromQuery] UserParams userParams)
         {
 			string genreIds = Request.Query["genres"]; 
