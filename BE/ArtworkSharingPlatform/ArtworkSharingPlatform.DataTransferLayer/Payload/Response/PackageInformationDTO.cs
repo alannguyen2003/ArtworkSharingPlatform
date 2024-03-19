@@ -12,7 +12,7 @@ namespace ArtworkSharingPlatform.DataTransferLayer.Payload.Response
         public int Id { get; set; }
         public string Name { get; set; }
         public int Credit { get; set; }
-        [Column(TypeName = "decimal(10,2)")] public decimal Price { get; set; }
+        [Column(TypeName = "decimal(18,2)")] public decimal Price { get; set; }
         public byte? Status { get; set; }
     }
 }

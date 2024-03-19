@@ -10,7 +10,7 @@ namespace ArtworkSharingPlatform.DataTransferLayer.Payload.Response
 {
     public class PackageBillingDTO
     {
-        [Column(TypeName = "decimal(10,2)")] public decimal TotalPrice { get; set; }
+        [Column(TypeName = "decimal(18,2)")] public decimal TotalPrice { get; set; }
         public string? Status { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
