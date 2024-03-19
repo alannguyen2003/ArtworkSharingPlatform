@@ -33,4 +33,8 @@ export class CommentService {
     let endpoint = 'Artworks/comment/' + artworkId
     return this.http.get(this.baseUrl + endpoint, this.httpOptions)
   }
+  getCommentsNumber(artworkId: number) {
+    let endpoint = 'Artworks/comment-number/' + artworkId
+    return this.http.get<number>(this.baseUrl + endpoint, this.httpOptions)
+  }
 }
