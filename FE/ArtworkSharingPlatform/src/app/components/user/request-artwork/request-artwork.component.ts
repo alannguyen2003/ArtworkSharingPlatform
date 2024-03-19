@@ -9,6 +9,7 @@ import {CommissionService} from "../../../_services/commission.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserProfile} from "../../../_model/userProfile.model";
 import {UserService} from "../../../_services/user.service";
+import {UserInfo} from "../../../_model/userInfo.model";
 
 @Component({
   selector: 'app-request-artwork',
@@ -17,7 +18,7 @@ import {UserService} from "../../../_services/user.service";
 })
 export class RequestArtworkComponent {
   userProfile: UserProfile | undefined;
-  artistId: number;
+  artistInfo: UserInfo;
   requestArtwork: RequestArtwork = new class implements RequestArtwork {
     genreId: number;
     maxPrice: number;
@@ -54,7 +55,9 @@ export class RequestArtworkComponent {
         console.log(this.userProfile)
       }
     });
-    this.userService.getUserWithEmail()
+    this.userService.getUserWithEmail(this.userProfile?.email).subscribe(response => {
+      this.artistInfo = response;
+    })
   }
   request() {
     this.requestArtwork.genreId = this.genreSelected;
@@ -64,8 +67,8 @@ export class RequestArtworkComponent {
     if (!this.validationService.maxPriceValidation(this.requestArtwork.maxPrice, this.requestArtwork.minPrice)) {
       this.toastrService.error("The max price must be smaller than 1.000.000.000VNĐ and larger than the min price.");
     }
+    this.requestArtwork.receiverId = this.artistInfo.id;
     this.commissionService.addCommission(this.requestArtwork).subscribe(response => {
-      console.log(response)
       this.toastrService.success('Your request has just sent, please check My PreOrder.');
       this.router.navigate(['/']);
     })
