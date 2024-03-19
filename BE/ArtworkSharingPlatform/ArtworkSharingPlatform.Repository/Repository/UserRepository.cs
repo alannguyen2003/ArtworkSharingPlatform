@@ -64,7 +64,7 @@ namespace ArtworkSharingPlatform.Repository.Repository
 
         public IQueryable<User> GetAll()
         {
-            return _dbContext.Users.Include(u => u.UserRoles).Include(u => u.UserImage);
+            return _dbContext.Users.Include(u => u.UserRoles).ThenInclude(u => u.Role).Include(u => u.UserImage);
         }
 
         public async Task CreateUserAdmin(User user)

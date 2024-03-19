@@ -208,16 +208,16 @@ namespace ArtworkSharingPlatform.Application.Helpers
                     opt => opt.MapFrom(
                         src => src.IsProgressStatus))
                 .ForMember(dest => dest.SenderName,
-                    opt => opt.Ignore()
+                    opt => opt.MapFrom(src => src.Sender.Name)
                 )
                 .ForMember(dest => dest.ReceiverName,
-                    opt => opt.Ignore()
+                    opt => opt.MapFrom(src => src.Receiver.Name)
                 )
                 .ForMember(dest => dest.GenreName,
-                    opt => opt.Ignore()
+                    opt => opt.MapFrom(src => src.Genre.Name)
                 )
                 .ForMember(dest => dest.CommissionStatus,
-                    opt => opt.Ignore()
+                    opt => opt.MapFrom(src => src.CommissionStatus.Description)
                 );
         }
         private void NewConfigManagerRequestToConfigManagerEntityMap()
