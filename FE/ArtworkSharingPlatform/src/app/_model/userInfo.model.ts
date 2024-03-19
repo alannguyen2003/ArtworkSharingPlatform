@@ -6,7 +6,7 @@ export interface UserInfo {
     description: string,
     status: number,
     role: string,
-    remaningCredit: number,
+    remainingCredit: number,
     packageId: number,
     userImageUrl: string
 }

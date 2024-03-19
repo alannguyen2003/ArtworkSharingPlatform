@@ -10,9 +10,6 @@ namespace ArtworkSharingPlatform.DataTransferLayer
         [Required]
         public decimal Price { get; set; }
         [Required]
-        [Range(0, int.MaxValue, ErrorMessage = "ReleaseCount must be greater than or equal to 0")]
-        public int ReleaseCount { get; set; }
-        [Required]
         public int OwnerId { get; set; }
         [Required]
         public DateTime CreatedDate { get; set; }

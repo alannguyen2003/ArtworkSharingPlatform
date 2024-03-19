@@ -26,19 +26,6 @@
           </div>
         </div>
         <div class="col-span-full sm:col-span-3">
-          <label for="releaseCount" class="block text-sm font-medium">Release Count</label>
-          <span class="text text-danger" *ngIf="releaseCount.invalid && releaseCount.touched">Please enter release count for this artwork</span>
-          <div class="flex">
-            <input type="number"
-                   name="releaseCount"
-                   id="releaseCount"
-                   #releaseCount="ngModel"
-                   [(ngModel)]="artwork.releaseCount"
-                   required
-                   class="flex flex-1 border-gray-500 sm:text-sm rounded-md focus:ri dark:border-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ri">
-          </div>
-        </div>
-        <div class="col-span-full sm:col-span-3">
           <label for="price" class="block text-sm font-medium">Price</label>
           <span class="text text-danger" *ngIf="price.invalid && price.touched">Please enter valid price</span>
           <div class="flex">

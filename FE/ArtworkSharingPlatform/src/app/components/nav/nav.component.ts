@@ -2,6 +2,13 @@ import {Component, ElementRef, OnDestroy, OnInit} from '@angular/core';
 import {Location} from "@angular/common";
 import {AccountService} from "../../_services/account.service";
 import {Router} from "@angular/router";
+import {Config} from "../../_model/config.model";
+import {ConfigService} from "../../_services/config.service";
+import {UserService} from "../../_services/user.service";
+import {UserInfo} from "../../_model/userInfo.model";
+import {take} from "rxjs";
+import {User} from "../../_model/user.model";
+import {LocalStorageService} from "../../_services/local-storage.service";
 
 @Component({
   selector: 'app-nav',
@@ -9,7 +16,17 @@ import {Router} from "@angular/router";
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent {
-  constructor(public accountService: AccountService, private router: Router) {
+  userInfo: UserInfo;
+  user: User | undefined;
+  constructor(public accountService: AccountService,
+              private userService: UserService,
+              private router: Router,
+              private localStorage: LocalStorageService) {
+    this.user = localStorage.getDataFromLocal("user");
+    this.userService.getRemainingCredits(this.user?.email).subscribe(response => {
+      this.userInfo = response;
+      console.log(this.userInfo)
+    })
   }
 
   logout() {

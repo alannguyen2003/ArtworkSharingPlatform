@@ -1,4 +1,5 @@
-﻿using ArtworkSharingPlatform.Domain.Entities.Transactions;
+﻿using ArtworkSharingPlatform.Domain.Entities.Artworks;
+using ArtworkSharingPlatform.Domain.Entities.Transactions;
 using ArtworkSharingPlatform.Domain.Migrations;
 using ArtworkSharingPlatform.Repository.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -44,6 +45,14 @@ namespace ArtworkSharingPlatform.Repository.Repository
                 throw new Exception(ex.Message);
             }
             return transaction;
+        }
+        public async Task AddTransaction(Transaction transaction)
+        {
+            if (transaction != null)
+            {
+                await _dbContext.Transactions.AddAsync(transaction);
+                await _dbContext.SaveChangesAsync();
+            }
         }
     }
 }

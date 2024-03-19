@@ -51,6 +51,7 @@ const routes: Routes = [
     children: [
       { path: 'dashboard', component: AdminDashboardComponent },
       { path: 'user-management/user-list', component: UserListComponent },
+      { path: 'user-detail/:email', component: UserDetailComponent },
       { path: 'user-management/user-create', component: UserCreateComponent },
       { path: 'user-update/:email', component: UserUpdateComponent },
       { path: 'artwork-management/artwork-list', component: ArtworkListComponent },

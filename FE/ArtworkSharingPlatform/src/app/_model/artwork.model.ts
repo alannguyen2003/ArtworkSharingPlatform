@@ -11,7 +11,6 @@ export interface Artwork {
   genreId: number;
   genreName: string
   price: number;
-  releaseCount: number;
   user: User;
   artworkImages: ArtworkImage[];
   likes: ArtworkLike[];
