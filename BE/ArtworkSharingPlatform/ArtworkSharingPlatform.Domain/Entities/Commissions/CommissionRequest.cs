@@ -8,9 +8,9 @@ namespace ArtworkSharingPlatform.Domain.Entities.Commissions;
 
 public class CommissionRequest : BaseEntity
 {
-    [Column(TypeName = "decimal(10,2)")] public decimal MinPrice { get; set; }
-    [Column(TypeName = "decimal(10,2)")] public decimal MaxPrice { get; set; }
-    [Column(TypeName = "decimal(10,2)")] public decimal ActualPrice { get; set; }
+    [Column(TypeName = "decimal(18,2)")] public decimal MinPrice { get; set; }
+    [Column(TypeName = "decimal(18,2)")] public decimal MaxPrice { get; set; }
+    [Column(TypeName = "decimal(18,2)")] public decimal ActualPrice { get; set; }
     public string? RequestDescription { get; set; }
     public string? NotAcceptedReason { get; set; }
     public DateTime RequestDate { get; set; }

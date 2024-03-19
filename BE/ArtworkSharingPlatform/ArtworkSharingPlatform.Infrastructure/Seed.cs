@@ -23,8 +23,17 @@ namespace ArtworkSharingPlatform.Infrastructure
             {
                 new Genre {Name = "Landscape"},
                 new Genre {Name = "Portrait"},
-                new Genre {Name = "Anime"},
-                new Genre {Name = "Fiction"}
+                new Genre {Name = "Sculpture"},
+                new Genre {Name = "Illustration"},
+                new Genre {Name = "Textile Art"},
+                new Genre {Name = "Wood Sculpture"},
+                new Genre {Name = "Expressionism"},
+                new Genre {Name = "Abstract Art"},
+                new Genre {Name = "Surrealism"},
+                new Genre {Name = "Realism Art"},
+                new Genre {Name = "Animal Art"},
+                new Genre {Name = "History Painting"}
+
             };
             foreach (var genre in genres)
             {
@@ -226,6 +235,38 @@ namespace ArtworkSharingPlatform.Infrastructure
             };
             await context.ConfigManagers.AddAsync(config);
             await context.SaveChangesAsync();   
+        }
+
+        public static async Task SeedCommissionRequest(ArtworkSharingPlatformDbContext context)
+        {
+            if (await context.CommissionRequests.AnyAsync()) { return; }
+
+            var commissionRequest = await File.ReadAllTextAsync("../ArtworkSharingPlatform.Infrastructure/CommissionRequestSeed.json");
+            var jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var commissions = JsonSerializer.Deserialize<List<CommissionRequest>>(commissionRequest, jsonOptions);
+
+            foreach (var com in commissions)
+            {
+                await context.CommissionRequests.AddAsync(com);
+            }
+
+            await context.SaveChangesAsync();
+        }
+
+        public static async Task SeedCommissionImage(ArtworkSharingPlatformDbContext context)
+        {
+            if (await context.CommissionImages.AnyAsync()) { return; }
+
+            var commissionRequest = await File.ReadAllTextAsync("../ArtworkSharingPlatform.Infrastructure/CommissionImageSeed.json");
+            var jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var commissions = JsonSerializer.Deserialize<List<CommissionImage>>(commissionRequest, jsonOptions);
+
+            foreach (var image in commissions)
+            {
+                await context.CommissionImages.AddAsync(image);
+            }
+
+            await context.SaveChangesAsync();
         }
     }
 }

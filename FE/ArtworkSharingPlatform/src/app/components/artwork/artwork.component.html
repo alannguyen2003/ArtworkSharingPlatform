@@ -1,17 +1,14 @@
 <section class="dark:bg-gray-800 dark:text-gray-100">
-  <form #filterForm="ngForm" (ngSubmit)="loadArtworks()" autocomplete="off"
-    class="container flex flex-col mx-auto space-y-12" *ngIf="userParams">
+  <form #filterForm="ngForm" (ngSubmit)="loadArtworks()" autocomplete="off" class=" flex flex-col mx-0 space-y-12"
+    *ngIf="userParams">
     <fieldset class="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm dark:bg-gray-950">
-      <div class="space-y-2 col-span-full lg:col-span-1">
-        <p class="text-3xl font-medium">Artworks</p>
-      </div>
-
-      <div class="col-span-3">
+      <div class="space-y-2 col-span-full lg:col-span-12">
         <div class="row">
-          <!--Search Box-->
-          <div class="input-group col-1 w-10/12 rounded border border-primary p-0">
+          <!--Search bar-->
+          <p class="text-3xl font-medium col-3 pl-16">Artworks</p>
+          <div class="input-group col-3 w-3/5 rounded p-0">
             <div
-              class="rounded-lg absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none input-group-addon">
+              class="rounded-lg absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none input-group-addon border-0">
 
               <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
@@ -29,7 +26,7 @@
           </div>
 
           <!--Price Filter dropdown-->
-          <div ngbDropdown class="dropdown col">
+          <div ngbDropdown class="dropdown col-1">
             <button class="btn btn-secondary" id="priceFilterDropdown" ngbDropdownToggle>Price Filter</button>
             <div ngbDropdownMenu aria-labelledby="priceFilterDropdown">
               <!-- Filter Order -->
@@ -57,46 +54,20 @@
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="flex flex-wrap items-start justify-center mt-3 px-0">
-            <!-- <a *ngFor="let genre of genres" style="cursor:pointer;" (click)="onGenreSelected(genre.id)"
-              [class.is-selected]="isSelectedGenre(genre.id)"
-              class="relative px-3 py-1 m-1 text-sm rounded-md shadow-sm sm:py-2 w-48 justify-center
-              sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50 hover:ring-blue-400 text-gray-50 bg-gray-600 no-underline"> -->
-            <a *ngFor="let genre of genres" style="cursor:pointer;" (click)="onGenreSelected(genre.id)"
-              [class.is-selected]="isSelectedGenre(genre.id)" class="flex pt-2 align-middle justify-center mx-3 text-sm rounded-md shadow-sm sm:py-2 w-48 h-10
-              sm:text-base ring ring-transparent group md:px-3 hover:ring hover:ring-opacity-50
-              focus:ring-opacity-50 hover:ring-blue-400 text-gray-50 bg-gray-600 no-underline">
-              <span style="font-size: 1.2rem;">
-                {{genre.name}}
-              </span>
-            </a>
-          </div>
+      </div>
+      <div class="lg:col-span-12">
+        <div class="flex flex-wrap items-start justify-center mt-3 px-0">
+          <a *ngFor="let genre of genres" style="cursor:pointer;" (click)="onGenreSelected(genre.id)"
+            [class.is-selected]="isSelectedGenre(genre.id)" class="flex pt-2 align-middle justify-center 
+                          mx-3 my-1 text-sm rounded-md shadow-sm sm:py-2 w-48 h-10
+                          sm:text-base ring ring-transparent group md:px-3 hover:ring hover:ring-opacity-50 
+                          focus:ring-opacity-50 hover:ring-blue-400 text-gray-50 bg-gray-600 no-underline">
+            <span style="font-size: 1.2rem;">
+              {{genre.name}}
+            </span>
+          </a>
         </div>
       </div>
-
-
-      <!--<div class="col-span-full sm:col-span-3 form-outline">
-          <label class="text-sm">Min Price</label>
-          <input type="number" placeholder="Min Price" name="minPrice" [(ngModel)]="userParams.minPrice"
-            #minPrice="ngModel"
-            class="form-control w-full rounded-md h-2/3 focus:ring focus:ri focus:ri dark:border-gray-700 dark:text-gray-900">
-        </div>
-        <div class="col-span-full sm:col-span-3">
-          <label class="text-sm">Max Price</label>
-          <input type="text" placeholder="Max Price" name="maxPrice" [(ngModel)]="userParams.maxPrice"
-            #maxPrice="ngModel"
-            class="form-control w-full h-2/3 rounded-md focus:ring focus:ri focus:ri dark:border-gray-700 dark:text-gray-900">
-        </div>
-        <div class="col-span-full">
-          <label class="text-sm">Price Order</label>
-          <select name="orderBy" [(ngModel)]="userParams.orderBy"
-            class="form-control w-full h-2/3 rounded-md focus:ring focus:ri focus:ri dark:border-gray-700 dark:text-gray-900">
-            <option *ngFor="let orderPrice of orderPriceList" [value]="orderPrice.value">
-              {{orderPrice.display}}
-            </option>
-          </select>
-        </div> -->
     </fieldset>
   </form>
   <div class="container-fluid p-0 m-0" *ngIf="artworks.length > 0">

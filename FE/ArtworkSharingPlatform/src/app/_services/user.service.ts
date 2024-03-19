@@ -11,7 +11,6 @@ import {UserImage} from "../_model/userImage.model";
 export class UserService {
   baseUrl = environment.apiUrl;
   constructor(private http: HttpClient) { }
-
   getUserProfile(email: string){
     return this.http.get<UserProfile>(this.baseUrl + 'user/artist/' + email);
   }

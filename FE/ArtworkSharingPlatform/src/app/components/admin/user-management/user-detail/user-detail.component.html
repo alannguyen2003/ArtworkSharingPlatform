@@ -1,0 +1,20 @@
+<div class="container mx-auto mt-8 p-4 bg-gray-800 rounded-lg shadow">
+  <h2 class="text-white text-3xl font-bold text-center mb-6">User Detail</h2>
+  <div class="flex flex-col md:flex-row justify-center items-center md:items-start gap-8">
+    <img src="{{ user.userImageUrl }}" alt="User Image" class="w-48 h-48 object-cover rounded-full border-2 border-white shadow-lg">
+    <div class="overflow-x-auto w-full max-w-md">
+      <table class="table-auto w-full text-white">
+        <tbody>
+          <tr><td class="border px-4 py-2">Name</td><td class="border px-4 py-2">{{ user.name }}</td></tr>
+          <tr><td class="border px-4 py-2">Email</td><td class="border px-4 py-2">{{ user.email }}</td></tr>
+          <tr><td class="border px-4 py-2">Phone Number</td><td class="border px-4 py-2">{{ user.phoneNumber }}</td></tr>
+          <tr><td class="border px-4 py-2">Description</td><td class="border px-4 py-2">{{ user.description }}</td></tr>
+          <tr><td class="border px-4 py-2">Status</td><td class="border px-4 py-2"><span class="{{ user.status === 1 ? 'bg-green-500' : 'bg-red-500' }} text-white px-2 py-1 rounded">{{ user.status === 1 ? 'Available' : 'Unavailable' }}</span></td></tr>
+          <tr><td class="border px-4 py-2">Role</td><td class="border px-4 py-2">{{ user.role }}</td></tr>
+          <tr><td class="border px-4 py-2">Remaining Credit</td><td class="border px-4 py-2">{{ user.remaningCredit }}</td></tr>
+          <tr><td class="border px-4 py-2">Package ID</td><td class="border px-4 py-2">{{ user.packageId }}</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

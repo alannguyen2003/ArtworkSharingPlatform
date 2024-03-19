@@ -1,0 +1,54 @@
+[
+  {
+    "MinPrice": 100000,
+    "MaxPrice": 500000,
+    "ActualPrice": 450000,
+    "RequestDescription": "I want to draw a landscape art with background is mountain and lake",
+    "NotAcceptedReason": "",
+    "RequestDate": "2024-03-15",
+    "IsProgressStatus": 1,
+    "SenderId": 1,
+    "ReceiverId": 13,
+    "GenreId": 1,
+    "CommissionStatusId": 3
+  },
+  {
+    "MinPrice": 300000,
+    "MaxPrice": 900000,
+    "ActualPrice": 1000000,
+    "RequestDescription": "I want to draw a fiction art with background is universe",
+    "NotAcceptedReason": "I cannot accept this because the requirement is not match with the price",
+    "RequestDate": "2024-03-16",
+    "IsProgressStatus": 0,
+    "SenderId": 3,
+    "ReceiverId": 13,
+    "GenreId": 4,
+    "CommissionStatusId": 4
+  },
+  {
+    "MinPrice": 1000000,
+    "MaxPrice": 3000000,
+    "ActualPrice": 2500000,
+    "RequestDescription": "I want to draw an anime art with 2 characters fighting with monsters",
+    "NotAcceptedReason": "",
+    "RequestDate": "2024-03-12",
+    "IsProgressStatus": 1,
+    "SenderId": 6,
+    "ReceiverId": 13,
+    "GenreId": 3,
+    "CommissionStatusId": 2
+  },
+  {
+    "MinPrice": 250000,
+    "MaxPrice": 700000,
+    "ActualPrice": 600000,
+    "RequestDescription": "I want to draw a portrait art for my grandma",
+    "NotAcceptedReason": "",
+    "RequestDate": "2024-03-17",
+    "IsProgressStatus": 1,
+    "SenderId": 8,
+    "ReceiverId": 13,
+    "GenreId": 2,
+    "CommissionStatusId": 1
+  }
+]

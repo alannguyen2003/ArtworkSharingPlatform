@@ -31,8 +31,9 @@ namespace ArtworkSharingPlatform.Repository.Interfaces
 		Task<IEnumerable<Purchase>> ListBoughtArtwork(int buyUserId);
 		Task<IEnumerable<Purchase>> ListSoldArtwork(int soldUserId);
 		Task AddPurchase(Purchase purchase);
-		Task ActiveArtworkStatus(int artworkId);
+		Task ActiveArtworkStatus(int artworkId, int userId);
 		Task<IEnumerable<Purchase>> ListHistoryPurchaseArtwork(int artworkId);
+		Task<bool> CreditAvailable(int userId);
 
     }
 }

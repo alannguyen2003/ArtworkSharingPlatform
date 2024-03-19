@@ -1,0 +1,58 @@
+
+  <div class="container mt-4 dark:bg-gray-800">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-white text-3xl font-bold">User List</h2>
+      <button routerLink="/admin/user-management/user-create" class="flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
+        Add New User
+      </button>
+    </div>
+  <table class="table-auto w-full mt-2 rounded-md">
+    <thead class="bg-gray-700 text-white">
+      <tr>
+        <th class="px-4 py-2">No.</th>
+        <!-- Thêm cột số thứ tự -->
+        <th class="px-4 py-2 text-center">Name</th>
+        <th class="px-4 py-2 text-center">Email</th>
+        <th class="px-4 py-2 text-center ">Phone Number</th>
+        <th class="px-4 py-2 text-center">Description</th>
+        <th class="px-4 py-2 text-center">Role</th>
+        <th class="px-4 py-2 text-center">Status</th>
+        <th class="px-4 py-2 text-center">Actions</th>
+        <!-- Thêm cột Actions cho nút Edit -->
+      </tr>
+    </thead>
+    <tbody class="bg-gray-800 text-white">
+      <tr
+        *ngFor="let user of users; let i = index"
+        class="border-b-2 border-gray-700"
+      >
+        <!-- Tăng độ đậm của đường kẻ -->
+        <td class="px-4 py-2">{{ i + 1 }}</td>
+        <!-- Hiển thị số thứ tự -->
+        <td class="px-4 py-2 text-center">{{ user.name }}</td>
+        <td class="px-4 py-2">{{ user.email }}</td>
+        <td class="px-4 py-2">{{ user.phoneNumber }}</td>
+        <td class="px-4 py-2">{{ user.description }}</td>
+        <td class="px-4 py-2">{{ user.role }}</td>
+        <!-- For Status -->
+        <td class="px-4 py-2 text-center">
+          <span [ngClass]="{'bg-green-500': user.status === 1, 'bg-red-500': user.status === 0}" class="relative inline-block px-3 py-1 font-semibold text-white leading-tight rounded-full">
+            <span aria-hidden="true" class="absolute inset-0 opacity-50 rounded-full"></span>
+            <span class="relative">{{ user.status === 1 ? 'Available' : 'Unavailable' }}</span>
+          </span>
+        </td>       
+        <!-- For Actions -->
+        <td class="px-4 py-2 text-sm text-center">
+          <div class="inline-flex gap-2">
+            <a routerLink="/admin/user-detail/{{user.email}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline text-xs">View</a>
+            <a routerLink="/admin/user-update/{{user.email}}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline text-xs">Edit</a>
+            <a (click)="deleteUser(user.email)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline text-xs">Delete</a>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

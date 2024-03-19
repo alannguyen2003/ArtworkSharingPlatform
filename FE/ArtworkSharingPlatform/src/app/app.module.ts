@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -38,6 +37,11 @@ import { ArtworkMessageComponent } from "./components/artwork/artwork-message/ar
 import { GalleryComponent } from "ng-gallery";
 import { ReportModalComponent } from './components/modal/report-modal/report-modal.component';
 import 'froala-editor/js/plugins.pkgd.min.js';
+import { UserListComponent } from './components/admin/user-management/user-list/user-list.component';
+import { UserDetailComponent } from './components/admin/user-management/user-detail/user-detail.component';
+import { UserCreateComponent } from './components/admin/user-management/user-create/user-create.component';
+import { ArtworkListComponent } from './components/admin/artwork-management/artwork-list/artwork-list.component';
+import { UserUpdateComponent } from './components/admin/user-management/user-update/user-update.component';
 import { OrderConfirmationComponent } from './components/checkout/order-confirmation/order-confirmation.component';
 import { OrderConfirmationFailedComponent } from './components/checkout/order-confirmation-failed/order-confirmation-failed.component';
 import { ChangeAvatarComponent } from './components/profile-edit/change-avatar/change-avatar.component';
@@ -45,6 +49,9 @@ import { CommonModule } from '@angular/common';
 import { ArtworkCarouselComponent } from './components/home/artwork-carousel/artwork-carousel.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { AdminLayoutComponent } from './components/admin/admin-layout/admin-layout.component';
+import { AdminSidebarComponent } from './components/admin/admin-sidebar/admin-sidebar.component';
+import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 
 
 @NgModule({
@@ -73,11 +80,20 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
     ArtistGalleryComponent,
     ArtworkEditComponent,
     ReportModalComponent,
+    UserListComponent,
+    UserDetailComponent,
+    UserCreateComponent,
+    ArtworkListComponent,
+    UserUpdateComponent,
+
     OrderConfirmationComponent,
     OrderConfirmationFailedComponent,
     ChangeAvatarComponent,
     ArtworkCarouselComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    AdminLayoutComponent,
+    AdminSidebarComponent,
+    AdminDashboardComponent
   ],
   imports: [
     BrowserModule,
