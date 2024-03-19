@@ -52,6 +52,16 @@ namespace ArtworkSharingPlatform.Repository.Repository
                 .FirstOrDefault()!;
         }
 
+        public User GetByEmail(string email)
+        {
+
+            return _dbContext?.Users?.Where(user => user.Email == email)
+                .Include(u => u.UserRoles)
+                .ThenInclude(ur => ur.Role)
+                .Include(u => u.UserImage)
+                .FirstOrDefault()!;
+        }
+
         public IQueryable<User> GetAll()
         {
             return _dbContext.Users.Include(u => u.UserRoles).Include(u => u.UserImage);
@@ -125,6 +135,27 @@ namespace ArtworkSharingPlatform.Repository.Repository
             try
             {
                 var u = await _userManager.FindByEmailAsync(user.Email);
+                if (u != null)
+                {
+                    u.Status = 0;
+                    await _userManager.UpdateAsync(u);
+                }
+                else
+                {
+                    throw new Exception("User is not exist");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task DeleteUserAdminByEmail(string email)
+        {
+            try
+            {
+                var u = await _userManager.FindByEmailAsync(email);
                 if (u != null)
                 {
                     u.Status = 0;

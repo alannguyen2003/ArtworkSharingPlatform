@@ -1,0 +1,93 @@
+<div class="container mt-4 dark:bg-gray-800 p-4">
+  <h2 class="text-white mb-4 text-3xl font-bold text-center md:text-left">
+    Edit User
+  </h2>
+  <div class="flex justify-center">
+    <form
+      [formGroup]="updateUserForm"
+      (ngSubmit)="updateUser()"
+      class="space-y-4 max-w-md w-full"
+    >
+      <div class="mb-3">
+        <label for="email" class="form-label text-white">Email</label>
+        <input
+          type="email"
+          id="email"
+          class="form-control readonly-bg custom-disabled max-w-sm"
+          formControlName="email"
+          readonly
+        />
+      </div>
+
+      <!-- Name -->
+      <div class="mb-3">
+        <label for="name" class="form-label text-white">Name</label>
+        <input
+          type="text"
+          id="name"
+          class="form-control bg-gray-700 text-white border-gray-600 focus:bg-gray-600 focus:border-gray-700 max-w-sm"
+          formControlName="name"
+        />
+      </div>
+
+      <!-- Phone Number -->
+      <div class="mb-3">
+        <div>
+          <label for="phoneNumber" class="form-label text-white"
+            >Phone Number</label
+          >
+          <input
+            type="text"
+            id="phoneNumber"
+            class="form-control bg-gray-700 text-white border-gray-600 focus:bg-gray-600 focus:border-gray-700 max-w-sm"
+            formControlName="phoneNumber"
+          />
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="mb-3">
+        <div>
+          <label for="description" class="form-label text-white"
+            >Description</label
+          >
+          <textarea
+            id="description"
+            class="form-control bg-gray-700 text-white border-gray-600 focus:bg-gray-600 focus:border-gray-700 max-w-sm"
+            formControlName="description"
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- Status -->
+      <div class="mb-3">
+        <label for="status" class="form-label text-white">Status</label>
+        <select
+          id="status"
+          class="form-control bg-gray-700 text-white border-gray-600 focus:bg-gray-600 focus:border-gray-700 max-w-sm"
+          formControlName="status"
+        >
+          <option value="1">Available</option>
+          <option value="0">Unavailable</option>
+        </select>
+      </div>
+
+      <!-- Remaning Credit -->
+      <div class="mb-3">
+        <label for="remaningCredit" class="form-label text-white"
+          >Remaining Credit</label
+        >
+        <input
+          type="number"
+          id="remaningCredit"
+          class="form-control bg-gray-700 text-white border-gray-600 focus:bg-gray-600 focus:border-gray-700 max-w-sm"
+          formControlName="remaningCredit"
+        />
+      </div>
+
+      <div>
+        <button type="submit" class="btn btn-success">Update</button>
+      </div>
+    </form>
+  </div>
+</div>
