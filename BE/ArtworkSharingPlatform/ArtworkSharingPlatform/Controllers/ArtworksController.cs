@@ -89,16 +89,23 @@ namespace ArtworkSharingHost.Controllers
 		[HttpPost]
         public async Task<IActionResult> AddArtwork([FromBody] ArtworkToAddDTO artwork)
         {
-            artwork.CreatedDate = DateTime.UtcNow;
-            artwork.OwnerId = User.GetUserId();
-            artwork.Status = 1;
-            var flag = artwork.ArtworkImages.Any(x => x.IsThumbnail == true);
-            if (!flag)
+            try
             {
-                artwork.ArtworkImages.First().IsThumbnail = true;
+				artwork.CreatedDate = DateTime.UtcNow;
+				artwork.OwnerId = User.GetUserId();
+				artwork.Status = 1;
+				var flag = artwork.ArtworkImages.Any(x => x.IsThumbnail == true);
+				if (!flag)
+				{
+					artwork.ArtworkImages.First().IsThumbnail = true;
+				}
+				await _artworkService.AddArtwork(artwork);
+				return Ok(artwork);
+			}
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
-            await _artworkService.AddArtwork(artwork);
-            return Ok(artwork);
         }
 
         [HttpPost("like")]
@@ -143,7 +150,15 @@ namespace ArtworkSharingHost.Controllers
             var comments = await _artworkService.GetArtworkComments(artworkId);
             return Ok(comments);
         }
-        [HttpPost("comment")]
+		[HttpGet("comment-number/{artworkId}")]
+		public async Task<IActionResult> GetArtworkCommentNumber(int artworkId)
+		{
+			var comments = await _artworkService.GetArtworkComments(artworkId);
+            var result = 0;
+            if(comments != null) result = comments.Count();
+            return Ok(result);
+		}
+		[HttpPost("comment")]
         public async Task<IActionResult> UserComment([FromBody] string content, int artworkId)
         {
             var comment = new ArtworkCommentDTO

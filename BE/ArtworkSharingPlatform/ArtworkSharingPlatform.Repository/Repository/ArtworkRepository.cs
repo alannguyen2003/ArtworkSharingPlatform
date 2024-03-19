@@ -112,6 +112,7 @@ namespace ArtworkSharingPlatform.Repository.Repository
             var user = _userRepository.GetById(artwork.OwnerId);
             if (user != null)
             {
+                if (user.RemainingCredit <= 0) throw new Exception("Insuficient credit");
                 user.RemainingCredit -= 1;
                 await _context.SaveChangesAsync();
             }

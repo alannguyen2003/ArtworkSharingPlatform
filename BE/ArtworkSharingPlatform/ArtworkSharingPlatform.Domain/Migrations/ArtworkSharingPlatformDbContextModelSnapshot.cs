@@ -246,7 +246,7 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("ActualPrice")
-                        .HasColumnType("decimal(10,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("CommissionStatusId")
                         .HasColumnType("int");
@@ -258,10 +258,10 @@ namespace ArtworkSharingPlatform.Domain.Migrations
                         .HasColumnType("tinyint");
 
                     b.Property<decimal>("MaxPrice")
-                        .HasColumnType("decimal(10,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("MinPrice")
-                        .HasColumnType("decimal(10,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("NotAcceptedReason")
                         .HasColumnType("nvarchar(max)");

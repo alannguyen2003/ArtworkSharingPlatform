@@ -236,5 +236,37 @@ namespace ArtworkSharingPlatform.Infrastructure
             await context.ConfigManagers.AddAsync(config);
             await context.SaveChangesAsync();   
         }
+
+        public static async Task SeedCommissionRequest(ArtworkSharingPlatformDbContext context)
+        {
+            if (await context.CommissionRequests.AnyAsync()) { return; }
+
+            var commissionRequest = await File.ReadAllTextAsync("../ArtworkSharingPlatform.Infrastructure/CommissionRequestSeed.json");
+            var jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var commissions = JsonSerializer.Deserialize<List<CommissionRequest>>(commissionRequest, jsonOptions);
+
+            foreach (var com in commissions)
+            {
+                await context.CommissionRequests.AddAsync(com);
+            }
+
+            await context.SaveChangesAsync();
+        }
+
+        public static async Task SeedCommissionImage(ArtworkSharingPlatformDbContext context)
+        {
+            if (await context.CommissionImages.AnyAsync()) { return; }
+
+            var commissionRequest = await File.ReadAllTextAsync("../ArtworkSharingPlatform.Infrastructure/CommissionImageSeed.json");
+            var jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var commissions = JsonSerializer.Deserialize<List<CommissionImage>>(commissionRequest, jsonOptions);
+
+            foreach (var image in commissions)
+            {
+                await context.CommissionImages.AddAsync(image);
+            }
+
+            await context.SaveChangesAsync();
+        }
     }
 }
