@@ -89,7 +89,6 @@ public class StripePaymentController : ControllerBase
 	public async Task<IActionResult> WebHook()
 	{
 		var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
-
 		try
 		{
 			var stripeEvent = EventUtility.ConstructEvent(
