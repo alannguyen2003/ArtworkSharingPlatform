@@ -1,7 +1,7 @@
 [
   {
     "Title": "eu sit ut",
-    "Description": "Dolor reprehenderit ullamco velit occaecat pariatur ea ex nostrud esse eu dolore sint occaecat. Mollit labore dolore deserunt incididunt elit. Ad et qui ex nulla voluptate minim aliqua ut cupidatat adipisicing aute qui Lorem. Laboris dolor ut voluptate commodo occaecat ut irure proident laborum. Occaecat anim enim excepteur et consectetur quis non aliquip laborum pariatur quis sint et veniam. Aute dolor mollit exercitation dolore deserunt occaecat officia ut sit mollit cillum excepteur fugiat.\r\n",
+    "Description": "Portrait art \r\n",
     "Price": 1062288,
     "CreatedDate": "2023-03-09",
     "GenreId": 2,
@@ -9,7 +9,8 @@
     "ReleaseCount": 0,
     "ArtworkImages": [
       {
-        "ImageUrl": "https://paintable.cc/wp-content/uploads/2015/11/002-yanjuncheng.jpg"
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/z9cfarg57drolumrnhd3",
+        "PublicId": "asp-net7/z9cfarg57drolumrnhd3"
       }
     ],
     "Status": 1
@@ -64,7 +65,7 @@
   },
   {
     "Title": "Story of the Night",
-    "Description": "Deserunt nisi nostrud fugiat veniam in voluptate amet enim cillum Lorem duis esse qui in. Sunt fugiat officia incididunt in proident enim tempor fugiat fugiat elit commodo laborum sint ipsum. Irure in pariatur dolor pariatur fugiat nulla velit ullamco non eiusmod sit labore esse eu. In officia ipsum quis cillum voluptate qui reprehenderit cupidatat consequat do eiusmod.\r\n",
+    "Description": ".\r\n",
     "Price": 18000000,
     "CreatedDate": "2023-10-15",
     "GenreId": 4,
@@ -80,7 +81,7 @@
   },
   {
     "Title": "consequat adipisicing culpa",
-    "Description": "Est magna ullamco sint ullamco proident proident. Quis dolor sit nisi et laboris est ullamco incididunt do sint dolor est. Dolor ut amet incididunt elit reprehenderit ad elit dolor laboris cupidatat sunt esse aliqua eu. Esse deserunt deserunt irure ad laborum. Nisi sint consectetur commodo exercitation proident labore et reprehenderit quis in exercitation nulla occaecat. Aute duis adipisicing aute exercitation sint voluptate culpa irure exercitation.\r\n",
+    "Description": "This is Landscape Art \r\n",
     "Price": 7726418,
     "CreatedDate": "2023-09-15",
     "GenreId": 1,
@@ -88,7 +89,8 @@
     "ReleaseCount": 0,
     "ArtworkImages": [
       {
-        "ImageUrl": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/1f802150-66ea-43cc-8f5b-a0ceb24350ea/dfvhqda-74b5c095-c477-4cd1-a4ed-4687c57a8b80.png/v1/fit/w_828,h_478,q_70,strp/thank_you_wallpaper_by_elffyie_dfvhqda-414w-2x.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTUwNiIsInBhdGgiOiJcL2ZcLzFmODAyMTUwLTY2ZWEtNDNjYy04ZjViLWEwY2ViMjQzNTBlYVwvZGZ2aHFkYS03NGI1YzA5NS1jNDc3LTRjZDEtYTRlZC00Njg3YzU3YThiODAucG5nIiwid2lkdGgiOiI8PTI2MTQifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.d0oNiZ8Mu26nEjfV_7n5ORTNjvDJMcondDKxlQdPT1s"
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/e18exvckty0c0oir2ddp",
+        "PublicId": "asp-net7/e18exvckty0c0oir2ddp"
       }
     ],
     "Status": 1
@@ -103,7 +105,8 @@
     "ReleaseCount": 0,
     "ArtworkImages": [
       {
-        "ImageUrl": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/ef3a4158-e0e0-418a-9e74-d273edb3a686/dfzf4vz-440a27d2-6324-4b20-8012-24fbbc719bea.png/v1/fill/w_1192,h_670,q_70,strp/serene_meadows_by_wopgnop_dfzf4vz-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6IlwvZlwvZWYzYTQxNTgtZTBlMC00MThhLTllNzQtZDI3M2VkYjNhNjg2XC9kZnpmNHZ6LTQ0MGEyN2QyLTYzMjQtNGIyMC04MDEyLTI0ZmJiYzcxOWJlYS5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.kyr78ehjMHaQ6R1--7a4nT9V6Sz36Xlapm1lCmUUrks"
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/zjmevitlgj3avkqss0oz",
+        "PublicId": "asp-net7/zjmevitlgj3avkqss0oz"
       }
     ],
     "Status": 1
@@ -118,7 +121,8 @@
     "ReleaseCount": 0,
     "ArtworkImages": [
       {
-        "ImageUrl": "https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/ab723877268563.5c829061bd6ea.jpg"
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/tsy1k8y4nbv1gdebljcp",
+        "PublicId": "asp-net7/tsy1k8y4nbv1gdebljcp"
       }
     ],
     "Status": 1
@@ -133,7 +137,8 @@
     "ReleaseCount": 0,
     "ArtworkImages": [
       {
-        "ImageUrl": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/b6296ab5-9590-4f4b-826a-14d30a86a131/df4xrm3-f5c23434-c542-4bab-99f3-c0bce04a4ec0.jpg/v1/fill/w_1152,h_694,q_70,strp/new_course_digital_landscape_painting___next_week__by_michaeladamidisart_df4xrm3-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzcxIiwicGF0aCI6IlwvZlwvYjYyOTZhYjUtOTU5MC00ZjRiLTgyNmEtMTRkMzBhODZhMTMxXC9kZjR4cm0zLWY1YzIzNDM0LWM1NDItNGJhYi05OWYzLWMwYmNlMDRhNGVjMC5qcGciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.kK04UYpIRd4hzk7YtvA2qVjDubwP5jIVPD5Ja8W7PKA"
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/i5cmyc9vnk7n0z6lzw1q",
+        "PublicId": "asp-net7/i5cmyc9vnk7n0z6lzw1q"
       }
     ],
     "Status": 1
@@ -148,7 +153,8 @@
     "ReleaseCount": 0,
     "ArtworkImages": [
       {
-        "ImageUrl": "https://paintable.cc/wp-content/uploads/2015/11/034-thiago-januario.jpg"
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/xlddie1sbbxekrcw4c11",
+        "PublicId": "asp-net7/xlddie1sbbxekrcw4c11"
       }
     ],
     "Status": 1

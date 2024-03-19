@@ -136,11 +136,10 @@ namespace ArtworkSharingPlatform.Repository.Repository
 			if (artwork != null)
 			{
 				var index = await _context.Artworks.FindAsync(artwork.Id);
-				index.Status = 1;
 
 				_context.Entry(index).CurrentValues.SetValues(artwork);
-
-				await _context.SaveChangesAsync();
+                index.Status = 1;
+                await _context.SaveChangesAsync();
 			}
 		}
 
@@ -304,7 +303,7 @@ namespace ArtworkSharingPlatform.Repository.Repository
             
             if (purchase == null)
             {
-                return ;
+                return;
             }
             if (artwork == null)
             {
