@@ -141,12 +141,6 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
             .HasForeignKey(t => t.SenderId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<Transaction>()
-        .HasOne(t => t.Receiver)
-        .WithMany(u => u.TransactionReceived)
-        .IsRequired(false)
-        .OnDelete(DeleteBehavior.NoAction);
-
         modelBuilder.Entity<Purchase>()
                 .HasKey(k => new { k.ArtworkId, k.SellUserId, k.BuyUserId });
         modelBuilder.Entity<Purchase>()

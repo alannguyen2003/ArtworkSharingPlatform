@@ -37,7 +37,6 @@ public class User : IdentityUser<int>
     public List<Follow> IsFollowedByUsers { get; set; }
     public List<Report>? Report { get; set; }
     public List<Transaction> TransactionSents { get; set; }
-    public List<Transaction> TransactionReceived { get; set; }
     public List<Purchase> ArtworkHasBought { get; set; }
     public List<Purchase> ArtworkHasSold { get; set; }
 }
