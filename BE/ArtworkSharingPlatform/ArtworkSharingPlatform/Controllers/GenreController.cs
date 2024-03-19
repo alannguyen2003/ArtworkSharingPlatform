@@ -17,10 +17,10 @@ namespace ArtworkSharingHost.Controllers
 		}
 		
 		[HttpGet]
-        [Authorize]
-        public async Task<IActionResult> GetAll()
+    [Authorize]
+    public async Task<IActionResult> GetAll()
 		{
 			return Ok(await _genreService.GetAll());
 		}
-    }
+   }
 }
