@@ -54,6 +54,11 @@ import { AdminSidebarComponent } from './components/admin/admin-sidebar/admin-si
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 import { ConfirmDialogComponent } from './components/modal/confirm-dialog/confirm-dialog.component';
 import { ConfigCreateComponent } from './components/admin/config-magement/config-create/config-create.component';
+import { ReportListComponent } from './components/admin/report-management/report-list/report-list.component';
+import { CommissionListComponent } from './components/admin/commission-management/commission-list/commission-list.component';
+import { CommissionDetailComponent } from './components/admin/commission-management/commission-detail/commission-detail.component';
+import { ReportDetailComponent } from './components/admin/report-management/report-detail/report-detail.component';
+import { ReportUpdateComponent } from './components/admin/report-management/report-update/report-update.component';
 import { ProfileBannerComponent } from './components/user/profile-banner/profile-banner.component';
 import { RequestArtworkComponent } from './components/user/request-artwork/request-artwork.component';
 
@@ -97,6 +102,14 @@ import { RequestArtworkComponent } from './components/user/request-artwork/reque
     AdminLayoutComponent,
     AdminSidebarComponent,
     AdminDashboardComponent,
+    ConfigCreateComponent,
+    ReportListComponent,
+    CommissionListComponent,
+    CommissionDetailComponent,
+    ConfirmDialogComponent,
+    ConfigCreateComponent,
+    ReportDetailComponent,
+    ReportUpdateComponent,
     ConfirmDialogComponent,
     ConfigCreateComponent,
     ProfileBannerComponent,

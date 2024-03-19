@@ -1,42 +1,42 @@
 <div class="container mx-auto mt-8 bg-gray-800 rounded-lg shadow">
     <h2 class="text-white text-3xl font-bold mb-4 text-center">Artwork List</h2>
     <div class="overflow-x-auto">
-      <table class="min-w-full leading-normal">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-auto min-w-full leading-normal">
         <thead>
           <tr>
-            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-xs font-semibold text-white uppercase tracking-wider">No.</th>
-            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-xs font-semibold text-white uppercase tracking-wider">Image</th>
-            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-xs font-semibold text-white uppercase tracking-wider">Title</th>
-            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-xs font-semibold text-white uppercase tracking-wider">Price</th>
-            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-xs font-semibold text-white uppercase tracking-wider">Owner</th>
-            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-xs font-semibold text-white uppercase tracking-wider">Created Date</th>
-            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-xs font-semibold text-white uppercase tracking-wider">Status</th>
-            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-xs font-semibold text-white uppercase tracking-wider">Action</th>
+            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-sm font-semibold text-white uppercase tracking-wider">No.</th>
+            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-sm font-semibold text-white uppercase tracking-wider">Image</th>
+            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-sm font-semibold text-white uppercase tracking-wider">Title</th>
+            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-sm font-semibold text-white uppercase tracking-wider">Price</th>
+            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-sm font-semibold text-white uppercase tracking-wider">Owner</th>
+            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-sm font-semibold text-white uppercase tracking-wider">Created Date</th>
+            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-sm font-semibold text-white uppercase tracking-wider">Status</th>
+            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-sm font-semibold text-white uppercase tracking-wider">Action</th>
           </tr>
         </thead>
         <tbody class="text-white">
           <tr *ngFor="let artwork of artworks; let i = index">
-            <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{i + 1}}</td>
-            <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">
+            <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-md">{{i + 1}}</td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-md">
               <div class="flex items-center justify-center">
                 <img class="w-20 h-20 object-cover rounded-full" src="{{ artwork.imageUrl }}" alt="{{ artwork.title }}">
               </div>
             </td>
-            <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{ artwork.title }}</td>
-            <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{ artwork.price | currency }}</td>
-            <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{ artwork.owner }}</td>
-            <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{ artwork.createdDate | date: 'mediumDate' }}</td>
-            <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">
+            <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-md">{{ artwork.title }}</td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-md">{{ artwork.price | currency }}</td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-md">{{ artwork.owner }}</td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-md">{{ artwork.createdDate | date: 'mediumDate' }}</td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-md">
               <span class="relative inline-block px-3 py-1 font-semibold leading-tight rounded-full" [ngClass]="{'bg-green-500': artwork.status === 1, 'bg-red-500': artwork.status === 0}">
                 <span class="relative">{{ artwork.status === 1 ? 'Active' : 'Inactive' }}</span>
               </span>
             </td>
-            <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-sm text-center">
+            <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-md text-center">
                 <div class="inline-flex gap-2">
-                  <!-- <a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline text-xs">View</a>
-                  <a href="#" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline text-xs">Edit</a> -->
+                  <!-- <a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline text-sm">View</a>
+                  <a href="#" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline text-sm">Edit</a> -->
                   <!-- Trong cột Actions của bảng artwork list -->
-                  <a (click)="deleteArtwork(artwork.id)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline text-xs">Delete</a>
+                  <a (click)="deleteArtwork(artwork.id)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline text-sm">Delete</a>
 
                 </div>
               </td>              

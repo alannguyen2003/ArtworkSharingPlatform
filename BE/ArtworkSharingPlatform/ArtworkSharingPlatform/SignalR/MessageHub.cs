@@ -93,7 +93,8 @@ namespace ArtworkSharingHost.SignalR
             if (await _messageService.SaveChangesAsync())
             {
                 message.Artwork = _mapper.Map<Artwork>(await _artworkService.GetArtworkAsync(createMessageDto.ArtworkId));
-                await Clients.Group(groupName).SendAsync("NewMessage", _mapper.Map<MessageDTO>(message));
+                var messageDto = _mapper.Map<MessageDTO>(message);
+				await Clients.Group(groupName).SendAsync("NewMessage", messageDto);
             }
         }
 

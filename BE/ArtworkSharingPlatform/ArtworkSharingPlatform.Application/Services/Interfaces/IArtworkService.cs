@@ -23,7 +23,7 @@ namespace ArtworkSharingPlatform.Application.Interfaces
         Task<IList<ArtworkDTO>> SearchArtworkByTitle(string search);
         Task<IList<ArtworkDTO>> GetArtistArtwork(int artistId);
         Task<IEnumerable<ArtworkDTO>> SearchArtworkByGenre(int genreId);
-        Task<bool> ConfirmSell(int artworkId, int userId);
+        Task<bool> ConfirmSell(int artworkId, int userId, string buyUserEmail);
         Task<bool> SetThumbnail(int id);
         Task<bool> DeleteArtworkImage(ArtworkImageDTO imageDTO);
         Task<ArtworkImage> AddImageToArtwork(ArtworkImageDTO artworkImageDTO);

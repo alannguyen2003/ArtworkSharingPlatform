@@ -53,7 +53,7 @@ export class UserUpdateComponent implements OnInit {
   }
 
   updateUser() {
-    if (this.updateUserForm.valid) {
+    if (!this.updateUserForm.valid) {
       const formData = this.updateUserForm.getRawValue();
       // Tạo đối tượng UserAdminDTO từ dữ liệu form và bao gồm userImageUrl từ this.user
       const userDto: UserAdmin = {
