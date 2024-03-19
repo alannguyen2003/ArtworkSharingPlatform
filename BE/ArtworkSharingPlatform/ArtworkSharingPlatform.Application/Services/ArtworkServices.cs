@@ -66,6 +66,7 @@ namespace ArtworkSharingPlatform.Application.Services
         public async Task<PagedList<ArtworkDTO>> GetArtworksAsync(UserParams userParams)
 		{
 			var query = _artworkRepository.GetArtworksAsQueryable();
+			query = query.Where(x => x.Status == 1);
 			query = query.Where(x => x.Price >= userParams.MinPrice && x.Price <= userParams.MaxPrice);
 
 			if (userParams.GenreIds != null && userParams.GenreIds.Length > 0)
@@ -81,7 +82,6 @@ namespace ArtworkSharingPlatform.Application.Services
 				"lowPrice" => query.OrderBy(x => x.Price),
 				_ => query.OrderByDescending(x => x.Price)
 			};
-            
 
 			return await PagedList<ArtworkDTO>.CreateAsync(query.AsNoTracking().ProjectTo<ArtworkDTO>(_mapper.ConfigurationProvider),
 															userParams.PageNumber,
@@ -183,9 +183,9 @@ namespace ArtworkSharingPlatform.Application.Services
             return artworkDTOs;
         }
 
-		public async Task<bool> ConfirmSell(int artworkId, int userId)
+		public async Task<bool> ConfirmSell(int artworkId, int userId, string buyUserEmail)
 		{
-			return await _artworkRepository.ConfirmSell(artworkId, userId);
+			return await _artworkRepository.ConfirmSell(artworkId, userId, buyUserEmail);
 		}
 
 		public async Task<IList<ArtworkDTO>> GetArtistArtwork(int artistId)

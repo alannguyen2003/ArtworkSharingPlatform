@@ -2,6 +2,7 @@
 using ArtworkSharingPlatform.DataTransferLayer;
 using ArtworkSharingPlatform.Domain.Entities.Messages;
 using ArtworkSharingPlatform.Domain.Helpers;
+using ArtworkSharingPlatform.Repository.Interfaces;
 using ArtworkSharingPlatform.Repository.Repository.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -12,12 +13,17 @@ namespace ArtworkSharingPlatform.Application.Services
     public class MessageService : IMessageService
     {
         private readonly IMessageRepository _messageRepository;
-        private readonly IMapper _mapper;
+		private readonly IArtworkRepository _artworkRepository;
+		private readonly IMapper _mapper;
 
-        public MessageService(IMessageRepository messageRepository, IMapper mapper)
+        public MessageService(
+            IMessageRepository messageRepository, 
+            IArtworkRepository artworkRepository,
+            IMapper mapper)
         {
             _messageRepository = messageRepository;
-            _mapper = mapper;
+			_artworkRepository = artworkRepository;
+			_mapper = mapper;
         }
         public void AddGroup(Group group)
         {
@@ -112,25 +118,28 @@ namespace ArtworkSharingPlatform.Application.Services
             List<MessageDTO> result = new List<MessageDTO>();
             foreach (var message in messages)
             {
-                if(result.Count == 0)
+                if(await _artworkRepository.CheckArtworkAvailability(message.Artwork.Id))
                 {
-                    result.Add(message);
-                }
-                else
-                {
-                    var flag = false;
-                    foreach(var m in result)
-                    {
-                        if(!result.Any(x => x.SenderEmail == message.SenderEmail && x.Artwork.Id == message.Artwork.Id))
-                        {
-                            flag = true;
-                        }
-                    }
-                    if(flag)
-                    {
-                        result.Add(message);
-                    }
-                }
+					if (result.Count == 0)
+					{
+						result.Add(message);
+					}
+					else
+					{
+						var flag = false;
+						foreach (var m in result)
+						{
+							if (!result.Any(x => x.SenderEmail == message.SenderEmail && x.Artwork.Id == message.Artwork.Id))
+							{
+								flag = true;
+							}
+						}
+						if (flag)
+						{
+							result.Add(message);
+						}
+					}
+				}
             }
             return result;
         }

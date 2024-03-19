@@ -117,10 +117,10 @@ namespace ArtworkSharingHost.Controllers
             await _artworkService.UserLike(like);
             return Ok();
         }
-        [HttpPut("sell/{artworkId}")]
-        public async Task<IActionResult> ConfirmSell(int artworkId)
+        [HttpPut("sell/{artworkId}/{buyUserEmail}")]
+        public async Task<IActionResult> ConfirmSell(int artworkId, string buyUserEmail)
         {
-            var isSuccess = await _artworkService.ConfirmSell(artworkId, User.GetUserId());
+            var isSuccess = await _artworkService.ConfirmSell(artworkId, User.GetUserId(), buyUserEmail);
             if (!isSuccess)
             {
                 return BadRequest();
@@ -241,7 +241,7 @@ namespace ArtworkSharingHost.Controllers
             await _artworkService.ReportArtwork(reportDTO);
             return Ok();
         }
-        [HttpGet("GetListBoughtArtwork")]
+        [HttpGet("GetListArtworkPurchase")]
         public async Task<IActionResult> GetListBoughtArtwork()
         {
             var result = await _artworkService.ListPurchaseArtwork(User.GetUserId());

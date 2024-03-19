@@ -199,7 +199,7 @@ namespace ArtworkSharingPlatform.Repository.Repository
             }
         }
 
-        public async Task<bool> ConfirmSell(int artworkId, int userId)
+        public async Task<bool> ConfirmSell(int artworkId, int userId, string buyUserEmail)
         {
             var flag = false;
             var artwork = await _context.Artworks.FindAsync(artworkId);
@@ -209,11 +209,18 @@ namespace ArtworkSharingPlatform.Repository.Repository
             }
             if (artwork != null)
             {
-                if(artwork.ReleaseCount > 0)
-                {
-					artwork.ReleaseCount--;
-				}
+                artwork.Status = 0;
             }
+            var buyUser = await _context.Users.Where(x => x.Email == buyUserEmail).SingleOrDefaultAsync();
+            var purchase = new Purchase
+            {
+                BuyUserId = buyUser.Id,
+                SellUserId = userId,
+                ArtworkId = artwork.Id,
+                BuyPrice = artwork.Price,
+                BuyDate = DateTime.UtcNow
+            };
+            _context.Purchases.Add(purchase);
             flag = await _context.SaveChangesAsync() > 0;
             return flag;
         }
@@ -278,14 +285,14 @@ namespace ArtworkSharingPlatform.Repository.Repository
             return await _context.Comments.Where(x => x.ArtworkId == artworkId).ToListAsync();
         }
 
-        public async Task<IEnumerable<Purchase>> ListBoughtArtwork(int buyUserId)
+        public async Task<IEnumerable<Purchase>> ListBoughtArtwork(int sellUserId)
         {
-            if (buyUserId == null)
+            if (sellUserId == null)
             {
                 return null;
             }
 
-            return await _context.Purchases.Where(x => x.BuyUserId == buyUserId).ToListAsync();
+            return await _context.Purchases.Where(x => x.SellUserId == sellUserId).ToListAsync();
         }
         public async Task<IEnumerable<Purchase>> ListSoldArtwork(int soldUserId)
         {
@@ -354,5 +361,11 @@ namespace ArtworkSharingPlatform.Repository.Repository
 
             return await _context.Purchases.Where(x => x.ArtworkId == artworkId).Include(x => x.Artwork).ToListAsync();
         }
-    }
+
+		public async Task<bool> CheckArtworkAvailability(int artworkId)
+		{
+            var artwork = await _context.Artworks.FindAsync(artworkId);
+            return artwork.Status == 1;
+		}
+	}
 }
