@@ -25,12 +25,15 @@ import { ArtworkListComponent } from './components/admin/artwork-management/artw
 import { UserUpdateComponent } from './components/admin/user-management/user-update/user-update.component';
 import { AdminLayoutComponent } from './components/admin/admin-layout/admin-layout.component';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
+import { CommissionListComponent } from './components/admin/commission-management/commission-list/commission-list.component';
 import { ConfigCreateComponent } from './components/admin/config-magement/config-create/config-create.component';
 import {OrderConfirmationComponent} from "./components/checkout/order-confirmation/order-confirmation.component";
 import {
   OrderConfirmationFailedComponent
 } from "./components/checkout/order-confirmation-failed/order-confirmation-failed.component";
 import {ForgotPasswordComponent} from "./components/forgot-password/forgot-password.component";
+import { CommissionDetailComponent } from './components/admin/commission-management/commission-detail/commission-detail.component';
+
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -44,7 +47,8 @@ const routes: Routes = [
       { path: 'user-update/:email', component: UserUpdateComponent },
       { path: 'artwork-management/artwork-list', component: ArtworkListComponent },
       { path: 'config-management/config-create', component: ConfigCreateComponent },
-      // thêm các route khác tại đây...
+      { path: 'commission-management/commission-list', component: CommissionListComponent },
+      { path: 'commission-detail/:commissionId', component: CommissionDetailComponent},
     ],
   },
   

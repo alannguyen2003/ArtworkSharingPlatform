@@ -53,6 +53,9 @@ import { AdminLayoutComponent } from './components/admin/admin-layout/admin-layo
 import { AdminSidebarComponent } from './components/admin/admin-sidebar/admin-sidebar.component';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 import { ConfigCreateComponent } from './components/admin/config-magement/config-create/config-create.component';
+import { ReportListComponent } from './components/admin/report-management/report-list/report-list.component';
+import { CommissionListComponent } from './components/admin/commission-management/commission-list/commission-list.component';
+import { CommissionDetailComponent } from './components/admin/commission-management/commission-detail/commission-detail.component';
 
 
 @NgModule({
@@ -94,7 +97,10 @@ import { ConfigCreateComponent } from './components/admin/config-magement/config
     AdminLayoutComponent,
     AdminSidebarComponent,
     AdminDashboardComponent,
-    ConfigCreateComponent
+    ConfigCreateComponent,
+    ReportListComponent,
+    CommissionListComponent,
+    CommissionDetailComponent
   ],
   imports: [
     BrowserModule,
