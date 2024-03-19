@@ -86,7 +86,6 @@ import { ConfirmDialogComponent } from './components/modal/confirm-dialog/confir
     UserCreateComponent,
     ArtworkListComponent,
     UserUpdateComponent,
-
     OrderConfirmationComponent,
     OrderConfirmationFailedComponent,
     ChangeAvatarComponent,
