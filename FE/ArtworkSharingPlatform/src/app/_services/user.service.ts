@@ -10,7 +10,6 @@ import {User} from "../_model/user.model";
 export class UserService {
   baseUrl = environment.apiUrl;
   constructor(private http: HttpClient) { }
-
   getUserProfile(email: string){
     return this.http.get<UserProfile>(this.baseUrl + 'user/artist/' + email);
   }

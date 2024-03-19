@@ -94,6 +94,25 @@ namespace ArtworkSharingHost.Controllers
             }
         }
 
+        [HttpGet("GetUserEmail/{email}")]
+        public async Task<IActionResult> GetUserByEmail(string email)
+        {
+            try
+            {
+                var userDto = _userService.GetUserByEmail(email);
+                if (userDto == null)
+                {
+                    return NotFound("User not found");
+                }
+
+                return Ok(userDto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPut("UpdateUser")]
         public async Task<IActionResult> UpdateUserAdmin([FromBody] UserAdminDTO userDto)
         {
@@ -116,6 +135,15 @@ namespace ArtworkSharingHost.Controllers
             await _userService.DeleteUserAdmin(user);
             return Ok();
         }
+
+        // AdminController.cs
+        [HttpDelete("DeleteUser/{email}")]
+        public async Task<IActionResult> DeleteUserAdminById(string email)
+        {
+            await _userService.DeleteUserAdminByEmail(email);
+            return Ok();
+        }
+
 
         [HttpGet("Artworks")]
         public async Task<IActionResult> GetAllArtwork()
