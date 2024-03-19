@@ -31,11 +31,16 @@ import {
   OrderConfirmationFailedComponent
 } from "./components/checkout/order-confirmation-failed/order-confirmation-failed.component";
 import {ForgotPasswordComponent} from "./components/forgot-password/forgot-password.component";
+import {authGuard} from "./_guards/auth.guard";
+import {adminGuard} from "./_guards/admin.guard";
+import {preventUnsavedChangesUserGuard} from "./_guards/prevent-unsaved-changes-user.guard";
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   {
     path: 'admin',
+    runGuardsAndResolvers: 'always',
+    canActivate: [adminGuard],
     component: AdminLayoutComponent,
     children: [
       { path: 'dashboard', component: AdminDashboardComponent },
@@ -47,10 +52,12 @@ const routes: Routes = [
       // thêm các route khác tại đây...
     ],
   },
-  
+
   //Phần này dành cho những route cần Guard
   {
     path: '',
+    runGuardsAndResolvers: 'always',
+    canActivate: [authGuard],
     children: [
       { path: 'artist/messages', component: ArtistMessageComponent },
       { path: 'artist/pricing', component: PricingComponent },
@@ -72,7 +79,10 @@ const routes: Routes = [
         component: ArtworkEditComponent,
         resolve: { artwork: artworkDetailResolver },
       },
-      { path: 'profile-edit', component: ProfileEditComponent },
+      { path: 'profile-edit',
+        component: ProfileEditComponent,
+        canDeactivate: [preventUnsavedChangesUserGuard]
+      },
     ],
   },
   {path: 'contact', component: ContactComponent},
