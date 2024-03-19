@@ -7,6 +7,7 @@ import {AccountService} from "../../../_services/account.service";
 import {take} from "rxjs";
 import {Genre} from "../../../_model/genre.model";
 import {ToastrService} from "ngx-toastr";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-artwork-post',
@@ -22,6 +23,7 @@ export class ArtworkPostComponent implements OnInit{
 
   constructor(private artworkService: ArtworkService,
               private accountService: AccountService,
+              private router: Router,
               private toastr: ToastrService) {
     this.accountService.currentUser$.pipe(take(1)).subscribe({
       next: user => {
@@ -52,7 +54,10 @@ export class ArtworkPostComponent implements OnInit{
       return;
     }
     this.artworkService.addArtwork(this.artwork).subscribe({
-      next: artwork => this.toastr.success("Post artwork successfullly!"),
+      next: artwork => {
+        this.toastr.success("Post artwork successfullly!");
+        this.router.navigateByUrl('/artist/gallery');
+      },
       error: errs => this.validationErrors = errs
     });
   }

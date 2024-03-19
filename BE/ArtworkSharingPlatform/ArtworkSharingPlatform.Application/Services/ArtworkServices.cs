@@ -191,7 +191,7 @@ namespace ArtworkSharingPlatform.Application.Services
 		public async Task<IList<ArtworkDTO>> GetArtistArtwork(int artistId)
 		{
 			var query = _artworkRepository.GetArtworksAsQueryable();
-			query = query.Where(x => x.OwnerId == artistId && x.Status == 1);
+			query = query.Where(x => x.OwnerId == artistId && x.Status == 1).OrderByDescending(x => x.CreatedDate);
 			return await query.ProjectTo<ArtworkDTO>(_mapper.ConfigurationProvider).ToListAsync();
 		}
 
