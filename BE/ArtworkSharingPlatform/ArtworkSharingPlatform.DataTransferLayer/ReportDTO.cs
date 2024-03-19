@@ -10,6 +10,7 @@ namespace ArtworkSharingPlatform.DataTransferLayer
 {
     public class ReportDTO
     {
+        public int Id { get; set; }
         public int ReporterId { get; set; }
         public int ArtworkId { get; set; }
         public string content { get; set; }

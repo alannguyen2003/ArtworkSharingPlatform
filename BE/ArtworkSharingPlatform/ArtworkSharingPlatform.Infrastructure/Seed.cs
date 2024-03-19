@@ -268,5 +268,20 @@ namespace ArtworkSharingPlatform.Infrastructure
 
             await context.SaveChangesAsync();
         }
+        public static async Task SeedReport(ArtworkSharingPlatformDbContext context)
+        {
+            if (await context.Reports.AnyAsync())
+            {
+                return;
+            }
+            var report = await File.ReadAllTextAsync("../ArtworkSharingPlatform.Infrastructure/ReportSeed.json");
+            var jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var reports = JsonSerializer.Deserialize<List<Report>>(report, jsonOptions);
+            foreach (var reoport in reports)
+            {
+                await context.Reports.AddAsync(reoport);
+            }
+            await context.SaveChangesAsync();
+        }
     }
 }

@@ -5,6 +5,7 @@ using ArtworkSharingPlatform.DataTransferLayer;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.User;
 using ArtworkSharingPlatform.Domain.Entities.Users;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
@@ -106,6 +107,7 @@ namespace ArtworkSharingHost.Controllers
 			return Ok();
 		}
         [HttpPut("buy-package/{packageId}")]
+        [Authorize]
         public async Task<IActionResult> BuyPackage(int packageId)
         {
             int userId = User.GetUserId();

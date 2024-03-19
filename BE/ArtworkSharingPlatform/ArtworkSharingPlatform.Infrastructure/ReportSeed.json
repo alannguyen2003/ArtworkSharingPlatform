@@ -1,0 +1,37 @@
+[
+  {
+    "reporterId": 1,
+    "artworkId": 1,
+    "content": "this artwork is so beauty",
+    "createdDate": "2024-03-16T16:24:24.044Z",
+    "Status": "Pending"
+  },
+  {
+    "reporterId": 1,
+    "artworkId": 2,
+    "content": "string",
+    "createdDate": "2024-03-17T16:24:24.044Z",
+    "Status": "Pending"
+  },
+  {
+    "reporterId": 10,
+    "artworkId": 20,
+    "content": "Report first time",
+    "createdDate": "2024-03-18T16:24:24.044Z",
+    "Status": "Pending"
+  },
+  {
+    "reporterId": 10,
+    "artworkId": 20,
+    "content": "Report second time",
+    "createdDate": "2024-03-11T16:24:24.044Z",
+    "Status": "Pending"
+  },
+  {
+    "reporterId":9,
+    "artworkId": 19,
+    "content": "string",
+    "createdDate": "2024-03-12T16:24:24.044Z",
+    "Status": "Pending"
+  }
+]
