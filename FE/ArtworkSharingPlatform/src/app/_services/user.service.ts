@@ -38,5 +38,9 @@ export class UserService {
     return this.http.post(this.baseUrl + 'auth/resetPassword', model);
   }
 
+  getUserWithEmail(email: string) {
+    return this.http.post(this.baseUrl + 'User/get-with-email', email);
+  }
+
 
 }

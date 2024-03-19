@@ -8,6 +8,7 @@ import {ValidationService} from "../../../_services/validation.service";
 import {CommissionService} from "../../../_services/commission.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserProfile} from "../../../_model/userProfile.model";
+import {UserService} from "../../../_services/user.service";
 
 @Component({
   selector: 'app-request-artwork',
@@ -16,6 +17,7 @@ import {UserProfile} from "../../../_model/userProfile.model";
 })
 export class RequestArtworkComponent {
   userProfile: UserProfile | undefined;
+  artistId: number;
   requestArtwork: RequestArtwork = new class implements RequestArtwork {
     genreId: number;
     maxPrice: number;
@@ -39,7 +41,8 @@ export class RequestArtworkComponent {
               private validationService: ValidationService,
               private commissionService: CommissionService,
               private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private userService: UserService) {
     this.artworkService.getGenreForArtwork().subscribe({
       next: genres => {
         this.genres = genres;
@@ -51,6 +54,7 @@ export class RequestArtworkComponent {
         console.log(this.userProfile)
       }
     });
+    this.userService.getUserWithEmail()
   }
   request() {
     this.requestArtwork.genreId = this.genreSelected;

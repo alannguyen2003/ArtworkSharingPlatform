@@ -119,5 +119,12 @@ namespace ArtworkSharingHost.Controllers
             return Ok(buyPackage);
         }
 
+        [HttpPost("get-with-email")]
+        public async Task<IActionResult> GetUserWithEmail(string email)
+        {
+            var user = _userService.GetUserByEmail(email);
+            return Ok(user);
+        }
+
     }
 }
