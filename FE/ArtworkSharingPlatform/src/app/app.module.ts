@@ -54,6 +54,8 @@ import { AdminSidebarComponent } from './components/admin/admin-sidebar/admin-si
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 import { ConfirmDialogComponent } from './components/modal/confirm-dialog/confirm-dialog.component';
 import { ConfigCreateComponent } from './components/admin/config-magement/config-create/config-create.component';
+import { ProfileBannerComponent } from './components/user/profile-banner/profile-banner.component';
+import { RequestArtworkComponent } from './components/user/request-artwork/request-artwork.component';
 
 
 @NgModule({
@@ -96,7 +98,9 @@ import { ConfigCreateComponent } from './components/admin/config-magement/config
     AdminSidebarComponent,
     AdminDashboardComponent,
     ConfirmDialogComponent,
-    ConfigCreateComponent
+    ConfigCreateComponent,
+    ProfileBannerComponent,
+    RequestArtworkComponent
   ],
   imports: [
     BrowserModule,
