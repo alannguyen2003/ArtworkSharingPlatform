@@ -3,6 +3,7 @@ using ArtworkSharingPlatform.Application.Interfaces;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.Commission;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response.Commission;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ArtworkSharingHost.Controllers;
@@ -19,6 +20,7 @@ public class CommissionController : ControllerBase
     }
 
     [HttpPost("Create")]
+    [Authorize]
     public ActionResult Create([FromBody] CreateCommissionRequestDTO requestDto)
     {
         requestDto.SenderId = User.GetUserId();
@@ -27,6 +29,7 @@ public class CommissionController : ControllerBase
         return clientResponse;
     }
     [HttpPost("Accept")]
+    [Authorize(Policy="RequireArtistRole")]
     public ActionResult Accept([FromBody] AcceptCommissionRequestDTO requestDto)
     {
         requestDto.ReceiverId = User.GetUserId();
@@ -35,6 +38,7 @@ public class CommissionController : ControllerBase
         return clientResponse;
     }
     [HttpPost("Reject")]
+    [Authorize(Policy="RequireArtistRole")]
     public ActionResult Reject([FromBody] RejectCommissionRequestDTO rejectCommissionRequestDto)
     {
         rejectCommissionRequestDto.ReceiverId = User.GetUserId();        
@@ -43,6 +47,7 @@ public class CommissionController : ControllerBase
         return clientResponse;
     }
     [HttpGet("Sender/GetAll")]
+    [Authorize]
     public async Task<ActionResult> GetAllBySenderId()
     {
         int senderId = User.GetUserId();
@@ -51,6 +56,7 @@ public class CommissionController : ControllerBase
         return clientResponse;
     }
     [HttpGet("Receiver/GetAll")]
+    [Authorize(Policy="RequireArtistRole")]
     public async Task<ActionResult> GetAllByReceiverId()
     {
         int receiverId = User.GetUserId();
@@ -59,6 +65,7 @@ public class CommissionController : ControllerBase
         return clientResponse;
     }
     [HttpPost("Sender/Request")]
+    [Authorize]
     public ActionResult RequestProgressImage([FromBody] RequestProgressImageDTO requestProgressImageDto)
     {
         requestProgressImageDto.SenderId = User.GetUserId();
@@ -67,6 +74,7 @@ public class CommissionController : ControllerBase
         return clientResponse;
     }
     [HttpPost("Receiver/Respond")]
+    [Authorize(Policy="RequireArtistRole")]
     public ActionResult RespondProgressImage([FromBody] RespondProgressImageDTO respondProgressImageDto)
     {
         respondProgressImageDto.ReceiverId = User.GetUserId();
