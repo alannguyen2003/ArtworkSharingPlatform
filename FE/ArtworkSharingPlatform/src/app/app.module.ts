@@ -52,6 +52,7 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { AdminLayoutComponent } from './components/admin/admin-layout/admin-layout.component';
 import { AdminSidebarComponent } from './components/admin/admin-sidebar/admin-sidebar.component';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
+import { ConfirmDialogComponent } from './components/modal/confirm-dialog/confirm-dialog.component';
 
 
 @NgModule({
@@ -93,7 +94,8 @@ import { AdminDashboardComponent } from './components/admin/admin-dashboard/admi
     ForgotPasswordComponent,
     AdminLayoutComponent,
     AdminSidebarComponent,
-    AdminDashboardComponent
+    AdminDashboardComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
