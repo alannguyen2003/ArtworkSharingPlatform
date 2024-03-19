@@ -8,16 +8,23 @@ using System.Text;
 using System.Threading.Tasks;
 using ArtworkSharingPlatform.Repository.Repository.Interfaces;
 using ArtworkSharingPlatform.Domain.Entities.Users;
+using Microsoft.AspNetCore.Identity;
 
 namespace ArtworkSharingPlatform.Repository.Repository
 {
     public class PackageRepository : IPackageRepository
     {
         private readonly ArtworkSharingPlatformDbContext _dbContext;
-        public PackageRepository(ArtworkSharingPlatformDbContext dbContext)
+		private readonly UserManager<User> _userManager;
+
+		public PackageRepository(
+            ArtworkSharingPlatformDbContext dbContext,
+            UserManager<User> userManager
+            )
         {
             _dbContext = dbContext;
-        }
+			_userManager = userManager;
+		}
         public async Task<List<PackageInformation>> GetAllPackage()
         {
             List<PackageInformation> packages = null;
@@ -132,6 +139,10 @@ namespace ArtworkSharingPlatform.Repository.Repository
             
             if (user  != null && package != null) 
             {
+                if(!await _userManager.IsInRoleAsync(user, "Artist"))
+                {
+                    await _userManager.AddToRoleAsync(user, "Artist");
+                }
                 user.RemainingCredit += package.Credit;
                 user.PackageId = packageId;
                 await _dbContext.SaveChangesAsync();
