@@ -1,4 +1,5 @@
 ﻿using ArtworkSharingPlatform.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,6 +17,7 @@ namespace ArtworkSharingHost.Controllers
 		}
 		
 		[HttpGet]
+		[Authorize]
 		public async Task<IActionResult> GetAll()
 		{
 			return Ok(await _genreService.GetAll());
