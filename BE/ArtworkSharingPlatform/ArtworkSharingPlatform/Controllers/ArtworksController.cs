@@ -23,7 +23,6 @@ namespace ArtworkSharingHost.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<ActionResult<PagedList<ArtworkDTO>>> GetArtworks([FromQuery] UserParams userParams)
         {
 			string genreIds = Request.Query["genres"]; 
@@ -59,16 +58,8 @@ namespace ArtworkSharingHost.Controllers
                                                                 artworks.TotalPage));
             return Ok(artworks);
         }
-
-        [HttpGet("genre")]
-        public async Task<ActionResult<List<ArtworkDTO>>> GetArtworksByGenre([FromQuery] ArtworkByGenreRequestDTO requestDto)
-        {
-            var artworks = await _artworkService.GetArtworksByGenre(requestDto.GenreId);
-            var paginatedArtworks = artworks.Skip((requestDto.PageNumber - 1) * requestDto.PageSize)
-                .Take(requestDto.PageSize).ToList();
-            return Ok(paginatedArtworks);
-        }
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<ArtworkDTO>> GetArtwork(int id)
         {
             var artwork = await _artworkService.GetArtworkAsync(id);
@@ -79,6 +70,7 @@ namespace ArtworkSharingHost.Controllers
             return Ok(artwork);
         }
 		[HttpGet("rating/{artworkId}")]
+        [Authorize]
 		public async Task<ActionResult<int>> GetArtworkRatingForUser(int artworkId)
 		{
 			var rating = await _artworkService.GetArtworkRatingForUser(User.GetUserId(), artworkId);
@@ -86,6 +78,7 @@ namespace ArtworkSharingHost.Controllers
 		}
 
 		[HttpPost]
+        [Authorize(Policy = "RequireArtistRole")]
         public async Task<IActionResult> AddArtwork([FromBody] ArtworkToAddDTO artwork)
         {
             try
@@ -108,6 +101,7 @@ namespace ArtworkSharingHost.Controllers
         }
 
         [HttpPost("like")]
+        [Authorize]
         public async Task<IActionResult> UserLike([FromBody] int artworkId)
         {
             var like = new ArtworkLikeDTO
@@ -129,15 +123,8 @@ namespace ArtworkSharingHost.Controllers
             return Ok();
         }
 
-        [HttpPost("rating")]
-        public async Task<IActionResult> UserRating([FromBody] ArtworkRatingDTO rating)
-        {
-            rating.UserId = User.GetUserId();
-            await _artworkService.UserRating(rating);
-            return Ok(new { message = "Rating submitted successfully." });
-        }
-
         [HttpPost("follow/{email}")]
+        [Authorize]
         public async Task<IActionResult> UserFollow(string email)
         {
             if(email == User.GetEmail()) return BadRequest("You cannot follow yourself");
@@ -145,12 +132,14 @@ namespace ArtworkSharingHost.Controllers
             return Ok(new { message = "User followed successfully." });
         }
         [HttpGet("comment/{artworkId}")]
+        [Authorize]
         public async Task<IActionResult> GetArtworkComments(int artworkId)
         {
             var comments = await _artworkService.GetArtworkComments(artworkId);
             return Ok(comments);
         }
 		[HttpGet("comment-number/{artworkId}")]
+        [Authorize]
 		public async Task<IActionResult> GetArtworkCommentNumber(int artworkId)
 		{
 			var comments = await _artworkService.GetArtworkComments(artworkId);
@@ -159,6 +148,7 @@ namespace ArtworkSharingHost.Controllers
             return Ok(result);
 		}
 		[HttpPost("comment")]
+        [Authorize]
         public async Task<IActionResult> UserComment([FromBody] string content, int artworkId)
         {
             var comment = new ArtworkCommentDTO
@@ -172,6 +162,7 @@ namespace ArtworkSharingHost.Controllers
         }
 
         [HttpDelete("{artworkId}")]
+        [Authorize]
         public async Task<IActionResult> DeleteArtwork(int artworkId)
         {
             await _artworkService.DeleteArtwork(artworkId);
@@ -179,38 +170,21 @@ namespace ArtworkSharingHost.Controllers
         }
 
         [HttpPut]
+        [Authorize(Policy = "RequireArtistRole")]
         public async Task<IActionResult> UpdateArtwork([FromBody] ArtworkUpdateDTO artwork)
         {
             await _artworkService.UpdateArtwork(artwork);
             return Ok(new { message = "Artwork updated successfully." });
         }
-
-        [HttpGet("likes")]
-        public async Task<ActionResult<IEnumerable<ArtworkLikeToShowDTO>>> GetArtworksLike()
-        {
-            var artworksLikes = await _artworkService.GetArtworksLike(User.GetUserId());
-            return Ok(artworksLikes);
-        }
-        [HttpGet("search")]
-        public async Task<ActionResult<IList<ArtworkDTO>>> ArtworkSearch(string search)
-        {
-            var results = await _artworkService.SearchArtworkByTitle(search);
-            return Ok(results);
-        }
-        [HttpGet("filter")]
-        public async Task<ActionResult<IEnumerable<ArtworkDTO>>> ArtworkFilter(int genreId)
-        {
-            var results = await _artworkService.SearchArtworkByGenre(genreId);
-            return Ok(results);
-        }
-
         [HttpGet("GetArtistArtwork")]
+        [Authorize(Policy = "RequireArtistRole")]
         public async Task<IActionResult> GetArtistArtwork()
         {
             var result = await _artworkService.GetArtistArtwork(User.GetUserId());
             return Ok(result);
         }
         [HttpPost("add-image")]
+        [Authorize(Policy = "RequireArtistRole")]
         public async Task<IActionResult> AddImage([FromBody] ArtworkImageDTO artworkImage)
         {
             var result = await _artworkService.AddImageToArtwork(artworkImage);
@@ -218,14 +192,16 @@ namespace ArtworkSharingHost.Controllers
             return Ok(result);
         }
         [HttpPut("set-thumbnail/{imageId}")]
-        public async Task<IActionResult> SetThumbnail(int imageId)
+		[Authorize(Policy = "RequireArtistRole")]
+		public async Task<IActionResult> SetThumbnail(int imageId)
         {
             var result = await _artworkService.SetThumbnail(imageId);
             if (!result) return BadRequest("Error while setting thumbnail image for artwork");
             return Ok();
         }
         [HttpDelete("delete-image")]
-        public async Task<IActionResult> DeleteArtworkImage([FromBody] ArtworkImageDTO imageDTO)
+		[Authorize(Policy = "RequireArtistRole")]
+		public async Task<IActionResult> DeleteArtworkImage([FromBody] ArtworkImageDTO imageDTO)
         {
             var publicId = imageDTO.PublicId;
             var result = await _artworkService.DeleteArtworkImage(imageDTO);
@@ -235,6 +211,7 @@ namespace ArtworkSharingHost.Controllers
         }
 
         [HttpPost("report")]
+        [Authorize]
         public async Task<IActionResult> ReportArtwork([FromBody] ReportDTO reportDTO)
         {
             reportDTO.ReporterId = User.GetUserId();
@@ -242,13 +219,14 @@ namespace ArtworkSharingHost.Controllers
             await _artworkService.ReportArtwork(reportDTO);
             return Ok();
         }
-        [HttpPut("active-artwork/{artworkId}")]
-        public async Task<IActionResult> ActiveArtwork(int artworkId)
-        {
-            var userId = User.GetUserId();
-            await _artworkService.ActiveArtworkStatus(artworkId, userId);
-            return Ok();
-        }
+
+        //[HttpPut("active-artwork/{artworkId}")]
+       // public async Task<IActionResult> ActiveArtwork(int artworkId)
+       // {
+        //    var userId = User.GetUserId();
+        //    await _artworkService.ActiveArtworkStatus(artworkId, userId);
+         //   return Ok();
+        //}
     }
 }    
 

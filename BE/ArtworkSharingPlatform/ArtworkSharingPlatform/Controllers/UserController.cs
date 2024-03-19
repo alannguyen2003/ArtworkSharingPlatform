@@ -33,6 +33,7 @@ namespace ArtworkSharingHost.Controllers
             _packageService = packageService;
         }
         [HttpGet("artist/{email}")]
+        [Authorize]
         public async Task<IActionResult> GetArtistProfile(string email)
         {
             var artistProfile = await _userService.GetArtistProfileByEmail(email);
@@ -44,6 +45,7 @@ namespace ArtworkSharingHost.Controllers
         }
 
         [HttpGet("/detail/{id}")]
+        [Authorize]
         public async Task<IActionResult> GetDetail(int id)
         {
             try
@@ -63,6 +65,7 @@ namespace ArtworkSharingHost.Controllers
         }
 
         [HttpPut("UpdateDetail")]
+        [Authorize]
         public async Task<IActionResult> UpdateUserDetail([FromBody]UserDetailUpdateDTO userDto)
         {
             try
@@ -77,6 +80,7 @@ namespace ArtworkSharingHost.Controllers
             return Ok();
         }
         [HttpGet("get-profile")]
+        [Authorize]
         public async Task<IActionResult> GetProfile()
         {
 
@@ -93,7 +97,8 @@ namespace ArtworkSharingHost.Controllers
         }
 
 		[HttpPut("change-avatar")]
-		public async Task<IActionResult> ChangeAvatar([FromBody] UserImageDTO userImageDTO)
+        [Authorize]
+        public async Task<IActionResult> ChangeAvatar([FromBody] UserImageDTO userImageDTO)
 
 		{
             if (string.IsNullOrEmpty(userImageDTO.PublicId)) return BadRequest("Change your image first in order to save");
@@ -113,6 +118,13 @@ namespace ArtworkSharingHost.Controllers
             int userId = User.GetUserId();
             var buyPackage = await _packageService.UserBuyPackage(userId, packageId);
             return Ok(buyPackage);
+        }
+
+        [HttpPost("get-with-email")]
+        public async Task<IActionResult> GetUserWithEmail(string email)
+        {
+            var user = _userService.GetUserByEmail(email);
+            return Ok(user);
         }
 
     }

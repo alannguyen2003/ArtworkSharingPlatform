@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {UserProfile} from "../_model/userProfile.model";
 import {User} from "../_model/user.model";
 import {UserImage} from "../_model/userImage.model";
+import {UserInfo} from "../_model/userInfo.model";
 
 @Injectable({
   providedIn: 'root'
@@ -38,5 +39,7 @@ export class UserService {
     return this.http.post(this.baseUrl + 'auth/resetPassword', model);
   }
 
-
+  getUserWithEmail(email: string | undefined) {
+    return this.http.post<UserInfo>(this.baseUrl + 'User/get-with-email?email=' + email, email);
+  }
 }

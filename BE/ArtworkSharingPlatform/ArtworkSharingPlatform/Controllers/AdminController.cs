@@ -13,7 +13,7 @@ namespace ArtworkSharingHost.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Policy = "RequireAdminRole")]
+    //[Authorize(Policy = "RequireAdminRole")]
     public class AdminController : ControllerBase
     {
         private readonly IUserService _userService;

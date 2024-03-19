@@ -2,6 +2,7 @@
 using ArtworkSharingPlatform.Application.Interfaces;
 using ArtworkSharingPlatform.DataTransferLayer;
 using ArtworkSharingPlatform.Domain.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,6 +32,7 @@ namespace ArtworkSharingHost.Controllers
             return Ok(messages);
         }
         [HttpGet("artistMessages")]
+        [Authorize]
         public async Task<ActionResult<List<MessageDTO>>> GetMessageBoxForArtist()
         {
             var messages = await _messageService.GetMessageBoxForArtist(User.GetEmail());

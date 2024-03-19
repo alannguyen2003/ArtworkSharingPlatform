@@ -4,6 +4,7 @@ using ArtworkSharingPlatform.Application.Interfaces;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response.Error;
 using ArtworkSharingPlatform.Domain.Entities.PackagesInfo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -40,6 +41,7 @@ public class StripePaymentController : ControllerBase
 	}
 
     [HttpGet("checkout")]
+    [Authorize]
     public async Task<IActionResult> CreateSessionForPayment(int packageId)
     {
         var package = _packageService.GetPackageById(packageId).Result;
@@ -89,7 +91,6 @@ public class StripePaymentController : ControllerBase
 	public async Task<IActionResult> WebHook()
 	{
 		var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
-
 		try
 		{
 			var stripeEvent = EventUtility.ConstructEvent(

@@ -9,6 +9,6 @@ public class CreateCommissionRequestDTO
     public string? RequestDescription{get;set;}
     [JsonIgnore]
     public int SenderId{get;set;}
-    public int ReceiverId{get;set;}
+    public int ReceiverId {get;set;}
     public int GenreId{get;set;}
 }

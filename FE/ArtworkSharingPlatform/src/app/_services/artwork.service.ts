@@ -57,8 +57,6 @@ export class ArtworkService {
     }
     return;
   }
-
-
   getArtworks(userParams: UserParams) {
     const response = this.artworkCache.get(Object.values(userParams).join('-'));
     if (response) return of(response);
@@ -86,7 +84,7 @@ export class ArtworkService {
     return this.http.get<Artwork>(this.baseUrl + 'artworks/' + id);
   }
   getArtworksByGenreId(genreId: number, pageNumber: number, pageSize: number) {
-    const url = `Artworks/genre?GenreId=${genreId}&PageNumber=${pageNumber}&PageSize=${pageSize}`
+    const url = `Artworks?GenreId=${genreId}&PageNumber=${pageNumber}&PageSize=${pageSize}`
     return this.http.get<Artwork[]>(this.baseUrl + url);
   }
 
