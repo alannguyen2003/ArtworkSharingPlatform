@@ -39,6 +39,7 @@ import {ForgotPasswordComponent} from "./components/forgot-password/forgot-passw
 import {authGuard} from "./_guards/auth.guard";
 import {adminGuard} from "./_guards/admin.guard";
 import {preventUnsavedChangesUserGuard} from "./_guards/prevent-unsaved-changes-user.guard";
+import {CommissionsComponent} from "./components/user/commissions/commissions.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -96,6 +97,7 @@ const routes: Routes = [
   {path: 'checkout', component: OrderConfirmationComponent},
   {path: 'checkout-fail', component: OrderConfirmationFailedComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'commissions', component: CommissionsComponent},
   {path: 'forgot-password', component: ForgotPasswordComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'test-error', component: TestErrorComponent},
