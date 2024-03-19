@@ -3,14 +3,13 @@ using ArtworkSharingHost.Extensions;
 using ArtworkSharingPlatform.Application.Interfaces;
 using ArtworkSharingPlatform.DataTransferLayer;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.Artwork;
-using ArtworkSharingPlatform.Domain.Entities.Users;
 using ArtworkSharingPlatform.Domain.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ArtworkSharingHost.Controllers
 {
-    [Route("api/[controller]")]
+	[Route("api/[controller]")]
     [ApiController]
     public class ArtworksController : ControllerBase
     {
@@ -24,6 +23,7 @@ namespace ArtworkSharingHost.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<PagedList<ArtworkDTO>>> GetArtworks([FromQuery] UserParams userParams)
         {
 			string genreIds = Request.Query["genres"]; 
