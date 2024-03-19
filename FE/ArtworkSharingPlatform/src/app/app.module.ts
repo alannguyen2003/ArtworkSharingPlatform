@@ -64,6 +64,7 @@ import { RequestArtworkComponent } from './components/user/request-artwork/reque
 import { CommissionsComponent } from './components/user/commissions/commissions.component';
 import { DetailComponent } from './components/user/commissions/detail/detail.component';
 import { CommissionArtistComponent } from './components/user/commission-artist/commission-artist.component';
+import { DetailCommissionComponent } from './components/user/commission-artist/detail-commission/detail-commission.component';
 
 
 @NgModule({
@@ -119,7 +120,8 @@ import { CommissionArtistComponent } from './components/user/commission-artist/c
     RequestArtworkComponent,
     CommissionsComponent,
     DetailComponent,
-    CommissionArtistComponent
+    CommissionArtistComponent,
+    DetailCommissionComponent
   ],
   imports: [
     BrowserModule,
