@@ -52,6 +52,7 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { AdminLayoutComponent } from './components/admin/admin-layout/admin-layout.component';
 import { AdminSidebarComponent } from './components/admin/admin-sidebar/admin-sidebar.component';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
+import { ConfigCreateComponent } from './components/admin/config-magement/config-create/config-create.component';
 
 
 @NgModule({
@@ -85,7 +86,6 @@ import { AdminDashboardComponent } from './components/admin/admin-dashboard/admi
     UserCreateComponent,
     ArtworkListComponent,
     UserUpdateComponent,
-
     OrderConfirmationComponent,
     OrderConfirmationFailedComponent,
     ChangeAvatarComponent,
@@ -93,7 +93,8 @@ import { AdminDashboardComponent } from './components/admin/admin-dashboard/admi
     ForgotPasswordComponent,
     AdminLayoutComponent,
     AdminSidebarComponent,
-    AdminDashboardComponent
+    AdminDashboardComponent,
+    ConfigCreateComponent
   ],
   imports: [
     BrowserModule,
