@@ -12,6 +12,7 @@ import { ArtworkImage } from "../_model/artworkImage.model";
 import { Report } from "../_model/report.model";
 import { Rating } from "../_model/rating.model";
 import { UserImage } from "../_model/userImage.model";
+import {Config} from "../_model/config.model";
 
 @Injectable({
   providedIn: 'root'
@@ -19,27 +20,49 @@ import { UserImage } from "../_model/userImage.model";
 export class ArtworkService {
   baseUrl = environment.apiUrl;
   user: User | undefined;
-  userParams: UserParams | undefined;
-  fakeUserParams: UserParams = {
+  userParams: UserParams = {
     minPrice: 0,
     maxPrice: 1000000000,
     orderBy: 'lowPrice',
     pageNumber: 1,
     pageSize: 6,
+    rowSize: 6,
+    genreIds: [],
+    search: ''
+  };
+  defaultUserParams: UserParams = {
+    minPrice: 0,
+    maxPrice: 1000000000,
+    orderBy: 'lowPrice',
+    pageNumber: 1,
+    pageSize: 6,
+    rowSize: 6,
     genreIds: [],
     search: ''
   };
   artworkCache = new Map();
   artworks: Artwork[] = [];
   constructor(private http: HttpClient, private accountService: AccountService) {
+    this.loadUserParams();
     this.accountService.currentUser$.pipe(take(1)).subscribe({
       next: user => {
         if (user) {
           this.user = user;
-          this.userParams = this.fakeUserParams;
+          this.loadUserParams().subscribe({
+            next: config => {
+              this.defaultUserParams.rowSize = config.rowSize;
+              this.defaultUserParams.pageSize = config.totalItemPerPage;
+              this.userParams.rowSize = config.rowSize;
+              this.userParams.pageSize = config.totalItemPerPage;
+            }
+          });
         }
       }
-    })
+    });
+  }
+
+  loadUserParams() {
+    return this.http.get<Config>(this.baseUrl + 'configmanager/lastestconfig');
   }
 
   getUserParams() {
@@ -52,7 +75,7 @@ export class ArtworkService {
 
   resetUserParams() {
     if (this.user) {
-      this.userParams = this.fakeUserParams;
+      this.userParams = this.defaultUserParams;
       return this.userParams;
     }
     return;
@@ -60,8 +83,8 @@ export class ArtworkService {
   getArtworks(userParams: UserParams) {
     const response = this.artworkCache.get(Object.values(userParams).join('-'));
     if (response) return of(response);
-
-    if (userParams.pageSize == null) userParams.pageSize = this.fakeUserParams.pageSize;
+    console.log(userParams);
+    if (userParams.pageSize == null) userParams.pageSize = this.defaultUserParams.pageSize;
     let params = getPaginationHeaders(userParams.pageNumber, userParams.pageSize);
     params = params.append('minPrice', userParams.minPrice);
     params = params.append('maxPrice', userParams.maxPrice);
