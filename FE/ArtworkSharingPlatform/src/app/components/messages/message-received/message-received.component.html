@@ -8,23 +8,7 @@
     <div
       class="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl"
     >
-      <div> <!--[innerHTML]="content"--><!--{{content}}-->
-        <div class="card" style="width: 18rem;">
-          <div class="card-body">
-            <h5 class="card-title font-bold">Request Commission</h5>
-            <div class="card-text m-0.5">
-              <ul>
-                <li>Min Price: đ100.000</li>
-                <li>Max Price: đ100.000</li>
-                <li>Description: A picture about portrait.</li>
-              </ul>
-            </div>
-            <div class="flex justify-between">
-              <a href="#" class="btn btn-primary">Accept</a>
-              <a href="#" class="btn btn-danger">Reject</a>
-            </div>
-          </div>
-        </div>
+      <div [innerHTML]="content"> <!--[innerHTML]="content"--><!--{{content}}-->
       </div>
     </div>
   </div>
