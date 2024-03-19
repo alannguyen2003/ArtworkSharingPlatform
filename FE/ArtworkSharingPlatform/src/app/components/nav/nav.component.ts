@@ -18,11 +18,13 @@ import {LocalStorageService} from "../../_services/local-storage.service";
 export class NavComponent {
   userInfo: UserInfo;
   user: User | undefined;
+  isArtist: boolean = false;
   constructor(public accountService: AccountService,
               private userService: UserService,
               private router: Router,
               private localStorage: LocalStorageService) {
     this.user = localStorage.getDataFromLocal("user");
+    this.isArtist = this.user?.roles[1] == "Artist";
     this.userService.getRemainingCredits(this.user?.email).subscribe(response => {
       this.userInfo = response;
       console.log(this.userInfo)
