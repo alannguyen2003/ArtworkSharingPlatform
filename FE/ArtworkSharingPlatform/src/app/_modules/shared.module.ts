@@ -10,6 +10,7 @@ import {FileUploadModule} from "ng2-file-upload";
 import {FroalaEditorModule, FroalaViewModule} from "angular-froala-wysiwyg";
 import {ModalModule} from "ngx-bootstrap/modal";
 import {RatingModule} from "ngx-bootstrap/rating";
+import {DataTablesModule} from "angular-datatables";
 
 
 
@@ -29,7 +30,8 @@ import {RatingModule} from "ngx-bootstrap/rating";
     FroalaEditorModule.forRoot(),
     ModalModule.forRoot(),
     RatingModule.forRoot(),
-    FileUploadModule
+    FileUploadModule,
+    DataTablesModule
   ],
   exports: [
     NgxSpinnerModule,
@@ -42,7 +44,8 @@ import {RatingModule} from "ngx-bootstrap/rating";
     FroalaEditorModule,
     ModalModule,
     RatingModule,
-    FileUploadModule
+    FileUploadModule,
+    DataTablesModule
   ]
 })
 export class SharedModule { }

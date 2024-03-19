@@ -9,7 +9,7 @@
         Add New User
       </button>
     </div>
-  <table class="table-auto w-full mt-2 rounded-md">
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-auto w-full mt-2 rounded-md">
     <thead class="bg-gray-700 text-white">
       <tr>
         <th class="px-4 py-2">No.</th>
@@ -43,7 +43,7 @@
             <span aria-hidden="true" class="absolute inset-0 opacity-50 rounded-full"></span>
             <span class="relative">{{ user.status === 1 ? 'Available' : 'Unavailable' }}</span>
           </span>
-        </td>       
+        </td>
         <!-- For Actions -->
         <td class="px-4 py-2 text-sm text-center">
           <div class="inline-flex gap-2">

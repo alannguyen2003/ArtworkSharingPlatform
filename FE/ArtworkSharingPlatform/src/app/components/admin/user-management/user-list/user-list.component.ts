@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserAdmin } from 'src/app/_model/userAdmin.model';
 import Swal from 'sweetalert2';
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-user-list',
@@ -11,6 +12,10 @@ import Swal from 'sweetalert2';
 })
 export class UserListComponent {
   users: UserAdmin[] = [];
+  dtOptions: DataTables.Settings = {
+   pagingType: 'full_numbers'
+  }
+  dtTrigger: Subject<any> = new Subject<any>();
 
   constructor(private adminService: AdminService, private router: Router) {}
 
@@ -21,6 +26,7 @@ export class UserListComponent {
   loadAllUsers() {
     this.adminService.getAllUsers().subscribe((users) => {
       this.users = users;
+      this.dtTrigger.next(null);
     });
   }
 
