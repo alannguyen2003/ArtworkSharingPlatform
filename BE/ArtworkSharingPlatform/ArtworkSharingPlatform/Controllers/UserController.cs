@@ -126,6 +126,13 @@ namespace ArtworkSharingHost.Controllers
             var user = _userService.GetUserByEmail(email);
             return Ok(user);
         }
+        
+        [HttpGet("get-remaining-credits")]
+        public async Task<IActionResult> GetRemainingCredits(string email)
+        {
+            var userInfo = _userService.GetUserByEmail(email);
+            return Ok(userInfo);
+        }
 
     }
 }
