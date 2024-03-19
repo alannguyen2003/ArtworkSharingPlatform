@@ -11,9 +11,9 @@ import { ArtworkCarouselComponent } from './artwork-carousel/artwork-carousel.co
 export class HomeComponent implements OnInit {
   pageNumber: number = 1
   pageSize: number = 15
-  animeArtworks: Artwork[] = [];
+  sculptureArtworks: Artwork[] = [];
   landscapeArtworks: Artwork[] = [];
-  fictionArtworks: Artwork[] = [];
+  illustrationArtworks: Artwork[] = [];
   portraitArtworks: Artwork[] = [];
 
   constructor(private artworkService: ArtworkService) {
@@ -46,8 +46,8 @@ export class HomeComponent implements OnInit {
 
     this.artworkService.getArtworksByGenreId(3, this.pageNumber, this.pageSize)
       .subscribe({
-        next: animeArtworks => {
-          this.animeArtworks = animeArtworks;
+        next: sculptureArtworks => {
+          this.sculptureArtworks = sculptureArtworks;
         }
       }
       );
@@ -55,8 +55,8 @@ export class HomeComponent implements OnInit {
 
     this.artworkService.getArtworksByGenreId(4, this.pageNumber, this.pageSize)
       .subscribe({
-        next: fictionArtworks => {
-          this.fictionArtworks = fictionArtworks;
+        next: illustrationArtworks => {
+          this.illustrationArtworks = illustrationArtworks;
         }
       }
       );
