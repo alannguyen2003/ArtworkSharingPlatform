@@ -22,7 +22,7 @@ namespace ArtworkSharingPlatform.Repository.Interfaces
 		Task AddArtworkImage(ArtworkImage artwork);
 		Task UpdateArtworkImage(ArtworkImage artwork);
 		Task ArtworkReport(Report report);
-        Task<bool> ConfirmSell(int artworkId, int userId);
+        Task<bool> ConfirmSell(int artworkId, int userId, string buyerEmail);
         Task<bool> DeleteArtworkImage(ArtworkImage image);
 		Task<bool> SetThumbNail(int id);
 		Task<ArtworkImage> AddImageToArtwork(ArtworkImage artworkImage);
@@ -34,6 +34,7 @@ namespace ArtworkSharingPlatform.Repository.Interfaces
 		Task ActiveArtworkStatus(int artworkId, int userId);
 		Task<IEnumerable<Purchase>> ListHistoryPurchaseArtwork(int artworkId);
 		Task<bool> CreditAvailable(int userId);
+		Task<bool> CheckArtworkAvailability(int artworkId);
 
     }
 }
