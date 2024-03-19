@@ -1,0 +1,33 @@
+.config-section {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .active-config {
+    border-color: #4CAF50;
+  }
+  
+  .config-title {
+    cursor: pointer;
+    margin: 0;
+  }
+  
+  .config-content {
+    margin-top: 10px;
+  }
+  
+  .input {
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.25rem;
+    box-sizing: border-box;
+    border-radius: 0.25rem;
+    border: 1px solid #2d3748;
+    background-color: #2d3748;
+    color: white;
+  }
+
+  

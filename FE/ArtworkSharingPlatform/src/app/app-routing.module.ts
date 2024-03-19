@@ -25,6 +25,7 @@ import { ArtworkListComponent } from './components/admin/artwork-management/artw
 import { UserUpdateComponent } from './components/admin/user-management/user-update/user-update.component';
 import { AdminLayoutComponent } from './components/admin/admin-layout/admin-layout.component';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
+import { ConfigCreateComponent } from './components/admin/config-magement/config-create/config-create.component';
 import {OrderConfirmationComponent} from "./components/checkout/order-confirmation/order-confirmation.component";
 import {
   OrderConfirmationFailedComponent
@@ -42,6 +43,7 @@ const routes: Routes = [
       { path: 'user-management/user-create', component: UserCreateComponent },
       { path: 'user-update/:email', component: UserUpdateComponent },
       { path: 'artwork-management/artwork-list', component: ArtworkListComponent },
+      { path: 'config-management/config-create', component: ConfigCreateComponent },
       // thêm các route khác tại đây...
     ],
   },
