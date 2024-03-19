@@ -66,9 +66,6 @@ namespace ArtworkSharingPlatform.Application.Services
         public async Task<PagedList<ArtworkDTO>> GetArtworksAsync(UserParams userParams)
 		{
 			var query = _artworkRepository.GetArtworksAsQueryable();
-
-			query = query.Where(x => x.OwnerId != userParams.CurrentUserId);
-
 			query = query.Where(x => x.Price >= userParams.MinPrice && x.Price <= userParams.MaxPrice);
 
 			if (userParams.GenreIds != null && userParams.GenreIds.Length > 0)

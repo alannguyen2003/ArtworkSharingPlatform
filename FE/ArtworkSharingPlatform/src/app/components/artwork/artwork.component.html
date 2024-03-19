@@ -41,8 +41,12 @@
               <div class="px-4 py-3">
                 <div class="mb-3">
                   <label for="minPrice" class="form-label">Min Price</label>
-                  <input type="number" placeholder="Min Price" name="minPrice" [(ngModel)]="userParams.minPrice"
-                    #minPrice="ngModel">
+                  <input type="number"
+                         placeholder="Min Price"
+                         name="minPrice"
+                         [(ngModel)]="userParams.minPrice"
+                         min="0"
+                         #minPrice="ngModel">
                 </div>
                 <div class="mb-3">
                   <label for="maxPrice" class="form-label">Max Price</label>
@@ -58,9 +62,9 @@
       <div class="lg:col-span-12">
         <div class="flex flex-wrap items-start justify-center mt-3 px-0">
           <a *ngFor="let genre of genres" style="cursor:pointer;" (click)="onGenreSelected(genre.id)"
-            [class.is-selected]="isSelectedGenre(genre.id)" class="flex pt-2 align-middle justify-center 
+            [class.is-selected]="isSelectedGenre(genre.id)" class="flex pt-2 align-middle justify-center
                           mx-3 my-1 text-sm rounded-md shadow-sm sm:py-2 w-48 h-10
-                          sm:text-base ring ring-transparent group md:px-3 hover:ring hover:ring-opacity-50 
+                          sm:text-base ring ring-transparent group md:px-3 hover:ring hover:ring-opacity-50
                           focus:ring-opacity-50 hover:ring-blue-400 text-gray-50 bg-gray-600 no-underline">
             <span style="font-size: 1.2rem;">
               {{genre.name}}
