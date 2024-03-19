@@ -42,6 +42,7 @@ public class CommissionRequestRepository : ICommissionRequestRepository
     public CommissionRequest GetById(int id)
     {
         return _dbContext.CommissionRequests
+            .Where(item => item.Id == id)
                 .Include(c => c.Receiver)
                 .Include(c => c.Sender)
                 .Include(c => c.CommissionStatus)
