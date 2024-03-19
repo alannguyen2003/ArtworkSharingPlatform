@@ -98,7 +98,7 @@ const routes: Routes = [
   {path: 'checkout', component: OrderConfirmationComponent},
   {path: 'checkout-fail', component: OrderConfirmationFailedComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'commissions', component: CommissionsComponent},
+  {path: 'pre-orders', component: CommissionsComponent},
   {path: 'forgot-password', component: ForgotPasswordComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'test-error', component: TestErrorComponent},

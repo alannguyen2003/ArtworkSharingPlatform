@@ -62,6 +62,7 @@ import { ReportUpdateComponent } from './components/admin/report-management/repo
 import { ProfileBannerComponent } from './components/user/profile-banner/profile-banner.component';
 import { RequestArtworkComponent } from './components/user/request-artwork/request-artwork.component';
 import { CommissionsComponent } from './components/user/commissions/commissions.component';
+import { DetailComponent } from './components/user/commissions/detail/detail.component';
 
 
 @NgModule({
@@ -115,7 +116,8 @@ import { CommissionsComponent } from './components/user/commissions/commissions.
     ConfigCreateComponent,
     ProfileBannerComponent,
     RequestArtworkComponent,
-    CommissionsComponent
+    CommissionsComponent,
+    DetailComponent
   ],
   imports: [
     BrowserModule,
