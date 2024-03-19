@@ -23,8 +23,17 @@ namespace ArtworkSharingPlatform.Infrastructure
             {
                 new Genre {Name = "Landscape"},
                 new Genre {Name = "Portrait"},
-                new Genre {Name = "Anime"},
-                new Genre {Name = "Fiction"}
+                new Genre {Name = "Sculpture"},
+                new Genre {Name = "Illustration"},
+                new Genre {Name = "Textile Art"},
+                new Genre {Name = "Wood Sculpture"},
+                new Genre {Name = "Expressionism"},
+                new Genre {Name = "Abstract Art"},
+                new Genre {Name = "Surrealism"},
+                new Genre {Name = "Realism Art"},
+                new Genre {Name = "Animal Art"},
+                new Genre {Name = "History Painting"}
+
             };
             foreach (var genre in genres)
             {
