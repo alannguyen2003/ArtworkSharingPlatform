@@ -1,6 +1,7 @@
 ﻿using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Domain.Migrations;
 using ArtworkSharingPlatform.Repository.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace ArtworkSharingPlatform.Repository.Repository;
 
@@ -18,8 +19,14 @@ public class CommissionRequestRepository : ICommissionRequestRepository
         List<CommissionRequest> commission = null;
         try
         {
-            commission = _dbContext.CommissionRequests.ToList();
-        }catch(Exception ex)
+            commission = _dbContext.CommissionRequests
+                .Include(c => c.Receiver)
+                .Include(c => c.Sender)
+                .Include(c => c.CommissionStatus)
+                .Include(c => c.Genre)
+                .ToList();
+        }
+        catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
@@ -34,7 +41,12 @@ public class CommissionRequestRepository : ICommissionRequestRepository
 
     public CommissionRequest GetById(int id)
     {
-        return _dbContext.CommissionRequests.Find(id)!;
+        return _dbContext.CommissionRequests
+                .Include(c => c.Receiver)
+                .Include(c => c.Sender)
+                .Include(c => c.CommissionStatus)
+                .Include(c => c.Genre)
+                .FirstOrDefault();
     }
 
     public IEnumerable<CommissionRequest> GetAllBySenderId(int senderId)
