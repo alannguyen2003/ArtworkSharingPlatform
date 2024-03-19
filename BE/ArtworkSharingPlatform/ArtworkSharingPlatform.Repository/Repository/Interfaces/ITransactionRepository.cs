@@ -6,5 +6,6 @@ namespace ArtworkSharingPlatform.Repository.Repository.Interfaces
     {
         Task<List<Transaction>> GetAllTransaction();
         Task<Transaction> GetTransactionById(int id);
+        Task AddTransaction(Transaction transaction);
     }
 }

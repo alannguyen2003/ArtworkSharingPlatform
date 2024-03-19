@@ -21,16 +21,19 @@ namespace ArtworkSharingHost.Controllers
 		private readonly IImageService _imageService;
 		private readonly IMapper _mapper;
         private readonly IPackageService _packageService;
+        private readonly ITransactionService _transactionService;
         public UserController(
             IUserService userService, 
             IImageService imageService,
             IMapper mapper,
-            IPackageService packageService)
+            IPackageService packageService,
+            ITransactionService transactionService)
         {
             _userService = userService;
 			_imageService = imageService;
 			_mapper = mapper;
             _packageService = packageService;
+            _transactionService = transactionService;
         }
         [HttpGet("artist/{email}")]
         [Authorize]
@@ -132,6 +135,16 @@ namespace ArtworkSharingHost.Controllers
         {
             var userInfo = _userService.GetUserByEmail(email);
             return Ok(userInfo);
+        }
+        [HttpPost("transaction")]
+        [Authorize]
+        public async Task<IActionResult> AddTransaction([FromBody] TransactionDTO transactionDTO)
+        {
+            if (transactionDTO == null) { return BadRequest("There something wrong with your transaction"); }
+            transactionDTO.CreateDate = DateTime.UtcNow;
+            transactionDTO.SenderId = User.GetUserId();
+            await _transactionService.AddTransaction(transactionDTO);
+            return Ok();
         }
 
     }
