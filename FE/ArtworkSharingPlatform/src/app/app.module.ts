@@ -53,6 +53,7 @@ import { AdminLayoutComponent } from './components/admin/admin-layout/admin-layo
 import { AdminSidebarComponent } from './components/admin/admin-sidebar/admin-sidebar.component';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 import { ConfirmDialogComponent } from './components/modal/confirm-dialog/confirm-dialog.component';
+import { ConfigCreateComponent } from './components/admin/config-magement/config-create/config-create.component';
 
 
 @NgModule({
@@ -86,7 +87,6 @@ import { ConfirmDialogComponent } from './components/modal/confirm-dialog/confir
     UserCreateComponent,
     ArtworkListComponent,
     UserUpdateComponent,
-
     OrderConfirmationComponent,
     OrderConfirmationFailedComponent,
     ChangeAvatarComponent,
@@ -96,6 +96,7 @@ import { ConfirmDialogComponent } from './components/modal/confirm-dialog/confir
     AdminSidebarComponent,
     AdminDashboardComponent,
     ConfirmDialogComponent
+    ConfigCreateComponent
   ],
   imports: [
     BrowserModule,
