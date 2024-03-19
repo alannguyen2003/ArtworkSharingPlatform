@@ -95,7 +95,7 @@ import { ConfigCreateComponent } from './components/admin/config-magement/config
     AdminLayoutComponent,
     AdminSidebarComponent,
     AdminDashboardComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
     ConfigCreateComponent
   ],
   imports: [
