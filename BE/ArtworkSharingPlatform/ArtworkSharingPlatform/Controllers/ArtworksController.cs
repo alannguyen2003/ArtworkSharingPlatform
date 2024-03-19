@@ -3,13 +3,13 @@ using ArtworkSharingHost.Extensions;
 using ArtworkSharingPlatform.Application.Interfaces;
 using ArtworkSharingPlatform.DataTransferLayer;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.Artwork;
-using ArtworkSharingPlatform.Domain.Entities.Users;
 using ArtworkSharingPlatform.Domain.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ArtworkSharingHost.Controllers
 {
-    [Route("api/[controller]")]
+	[Route("api/[controller]")]
     [ApiController]
     public class ArtworksController : ControllerBase
     {
@@ -23,6 +23,7 @@ namespace ArtworkSharingHost.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<PagedList<ArtworkDTO>>> GetArtworks([FromQuery] UserParams userParams)
         {
 			string genreIds = Request.Query["genres"]; 
@@ -117,10 +118,10 @@ namespace ArtworkSharingHost.Controllers
             await _artworkService.UserLike(like);
             return Ok();
         }
-        [HttpPut("sell/{artworkId}")]
-        public async Task<IActionResult> ConfirmSell(int artworkId)
+        [HttpPut("sell/{artworkId}/{buyUserEmail}")]
+        public async Task<IActionResult> ConfirmSell(int artworkId, string buyUserEmail)
         {
-            var isSuccess = await _artworkService.ConfirmSell(artworkId, User.GetUserId());
+            var isSuccess = await _artworkService.ConfirmSell(artworkId, User.GetUserId(), buyUserEmail);
             if (!isSuccess)
             {
                 return BadRequest();
@@ -241,7 +242,7 @@ namespace ArtworkSharingHost.Controllers
             await _artworkService.ReportArtwork(reportDTO);
             return Ok();
         }
-        [HttpGet("GetListBoughtArtwork")]
+        [HttpGet("GetListArtworkPurchase")]
         public async Task<IActionResult> GetListBoughtArtwork()
         {
             var result = await _artworkService.ListPurchaseArtwork(User.GetUserId());

@@ -1,19 +1,19 @@
-import {Component, OnInit} from '@angular/core';
+import { Component } from '@angular/core';
 import {UserProfile} from "../../../_model/userProfile.model";
+import {User} from "../../../_model/user.model";
 import {ActivatedRoute} from "@angular/router";
 import {AccountService} from "../../../_services/account.service";
-import {take} from "rxjs";
-import {User} from "../../../_model/user.model";
 import {UserService} from "../../../_services/user.service";
 import {ToastrService} from "ngx-toastr";
+import {take} from "rxjs";
 import {Follow} from "../../../_model/follow.model";
 
 @Component({
-  selector: 'app-user-profile',
-  templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.css']
+  selector: 'app-profile-banner',
+  templateUrl: './profile-banner.component.html',
+  styleUrls: ['./profile-banner.component.css']
 })
-export class UserProfileComponent implements OnInit{
+export class ProfileBannerComponent {
   userProfile: UserProfile | undefined;
   user: User | undefined;
   checkIsFollowed = false;
@@ -38,7 +38,7 @@ export class UserProfileComponent implements OnInit{
     }
   }
 
-  requestArtwork() {
+  follow() {
     if (!this.userProfile) return;
     this.userService.folowUser(this.userProfile.email).subscribe({
       next: _ => {

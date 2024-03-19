@@ -59,6 +59,8 @@ import { CommissionListComponent } from './components/admin/commission-managemen
 import { CommissionDetailComponent } from './components/admin/commission-management/commission-detail/commission-detail.component';
 import { ReportDetailComponent } from './components/admin/report-management/report-detail/report-detail.component';
 import { ReportUpdateComponent } from './components/admin/report-management/report-update/report-update.component';
+import { ProfileBannerComponent } from './components/user/profile-banner/profile-banner.component';
+import { RequestArtworkComponent } from './components/user/request-artwork/request-artwork.component';
 
 
 @NgModule({
@@ -107,7 +109,11 @@ import { ReportUpdateComponent } from './components/admin/report-management/repo
     ConfirmDialogComponent,
     ConfigCreateComponent,
     ReportDetailComponent,
-    ReportUpdateComponent
+    ReportUpdateComponent,
+    ConfirmDialogComponent,
+    ConfigCreateComponent,
+    ProfileBannerComponent,
+    RequestArtworkComponent
   ],
   imports: [
     BrowserModule,
