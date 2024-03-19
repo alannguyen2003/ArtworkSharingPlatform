@@ -1,56 +1,49 @@
-<div class="container mt-4 dark:bg-gray-800">
-    <div class="flex justify-between items-center mb-4">
-        <h2 class="text-white text-3xl font-bold">User List</h2>
-        <button routerLink="/admin/user-management/user-create" class="flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-            </svg>
-            Add New User
-        </button>
-    </div>
-    <table datatable class="table-auto w-full mt-2 rounded-md">
-        <thead class="bg-gray-700 text-white">
-        <tr>
-            <th class="px-4 py-2">No.</th>
-            <!-- Thêm cột số thứ tự -->
-            <th class="px-4 py-2 text-center text-md">Name</th>
-            <th class="px-4 py-2 text-center text-md">Email</th>
-            <th class="px-4 py-2 text-center text-md ">Phone Number</th>
-            <th class="px-4 py-2 text-center text-md">Description</th>
-            <th class="px-4 py-2 text-center text-md">Role</th>
-            <th class="px-4 py-2 text-center text-md">Status</th>
-            <th class="px-4 py-2 text-center text-md">Actions</th>
-            <!-- Thêm cột Actions cho nút Edit -->
-        </tr>
-        </thead>
-        <tbody class="bg-gray-800 text-white">
-        <tr
-                class="border-b-2 border-gray-700"
-        >
-            <!-- Tăng độ đậm của đường kẻ -->
-            <td class="px-4 py-2">Name</td>
-            <!-- Hiển thị số thứ tự -->
-            <td class="px-4 py-2 text-center text-md">Name</td>
-            <td class="px-4 py-2">Name</td>
-            <td class="px-4 py-2">Name</td>
-            <td class="px-4 py-2">Name</td>
-            <td class="px-4 py-2">Name</td>
-            <!-- For Status -->
-            <td class="px-4 py-2 text-center text-md">
-          <span class="relative inline-block px-3 py-1 font-semibold text-white leading-tight rounded-full">
-            <span aria-hidden="true" class="absolute inset-0 opacity-50 rounded-full"></span>
-            <span class="relative">Name</span>
-          </span>
-            </td>
-            <!-- For Actions -->
-            <td class="px-4 py-2 text-sm text-center text-md">
-                <div class="inline-flex gap-2">
-                    <a routerLink="/" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline text-xs">View</a>
-                    <a routerLink="/" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline text-xs">Edit</a>
-                    <a class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline text-xs">Delete</a>
-                </div>
-            </td>
-        </tr>
-        </tbody>
+<div class="container mx-auto mt-8 p-4 bg-gray-800 rounded-lg shadow">
+  <h2 class="text-white text-3xl font-bold mb-4 text-center">Commission List</h2>
+  <div class="overflow-x-auto">
+    <table datatable class="min-w-full leading-normal">
+      <thead>
+      <tr>
+        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">ID</th>
+        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">Min Price</th>
+        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">Max Price</th>
+        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">Actual Price</th>
+        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">Description</th>
+        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">Request Date</th>
+        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">Status</th>
+        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">Sender</th>
+        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">Receiver</th>
+        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">Genre</th>
+        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider sticky-action-column">Action</th>
+      </tr>
+      </thead>
+      <tbody class="text-white">
+      <tr *ngFor="let commission of commissionsItem.returnData">
+        <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.id}}</td>
+        <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.minPrice | currency}}</td>
+        <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.maxPrice | currency}}</td>
+        <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.actualPrice | currency}}</td>
+        <td class=" truncatepx-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.requestDescription}}</td>
+        <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.requestDate | date:'mediumDate'}}</td>
+        <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">
+              <span [ngClass]="{
+                  'bg-green-500': commission.commissionStatus === 'Completed',
+                  'bg-red-500': commission.commissionStatus === 'Rejected',
+                  'bg-yellow-500': commission.commissionStatus === 'Pending',
+                  'bg-purple-500': commission.commissionStatus === 'Accepted'
+                }" class="relative inline-block px-3 py-1 font-semibold text-white leading-tight rounded-full">
+                <span aria-hidden="true" class="absolute inset-0 opacity-50 rounded-full"></span>
+                <span class="relative">{{ commission.commissionStatus }}</span>
+              </span>
+        </td>
+        <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.senderName}}</td>
+        <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.receiverName}}</td>
+        <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.genreName}}</td>
+        <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm text-right sticky-action-column">
+          <a routerLink="#" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded text-center text-sm">View</a>
+        </td>
+      </tr>
+      </tbody>
     </table>
+  </div>
 </div>
