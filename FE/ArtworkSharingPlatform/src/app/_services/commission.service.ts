@@ -19,4 +19,7 @@ export class CommissionService {
   getCommissions() {
     return this.http.get<CommissionHistoryAudience>(this.baseUrl + "Commission/Sender/GetAll");
   }
+  getCommissionsArtist() {
+    return this.http.get<CommissionHistoryAudience>(this.baseUrl + "Commission/Receiver/GetAll");
+  }
 }
