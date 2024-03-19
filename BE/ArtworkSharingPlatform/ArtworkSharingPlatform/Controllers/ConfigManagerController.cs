@@ -1,5 +1,6 @@
 ﻿using ArtworkSharingHost.Extensions;
 using ArtworkSharingPlatform.Application.Interfaces;
+using ArtworkSharingPlatform.Application.Services;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.ConfigManager;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response.ConfigManager;
 using Microsoft.AspNetCore.Authorization;
@@ -25,6 +26,11 @@ public class ConfigManagerController : ControllerBase
         var result = _configManagerService.Create(newConfigManagerRequest);
         var clientResponse = ReturnStatusCodeToEndpoint(result);
         return clientResponse;
+    }
+    [HttpGet("LastestConfig")]
+    public async Task<IActionResult> GetLastestConfig()
+    {
+        return Ok(await _configManagerService.GetLastestConfig());
     }
     private ObjectResult ReturnStatusCodeToEndpoint(ConfigManagerServiceResponse result)
     {

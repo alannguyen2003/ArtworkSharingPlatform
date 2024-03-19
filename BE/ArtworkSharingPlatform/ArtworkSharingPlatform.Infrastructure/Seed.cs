@@ -8,6 +8,7 @@ using ArtworkSharingPlatform.Domain.Entities.Commissions;
 using ArtworkSharingPlatform.Domain.Entities.PackagesInfo;
 using ArtworkSharingPlatform.Domain.Entities.Transactions;
 using ArtworkSharingPlatform.Domain.Entities.Configs;
+using System.Net;
 
 namespace ArtworkSharingPlatform.Infrastructure
 {
@@ -213,10 +214,12 @@ namespace ArtworkSharingPlatform.Infrastructure
 
         public static async Task SeedConfigManager(ArtworkSharingPlatformDbContext context)
         {
-            if(await context.ConfigManagers.AnyAsync()) { return; }
-            var config = new ConfigManager
+            if (await context.ConfigManagers.AnyAsync()) { return; }
+            var configs = new List<ConfigManager>
             {
-                ConfigDate = DateTime.Now,
+                new ConfigManager
+                {
+                ConfigDate = DateTime.Now.AddDays(-5),
                 IsServicePackageConfig = true,
                 IsPhysicalImageConfig = true,
                 MaxReleaseCount = 10,
@@ -232,9 +235,33 @@ namespace ArtworkSharingPlatform.Infrastructure
                 CompanyPhoneNumber = "0999992123",
                 CompanyEmail = "fptu@fpt.edu.vn",
                 Administrator = context.Users.FirstOrDefault(u => u.Id == 11)
-            };
-            await context.ConfigManagers.AddAsync(config);
-            await context.SaveChangesAsync();   
+                },
+                new ConfigManager
+                {
+                ConfigDate = DateTime.Now,
+                IsServicePackageConfig = true,
+                IsPhysicalImageConfig = true,
+                MaxReleaseCount = 17,
+                IsGeneralConfig = true,
+                LogoUrl = "",
+                MyPhoneNumber = "1321312312",
+                Address = "NVHSV",
+                IsPagingConfig = true,
+                TotalItemPerPage = 10,
+                RowSize = 5,
+                IsAdvertisementConfig = true,
+                CompanyName = "NVHSV",
+                CompanyPhoneNumber = "0999992123",
+                CompanyEmail = "fptu@fpt.edu.vn",
+                Administrator = context.Users.FirstOrDefault(u => u.Id == 11)
+                }
+        };
+            foreach (var config in configs)
+            {
+                await context.ConfigManagers.AddAsync(config);
+            }
+
+            await context.SaveChangesAsync();
         }
 
         public static async Task SeedCommissionRequest(ArtworkSharingPlatformDbContext context)

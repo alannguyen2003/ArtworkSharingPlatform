@@ -46,6 +46,24 @@ namespace ArtworkSharingPlatform.Repository.Repository
             return config;
         }
 
+        public async Task<ConfigManager> GetLastestConfig()
+        {
+            ConfigManager config = null;
+            try
+            {
+                config = await _dbContext.ConfigManagers
+                                          .Include(c => c.Administrator) // Include any related data if necessary
+                                          .OrderByDescending(c => c.ConfigDate) // Order by ConfigDate descending
+                                          .FirstOrDefaultAsync(); // Get the first record, which is the latest
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return config;
+        }
+
+
         public async Task UpdateConfig(ConfigManager config)
         {
             try
