@@ -414,5 +414,165 @@
       }
     ],
     "Status": 1
+  },
+  {
+    "Title": "Wooden Face",
+    "Description": "Beautiful women face on the tree",
+    "Price": 5000000,
+    "CreatedDate": "2023-11-15",
+    "GenreId": 2,
+    "OwnerId": 13,
+    "ReleaseCount": 0,
+    "ArtworkImages": [
+      {
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/l7rwf3z3sp6ylfrpy54w",
+        "PublicId": "asp-net7/l7rwf3z3sp6ylfrpy54w"
+      }
+    ],
+    "Status": 1
+  },
+  {
+    "Title": "Mountain Sunset",
+    "Description": "Beautiful senset on mountain",
+    "Price": 2500000,
+    "CreatedDate": "2023-08-15",
+    "GenreId": 1,
+    "OwnerId": 13,
+    "ReleaseCount": 0,
+    "ArtworkImages": [
+      {
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/ymwqzqythrmfsicyvvl7",
+        "PublicId": "asp-net7/ymwqzqythrmfsicyvvl7"
+      }
+    ],
+    "Status": 1
+  },
+  {
+    "Title": "Acrylic Mountain",
+    "Description": "Beautiful mountain painted with acrylic color",
+    "Price": 6000000,
+    "CreatedDate": "2024-01-23",
+    "GenreId": 1,
+    "OwnerId": 13,
+    "ReleaseCount": 0,
+    "ArtworkImages": [
+      {
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/bfs56j95sbpvcnczqzvh",
+        "PublicId": "asp-net7/bfs56j95sbpvcnczqzvh"
+      }
+    ],
+    "Status": 1
+  },
+  {
+    "Title": "Romance Couple",
+    "Description": "Romance scene of a couple under the nightlight",
+    "Price": 4000000,
+    "CreatedDate": "2024-01-20",
+    "GenreId": 1,
+    "OwnerId": 13,
+    "ReleaseCount": 0,
+    "ArtworkImages": [
+      {
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/cz0hf7ufrlj2vh4ucoj4",
+        "PublicId": "asp-net7/cz0hf7ufrlj2vh4ucoj4"
+      }
+    ],
+    "Status": 1
+  },
+  {
+    "Title": "Marvelous Mountain and River",
+    "Description": "Marvelous scene of mountains and river",
+    "Price": 10000000,
+    "CreatedDate": "2024-02-20",
+    "GenreId": 1,
+    "OwnerId": 13,
+    "ReleaseCount": 0,
+    "ArtworkImages": [
+      {
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/ehqdvwo8xxad6n9z6pwx",
+        "PublicId": "asp-net7/ehqdvwo8xxad6n9z6pwx"
+      }
+    ],
+    "Status": 1
+  },
+  {
+    "Title": "Beautiful Lady",
+    "Description": "Beautiful portrait of lady",
+    "Price": 8000000,
+    "CreatedDate": "2023-11-20",
+    "GenreId": 2,
+    "OwnerId": 13,
+    "ReleaseCount": 0,
+    "ArtworkImages": [
+      {
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/guykkqrlmedjje6scdnd",
+        "PublicId": "asp-net7/guykkqrlmedjje6scdnd"
+      }
+    ],
+    "Status": 1
+  },
+  {
+    "Title": "Man Sculpture",
+    "Description": "Beautiful sculpture artwork",
+    "Price": 8000000,
+    "CreatedDate": "2023-11-20",
+    "GenreId": 3,
+    "OwnerId": 13,
+    "ReleaseCount": 0,
+    "ArtworkImages": [
+      {
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/cqx5gitfznociv6epl2y",
+        "PublicId": "asp-net7/cqx5gitfznociv6epl2y"
+      }
+    ],
+    "Status": 1
+  },
+  {
+    "Title": "Angel Sculpture",
+    "Description": "Beautiful baby sculpture artwork",
+    "Price": 10000000,
+    "CreatedDate": "2023-11-10",
+    "GenreId": 3,
+    "OwnerId": 13,
+    "ReleaseCount": 0,
+    "ArtworkImages": [
+      {
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/defexxll2fp6qutdh4nn",
+        "PublicId": "asp-net7/defexxll2fp6qutdh4nn"
+      }
+    ],
+    "Status": 1
+  },
+  {
+    "Title": "Silent Lady",
+    "Description": "Beautiful lady watching in the void",
+    "Price": 3500000,
+    "CreatedDate": "2023-12-16",
+    "GenreId": 4,
+    "OwnerId": 13,
+    "ReleaseCount": 0,
+    "ArtworkImages": [
+      {
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/nnjxspmkippljlen6tpm",
+        "PublicId": "asp-net7/nnjxspmkippljlen6tpm"
+      }
+    ],
+    "Status": 1
+  },
+  {
+    "Title": "Monkey and Banana",
+    "Description": "Monkey hanging on the tree",
+    "Price": 1500000,
+    "CreatedDate": "2023-03-12",
+    "GenreId": 4,
+    "OwnerId": 13,
+    "ReleaseCount": 0,
+    "ArtworkImages": [
+      {
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/stccyjtgnq7z2xmokjtr",
+        "PublicId": "asp-net7/stccyjtgnq7z2xmokjtr"
+      }
+    ],
+    "Status": 1
   }
 ]
