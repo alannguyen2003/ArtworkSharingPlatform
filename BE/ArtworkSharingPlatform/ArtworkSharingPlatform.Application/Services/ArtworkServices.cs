@@ -245,9 +245,9 @@ namespace ArtworkSharingPlatform.Application.Services
             var purchaseDTO = _mapper.Map<IList<PurchaseDTO>>(Artworks);
             return purchaseDTO;
         }
-		public async Task ActiveArtworkStatus(int artworkId)
+		public async Task ActiveArtworkStatus(int artworkId, int userId)
 		{
-			await _artworkRepository.ActiveArtworkStatus(artworkId);
+			await _artworkRepository.ActiveArtworkStatus(artworkId, userId);
 		}
   }
 }

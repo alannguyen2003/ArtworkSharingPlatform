@@ -5,7 +5,7 @@
     "Price": 1062288,
     "CreatedDate": "2023-03-09",
     "GenreId": 2,
-    "OwnerId": 4,
+    "OwnerId": 13,
     "ReleaseCount": 0,
     "ArtworkImages": [
       {
@@ -15,61 +15,65 @@
     "Status": 1
   },
   {
-    "Title": "elit minim cillum",
+    "Title": "Eternal Harmony",
     "Description": "Cillum sunt non minim non irure. Sint adipisicing dolor voluptate excepteur aliqua ex pariatur amet sint duis enim tempor. Aliqua consectetur veniam laborum deserunt et quis consectetur fugiat incididunt non anim dolore quis. Ad id eiusmod consequat ad sunt eiusmod consectetur culpa cupidatat. Tempor esse commodo elit deserunt laborum.\r\n",
-    "Price": 5040323,
+    "Price": 15000000,
     "CreatedDate": "2023-03-29",
     "GenreId": 3,
-    "OwnerId": 3,
+    "OwnerId": 13,
     "ReleaseCount": 0,
     "ArtworkImages": [
       {
-        "ImageUrl": "https://e0.pxfuel.com/wallpapers/523/967/desktop-wallpaper-kimetsu-no-yaiba-anime-digital-art-artwork-2d-tanjiro-kamado-%E2%80%A2-for-you-for-mobile.jpg"
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/pcnty2w4jxbgm2p3fcr6",
+        "PublicId": "asp-net7/pcnty2w4jxbgm2p3fcr6"
       }
     ],
     "Status": 1
   },
   {
-    "Title": "culpa dolor sit",
+    "Title": "Spirit of Stone",
     "Description": "Fugiat ullamco pariatur laboris commodo ipsum esse. Proident fugiat cupidatat nulla qui consectetur. Consectetur culpa sit deserunt reprehenderit aliquip reprehenderit. Ad non do ullamco consequat magna sint ut cillum incididunt et nostrud.\r\n",
-    "Price": 4993514,
+    "Price": 2000000,
     "CreatedDate": "2023-04-02",
     "GenreId": 3,
-    "OwnerId": 4,
+    "OwnerId": 13,
     "ReleaseCount": 0,
     "ArtworkImages": [
       {
-        "ImageUrl": "https://i.pinimg.com/564x/a1/dc/ac/a1dcacd4a2515d673ee2b4cc8d65a50b.jpg"
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/jdztp2iijatcecst6aqj",
+        "PublicId": "asp-net7/jdztp2iijatcecst6aqj"
       }
     ],
     "Status": 1
   },
   {
-    "Title": "occaecat eiusmod cillum",
+    "Title": "Colorful Dream",
     "Description": "Veniam ex excepteur pariatur ad cupidatat sit voluptate ad. Esse esse fugiat irure aliqua minim minim irure dolor commodo voluptate. Dolor ea magna quis et officia esse reprehenderit laborum in tempor aute voluptate.\r\n",
-    "Price": 3330308,
+    "Price": 12000000,
     "CreatedDate": "2023-02-11",
     "GenreId": 4,
-    "OwnerId": 10,
+    "OwnerId": 13,
     "ReleaseCount": 0,
     "ArtworkImages": [
       {
-        "ImageUrl": "https://c4.wallpaperflare.com/wallpaper/122/555/692/science-fiction-digital-art-concept-art-artwork-futuristic-hd-wallpaper-preview.jpg"
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/n4l9kidwazyjpmf5a5cq",
+        "PublicId": "asp-net7/n4l9kidwazyjpmf5a5cq"
       }
     ],
     "Status": 1
   },
   {
-    "Title": "excepteur minim Lorem",
+    "Title": "Story of the Night",
     "Description": "Deserunt nisi nostrud fugiat veniam in voluptate amet enim cillum Lorem duis esse qui in. Sunt fugiat officia incididunt in proident enim tempor fugiat fugiat elit commodo laborum sint ipsum. Irure in pariatur dolor pariatur fugiat nulla velit ullamco non eiusmod sit labore esse eu. In officia ipsum quis cillum voluptate qui reprehenderit cupidatat consequat do eiusmod.\r\n",
-    "Price": 8111384,
+    "Price": 18000000,
     "CreatedDate": "2023-10-15",
     "GenreId": 4,
-    "OwnerId": 2,
+    "OwnerId": 13,
     "ReleaseCount": 0,
     "ArtworkImages": [
       {
-        "ImageUrl": "https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77701915053.jpg"
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/att5gpxxjmhqp5gaohph",
+        "PublicId": "asp-net7/att5gpxxjmhqp5gaohph"
       }
     ],
     "Status": 1
@@ -80,7 +84,7 @@
     "Price": 7726418,
     "CreatedDate": "2023-09-15",
     "GenreId": 1,
-    "OwnerId": 8,
+    "OwnerId": 13,
     "ReleaseCount": 0,
     "ArtworkImages": [
       {
@@ -95,7 +99,7 @@
     "Price": 6000168,
     "CreatedDate": "2023-12-30",
     "GenreId": 1,
-    "OwnerId": 5,
+    "OwnerId": 13,
     "ReleaseCount": 0,
     "ArtworkImages": [
       {
@@ -110,7 +114,7 @@
     "Price": 5686013,
     "CreatedDate": "2023-01-14",
     "GenreId": 1,
-    "OwnerId": 7,
+    "OwnerId": 13,
     "ReleaseCount": 0,
     "ArtworkImages": [
       {
@@ -125,7 +129,7 @@
     "Price": 53890,
     "CreatedDate": "2023-06-03",
     "GenreId": 1,
-    "OwnerId": 7,
+    "OwnerId": 13,
     "ReleaseCount": 0,
     "ArtworkImages": [
       {
@@ -140,11 +144,267 @@
     "Price": 87531,
     "CreatedDate": "2023-09-11",
     "GenreId": 2,
-    "OwnerId": 6,
+    "OwnerId": 13,
     "ReleaseCount": 0,
     "ArtworkImages": [
       {
         "ImageUrl": "https://paintable.cc/wp-content/uploads/2015/11/034-thiago-januario.jpg"
+      }
+    ],
+    "Status": 1
+  },
+  {
+    "Title": "Fabric of Life",
+    "Description": "This is Textile Art \r\n",
+    "Price": 23000000,
+    "CreatedDate": "2023-10-15",
+    "GenreId": 5,
+    "OwnerId": 13,
+    "ReleaseCount": 0,
+    "ArtworkImages": [
+      {
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/eqwbj8jldqtniwnvha84",
+        "PublicId": "asp-net7/eqwbj8jldqtniwnvha84"
+      }
+    ],
+    "Status": 1
+  },
+  {
+    "Title": "Silk Symphony",
+    "Description": "This is Textile Art \r\n",
+    "Price": 14000000,
+    "CreatedDate": "2023-10-15",
+    "GenreId": 5,
+    "OwnerId": 13,
+    "ReleaseCount": 0,
+    "ArtworkImages": [
+      {
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/yj8qlpyfjrccowndpfqq",
+        "PublicId": "asp-net7/yj8qlpyfjrccowndpfqq"
+      }
+    ],
+    "Status": 1
+  },
+  {
+    "Title": "Resilient Roots",
+    "Description": "This is Wood Sculpture \r\n",
+    "Price": 26000000,
+    "CreatedDate": "2023-10-15",
+    "GenreId": 6,
+    "OwnerId": 13,
+    "ReleaseCount": 0,
+    "ArtworkImages": [
+      {
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/ionm6kqrqhhkqywqdkcb",
+        "PublicId": "asp-net7/ionm6kqrqhhkqywqdkcb"
+      }
+    ],
+    "Status": 1
+  },
+  {
+    "Title": "Melody of Timber",
+    "Description": "This is Wood Sculpture\r\n",
+    "Price": 15000000,
+    "CreatedDate": "2023-10-15",
+    "GenreId": 6,
+    "OwnerId": 13,
+    "ReleaseCount": 0,
+    "ArtworkImages": [
+      {
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/tn4dbicmawdmtlwnmxav",
+        "PublicId": "asp-net7/tn4dbicmawdmtlwnmxav"
+      }
+    ],
+    "Status": 1
+  },
+  {
+    "Title": "Echoes of The Prehistoric",
+    "Description": "This is Expressionism \r\n",
+    "Price": 19000000,
+    "CreatedDate": "2023-10-15",
+    "GenreId": 7,
+    "OwnerId": 13,
+    "ReleaseCount": 0,
+    "ArtworkImages": [
+      {
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/oseldkxddgzwaalwucox",
+        "PublicId": "asp-net7/oseldkxddgzwaalwucox"
+      }
+    ],
+    "Status": 1
+  },
+  {
+    "Title": "Ancient Whisper",
+    "Description": "This is Expressionism \r\n",
+    "Price": 21000000,
+    "CreatedDate": "2023-10-15",
+    "GenreId": 7,
+    "OwnerId": 13,
+    "ReleaseCount": 0,
+    "ArtworkImages": [
+      {
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/vutmx988nyaxador5tz4",
+        "PublicId": "asp-net7/vutmx988nyaxador5tz4"
+      }
+    ],
+    "Status": 1
+  },
+  {
+    "Title": "Emotion Exploration",
+    "Description": "Deserunt nisi nostrud fugiat veniam in voluptate amet enim cillum Lorem duis esse qui in. Sunt fugiat officia incididunt in proident enim tempor fugiat fugiat elit commodo laborum sint ipsum. Irure in pariatur dolor pariatur fugiat nulla velit ullamco non eiusmod sit labore esse eu. In officia ipsum quis cillum voluptate qui reprehenderit cupidatat consequat do eiusmod.\r\n",
+    "Price": 30000000,
+    "CreatedDate": "2023-10-15",
+    "GenreId": 8,
+    "OwnerId": 13,
+    "ReleaseCount": 0,
+    "ArtworkImages": [
+      {
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/wuveolfwgk8s3qihowsq",
+        "PublicId": "asp-net7/wuveolfwgk8s3qihowsq"
+      }
+    ],
+    "Status": 1
+  },
+  {
+    "Title": "Rhythm of Chaos",
+    "Description": "This is Abstract Art \r\n",
+    "Price": 27000000,
+    "CreatedDate": "2023-10-15",
+    "GenreId": 8,
+    "OwnerId": 13,
+    "ReleaseCount": 0,
+    "ArtworkImages": [
+      {
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/j1obqshw5qp3y0mg7axi",
+        "PublicId": "asp-net7/j1obqshw5qp3y0mg7axi"
+      }
+    ],
+    "Status": 1
+  },
+  {
+    "Title": "Dream Labyrinth",
+    "Description": "This is Surrealism Art \r\n",
+    "Price": 29000000,
+    "CreatedDate": "2023-10-15",
+    "GenreId": 9,
+    "OwnerId": 13,
+    "ReleaseCount": 0,
+    "ArtworkImages": [
+      {
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/funpykw9rahosgjgvn2s",
+        "PublicId": "asp-net7/funpykw9rahosgjgvn2s"
+      }
+    ],
+    "Status": 1
+  },
+  {
+    "Title": "Mirrored Fantasia",
+    "Description": "This is Surrealism Art \r\n",
+    "Price": 31000000,
+    "CreatedDate": "2023-10-15",
+    "GenreId": 9,
+    "OwnerId": 13,
+    "ReleaseCount": 0,
+    "ArtworkImages": [
+      {
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/xdafjcsxaxnrkwrej3bt",
+        "PublicId": "asp-net7/xdafjcsxaxnrkwrej3bt"
+      }
+    ],
+    "Status": 1
+  },
+  {
+    "Title": "Truthful Reflectio",
+    "Description": "This is Realism Art.\r\n",
+    "Price": 25000000,
+    "CreatedDate": "2023-10-15",
+    "GenreId": 10,
+    "OwnerId": 13,
+    "ReleaseCount": 0,
+    "ArtworkImages": [
+      {
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/tfzesr8o9efhwi60c12j",
+        "PublicId": "asp-net7/tfzesr8o9efhwi60c12j"
+      }
+    ],
+    "Status": 1
+  },
+  {
+    "Title": "Essence of Reality",
+    "Description": "This is Realism Art.\r\n",
+    "Price": 22000000,
+    "CreatedDate": "2023-10-15",
+    "GenreId": 10,
+    "OwnerId": 13,
+    "ReleaseCount": 0,
+    "ArtworkImages": [
+      {
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/npbmu0lab2da0lposauq",
+        "PublicId": "asp-net7/npbmu0lab2da0lposauq"
+      }
+    ],
+    "Status": 1
+  },
+  {
+    "Title": "Spirited Stallion",
+    "Description": "This is Realism Art.\r\n",
+    "Price": 16500000,
+    "CreatedDate": "2023-10-15",
+    "GenreId": 11,
+    "OwnerId": 13,
+    "ReleaseCount": 0,
+    "ArtworkImages": [
+      {
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/ujxlmj0uler2hceyvss5",
+        "PublicId": "asp-net7/ujxlmj0uler2hceyvss5"
+      }
+    ],
+    "Status": 1
+  },
+  {
+    "Title": "Majestic Wilderness",
+    "Description": "This is Realism Art.\r\n",
+    "Price": 21000000,
+    "CreatedDate": "2023-10-15",
+    "GenreId": 11,
+    "OwnerId": 13,
+    "ReleaseCount": 0,
+    "ArtworkImages": [
+      {
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/m5aeqeaisf4dn5zoe6xr",
+        "PublicId": "asp-net7/m5aeqeaisf4dn5zoe6xr"
+      }
+    ],
+    "Status": 1
+  },
+  {
+    "Title": "Epoch Echo",
+    "Description": "History Painting.\r\n",
+    "Price": 35000000,
+    "CreatedDate": "2023-10-15",
+    "GenreId": 12,
+    "OwnerId": 13,
+    "ReleaseCount": 0,
+    "ArtworkImages": [
+      {
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/vrp4auchzocoxhhyqujq",
+        "PublicId": "asp-net7/vrp4auchzocoxhhyqujq"
+      }
+    ],
+    "Status": 1
+  },
+  {
+    "Title": "Time's Tapestry",
+    "Description": "History Painting.\r\n",
+    "Price": 40000000,
+    "CreatedDate": "2023-10-15",
+    "GenreId": 12,
+    "OwnerId": 13,
+    "ReleaseCount": 0,
+    "ArtworkImages": [
+      {
+        "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/jvg6k1tebh4tgslwp8z5",
+        "PublicId": "asp-net7/jvg6k1tebh4tgslwp8z5"
       }
     ],
     "Status": 1

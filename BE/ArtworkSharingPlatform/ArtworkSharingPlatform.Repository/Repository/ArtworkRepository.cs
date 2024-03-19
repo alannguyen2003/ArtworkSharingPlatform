@@ -315,24 +315,38 @@ namespace ArtworkSharingPlatform.Repository.Repository
             
             
             artwork.Status = 0;
-            artwork.OwnerId = purchase.BuyUserId;
             await _context.SaveChangesAsync();
         }
-        public async Task ActiveArtworkStatus(int artworkId)
+        public async Task<bool> CreditAvailable (int userId)
         {
-            if (artworkId == null && artworkId ==0)
+            if (userId == 0 && userId == null) { return false; }
+            var user = await _context.Users.Where(x => x.Id == userId)
+                .FirstOrDefaultAsync();
+            if (user.RemainingCredit >= 1)
+            {
+                user.RemainingCredit -= 1;
+                return true;
+            }
+            return false;
+        }
+        public async Task ActiveArtworkStatus(int artworkId, int userId)
+        {
+            if (artworkId == null && artworkId ==0 && userId==0)
             {
                 return;
             }
 
+            var user = await _context.Users.Where(x => x.Id == userId)
+                .FirstOrDefaultAsync();
             var artwork = await _context.Artworks.Where(x => x.Id == artworkId)
                 .FirstOrDefaultAsync();
-            artwork.Status = 1;
-            await _context.SaveChangesAsync();
+            if (user == null && artwork == null) { return; }
+                artwork.Status = 1;
+                await _context.SaveChangesAsync();
         }
         public async Task<IEnumerable<Purchase>> ListHistoryPurchaseArtwork (int artworkId)
         {
-            if (artworkId == null && artworkId != 0)
+            if (artworkId == null && artworkId == 0)
             {
                 return null;
             }

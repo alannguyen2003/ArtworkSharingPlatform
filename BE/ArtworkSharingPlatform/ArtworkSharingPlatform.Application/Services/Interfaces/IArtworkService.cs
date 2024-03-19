@@ -33,7 +33,7 @@ namespace ArtworkSharingPlatform.Application.Interfaces
         Task<IEnumerable<PurchaseDTO>> ListPurchaseArtwork(int UserId);
         Task AddPurchase(PurchaseDTO purchaseDTO);
         Task<IEnumerable<PurchaseDTO>> ListHistoryPurchaseArtwork(int artworkId);
-        Task ActiveArtworkStatus(int artworkId);
+        Task ActiveArtworkStatus(int artworkId, int userId);
 
     }
 }

@@ -221,13 +221,15 @@ namespace ArtworkSharingHost.Controllers
         [HttpGet("GetListHistoryPurchaseArtwork/{artworkId}")]
         public async Task<IActionResult> GetListHistoryPurchaseArtwork(int artworkId)
         {
+            var userId = User.GetUserId();
             var result = await _artworkService.ListHistoryPurchaseArtwork(artworkId);
             return Ok(result);
         }
-        [HttpPost("buy-artwork")]
-        public async Task<IActionResult> BuyArtwork([FromBody] PurchaseDTO purchaseDTO)
+        [HttpPost("buy-artwork/{buyUserId}")]
+        public async Task<IActionResult> BuyArtwork([FromBody] PurchaseDTO purchaseDTO, int buyUserId)
         {
-            purchaseDTO.BuyUserId = User.GetUserId();
+            purchaseDTO.SellUserId = User.GetUserId();
+            purchaseDTO.BuyUserId = buyUserId;
             purchaseDTO.BuyDate = DateTime.UtcNow;
             await _artworkService.AddPurchase(purchaseDTO);
             return Ok();
@@ -235,7 +237,8 @@ namespace ArtworkSharingHost.Controllers
         [HttpPut("active-artwork/{artworkId}")]
         public async Task<IActionResult> ActiveArtwork(int artworkId)
         {
-            await _artworkService.ActiveArtworkStatus(artworkId);
+            var userId = User.GetUserId();
+            await _artworkService.ActiveArtworkStatus(artworkId, userId);
             return Ok();
         }
     }
