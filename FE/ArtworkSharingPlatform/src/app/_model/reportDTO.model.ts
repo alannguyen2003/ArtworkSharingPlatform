@@ -1,5 +1,5 @@
-// src/app/_model/reportDTO.model.ts
 export interface ReportDTO {
+    id: number;
     reporterId: number;
     artworkId: number;
     content: string;

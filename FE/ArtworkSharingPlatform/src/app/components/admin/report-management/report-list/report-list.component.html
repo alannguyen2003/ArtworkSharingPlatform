@@ -4,15 +4,17 @@
       <table class="w-full text-sm text-left text-white">
         <thead class="text-xs text-gray-700 uppercase bg-gray-700">
           <tr>
-            <th scope="col" class="py-3 px-6">Reporter ID</th>
-            <th scope="col" class="py-3 px-6">Artwork ID</th>
-            <th scope="col" class="py-3 px-6">Content</th>
-            <th scope="col" class="py-3 px-6">Created Date</th>
-            <th scope="col" class="py-3 px-6">Action</th>
+            <th class="py-3 px-6 text-white">Report ID</th>
+            <th class="py-3 px-6 text-white">Reporter ID</th>
+            <th class="py-3 px-6 text-white">Artwork ID</th>
+            <th class="py-3 px-6 text-white">Content</th>
+            <th class="py-3 px-6 text-white">Created Date</th>
+            <th class="py-3 px-6 text-white">Action</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let report of reports" class="bg-gray-800 border-b border-gray-700">
+            <td class="py-4 px-6">{{report.id}}</td>
             <td class="py-4 px-6">{{report.reporterId}}</td>
             <td class="py-4 px-6">{{report.artworkId}}</td>
             <td class="py-4 px-6">{{report.content}}</td>
