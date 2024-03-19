@@ -37,6 +37,12 @@ namespace ArtworkSharingPlatform.Application.Services
             return _mapper.Map<UserInfoDTO>(user);
         }
 
+        public UserInfoDTO GetUserByEmail(string email)
+        {
+            var user = _userRepository.GetByEmail(email);
+            return _mapper.Map<UserInfoDTO>(user);
+        }
+
         public UserInfoAudienceDTO GetUserDetail(int id)
         {
             var user = _userRepository.GetById(id);
@@ -56,6 +62,11 @@ namespace ArtworkSharingPlatform.Application.Services
         public async Task DeleteUserAdmin(User user)
         {
             await _userRepository.DeleteUserAdmin(user);
+        }
+
+        public async Task DeleteUserAdminByEmail(string email)
+        {
+            await _userRepository.DeleteUserAdminByEmail(email);
         }
 
         public async Task UpdateUserDetail(User user)
