@@ -50,7 +50,6 @@ builder.Services.AddIdentityCore<User>(opt =>
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters()
@@ -134,8 +133,8 @@ app.UseCors(builder => builder
 .AllowAnyMethod()
 .AllowCredentials()
 .WithOrigins("http://localhost:4200"));
-app.UseAuthorization();
 app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 app.MapHub<PresenceHub>("hub/presence");
 app.MapHub<MessageHub>("hub/message");
