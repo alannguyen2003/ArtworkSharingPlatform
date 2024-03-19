@@ -79,7 +79,15 @@ builder.Services.AddAuthentication(options =>
         }
     };
 });
-
+builder.Services.AddAuthorization(options =>
+{
+	options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+	options.AddPolicy("RequireManagerRole", policy => policy.RequireRole("Manager"));
+	options.AddPolicy("RequireArtistRole", policy => policy.RequireRole("Artist"));
+	options.AddPolicy("RequireAdminManagerRole", policy =>
+		policy.RequireAssertion(context =>
+			context.User.IsInRole("Admin") || context.User.IsInRole("Manager")));
+});
 //builder.Services.AddCors(options =>
 //{
 //    options.AddPolicy(name: artworkSharingPlatformCors,
