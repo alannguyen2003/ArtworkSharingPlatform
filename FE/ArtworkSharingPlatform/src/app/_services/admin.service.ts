@@ -5,6 +5,7 @@ import { UserAdmin } from '../_model/userAdmin.model';
 import { Artwork } from '../_model/artwork.model';
 import { Observable } from 'rxjs';
 import { ArtworkAdminDTO } from '../_model/artworkAdminDTO.model';
+import { ConfigManagerRequest } from '../_model/configManagerRequest.model';
 
 @Injectable({
   providedIn: 'root',
@@ -35,6 +36,9 @@ export class AdminService {
   }
   deleteArtwork(artworkId: number) {
     return this.http.delete(`${this.baseUrl}admin/${artworkId}`);
+  }
+  createConfig(newConfig: ConfigManagerRequest): Observable<any> {
+    return this.http.post(`${this.baseUrl}api/ConfigManager/Create`, newConfig);
   }
   
 }
