@@ -74,10 +74,11 @@
       </div>
     </fieldset>
   </form>
-  <div class="container-fluid p-0 m-0" *ngIf="artworks.length > 0">
+  <div class="container-fluid p-0 m-0" *ngIf="artworks.length > 0 && userParams">
     <div class="row w-full justify-content-center">
       <div
-        class="flex col-3 max-w-lg p-6 space-y-6 overflow-hidden rounded-lg shadow-md dark:bg-gray-900 dark:text-gray-100 m-2"
+        class="flex p-6 space-y-6 overflow-hidden rounded-lg shadow-md dark:bg-gray-900 dark:text-gray-100 m-2"
+        [ngStyle]="{'flex': '0 0 '+ 100/(userParams.rowSize + 1) +'%', 'max-width': 100/(userParams.rowSize + 1)+'%'}"
         *ngFor="let artwork of artworks">
         <app-artwork-card [artwork]="artwork"></app-artwork-card>
       </div>

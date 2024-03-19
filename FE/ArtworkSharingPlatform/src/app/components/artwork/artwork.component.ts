@@ -19,15 +19,22 @@ export class ArtworkComponent implements OnInit {
   genres: Genre[] = [];
   selectedGenres: any[] = [];
   constructor(private artworkService: ArtworkService) {
-    this.userParams = this.artworkService.getUserParams();
   }
   ngOnInit() {
-    this.loadArtworks();
+    this.userParams = this.artworkService.getUserParams();
+    this.artworkService.loadUserParams().subscribe({
+      next: config => {
+        if (this.userParams) {
+          this.userParams.pageSize = config.totalItemPerPage;
+          this.userParams.rowSize = config.rowSize;
+        }
+        this.loadArtworks();
+      }
+    });
     this.loadGenres();
-    console.log(this.artworks);
   }
 
-  async loadGenres() {
+  loadGenres() {
     this.artworkService.getGenreForArtwork().subscribe({
       next: genres => {
         this.genres = genres;
@@ -35,10 +42,9 @@ export class ArtworkComponent implements OnInit {
     });
   }
 
-  async loadArtworks() {
+  loadArtworks() {
     if (this.userParams) {
       this.userParams.genreIds = this.selectedGenres;
-      console.log(this.userParams);
       this.artworkService.setUserParams(this.userParams);
       this.artworkService.getArtworks(this.userParams).subscribe({
         next: response => {

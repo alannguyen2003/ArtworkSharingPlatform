@@ -21,7 +21,7 @@ namespace ArtworkSharingHost.EmailService
 			Configuration.Default.ApiKey["api-key"] = _sendInBlue.Value.ApiKey;
 			string message;
 			var apiInstance = new TransactionalEmailsApi();
-			string SenderName = "Test Auto Email";
+			string SenderName = "Artwork Sharing Platform";
 			string SenderEmail = from;
 			SendSmtpEmailSender Email = new SendSmtpEmailSender(SenderName, SenderEmail);
 			string ToEmail = to;
