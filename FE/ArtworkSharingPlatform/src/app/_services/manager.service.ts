@@ -17,8 +17,11 @@ export class ManagerService {
   }
   getTransactionDetail(transactionId: number): Observable<Transaction> {
     return this.http.get<Transaction>(`${this.baseUrl}manager/transaction/${transactionId}`);
-  } 
+  }
+  exportTransactionList(): Observable<Blob> {
+    return this.http.get(`${this.baseUrl}manager/export/list`, { responseType: 'blob' });
+  }  
   exportTransaction(transactionId: number): Observable<Blob> {
     return this.http.get(`${this.baseUrl}manager/export/${transactionId}`, { responseType: 'blob' });
-  }  
+  }
 }

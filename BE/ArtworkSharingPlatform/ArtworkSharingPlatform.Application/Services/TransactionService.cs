@@ -58,5 +58,33 @@ namespace ArtworkSharingPlatform.Application.Services
 
             return workbook;
         }
+
+        public async Task<XLWorkbook> ExportTransactionList()
+        {
+            var transactions = await _transactionRepository.GetAllTransaction();
+            var workbook = new XLWorkbook();
+            var worksheet = workbook.AddWorksheet("Transactions");
+
+            // Thêm tiêu đề cho các cột
+            worksheet.Cell(1, 1).Value = "Transaction ID";
+            worksheet.Cell(1, 2).Value = "Report Name";
+            worksheet.Cell(1, 3).Value = "Create Date";
+            worksheet.Cell(1, 4).Value = "Total Price";
+            worksheet.Cell(1, 5).Value = "Sender ID";
+
+            int currentRow = 2;
+            foreach (var transaction in transactions)
+            {
+                worksheet.Cell(currentRow, 1).Value = transaction.Id;
+                worksheet.Cell(currentRow, 2).Value = transaction.ReportName;
+                worksheet.Cell(currentRow, 3).Value = transaction.CreateDate;
+                worksheet.Cell(currentRow, 4).Value = transaction.TotalPrice;
+                worksheet.Cell(currentRow, 5).Value = transaction.SenderId;
+                currentRow++;
+            }
+
+            return workbook;
+        }
+
     }
 }
