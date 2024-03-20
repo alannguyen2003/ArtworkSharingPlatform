@@ -47,7 +47,8 @@ public class CommissionController : ControllerBase
         return clientResponse;
     }
     [HttpPost("Complete")]
-    [Authorize(Policy="RequireArtistRole")]
+    // [Authorize(Policy="RequireArtistRole")]
+    [Authorize]
     public ActionResult Complete([FromBody] CompleteCommissionRequestDTO completeCommissionRequestDto)
     {
         completeCommissionRequestDto.ReceiverId = User.GetUserId();        
@@ -63,6 +64,11 @@ public class CommissionController : ControllerBase
         var result = await _commissionService.GetAllSenderCommissions(senderId);
         var clientResponse = await Task.Run(()=>ReturnStatusCodeToEndpoint(result));
         return clientResponse;
+    }
+    [HttpGet("{commissionId}")]
+    public async Task<IActionResult> GetSingleCommission(int commissionId)
+    {
+        return Ok(_commissionService.GetSingleCommission(commissionId));
     }
     [HttpGet("Receiver/GetAll")]
     [Authorize(Policy="RequireArtistRole")]

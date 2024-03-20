@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import {CommissionHistoryAdmin} from "../../../../_model/commissionHistoryAdmin.model";
-import {AdminService} from "../../../../_services/admin.service";
-import {ActivatedRoute} from "@angular/router";
-import {ReportModalComponent} from "../../../modal/report-modal/report-modal.component";
-import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
-import {RejectRequestComponent} from "../../../modal/reject-request/reject-request.component";
+import { CommissionHistoryAdmin } from "../../../../_model/commissionHistoryAdmin.model";
+import { AdminService } from "../../../../_services/admin.service";
+import { ActivatedRoute } from "@angular/router";
+import { ReportModalComponent } from "../../../modal/report-modal/report-modal.component";
+import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
+import { RejectRequestComponent } from "../../../modal/reject-request/reject-request.component";
 import { CommissionService } from '../../../../_services/commission.service';
 import { AcceptRequest } from 'src/app/_model/acceptRequest.model';
 
@@ -20,7 +20,7 @@ export class DetailCommissionComponent {
   isPending: boolean = false;
   isActualPrice: boolean = false;
   bsModalRef: BsModalRef<RejectRequestComponent> = new BsModalRef<RejectRequestComponent>();
-    constructor(
+  constructor(
     private adminService: AdminService,
     private route: ActivatedRoute,
     private commissionService: CommissionService,
@@ -30,7 +30,7 @@ export class DetailCommissionComponent {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const commissionId = +params['id'];
-      this.adminService.getSingleCommission(commissionId).subscribe(commission => {
+      this.commissionService.getSingleCommission(commissionId).subscribe(commission => {
         this.commission = commission;
         console.log(this.commission)
         if (this.commission.commissionStatus == 'Pending') this.isPending = true;
