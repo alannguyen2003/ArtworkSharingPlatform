@@ -1,7 +1,4 @@
-<div
-        *ngIf="commission"
-        class="container mx-auto mt-8 p-6 bg-gray-800 rounded-xl shadow-lg max-w-4xl"
->
+<div *ngIf="commission" class="container mx-auto mt-8 p-6 bg-gray-800 rounded-xl shadow-lg max-w-4xl">
     <h2 class="text-white text-3xl font-bold mb-6 text-center">
         Commission Detail
     </h2>
@@ -45,38 +42,33 @@
                 'bg-red-500': commission.commissionStatus === 'Rejected',
                 'bg-yellow-500': commission.commissionStatus === 'Pending',
                 'bg-purple-500': commission.commissionStatus === 'Accepted'
-              }"
-                    class="relative inline-block px-3 py-1 font-semibold text-white leading-tight rounded-full"
-            >
-              <span
-                      aria-hidden="true"
-                      class="absolute inset-0 opacity-50 rounded-full"
-              ></span>
-              <span class="relative">{{ commission.commissionStatus }}</span>
-            </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="px-6 py-4 font-semibold">Sender:</td>
-                <td class="px-6 py-4">{{ commission.senderName }}</td>
-            </tr>
-            <tr>
-                <td class="px-6 py-4 font-semibold">Receiver:</td>
-                <td class="px-6 py-4">{{ commission.receiverName }}</td>
-            </tr>
-            <tr>
-                <td class="px-6 py-4 font-semibold rounded-bl-xl">Genre:</td>
-                <td class="px-6 py-4 rounded-br-xl">{{ commission.genreName }}</td>
-            </tr>
+              }" class="relative inline-block px-3 py-1 font-semibold text-white leading-tight rounded-full">
+                            <span aria-hidden="true" class="absolute inset-0 opacity-50 rounded-full"></span>
+                            <span class="relative">{{ commission.commissionStatus }}</span>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="px-6 py-4 font-semibold">Sender:</td>
+                    <td class="px-6 py-4">{{ commission.senderName }}</td>
+                </tr>
+                <tr>
+                    <td class="px-6 py-4 font-semibold">Receiver:</td>
+                    <td class="px-6 py-4">{{ commission.receiverName }}</td>
+                </tr>
+                <tr>
+                    <td class="px-6 py-4 font-semibold rounded-bl-xl">Genre:</td>
+                    <td class="px-6 py-4 rounded-br-xl">{{ commission.genreName }}</td>
+                </tr>
             </tbody>
         </table>
         <div *ngIf="commission.commissionStatus == 'Pending'" class="px-6 py-4 flex justify-between">
             <button (click)="openReportModal()" class="btn btn-danger">Reject</button>
             <button (click)="acceptCommission()" class="btn btn-success">Accepted</button>
         </div>
-        <div *ngIf="isAccepted" class="px-6 py-4 flex justify-between">
+        <div *ngIf="isAccepted && commission.commissionStatus !== 'Rejected'" class="px-6 py-4 flex justify-between">
             <button></button>
             <button class="btn btn-success">Completed</button>
+        </div>
     </div>
-</div>
 </div>
