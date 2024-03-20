@@ -26,7 +26,7 @@ export class UserUpdateComponent implements OnInit {
       id: ['', Validators.required],
       email: ['', Validators.required],
       name: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       description: [''],
       status: ['', Validators.required],
       role: ['', Validators.required],

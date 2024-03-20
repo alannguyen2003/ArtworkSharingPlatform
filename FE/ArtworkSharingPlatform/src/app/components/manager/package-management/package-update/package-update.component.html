@@ -1,1 +1,72 @@
-<p>package-update works!</p>
+<div class="container mt-4 dark:bg-gray-800 p-4">
+  <h2 class="text-white mb-4 text-3xl font-bold text-center md:text-left">
+    Update Package
+  </h2>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <div class="flex justify-center">
+    <form
+      [formGroup]="updatePackageForm"
+      (ngSubmit)="onUpdate()"
+      class="space-y-4 max-w-md w-full"
+    >
+      <!-- Package Name -->
+      <div class="mb-3">
+        <label for="name" class="form-label text-white">Package Name</label>
+        <input
+          type="text"
+          id="name"
+          class="form-control bg-gray-700 text-white border-gray-600 focus:bg-gray-600 focus:border-gray-700"
+          formControlName="name"
+        />
+      </div>
+
+      <!-- Credit -->
+      <div class="mb-3">
+        <label for="credit" class="form-label text-white">Credit</label>
+        <input
+          type="number"
+          id="credit"
+          class="form-control bg-gray-700 text-white border-gray-600 focus:bg-gray-600 focus:border-gray-700"
+          formControlName="credit"
+        />
+      </div>
+
+      <!-- Price -->
+      <div class="mb-3">
+        <label for="price" class="form-label text-white">Price</label>
+        <input
+          type="text"
+          id="price"
+          class="form-control bg-gray-700 text-white border-gray-600 focus:bg-gray-600 focus:border-gray-700"
+          formControlName="price"
+        />
+      </div>
+
+      <!-- Status -->
+      <div class="mb-3">
+        <label for="status" class="form-label text-white">Status</label>
+        <select
+          id="status"
+          class="form-control bg-gray-700 text-white border-gray-600 focus:bg-gray-600 focus:border-gray-700"
+          formControlName="status"
+        >
+          <option value="1">Active</option>
+          <option value="0">Inactive</option>
+        </select>
+      </div>
+
+      <div class="flex justify-end">
+        <button
+          type="submit"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Update
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

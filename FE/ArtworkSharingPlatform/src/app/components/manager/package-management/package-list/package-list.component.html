@@ -80,21 +80,17 @@
             </span>
           </td>
           <td
-            class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-md"
+            class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-md flex justify-center gap-x-2"
           >
-            <a
-              routerLink="/manager/package-detail/{{ package.id }}"
-              class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded sticky-action-column"
-            >
-              View
-            </a>
-
-            <button
-              (click)="deletePackage(package.id)"
-              class="inline-block bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded sticky-action-column"
-            >
-              Delete
-            </button>
+          <a routerLink="/manager/package-detail/{{ package.id }}" class="inline-flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm">
+            View
+          </a>
+          <a routerLink="/manager/package-update/{{ package.id }}" class="inline-flex items-center bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded text-sm">
+            Edit
+          </a>
+          <button (click)="deletePackage(package.id)" class="inline-flex items-center bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded text-sm">
+            Delete
+          </button> 
           </td>
         </tr>
       </tbody>

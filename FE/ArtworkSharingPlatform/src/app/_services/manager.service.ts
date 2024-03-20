@@ -31,6 +31,9 @@ export class ManagerService {
   getPackageById(packageId: number): Observable<Package> {
     return this.http.get<Package>(`${this.baseUrl}manager/packages/${packageId}`);
   }
+  updatePackage(packageData: Package): Observable<any> {
+    return this.http.put(`${this.baseUrl}manager/updatePackage`, packageData);
+  }
   deletePackage(packageId: number) {
     return this.http.delete(`${this.baseUrl}manager/packages/${packageId}`);
   }
