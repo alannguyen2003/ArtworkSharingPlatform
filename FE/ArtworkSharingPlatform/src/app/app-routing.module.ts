@@ -48,7 +48,6 @@ import { ForgotPasswordComponent } from "./components/forgot-password/forgot-pas
 import { preventUnsavedChangesUserGuard } from "./_guards/prevent-unsaved-changes-user.guard";
 import { CommissionsComponent } from "./components/user/commissions/commissions.component";
 import { DetailComponent } from "./components/user/commissions/detail/detail.component";
-import { CommissionArtistComponent } from "./components/user/commission-artist/commission-artist.component";
 import { RequestArtworkComponent } from './components/user/request-artwork/request-artwork.component';
 
 
