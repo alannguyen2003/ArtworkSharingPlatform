@@ -14,6 +14,7 @@ using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.ConfigManager;
 using ArtworkSharingPlatform.Domain.Entities.PackagesInfo;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Request.Package;
 using ArtworkSharingPlatform.Domain.Entities.Configs;
+using ArtworkSharingPlatform.Domain.Entities.Transactions;
 
 namespace ArtworkSharingPlatform.Application.Helpers
 {
@@ -42,6 +43,7 @@ namespace ArtworkSharingPlatform.Application.Helpers
             CreateMap<Artwork, ArtworkUpdateDTO>().ReverseMap();
             CreateMap<ArtworkImage, ArtworkImageToAddDTO>().ReverseMap();
             CreateMap<Report, ReportDTO>().ReverseMap();
+            CreateMap<Transaction, TransactionDTO>().ReverseMap();
             CreateMap<Artwork, ArtworkDTO>()
                 .ForMember(dest => dest.ImageUrl,
                     opt => opt.MapFrom(src => src.ArtworkImages.SingleOrDefault(x => x.IsThumbnail.Value).ImageUrl))

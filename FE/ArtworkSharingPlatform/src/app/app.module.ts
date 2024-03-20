@@ -63,6 +63,9 @@ import { ProfileBannerComponent } from './components/user/profile-banner/profile
 import { RequestArtworkComponent } from './components/user/request-artwork/request-artwork.component';
 import { CommissionsComponent } from './components/user/commissions/commissions.component';
 import { ConfigDetailComponent } from './components/admin/config-magement/config-detail/config-detail.component';
+import { DetailComponent } from './components/user/commissions/detail/detail.component';
+import { CommissionArtistComponent } from './components/user/commission-artist/commission-artist.component';
+import { DetailCommissionComponent } from './components/user/commission-artist/detail-commission/detail-commission.component';
 
 
 @NgModule({
@@ -115,7 +118,10 @@ import { ConfigDetailComponent } from './components/admin/config-magement/config
     RequestArtworkComponent,
     CommissionsComponent,
     ConfigListComponent,
-    ConfigDetailComponent
+    ConfigDetailComponent,
+    DetailComponent,
+    CommissionArtistComponent,
+    DetailCommissionComponent
   ],
   imports: [
     BrowserModule,

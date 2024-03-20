@@ -83,6 +83,12 @@ public class CommissionController : ControllerBase
         return clientResponse;
     }
 
+    [HttpGet("get-remaining-credits")]
+    public async Task<IActionResult> GetRemainingCredits()
+    {
+        return Ok();
+    }
+
     private ObjectResult ReturnStatusCodeToEndpoint(CommissionServiceResponseDTO result)
     {
         return StatusCode(result.StatusCode, result);

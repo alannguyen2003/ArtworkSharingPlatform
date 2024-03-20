@@ -29,7 +29,7 @@ namespace ArtworkSharingPlatform.DataTransferLayer
         [Required]
         public string Role { get; set; }
         [Required]
-        public int RemaningCredit { get; set; }
+        public int RemainingCredit { get; set; }
         [Required]
         public int PackageId { get; set; }
         [Required]

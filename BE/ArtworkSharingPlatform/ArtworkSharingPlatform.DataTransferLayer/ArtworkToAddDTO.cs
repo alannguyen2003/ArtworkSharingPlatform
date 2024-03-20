@@ -10,8 +10,6 @@ namespace ArtworkSharingPlatform.DataTransferLayer
         [Required]
         public decimal Price { get; set; }
         [Required]
-        public int ReleaseCount { get; set; }
-        [Required]
         public int OwnerId { get; set; }
         [Required]
         public DateTime CreatedDate { get; set; }
