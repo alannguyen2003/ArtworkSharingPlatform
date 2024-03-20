@@ -1,4 +1,3 @@
-// Trong src/app/components/admin/commission-detail.component.ts
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
