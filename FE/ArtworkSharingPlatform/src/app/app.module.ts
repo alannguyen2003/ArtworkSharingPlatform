@@ -67,7 +67,15 @@ import { DetailComponent } from './components/user/commissions/detail/detail.com
 import { CommissionArtistComponent } from './components/user/commission-artist/commission-artist.component';
 import { DetailCommissionComponent } from './components/user/commission-artist/detail-commission/detail-commission.component';
 import { RejectRequestComponent } from './components/modal/reject-request/reject-request.component';
-
+import { TransactionListComponent } from './components/manager/transaction-management/transaction-list/transaction-list.component';
+import { ManagerLayoutComponent } from './components/manager/manager-layout/manager-layout.component';
+import { ManagerDashboardComponent } from './components/manager/manager-dashboard/manager-dashboard.component';
+import { ManagerSidebarComponent } from './components/manager/manager-sidebar/manager-sidebar.component';
+import { TransactionDetailComponent } from './components/manager/transaction-management/transaction-detail/transaction-detail.component';
+import { PackageListComponent } from './components/manager/package-management/package-list/package-list.component';
+import { PackageDetailComponent } from './components/manager/package-management/package-detail/package-detail.component';
+import { PackageUpdateComponent } from './components/manager/package-management/package-update/package-update.component';
+import { PackageDeleteComponent } from './components/manager/package-management/package-delete/package-delete.component';
 
 @NgModule({
   declarations: [
@@ -123,7 +131,16 @@ import { RejectRequestComponent } from './components/modal/reject-request/reject
     DetailComponent,
     CommissionArtistComponent,
     DetailCommissionComponent,
-    RejectRequestComponent
+    RejectRequestComponent,
+    TransactionListComponent,
+    ManagerLayoutComponent,
+    ManagerDashboardComponent,
+    ManagerSidebarComponent,
+    TransactionDetailComponent,
+    PackageListComponent,
+    PackageDetailComponent,
+    PackageUpdateComponent,
+    PackageDeleteComponent
   ],
   imports: [
     BrowserModule,

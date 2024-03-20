@@ -1,7 +1,7 @@
 <div class="container mx-auto mt-8 p-6 bg-gray-800 rounded-xl shadow-lg">
     <h2 class="text-white text-3xl font-bold mb-6 text-center">Configuration List</h2>
     <div class="overflow-x-auto">
-      <table class="min-w-full leading-normal">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="min-w-full leading-normal">
         <thead class="bg-gray-700 text-white">
           <tr>
             <th class="px-5 py-3 border-b-2 border-gray-200 text-left text-sm text-center font-semibold tracking-wider">Id</th>

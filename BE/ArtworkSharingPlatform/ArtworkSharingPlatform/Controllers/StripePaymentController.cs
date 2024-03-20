@@ -1,6 +1,7 @@
 ﻿using ArtworkSharingHost.Extensions;
 using ArtworkSharingHost.StripePaymentService.Settings;
 using ArtworkSharingPlatform.Application.Interfaces;
+using ArtworkSharingPlatform.DataTransferLayer;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response;
 using ArtworkSharingPlatform.DataTransferLayer.Payload.Response.Error;
 using ArtworkSharingPlatform.Domain.Entities.PackagesInfo;
@@ -25,23 +26,25 @@ public class StripePaymentController : ControllerBase
     private readonly IPackageService _packageService;
 	private readonly IOptions<StripeSettings> _stripeSettings;
 	private readonly IAuthService _authService;
+	private readonly ITransactionService _transactionService;
 	private readonly ILogger<StripePaymentController> _logger;
 
 	public StripePaymentController(
         IPackageService packageService,
         IOptions<StripeSettings> stripeSettings,
         IAuthService authService,
+        ITransactionService transactionService,
         ILogger<StripePaymentController> logger
         )
     {
         _packageService = packageService;
 		_stripeSettings = stripeSettings;
 		_authService = authService;
+		_transactionService = transactionService;
 		_logger = logger;
 	}
 
     [HttpGet("checkout")]
-    [Authorize]
     public async Task<IActionResult> CreateSessionForPayment(int packageId)
     {
         var package = _packageService.GetPackageById(packageId).Result;
@@ -109,6 +112,28 @@ public class StripePaymentController : ControllerBase
                     _logger.LogInformation(paymentIntent.Id);
                 }
 			}
+            else if(stripeEvent.Type == Events.CheckoutSessionAsyncPaymentFailed)
+            {
+				var checkoutSession = stripeEvent.Data.Object as Session;
+                if (!string.IsNullOrEmpty(checkoutSession.CustomerEmail))
+                {
+                    var user = await _authService.GetUserByEmail(checkoutSession.CustomerEmail);
+                    if (user != null)
+                    {
+                        await _packageService.UserBuyPackage(user.Id, Int32.Parse(checkoutSession.Metadata.GetValueOrDefault("package_id")));
+                        var package = await _packageService.GetPackageById(Int32.Parse(checkoutSession.Metadata.GetValueOrDefault("package_id")));
+                        var transaction = new TransactionDTO
+                        {
+                            SenderId = user.Id,
+                            ReportName = user.Email + " buy package: " + package.Name + "FAILED",
+                            CreateDate = DateTime.UtcNow,
+                            TotalPrice = package.Price
+                        };
+                        await _transactionService.AddTransaction(transaction);
+                        _logger.LogInformation("Add credit failed");
+                    }
+                }
+			}
             else if(stripeEvent.Type == Events.CheckoutSessionCompleted)
             {
                 var checkoutSession = stripeEvent.Data.Object as Session;
@@ -116,6 +141,15 @@ public class StripePaymentController : ControllerBase
                 if (user != null)
                 {
                     await _packageService.UserBuyPackage(user.Id, Int32.Parse(checkoutSession.Metadata.GetValueOrDefault("package_id")));
+                    var package = await _packageService.GetPackageById(Int32.Parse(checkoutSession.Metadata.GetValueOrDefault("package_id")));
+                    var transaction = new TransactionDTO
+                    {
+                        SenderId = user.Id,
+                        ReportName = user.Email + " buy package: " + package.Name,
+                        CreateDate = DateTime.UtcNow,
+                        TotalPrice = package.Price
+                    };
+                    await _transactionService.AddTransaction(transaction);
                     _logger.LogInformation("Add credit success");
                 }
             }

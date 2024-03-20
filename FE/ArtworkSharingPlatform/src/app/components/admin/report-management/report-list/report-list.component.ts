@@ -11,10 +11,12 @@ import { Subject } from 'rxjs';
 })
 export class ReportListComponent implements OnInit {
   reports: ReportDTO[] = [];
+  
   dtOptions: DataTables.Settings = {
     pagingType: 'full_numbers'
    }
    dtTrigger: Subject<any> = new Subject<any>();
+
   constructor(private adminService: AdminService) {}
 
   ngOnInit() {
