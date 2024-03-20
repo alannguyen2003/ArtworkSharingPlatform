@@ -26,8 +26,8 @@ export class PackageUpdateComponent implements OnInit {
     this.updatePackageForm = this.fb.group({
       id: ['', Validators.required],
       name: ['', Validators.required],
-      credit: ['', Validators.required],
-      price: ['', Validators.required],
+      credit: ['', [Validators.required, Validators.min(0)]],
+      price: ['', [Validators.required, Validators.min(0)]],
       status: ['', Validators.required],
     });
   }
