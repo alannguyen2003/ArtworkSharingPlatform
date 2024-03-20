@@ -66,6 +66,7 @@ import { ConfigDetailComponent } from './components/admin/config-magement/config
 import { DetailComponent } from './components/user/commissions/detail/detail.component';
 import { CommissionArtistComponent } from './components/user/commission-artist/commission-artist.component';
 import { DetailCommissionComponent } from './components/user/commission-artist/detail-commission/detail-commission.component';
+import { RejectRequestComponent } from './components/modal/reject-request/reject-request.component';
 import { TransactionListComponent } from './components/manager/transaction-management/transaction-list/transaction-list.component';
 import { ManagerLayoutComponent } from './components/manager/manager-layout/manager-layout.component';
 import { ManagerDashboardComponent } from './components/manager/manager-dashboard/manager-dashboard.component';
@@ -75,7 +76,6 @@ import { PackageListComponent } from './components/manager/package-management/pa
 import { PackageDetailComponent } from './components/manager/package-management/package-detail/package-detail.component';
 import { PackageUpdateComponent } from './components/manager/package-management/package-update/package-update.component';
 import { PackageDeleteComponent } from './components/manager/package-management/package-delete/package-delete.component';
-
 
 @NgModule({
   declarations: [
@@ -131,6 +131,7 @@ import { PackageDeleteComponent } from './components/manager/package-management/
     DetailComponent,
     CommissionArtistComponent,
     DetailCommissionComponent,
+    RejectRequestComponent,
     TransactionListComponent,
     ManagerLayoutComponent,
     ManagerDashboardComponent,
