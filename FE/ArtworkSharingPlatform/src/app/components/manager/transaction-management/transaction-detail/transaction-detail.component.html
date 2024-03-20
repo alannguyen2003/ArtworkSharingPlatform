@@ -1,0 +1,50 @@
+<div
+  *ngIf="transaction"
+  class="container mx-auto mt-8 p-6 bg-gray-800 rounded-xl shadow-lg max-w-4xl"
+>
+  <h2 class="text-white text-3xl font-bold mb-6 text-center">
+    Transaction Detail
+  </h2>
+  <div class="bg-gray-900 p-5 rounded-lg">
+    <div class="flex justify-center">
+      <div class="overflow-x-auto w-full max-w-md">
+        <table class="table-auto w-full text-white">
+          <tbody>
+            <tr>
+              <td class="border px-4 py-2 font-semibold">Transaction ID:</td>
+              <td class="border px-4 py-2">{{ transaction.id }}</td>
+            </tr>
+            <tr>
+              <td class="border px-4 py-2 font-semibold">Report Name:</td>
+              <td class="border px-4 py-2">{{ transaction.reportName }}</td>
+            </tr>
+            <tr>
+              <td class="border px-4 py-2 font-semibold">Create Date:</td>
+              <td class="border px-4 py-2">
+                {{ transaction.createDate | date : "mediumDate" }}
+              </td>
+            </tr>
+            <tr>
+              <td class="border px-4 py-2 font-semibold">Total Price:</td>
+              <td class="border px-4 py-2">
+                {{ transaction.totalPrice | currency }}
+              </td>
+            </tr>
+            <tr>
+              <td class="border px-4 py-2 font-semibold">Sender ID:</td>
+              <td class="border px-4 py-2">{{ transaction.senderId }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="flex justify-end mt-4">
+          <button
+            (click)="exportTransaction()"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Export File
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

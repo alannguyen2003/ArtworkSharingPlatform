@@ -1,0 +1,32 @@
+<div class="container mx-auto mt-8 p-4 bg-gray-800 rounded-lg shadow">
+  <h2 class="text-white text-3xl font-bold mb-4 text-center">Transaction List</h2>
+  <div class="overflow-x-auto">
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="min-w-full leading-normal">
+      <thead>
+        <tr>
+          <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-left text-center text-md font-semibold text-white uppercase tracking-wider">Transaction ID</th>
+          <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-left text-center text-md font-semibold text-white uppercase tracking-wider">Report Name</th>
+          <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-left text-center text-md font-semibold text-white uppercase tracking-wider">Create Date</th>
+          <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-left text-center text-md font-semibold text-white uppercase tracking-wider">Total Price</th>
+          <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-left text-center text-md font-semibold text-white uppercase tracking-wider">Sender ID</th>
+          <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-left text-center text-md font-semibold text-white uppercase tracking-wider sticky-action-column">Action</th>
+        </tr>
+      </thead>
+      <tbody class="text-white">
+        <tr *ngFor="let transaction of transactions">
+          <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-md">{{ transaction.id }}</td>
+          <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-md">{{ transaction.reportName }}</td>
+          <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-md">{{ transaction.createDate | date:'mediumDate' }}</td>
+          <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-md">{{ transaction.totalPrice | currency }}</td>
+          <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-md">{{ transaction.senderId }}</td>
+          <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-md"><a routerLink="/manager/transaction-detail/{{transaction.id}}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded text-xs">View</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<ng-template #noTransactions>
+  <div class="text-center my-5">
+      <h3 class="text-xl text-white">No transactions found.</h3>
+  </div>
+</ng-template>

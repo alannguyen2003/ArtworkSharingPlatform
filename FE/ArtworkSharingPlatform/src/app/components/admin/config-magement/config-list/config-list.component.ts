@@ -11,6 +11,11 @@ import { Subject } from 'rxjs';
 export class ConfigListComponent implements OnInit{
   configs: ConfigManagerRequest[] = [];
 
+  dtOptions: DataTables.Settings = {
+    pagingType: 'full_numbers'
+   }
+   dtTrigger: Subject<any> = new Subject<any>();
+
   constructor(private adminService: AdminService) { }
 
   ngOnInit(): void {
@@ -20,6 +25,7 @@ export class ConfigListComponent implements OnInit{
   loadAllConfigs() {
     this.adminService.getAllConfig().subscribe((configs) => {
       this.configs = configs;
+      this.dtTrigger.next(null);
     });
   }
 }
