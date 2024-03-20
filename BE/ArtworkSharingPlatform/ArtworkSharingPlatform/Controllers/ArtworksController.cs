@@ -76,6 +76,14 @@ namespace ArtworkSharingHost.Controllers
 			var rating = await _artworkService.GetArtworkRatingForUser(User.GetUserId(), artworkId);
 			return Ok(rating);
 		}
+		[HttpPost("rating")]
+		[Authorize]
+		public async Task<ActionResult<int>> Rating([FromBody] ArtworkRatingDTO rating)
+		{
+            rating.UserId = User.GetUserId();
+			await _artworkService.UserRating(rating);
+			return Ok();
+		}
 
 		[HttpPost]
         [Authorize(Policy = "RequireArtistRole")]
@@ -83,6 +91,10 @@ namespace ArtworkSharingHost.Controllers
         {
             try
             {
+                if (artwork.Price <= 0)
+                {
+                    return BadRequest("Invalid Price");
+                }
 				artwork.CreatedDate = DateTime.UtcNow;
 				artwork.OwnerId = User.GetUserId();
 				artwork.Status = 1;
@@ -173,7 +185,11 @@ namespace ArtworkSharingHost.Controllers
         [Authorize(Policy = "RequireArtistRole")]
         public async Task<IActionResult> UpdateArtwork([FromBody] ArtworkUpdateDTO artwork)
         {
-            await _artworkService.UpdateArtwork(artwork);
+			if (artwork.Price <= 0)
+			{
+				return BadRequest("Invalid Price");
+			}
+			await _artworkService.UpdateArtwork(artwork);
             return Ok(new { message = "Artwork updated successfully." });
         }
         [HttpGet("GetArtistArtwork")]

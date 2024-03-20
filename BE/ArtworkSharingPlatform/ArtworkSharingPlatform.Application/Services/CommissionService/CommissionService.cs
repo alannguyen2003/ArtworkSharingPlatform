@@ -22,6 +22,7 @@ public class CommissionService : ICommissionService
     private GetAllReceiverCommissionsService _getAllReceiverCommissionsService;
     private RequestProgressImageService _requestProgressImageService;
     private RespondProgressImageService _respondProgressImageService;
+    private CompleteCommissionService _completeCommissionService;
     private readonly ICommissionRequestRepository _commissionRequestRepository;
     private readonly ICommissionStatusRepository _commissionStatusRepository;
     private readonly IGenreRepository _genreRepository;
@@ -62,6 +63,11 @@ public class CommissionService : ICommissionService
     public CommissionServiceResponseDTO RejectCommission(RejectCommissionRequestDTO rejectCommissionRequestDto)
     {
         return _rejectCommissionService.Reject(rejectCommissionRequestDto);
+    }
+
+    public CommissionServiceResponseDTO CompleteCommission(CompleteCommissionRequestDTO completeCommissionRequestDto)
+    {
+        return _completeCommissionService.Complete(completeCommissionRequestDto);
     }
 
     public Task<CommissionServiceResponseDTO> GetAllSenderCommissions(int senderId)
@@ -107,7 +113,9 @@ public class CommissionService : ICommissionService
         _acceptCommissionService = new AcceptCommissionService(
             _commissionRequestRepository, _userRoleRepository);
         _rejectCommissionService = new RejectCommissionService(
-            _commissionRequestRepository,_userRoleRepository);
+            _commissionRequestRepository, _userRoleRepository);
+        _completeCommissionService = new CompleteCommissionService(
+            _commissionRequestRepository, _userRoleRepository);
         _getAllSenderCommissionsService = new GetAllSenderCommissionsService(
             _commissionRequestRepository, _userRepository,
             _genreRepository, _commissionStatusRepository, _mapper
