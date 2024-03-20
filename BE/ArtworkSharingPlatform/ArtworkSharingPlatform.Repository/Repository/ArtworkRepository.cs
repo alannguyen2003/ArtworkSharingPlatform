@@ -102,13 +102,6 @@ namespace ArtworkSharingPlatform.Repository.Repository
 
         public async Task AddArtwork(Artwork artwork)
         {
-                if (artwork != null)
-                {
-                    artwork.Status = 1;
-                    await _context.Artworks.AddAsync(artwork);
-
-                    await _context.SaveChangesAsync();
-                }
             var user = _userRepository.GetById(artwork.OwnerId);
             if (user != null)
             {
@@ -116,6 +109,13 @@ namespace ArtworkSharingPlatform.Repository.Repository
                 user.RemainingCredit -= 1;
                 await _context.SaveChangesAsync();
             }
+            if (artwork != null)
+                {
+                    artwork.Status = 1;
+                    await _context.Artworks.AddAsync(artwork);
+
+                    await _context.SaveChangesAsync();
+                }
         }
 
         public async Task DeleteArtwork(int artworkId)

@@ -42,4 +42,8 @@ export class UserService {
   getUserWithEmail(email: string | undefined) {
     return this.http.post<UserInfo>(this.baseUrl + 'User/get-with-email?email=' + email, email);
   }
+
+  getRemainingCredits(email: string | undefined) {
+    return this.http.get<UserInfo>(this.baseUrl + "User/get-remaining-credits?email=" + email);
+  }
 }

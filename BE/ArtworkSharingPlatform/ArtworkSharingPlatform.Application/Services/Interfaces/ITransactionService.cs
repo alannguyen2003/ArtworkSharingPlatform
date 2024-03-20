@@ -1,4 +1,5 @@
-﻿using ArtworkSharingPlatform.Domain.Entities.Transactions;
+﻿using ArtworkSharingPlatform.DataTransferLayer;
+using ArtworkSharingPlatform.Domain.Entities.Transactions;
 
 namespace ArtworkSharingPlatform.Application.Interfaces
 {
@@ -6,5 +7,6 @@ namespace ArtworkSharingPlatform.Application.Interfaces
     {
         Task<List<Transaction>> GetAllTransaction();
         Task<Transaction> GetTransactionById(int id);
+        Task AddTransaction(TransactionDTO transactionDTO);
     }
 }

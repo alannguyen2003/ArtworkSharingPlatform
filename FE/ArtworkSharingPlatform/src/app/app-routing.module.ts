@@ -41,6 +41,11 @@ import {authGuard} from "./_guards/auth.guard";
 import {adminGuard} from "./_guards/admin.guard";
 import {preventUnsavedChangesUserGuard} from "./_guards/prevent-unsaved-changes-user.guard";
 import {CommissionsComponent} from "./components/user/commissions/commissions.component";
+import {DetailComponent} from "./components/user/commissions/detail/detail.component";
+import {CommissionArtistComponent} from "./components/user/commission-artist/commission-artist.component";
+import {
+  DetailCommissionComponent
+} from "./components/user/commission-artist/detail-commission/detail-commission.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -102,7 +107,10 @@ const routes: Routes = [
   {path: 'checkout', component: OrderConfirmationComponent},
   {path: 'checkout-fail', component: OrderConfirmationFailedComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'commissions', component: CommissionsComponent},
+  {path: 'pre-orders', component: CommissionsComponent},
+  {path: 'pre-orders/:id', component: DetailComponent},
+  {path: 'commissions', component: CommissionArtistComponent},
+  {path: 'commissions/:id', component: DetailCommissionComponent},
   {path: 'forgot-password', component: ForgotPasswordComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'test-error', component: TestErrorComponent},
