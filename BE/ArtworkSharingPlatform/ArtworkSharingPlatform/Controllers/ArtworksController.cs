@@ -58,6 +58,13 @@ namespace ArtworkSharingHost.Controllers
                                                                 artworks.TotalPage));
             return Ok(artworks);
         }
+        [HttpGet ("Genre")]
+        public async Task<ActionResult<PagedList<ArtworkDTO>>> GetArtworksByGenreId([FromQuery] ArtworkByGenreRequestDTO requestDto)
+        {
+            string genreIds = Request.Query["genres"]; 
+            var artworks = await _artworkService.GetArtworksByGenre(requestDto.GenreId);
+            return Ok(artworks);
+        }
         [HttpGet("{id}")]
         [Authorize]
         public async Task<ActionResult<ArtworkDTO>> GetArtwork(int id)
