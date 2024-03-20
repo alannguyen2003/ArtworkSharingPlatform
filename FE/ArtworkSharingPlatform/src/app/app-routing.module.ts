@@ -50,6 +50,7 @@ import { CommissionsComponent } from "./components/user/commissions/commissions.
 import { DetailComponent } from "./components/user/commissions/detail/detail.component";
 import { RequestArtworkComponent } from './components/user/request-artwork/request-artwork.component';
 import { PackageListComponent } from './components/manager/package-management/package-list/package-list.component';
+import { PackageDetailComponent } from './components/manager/package-management/package-detail/package-detail.component';
 
 
 const routes: Routes = [
@@ -97,8 +98,9 @@ const routes: Routes = [
       { path: 'dashboard', component: ManagerDashboardComponent },
       { path: 'transaction-management/transaction-list', component: TransactionListComponent },
       { path: 'transaction-detail/:id', component: TransactionDetailComponent},
-      { path: 'package-management/package-list', component: PackageListComponent}
-
+      { path: 'package-management/package-list', component: PackageListComponent},
+      { path: 'package-detail/:id', component: PackageDetailComponent}
+      
     ],
   },
   //Phần này dành cho những route cần Guard
