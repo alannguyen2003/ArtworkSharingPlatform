@@ -10,5 +10,6 @@ namespace ArtworkSharingPlatform.Application.Interfaces
         Task<Transaction> GetTransactionById(int id);
         Task AddTransaction(TransactionDTO transactionDTO);
         Task<XLWorkbook> ExportTransaction(int id);
+        Task<XLWorkbook> ExportTransactionList();
     }
 }
