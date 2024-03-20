@@ -14,7 +14,7 @@
       <i class="bi bi-twitter-x"></i>
     </a>
   </div>
-  <div *appHasRole="['Artist']">
+  <div *ngIf="userInfo.remainingCredit">
     <button type="button" routerLink="/artwork-post" class="px-8 py-2 font-semibold rounded-full dark:bg-gray-100 dark:text-gray-800">Post an artwork</button>
   </div>
 
