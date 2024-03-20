@@ -5,11 +5,37 @@
     <table class="w-full text-sm text-left text-white">
       <thead class="text-xs text-gray-700 uppercase bg-gray-700">
         <tr>
-          <th class="py-3 px-6 border-b-2 border-gray-200 bg-gray-700 text-left text-center text-md font-semibold text-white uppercase tracking-wider">ID</th>
-          <th class="py-3 px-6 border-b-2 border-gray-200 bg-gray-700 text-left text-center text-md font-semibold text-white uppercase tracking-wider">Package Name</th>
-          <th class="py-3 px-6 border-b-2 border-gray-200 bg-gray-700 text-left text-center text-md font-semibold text-white uppercase tracking-wider">Credit</th>
-          <th class="py-3 px-6 border-b-2 border-gray-200 bg-gray-700 text-left text-center text-md font-semibold text-white uppercase tracking-wider">Price</th>
-          <th class="py-3 px-6 border-b-2 border-gray-200 bg-gray-700 text-left text-center text-md font-semibold text-white uppercase tracking-wider">Status</th>
+          <th
+            class="py-3 px-6 border-b-2 border-gray-200 bg-gray-700 text-left text-center text-md font-semibold text-white uppercase tracking-wider"
+          >
+            ID
+          </th>
+          <th
+            class="py-3 px-6 border-b-2 border-gray-200 bg-gray-700 text-left text-center text-md font-semibold text-white uppercase tracking-wider"
+          >
+            Package Name
+          </th>
+          <th
+            class="py-3 px-6 border-b-2 border-gray-200 bg-gray-700 text-left text-center text-md font-semibold text-white uppercase tracking-wider"
+          >
+            Credit
+          </th>
+          <th
+            class="py-3 px-6 border-b-2 border-gray-200 bg-gray-700 text-left text-center text-md font-semibold text-white uppercase tracking-wider"
+          >
+            Price
+          </th>
+          <th
+            class="py-3 px-6 border-b-2 border-gray-200 bg-gray-700 text-left text-center text-md font-semibold text-white uppercase tracking-wider"
+          >
+            Status
+          </th>
+          <th
+            class="py-3 px-6 border-b-2 border-gray-200 bg-gray-700 text-left text-center text-md font-semibold text-white uppercase tracking-wider sticky-action-column"
+          >
+            Action
+          </th>
+
           <!-- Thêm các cột khác tùy theo nhu cầu -->
         </tr>
       </thead>
@@ -18,11 +44,29 @@
           *ngFor="let package of packages"
           class="bg-gray-800 border-b border-gray-700"
         >
-          <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-md">{{ package.id }}</td>
-          <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-md">{{ package.credit }}</td>
-          <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-md">{{ package.name }}</td>
-          <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-md">{{ package.price }}</td>
-          <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-md">
+          <td
+            class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-md"
+          >
+            {{ package.id }}
+          </td>
+          <td
+            class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-md"
+          >
+            {{ package.credit }}
+          </td>
+          <td
+            class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-md"
+          >
+            {{ package.name }}
+          </td>
+          <td
+            class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-md"
+          >
+            {{ package.price }}
+          </td>
+          <td
+            class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-md"
+          >
             <span
               class="relative inline-block px-3 py-1 font-semibold leading-tight rounded-full"
               [ngClass]="{
@@ -34,6 +78,23 @@
                 package.status === 1 ? "Active" : "Inactive"
               }}</span>
             </span>
+          </td>
+          <td
+            class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-md"
+          >
+            <a
+              routerLink="/manager/package-detail/{{ package.id }}"
+              class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded sticky-action-column"
+            >
+              View
+            </a>
+
+            <button
+              (click)="deletePackage(package.id)"
+              class="inline-block bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded sticky-action-column"
+            >
+              Delete
+            </button>
           </td>
         </tr>
       </tbody>
