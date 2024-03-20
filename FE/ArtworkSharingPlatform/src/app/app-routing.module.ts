@@ -110,7 +110,6 @@ const routes: Routes = [
   { path: 'checkout-fail', component: OrderConfirmationFailedComponent },
   { path: 'login', component: LoginComponent },
   { path: 'pre-orders', component: CommissionsComponent },
-  { path: 'pre-orders/request', component: RequestArtworkComponent },
   { path: 'pre-orders/:id', component: DetailComponent },
   { path: 'commissions', component: CommissionArtistComponent },
   { path: 'commissions/:id', component: DetailCommissionComponent },
