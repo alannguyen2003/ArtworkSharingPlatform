@@ -49,6 +49,7 @@ import { preventUnsavedChangesUserGuard } from "./_guards/prevent-unsaved-change
 import { CommissionsComponent } from "./components/user/commissions/commissions.component";
 import { DetailComponent } from "./components/user/commissions/detail/detail.component";
 import { RequestArtworkComponent } from './components/user/request-artwork/request-artwork.component';
+import { PackageListComponent } from './components/manager/package-management/package-list/package-list.component';
 
 
 const routes: Routes = [
@@ -95,7 +96,8 @@ const routes: Routes = [
     children: [
       { path: 'dashboard', component: ManagerDashboardComponent },
       { path: 'transaction-management/transaction-list', component: TransactionListComponent },
-      { path: 'transaction-detail/:id', component: TransactionDetailComponent}
+      { path: 'transaction-detail/:id', component: TransactionDetailComponent},
+      { path: 'package-management/package-list', component: PackageListComponent}
 
     ],
   },
