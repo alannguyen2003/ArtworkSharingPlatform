@@ -5,6 +5,7 @@ import {environment} from "../../environments/environment";
 import {CommissionHistoryAdmin} from "../_model/commissionHistoryAdmin.model";
 import {CommissionHistoryAudience} from "../_model/commissionHistoryAudience.model";
 import {RejectRequest} from "../_model/rejectRequest.model";
+import { AcceptRequest } from '../_model/acceptRequest.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,11 @@ export class CommissionService {
   }
   getCommissionsArtist() {
     return this.http.get<CommissionHistoryAudience>(this.baseUrl + "Commission/Receiver/GetAll");
+  }
+  acceptCommission(acceptCommissionRequest: AcceptRequest) {
+    const url = `${this.baseUrl}Commission/Accept`
+    console.log('url: ' + url)
+    return this.http.post(url, acceptCommissionRequest)
   }
 
   rejectCommission(rejectRequest: RejectRequest) {

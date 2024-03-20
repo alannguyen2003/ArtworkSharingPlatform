@@ -45,7 +45,6 @@ export class AdminService {
   getAllCommissions(): Observable<CommissionHistoryAdmin[]>{
     return this.http.get<CommissionHistoryAdmin[]>(`${this.baseUrl}admin/Commissions`);
   }
-  
   getSingleCommission(commissionId: number): Observable<CommissionHistoryAdmin> {
     return this.http.get<CommissionHistoryAdmin>(`${this.baseUrl}admin/${commissionId}`);
   }
@@ -53,9 +52,12 @@ export class AdminService {
     return this.http.get<ReportDTO[]>(`${this.baseUrl}admin/report`);
   }
   getReportDetail(reportId: number): Observable<ReportDTO> {
-    return this.http.get<ReportDTO>(`${this.baseUrl}admin/reportDetail?reportId=${reportId}`);
+    return this.http.get<ReportDTO>(`${this.baseUrl}admin/reportDetail/${reportId}`);
+  } 
+  getAllConfig(): Observable<ConfigManagerRequest[]> {
+    return this.http.get<ConfigManagerRequest[]>(`${this.baseUrl}admin/config`);
+  } 
+  getSingleConfig(configId: number): Observable<ConfigManagerRequest> {
+    return this.http.get<ConfigManagerRequest>(`${this.baseUrl}admin/config/${configId}`);
   }  
-  createConfig(newConfig: ConfigManagerRequest): Observable<any> {
-    return this.http.post(`${this.baseUrl}api/ConfigManager/Create`, newConfig);
-  }
 }

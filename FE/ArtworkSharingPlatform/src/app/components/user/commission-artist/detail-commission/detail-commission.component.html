@@ -8,39 +8,39 @@
     <div class="bg-gray-900 p-5 rounded-lg">
         <table class="min-w-full divide-x divide-y divide-gray-700 text-white">
             <tbody class="divide-y divide-gray-700 rounded-lg">
-            <tr>
-                <td class="px-6 py-4 font-semibold">ID:</td>
-                <td class="px-6 py-4">{{ commission.id }}</td>
-            </tr>
-            <tr>
-                <td class="px-6 py-4 font-semibold">Min Price:</td>
-                <td class="px-6 py-4">{{ commission.minPrice | currency:"đ":true }}</td>
-            </tr>
-            <tr>
-                <td class="px-6 py-4 font-semibold">Max Price:</td>
-                <td class="px-6 py-4">{{ commission.maxPrice | currency:"đ":true }}</td>
-            </tr>
-            <tr>
-                <td class="px-6 py-4 font-semibold">Actual Price:</td>
-                <td class="px-6 py-4">
-                    <input [(ngModel)]="actualPrice" type="number">
-                </td>
-            </tr>
-            <tr>
-                <td class="px-6 py-4 font-semibold">Description:</td>
-                <td class="px-6 py-4">{{ commission.requestDescription }}</td>
-            </tr>
-            <tr>
-                <td class="px-6 py-4 font-semibold">Request Date:</td>
-                <td class="px-6 py-4">
-                    {{ commission.requestDate | date : "mediumDate" }}
-                </td>
-            </tr>
-            <tr>
-                <td class="px-6 py-4 font-semibold">Status:</td>
-                <td class="px-6 py-4">
-            <span
-                    [ngClass]="{
+                <tr>
+                    <td class="px-6 py-4 font-semibold">ID:</td>
+                    <td class="px-6 py-4">{{ commission.id }}</td>
+                </tr>
+                <tr>
+                    <td class="px-6 py-4 font-semibold">Min Price:</td>
+                    <td class="px-6 py-4">{{ commission.minPrice | currency:"đ":true }}</td>
+                </tr>
+                <tr>
+                    <td class="px-6 py-4 font-semibold">Max Price:</td>
+                    <td class="px-6 py-4">{{ commission.maxPrice | currency:"đ":true }}</td>
+                </tr>
+                <tr>
+                    <td class="px-6 py-4 font-semibold">Actual Price:</td>
+                    <td class="px-6 py-4">
+                        <input *ngIf="isPending" style="color:black" type="number" [(ngModel)]="actualPrice">
+                        <span *ngIf="isActualPrice">{{commission.maxPrice | currency:"đ":true}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="px-6 py-4 font-semibold">Description:</td>
+                    <td class="px-6 py-4">{{ commission.requestDescription }}</td>
+                </tr>
+                <tr>
+                    <td class="px-6 py-4 font-semibold">Request Date:</td>
+                    <td class="px-6 py-4">
+                        {{ commission.requestDate | date : "mediumDate" }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="px-6 py-4 font-semibold">Status:</td>
+                    <td class="px-6 py-4">
+                        <span [ngClass]="{
                 'bg-green-500': commission.commissionStatus === 'Completed',
                 'bg-red-500': commission.commissionStatus === 'Rejected',
                 'bg-yellow-500': commission.commissionStatus === 'Pending',
@@ -72,11 +72,11 @@
         </table>
         <div *ngIf="commission.commissionStatus == 'Pending'" class="px-6 py-4 flex justify-between">
             <button (click)="openReportModal()" class="btn btn-danger">Reject</button>
-            <button class="btn btn-success">Accepted</button>
+            <button (click)="acceptCommission()" class="btn btn-success">Accepted</button>
         </div>
-        <div *ngIf="commission.commissionStatus == 'Accepted'" class="px-6 py-4 flex justify-between">
+        <div *ngIf="isAccepted" class="px-6 py-4 flex justify-between">
             <button></button>
             <button class="btn btn-success">Completed</button>
-        </div>
     </div>
+</div>
 </div>
