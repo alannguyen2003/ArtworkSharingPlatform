@@ -70,7 +70,7 @@ public class ArtworkSharingPlatformDbContext : IdentityDbContext<User,
         IConfiguration configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", true, true)
             .Build();
-        return "Data Source=(local);database=ASPDatabase;uid=sa;pwd=1234567890;TrustServerCertificate=True;MultipleActiveResultSets=True";
+        return "Data Source=(local);database=ASPDatabase;uid=sa;pwd=12345;TrustServerCertificate=True;MultipleActiveResultSets=True";
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
