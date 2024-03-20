@@ -1,48 +1,81 @@
 <div class="container mx-auto mt-8 p-4 bg-gray-800 rounded-lg shadow">
-  <h2 class="text-white text-3xl font-bold mb-4 text-center">Commission List</h2>
+  <div>
+    <h2 class="text-white text-3xl font-bold mb-4 text-center">Commission List</h2>
+
+  </div>
   <div class="overflow-x-auto">
     <table datatable class="min-w-full leading-normal">
       <thead>
-      <tr>
-        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">ID</th>
-        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">Min Price</th>
-        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">Max Price</th>
-        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">Actual Price</th>
-        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">Description</th>
-        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">Request Date</th>
-        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">Status</th>
-        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">Sender</th>
-        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">Receiver</th>
-        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">Genre</th>
-        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider sticky-action-column">Action</th>
-      </tr>
+        <tr>
+          <th
+            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">
+            ID</th>
+          <th
+            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">
+            Min Price</th>
+          <th
+            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">
+            Max Price</th>
+          <th
+            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">
+            Actual Price</th>
+          <th
+            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">
+            Description</th>
+          <th
+            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">
+            Request Date</th>
+          <th
+            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">
+            Status</th>
+          <th
+            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">
+            Sender</th>
+          <th
+            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">
+            Receiver</th>
+          <th
+            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider">
+            Genre</th>
+          <th
+            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-700 text-center text-center text-sm font-semibold text-white uppercase tracking-wider sticky-action-column">
+            Action</th>
+        </tr>
       </thead>
       <tbody class="text-white">
-      <tr *ngFor="let commission of commissionsItem.returnData">
-        <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.id}}</td>
-        <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.minPrice | currency:"đ":true}}</td>
-        <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.maxPrice | currency:"đ":true}}</td>
-        <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.actualPrice | currency:"đ":true}}</td>
-        <td class=" truncatepx-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.requestDescription}}</td>
-        <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.requestDate | date:'mediumDate'}}</td>
-        <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">
-              <span [ngClass]="{
+        <tr *ngFor="let commission of commissionsItem.returnData">
+          <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.id}}</td>
+          <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.minPrice |
+            currency:"đ":true}}</td>
+          <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.maxPrice |
+            currency:"đ":true}}</td>
+          <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.actualPrice |
+            currency:"đ":true}}</td>
+          <td class=" truncatepx-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">
+            {{commission.requestDescription}}</td>
+          <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.requestDate |
+            date:'mediumDate'}}</td>
+          <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">
+            <span [ngClass]="{
                   'bg-green-500': commission.commissionStatus === 'Completed',
                   'bg-red-500': commission.commissionStatus === 'Rejected',
                   'bg-yellow-500': commission.commissionStatus === 'Pending',
                   'bg-purple-500': commission.commissionStatus === 'Accepted'
                 }" class="relative inline-block px-3 py-1 font-semibold text-white leading-tight rounded-full">
-                <span aria-hidden="true" class="absolute inset-0 opacity-50 rounded-full"></span>
-                <span class="relative">{{ commission.commissionStatus }}</span>
-              </span>
-        </td>
-        <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.senderName}}</td>
-        <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.receiverName}}</td>
-        <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.genreName}}</td>
-        <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm text-right sticky-action-column">
-          <a routerLink="/pre-orders/{{commission.id}}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded text-center text-sm">View</a>
-        </td>
-      </tr>
+              <span aria-hidden="true" class="absolute inset-0 opacity-50 rounded-full"></span>
+              <span class="relative">{{ commission.commissionStatus }}</span>
+            </span>
+          </td>
+          <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.senderName}}</td>
+          <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.receiverName}}
+          </td>
+          <td class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm">{{commission.genreName}}</td>
+          <td
+            class="px-5 py-5 border-b border-gray-200 bg-gray-800 text-center text-sm text-right sticky-action-column">
+            <a routerLink="/pre-orders/{{commission.id}}"
+              class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded text-center text-sm">View</a>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
