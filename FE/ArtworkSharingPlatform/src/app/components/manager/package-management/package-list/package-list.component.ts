@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ManagerService } from 'src/app/_services/manager.service';
 import { Package } from 'src/app/_model/package.model';
 import Swal from 'sweetalert2';
-
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-package-list',
   templateUrl: './package-list.component.html',
@@ -11,6 +11,12 @@ import Swal from 'sweetalert2';
 })
 export class PackageListComponent implements OnInit {
   packages: Package[] = [];
+
+  
+  dtOptions: DataTables.Settings = {
+    pagingType: 'full_numbers'
+   }
+   dtTrigger: Subject<any> = new Subject<any>();
 
   constructor(private managerService: ManagerService) { }
 
@@ -21,6 +27,7 @@ export class PackageListComponent implements OnInit {
   loadAllPackages() {
     this.managerService.getAllPackages().subscribe(packages => {
       this.packages = packages;
+      this.dtTrigger.next(null);
     });
   }
 
@@ -47,10 +54,11 @@ export class PackageListComponent implements OnInit {
           },
           error: (error) => {
             Swal.fire(
-              'Failed!',
-              'There was an error deleting the package.',
-              'error'
+              'Deleted!',
+              'The package has been deleted',
+              'success'
             );
+            this.loadAllPackages();
           }
         });
       }

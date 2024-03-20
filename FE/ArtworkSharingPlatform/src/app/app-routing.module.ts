@@ -51,6 +51,7 @@ import { DetailComponent } from "./components/user/commissions/detail/detail.com
 import { RequestArtworkComponent } from './components/user/request-artwork/request-artwork.component';
 import { PackageListComponent } from './components/manager/package-management/package-list/package-list.component';
 import { PackageDetailComponent } from './components/manager/package-management/package-detail/package-detail.component';
+import { PackageUpdateComponent } from './components/manager/package-management/package-update/package-update.component';
 
 
 const routes: Routes = [
@@ -99,7 +100,8 @@ const routes: Routes = [
       { path: 'transaction-management/transaction-list', component: TransactionListComponent },
       { path: 'transaction-detail/:id', component: TransactionDetailComponent},
       { path: 'package-management/package-list', component: PackageListComponent},
-      { path: 'package-detail/:id', component: PackageDetailComponent}
+      { path: 'package-detail/:id', component: PackageDetailComponent},
+      { path: 'package-update/:id', component: PackageUpdateComponent}
       
     ],
   },
