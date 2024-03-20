@@ -4,6 +4,7 @@ import {RequestArtwork} from "../_model/request-artwork.model";
 import {environment} from "../../environments/environment";
 import {CommissionHistoryAdmin} from "../_model/commissionHistoryAdmin.model";
 import {CommissionHistoryAudience} from "../_model/commissionHistoryAudience.model";
+import {RejectRequest} from "../_model/rejectRequest.model";
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +22,9 @@ export class CommissionService {
   }
   getCommissionsArtist() {
     return this.http.get<CommissionHistoryAudience>(this.baseUrl + "Commission/Receiver/GetAll");
+  }
+
+  rejectCommission(rejectRequest: RejectRequest) {
+    return this.http.post(this.baseUrl + "Commission/Reject", rejectRequest);
   }
 }

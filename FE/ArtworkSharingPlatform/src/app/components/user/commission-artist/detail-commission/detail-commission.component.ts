@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import {CommissionHistoryAdmin} from "../../../../_model/commissionHistoryAdmin.model";
 import {AdminService} from "../../../../_services/admin.service";
 import {ActivatedRoute} from "@angular/router";
+import {ReportModalComponent} from "../../../modal/report-modal/report-modal.component";
+import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
+import {RejectRequestComponent} from "../../../modal/reject-request/reject-request.component";
 
 @Component({
   selector: 'app-detail-commission',
@@ -10,10 +13,13 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class DetailCommissionComponent {
   commission: CommissionHistoryAdmin;
+  actualPrice: number;
+  bsModalRef: BsModalRef<RejectRequestComponent> = new BsModalRef<RejectRequestComponent>();
 
   constructor(
       private adminService: AdminService,
-      private route: ActivatedRoute
+      private route: ActivatedRoute,
+      private modalService: BsModalService
   ) {}
 
   ngOnInit(): void {
@@ -23,5 +29,14 @@ export class DetailCommissionComponent {
         this.commission = commission;
       });
     });
+  }
+  openReportModal() {
+    const config = {
+      class: 'modal-dialog-centered modal-lg',
+      initialState: {
+        commission: this.commission
+      }
+    };
+    this.bsModalRef = this.modalService.show(RejectRequestComponent, config);
   }
 }

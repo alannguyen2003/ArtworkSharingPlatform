@@ -26,6 +26,7 @@ export class CommissionArtistComponent {
   loadAllCommissions() {
     this.commissionService.getCommissionsArtist().subscribe(response => {
       this.commissionsItem = response;
+      this.commissionsItem.returnData.reverse();
       this.dtTrigger.next(null);
     });
   }

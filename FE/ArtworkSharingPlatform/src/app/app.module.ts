@@ -65,6 +65,7 @@ import { CommissionsComponent } from './components/user/commissions/commissions.
 import { DetailComponent } from './components/user/commissions/detail/detail.component';
 import { CommissionArtistComponent } from './components/user/commission-artist/commission-artist.component';
 import { DetailCommissionComponent } from './components/user/commission-artist/detail-commission/detail-commission.component';
+import { RejectRequestComponent } from './components/modal/reject-request/reject-request.component';
 
 
 @NgModule({
@@ -121,7 +122,8 @@ import { DetailCommissionComponent } from './components/user/commission-artist/d
     CommissionsComponent,
     DetailComponent,
     CommissionArtistComponent,
-    DetailCommissionComponent
+    DetailCommissionComponent,
+    RejectRequestComponent
   ],
   imports: [
     BrowserModule,

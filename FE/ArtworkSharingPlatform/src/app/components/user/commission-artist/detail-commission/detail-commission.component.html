@@ -22,7 +22,9 @@
             </tr>
             <tr>
                 <td class="px-6 py-4 font-semibold">Actual Price:</td>
-                <td class="px-6 py-4">{{ commission.actualPrice | currency:"đ":true }}</td>
+                <td class="px-6 py-4">
+                    <input [(ngModel)]="actualPrice" type="number">
+                </td>
             </tr>
             <tr>
                 <td class="px-6 py-4 font-semibold">Description:</td>
@@ -68,8 +70,13 @@
             </tr>
             </tbody>
         </table>
-        <div *ngIf="commission.commissionStatus != 'Completed'" class="flex justify-between">
-            <button class="btn btn-primary">Check Request</button>
+        <div *ngIf="commission.commissionStatus == 'Pending'" class="px-6 py-4 flex justify-between">
+            <button (click)="openReportModal()" class="btn btn-danger">Reject</button>
+            <button class="btn btn-success">Accepted</button>
+        </div>
+        <div *ngIf="commission.commissionStatus == 'Accepted'" class="px-6 py-4 flex justify-between">
+            <button></button>
+            <button class="btn btn-success">Completed</button>
         </div>
     </div>
 </div>
