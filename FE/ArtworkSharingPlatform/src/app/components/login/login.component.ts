@@ -19,7 +19,4 @@ export class LoginComponent {
       error: err => this.validationErrs = err
     });
   }
-
-
-
 }

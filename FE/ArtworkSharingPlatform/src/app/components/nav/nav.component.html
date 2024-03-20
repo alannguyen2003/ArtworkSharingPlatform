@@ -69,6 +69,12 @@
               *dropdownMenu>
               <ul class="py-2 text-sm text-gray-700 dark:text-gray-200 border-none"
                 aria-labelledby="dropdownLargeButton">
+                <li *ngIf="accountService.isAdmin()">
+                  <a routerLink="/admin/dashboard" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Admin Page</a>
+                </li>
+                <li *ngIf="accountService.isManager()">
+                  <a routerLink="/admin/dashboard" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Admin Page</a>
+                </li>
                 <li>
                   <span class="block px-4 py-2">Remaining credits: {{userInfo.remainingCredit}}</span>
                 </li>
