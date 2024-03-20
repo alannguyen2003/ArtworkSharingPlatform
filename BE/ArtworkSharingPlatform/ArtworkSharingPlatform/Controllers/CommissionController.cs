@@ -46,6 +46,15 @@ public class CommissionController : ControllerBase
         var clientResponse = ReturnStatusCodeToEndpoint(result);
         return clientResponse;
     }
+    [HttpPost("Complete")]
+    [Authorize(Policy="RequireArtistRole")]
+    public ActionResult Complete([FromBody] CompleteCommissionRequestDTO completeCommissionRequestDto)
+    {
+        completeCommissionRequestDto.ReceiverId = User.GetUserId();        
+        var result = _commissionService.CompleteCommission(completeCommissionRequestDto);
+        var clientResponse = ReturnStatusCodeToEndpoint(result);
+        return clientResponse;
+    }
     [HttpGet("Sender/GetAll")]
     [Authorize]
     public async Task<ActionResult> GetAllBySenderId()
