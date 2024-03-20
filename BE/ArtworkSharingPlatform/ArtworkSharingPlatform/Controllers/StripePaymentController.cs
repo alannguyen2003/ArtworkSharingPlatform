@@ -115,7 +115,7 @@ public class StripePaymentController : ControllerBase
             else if(stripeEvent.Type == Events.CheckoutSessionAsyncPaymentFailed)
             {
 				var checkoutSession = stripeEvent.Data.Object as Session;
-                if (!string.IsNullOrEmpty(checkoutSession.CustomerEmail))
+                if (checkoutSession != null && !string.IsNullOrEmpty(checkoutSession.CustomerEmail))
                 {
                     var user = await _authService.GetUserByEmail(checkoutSession.CustomerEmail);
                     if (user != null)
