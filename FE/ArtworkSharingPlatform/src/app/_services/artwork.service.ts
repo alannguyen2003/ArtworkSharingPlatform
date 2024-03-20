@@ -12,7 +12,7 @@ import { ArtworkImage } from "../_model/artworkImage.model";
 import { Report } from "../_model/report.model";
 import { Rating } from "../_model/rating.model";
 import { UserImage } from "../_model/userImage.model";
-import {Config} from "../_model/config.model";
+import { Config } from "../_model/config.model";
 
 @Injectable({
   providedIn: 'root'
@@ -107,7 +107,7 @@ export class ArtworkService {
     return this.http.get<Artwork>(this.baseUrl + 'artworks/' + id);
   }
   getArtworksByGenreId(genreId: number, pageNumber: number, pageSize: number) {
-    const url = `Artworks?GenreId=${genreId}&PageNumber=${pageNumber}&PageSize=${pageSize}`
+    const url = `Artworks/Genre?GenreId=${genreId}&PageNumber=${pageNumber}&PageSize=${pageSize}`
     return this.http.get<Artwork[]>(this.baseUrl + url);
   }
 
