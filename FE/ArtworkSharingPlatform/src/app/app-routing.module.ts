@@ -1,5 +1,6 @@
 import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { HomeComponent } from './components/home/home.component';
 import { PricingComponent } from './components/artist/pricing/pricing.component';
 import { ArtworkComponent } from './components/artwork/artwork.component';
@@ -32,21 +33,24 @@ import { CommissionDetailComponent } from './components/admin/commission-managem
 import { ReportDetailComponent } from './components/admin/report-management/report-detail/report-detail.component';
 import { ReportListComponent } from './components/admin/report-management/report-list/report-list.component';
 import { ReportUpdateComponent } from './components/admin/report-management/report-update/report-update.component';
-import { OrderConfirmationComponent } from './components/checkout/order-confirmation/order-confirmation.component';
 import { OrderConfirmationFailedComponent } from './components/checkout/order-confirmation-failed/order-confirmation-failed.component';
-import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { authGuard } from './_guards/auth.guard';
 import { adminGuard } from './_guards/admin.guard';
 import {managerGuard} from './_guards/manager.guard';
-import { preventUnsavedChangesUserGuard } from './_guards/prevent-unsaved-changes-user.guard';
-import { CommissionsComponent } from './components/user/commissions/commissions.component';
-import { DetailComponent } from './components/user/commissions/detail/detail.component';
 import { CommissionArtistComponent } from './components/user/commission-artist/commission-artist.component';
 import { DetailCommissionComponent } from './components/user/commission-artist/detail-commission/detail-commission.component';
 import { ManagerLayoutComponent } from './components/manager/manager-layout/manager-layout.component';
 import { ManagerDashboardComponent } from './components/manager/manager-dashboard/manager-dashboard.component';
 import { TransactionListComponent } from './components/manager/transaction-management/transaction-list/transaction-list.component';
 import { TransactionDetailComponent } from './components/manager/transaction-management/transaction-detail/transaction-detail.component';
+import { OrderConfirmationComponent } from "./components/checkout/order-confirmation/order-confirmation.component";
+import { ForgotPasswordComponent } from "./components/forgot-password/forgot-password.component";
+import { preventUnsavedChangesUserGuard } from "./_guards/prevent-unsaved-changes-user.guard";
+import { CommissionsComponent } from "./components/user/commissions/commissions.component";
+import { DetailComponent } from "./components/user/commissions/detail/detail.component";
+import { CommissionArtistComponent } from "./components/user/commission-artist/commission-artist.component";
+import { RequestArtworkComponent } from './components/user/request-artwork/request-artwork.component';
+
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -75,6 +79,11 @@ const routes: Routes = [
         path: 'commission-detail/:commissionId',
         component: CommissionDetailComponent,
       },
+      { path: 'artwork-management/artwork-list', component: ArtworkListComponent },
+      { path: 'config-management/config-list', component: ConfigListComponent },
+      { path: 'config-detail/:configId', component: ConfigDetailComponent },
+      { path: 'commission-management/commission-list', component: CommissionListComponent },
+      { path: 'commission-detail/:commissionId', component: CommissionDetailComponent },
       { path: 'report-management/report-list', component: ReportListComponent },
       { path: 'report-detail/:id', component: ReportDetailComponent },
     ],
@@ -136,11 +145,15 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'test-error', component: TestErrorComponent },
   { path: 'server-error', component: ServerErrorComponent },
+
   { path: '**', component: NotfoundComponent },
+
+  { path: '**', component: NotfoundComponent }
+
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

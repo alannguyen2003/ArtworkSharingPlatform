@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {RequestArtwork} from "../_model/request-artwork.model";
-import {environment} from "../../environments/environment";
-import {CommissionHistoryAdmin} from "../_model/commissionHistoryAdmin.model";
-import {CommissionHistoryAudience} from "../_model/commissionHistoryAudience.model";
+import { HttpClient } from "@angular/common/http";
+import { RequestArtwork } from "../_model/request-artwork.model";
+import { environment } from "../../environments/environment";
+import { CommissionHistoryAdmin } from "../_model/commissionHistoryAdmin.model";
+import { CommissionHistoryAudience } from "../_model/commissionHistoryAudience.model";
+import { AcceptRequest } from '../_model/acceptRequest.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +22,13 @@ export class CommissionService {
   }
   getCommissionsArtist() {
     return this.http.get<CommissionHistoryAudience>(this.baseUrl + "Commission/Receiver/GetAll");
+  }
+  acceptCommission(acceptCommissionRequest: AcceptRequest) {
+    const url = `${this.baseUrl}Commission/Accept`
+    console.log('url: ' + url)
+    return this.http.post(url, acceptCommissionRequest)
+  }
+  rejectCommission() {
+
   }
 }
