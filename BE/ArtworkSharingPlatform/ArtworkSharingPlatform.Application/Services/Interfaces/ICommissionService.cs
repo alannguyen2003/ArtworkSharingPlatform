@@ -10,6 +10,7 @@ public interface ICommissionService
     CommissionServiceResponseDTO CreateCommission(CreateCommissionRequestDTO createCommissionRequestDto);
     CommissionServiceResponseDTO AcceptCommission(AcceptCommissionRequestDTO acceptCommissionRequestDto);
     CommissionServiceResponseDTO RejectCommission(RejectCommissionRequestDTO rejectCommissionRequestDto);
+    CommissionServiceResponseDTO CompleteCommission(CompleteCommissionRequestDTO completeCommissionRequestDto);
     Task<CommissionServiceResponseDTO> GetAllSenderCommissions(int senderId);
     Task<CommissionServiceResponseDTO> GetAllReceiverCommissions(int receiverId);
     CommissionServiceResponseDTO RequestProgressImageRequest(RequestProgressImageDTO requestProgressImageDto);
