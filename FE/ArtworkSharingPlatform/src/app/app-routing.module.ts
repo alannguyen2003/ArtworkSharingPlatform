@@ -26,7 +26,8 @@ import { UserUpdateComponent } from './components/admin/user-management/user-upd
 import { AdminLayoutComponent } from './components/admin/admin-layout/admin-layout.component';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 import { CommissionListComponent } from './components/admin/commission-management/commission-list/commission-list.component';
-import { ConfigCreateComponent } from './components/admin/config-magement/config-create/config-create.component';
+import { ConfigListComponent } from './components/admin/config-magement/config-list/config-list.component';
+import { ConfigDetailComponent } from './components/admin/config-magement/config-detail/config-detail.component';
 import { CommissionDetailComponent } from './components/admin/commission-management/commission-detail/commission-detail.component';
 import { ReportDetailComponent } from './components/admin/report-management/report-detail/report-detail.component';
 import { ReportListComponent } from './components/admin/report-management/report-list/report-list.component';
@@ -55,10 +56,13 @@ const routes: Routes = [
       { path: 'user-management/user-create', component: UserCreateComponent },
       { path: 'user-update/:email', component: UserUpdateComponent },
       { path: 'artwork-management/artwork-list', component: ArtworkListComponent },
-      { path: 'config-management/config-create', component: ConfigCreateComponent },
+      { path: 'config-management/config-list', component: ConfigListComponent},
+      { path: 'config-detail/:configId', component: ConfigDetailComponent },
       { path: 'commission-management/commission-list', component: CommissionListComponent },
       { path: 'commission-detail/:commissionId', component: CommissionDetailComponent},
       { path: 'report-management/report-list', component: ReportListComponent },
+      { path: 'report-detail/:id', component: ReportDetailComponent },
+
     ],
   },
 

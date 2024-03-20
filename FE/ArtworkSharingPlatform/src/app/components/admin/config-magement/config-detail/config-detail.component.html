@@ -1,0 +1,102 @@
+<div
+  *ngIf="config"
+  class="container mx-auto mt-8 p-6 bg-gray-800 rounded-xl shadow-lg max-w-4xl"
+>
+  <h2 class="text-white text-3xl font-bold mb-6 text-center">Config Detail</h2>
+  <div class="bg-gray-900 p-5 rounded-lg">
+    <div class="flex justify-center">
+      <div class="overflow-x-auto w-full max-w-md">
+        <table class="table-auto w-full text-white">
+          <tbody>
+            <tr>
+              <td class="border px-4 py-2 font-semibold">Config ID:</td>
+              <td class="border px-4 py-2">{{ config.id }}</td>
+            </tr>
+            <tr>
+              <td class="border px-4 py-2 font-semibold">Config Date:</td>
+              <td class="border px-4 py-2">
+                {{ config.configDate | date : "mediumDate" }}
+              </td>
+            </tr>
+            <tr>
+              <td class="border px-4 py-2 font-semibold">
+                Service Package Config:
+              </td>
+              <td class="border px-4 py-2">
+                {{ config.isServicePackageConfig ? "Yes" : "No" }}
+              </td>
+            </tr>
+            <tr>
+              <td class="border px-4 py-2 font-semibold">
+                Physical Image Config:
+              </td>
+              <td class="border px-4 py-2">
+                {{ config.isPhysicalImageConfig ? "Yes" : "No" }}
+              </td>
+            </tr>
+            <tr>
+              <td class="border px-4 py-2 font-semibold">General Config:</td>
+              <td class="border px-4 py-2">
+                {{ config.isGeneralConfig ? "Yes" : "No" }}
+              </td>
+            </tr>
+            <tr>
+              <td class="border px-4 py-2 font-semibold">Logo URL:</td>
+              <td class="border px-4 py-2">
+                <a href="{{ config.logoUrl }}" target="_blank">{{
+                  config.logoUrl
+                }}</a>
+              </td>
+            </tr>
+            <tr>
+              <td class="border px-4 py-2 font-semibold">Phone Number:</td>
+              <td class="border px-4 py-2">{{ config.myPhoneNumber }}</td>
+            </tr>
+            <tr>
+              <td class="border px-4 py-2 font-semibold">Address:</td>
+              <td class="border px-4 py-2">{{ config.address }}</td>
+            </tr>
+            <tr>
+              <td class="border px-4 py-2 font-semibold">Paging Config:</td>
+              <td class="border px-4 py-2">
+                {{ config.isPagingConfig ? "Yes" : "No" }}
+              </td>
+            </tr>
+            <tr>
+              <td class="border px-4 py-2 font-semibold">
+                Total Items Per Page:
+              </td>
+              <td class="border px-4 py-2">{{ config.totalItemPerPage }}</td>
+            </tr>
+            <tr>
+              <td class="border px-4 py-2 font-semibold">Row Size:</td>
+              <td class="border px-4 py-2">{{ config.rowSize }}</td>
+            </tr>
+            <tr>
+              <td class="border px-4 py-2 font-semibold">
+                Advertisement Config:
+              </td>
+              <td class="border px-4 py-2">
+                {{ config.isAdvertisementConfig ? "Yes" : "No" }}
+              </td>
+            </tr>
+            <tr>
+              <td class="border px-4 py-2 font-semibold">Company Name:</td>
+              <td class="border px-4 py-2">{{ config.companyName }}</td>
+            </tr>
+            <tr>
+              <td class="border px-4 py-2 font-semibold">
+                Company Phone Number:
+              </td>
+              <td class="border px-4 py-2">{{ config.companyPhoneNumber }}</td>
+            </tr>
+            <tr>
+              <td class="border px-4 py-2 font-semibold">Company Email:</td>
+              <td class="border px-4 py-2">{{ config.companyEmail }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

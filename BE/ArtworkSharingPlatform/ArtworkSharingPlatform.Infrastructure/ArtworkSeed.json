@@ -6,7 +6,7 @@
     "CreatedDate": "2023-03-09",
     "GenreId": 2,
     "OwnerId": 13,
-    "ReleaseCount": 0,
+    "ReleaseCount": 1,
     "ArtworkImages": [
       {
         "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/z9cfarg57drolumrnhd3",
@@ -22,7 +22,7 @@
     "CreatedDate": "2023-03-29",
     "GenreId": 3,
     "OwnerId": 13,
-    "ReleaseCount": 0,
+    "ReleaseCount": 1,
     "ArtworkImages": [
       {
         "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/pcnty2w4jxbgm2p3fcr6",
@@ -38,7 +38,7 @@
     "CreatedDate": "2023-04-02",
     "GenreId": 3,
     "OwnerId": 13,
-    "ReleaseCount": 0,
+    "ReleaseCount": 1,
     "ArtworkImages": [
       {
         "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/jdztp2iijatcecst6aqj",
@@ -54,7 +54,7 @@
     "CreatedDate": "2023-02-11",
     "GenreId": 4,
     "OwnerId": 13,
-    "ReleaseCount": 0,
+    "ReleaseCount": 1,
     "ArtworkImages": [
       {
         "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/n4l9kidwazyjpmf5a5cq",
@@ -70,7 +70,7 @@
     "CreatedDate": "2023-10-15",
     "GenreId": 4,
     "OwnerId": 13,
-    "ReleaseCount": 0,
+    "ReleaseCount": 1,
     "ArtworkImages": [
       {
         "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/att5gpxxjmhqp5gaohph",
@@ -86,7 +86,7 @@
     "CreatedDate": "2023-09-15",
     "GenreId": 1,
     "OwnerId": 13,
-    "ReleaseCount": 0,
+    "ReleaseCount": 1,
     "ArtworkImages": [
       {
         "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/e18exvckty0c0oir2ddp",
@@ -102,7 +102,7 @@
     "CreatedDate": "2023-12-30",
     "GenreId": 1,
     "OwnerId": 13,
-    "ReleaseCount": 0,
+    "ReleaseCount": 1,
     "ArtworkImages": [
       {
         "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/zjmevitlgj3avkqss0oz",
@@ -118,7 +118,7 @@
     "CreatedDate": "2023-01-14",
     "GenreId": 1,
     "OwnerId": 13,
-    "ReleaseCount": 0,
+    "ReleaseCount": 1,
     "ArtworkImages": [
       {
         "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/tsy1k8y4nbv1gdebljcp",
@@ -134,7 +134,7 @@
     "CreatedDate": "2023-06-03",
     "GenreId": 1,
     "OwnerId": 13,
-    "ReleaseCount": 0,
+    "ReleaseCount": 1,
     "ArtworkImages": [
       {
         "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/i5cmyc9vnk7n0z6lzw1q",
@@ -150,7 +150,7 @@
     "CreatedDate": "2023-09-11",
     "GenreId": 2,
     "OwnerId": 13,
-    "ReleaseCount": 0,
+    "ReleaseCount": 1,
     "ArtworkImages": [
       {
         "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/xlddie1sbbxekrcw4c11",
@@ -166,7 +166,7 @@
     "CreatedDate": "2023-10-15",
     "GenreId": 5,
     "OwnerId": 13,
-    "ReleaseCount": 0,
+    "ReleaseCount": 1,
     "ArtworkImages": [
       {
         "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/eqwbj8jldqtniwnvha84",
@@ -182,7 +182,7 @@
     "CreatedDate": "2023-10-15",
     "GenreId": 5,
     "OwnerId": 13,
-    "ReleaseCount": 0,
+    "ReleaseCount": 1,
     "ArtworkImages": [
       {
         "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/yj8qlpyfjrccowndpfqq",
@@ -198,7 +198,7 @@
     "CreatedDate": "2023-10-15",
     "GenreId": 6,
     "OwnerId": 13,
-    "ReleaseCount": 0,
+    "ReleaseCount": 1,
     "ArtworkImages": [
       {
         "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/ionm6kqrqhhkqywqdkcb",
@@ -214,7 +214,7 @@
     "CreatedDate": "2023-10-15",
     "GenreId": 6,
     "OwnerId": 13,
-    "ReleaseCount": 0,
+    "ReleaseCount": 1,
     "ArtworkImages": [
       {
         "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/tn4dbicmawdmtlwnmxav",
@@ -230,7 +230,7 @@
     "CreatedDate": "2023-10-15",
     "GenreId": 7,
     "OwnerId": 13,
-    "ReleaseCount": 0,
+    "ReleaseCount": 1,
     "ArtworkImages": [
       {
         "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/oseldkxddgzwaalwucox",
@@ -246,7 +246,7 @@
     "CreatedDate": "2023-10-15",
     "GenreId": 7,
     "OwnerId": 13,
-    "ReleaseCount": 0,
+    "ReleaseCount": 1,
     "ArtworkImages": [
       {
         "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/vutmx988nyaxador5tz4",
@@ -262,7 +262,7 @@
     "CreatedDate": "2023-10-15",
     "GenreId": 8,
     "OwnerId": 13,
-    "ReleaseCount": 0,
+    "ReleaseCount": 1,
     "ArtworkImages": [
       {
         "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/wuveolfwgk8s3qihowsq",
@@ -278,7 +278,7 @@
     "CreatedDate": "2023-10-15",
     "GenreId": 8,
     "OwnerId": 13,
-    "ReleaseCount": 0,
+    "ReleaseCount": 1,
     "ArtworkImages": [
       {
         "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/j1obqshw5qp3y0mg7axi",
@@ -294,7 +294,7 @@
     "CreatedDate": "2023-10-15",
     "GenreId": 9,
     "OwnerId": 13,
-    "ReleaseCount": 0,
+    "ReleaseCount": 1,
     "ArtworkImages": [
       {
         "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/funpykw9rahosgjgvn2s",
@@ -310,7 +310,7 @@
     "CreatedDate": "2023-10-15",
     "GenreId": 9,
     "OwnerId": 13,
-    "ReleaseCount": 0,
+    "ReleaseCount": 1,
     "ArtworkImages": [
       {
         "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/xdafjcsxaxnrkwrej3bt",
@@ -326,7 +326,7 @@
     "CreatedDate": "2023-10-15",
     "GenreId": 10,
     "OwnerId": 13,
-    "ReleaseCount": 0,
+    "ReleaseCount": 1,
     "ArtworkImages": [
       {
         "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/tfzesr8o9efhwi60c12j",
@@ -342,7 +342,7 @@
     "CreatedDate": "2023-10-15",
     "GenreId": 10,
     "OwnerId": 13,
-    "ReleaseCount": 0,
+    "ReleaseCount": 1,
     "ArtworkImages": [
       {
         "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/npbmu0lab2da0lposauq",
@@ -358,7 +358,7 @@
     "CreatedDate": "2023-10-15",
     "GenreId": 11,
     "OwnerId": 13,
-    "ReleaseCount": 0,
+    "ReleaseCount": 1,
     "ArtworkImages": [
       {
         "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/ujxlmj0uler2hceyvss5",
@@ -374,7 +374,7 @@
     "CreatedDate": "2023-10-15",
     "GenreId": 11,
     "OwnerId": 13,
-    "ReleaseCount": 0,
+    "ReleaseCount": 1,
     "ArtworkImages": [
       {
         "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/m5aeqeaisf4dn5zoe6xr",
@@ -390,7 +390,7 @@
     "CreatedDate": "2023-10-15",
     "GenreId": 12,
     "OwnerId": 13,
-    "ReleaseCount": 0,
+    "ReleaseCount": 1,
     "ArtworkImages": [
       {
         "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/vrp4auchzocoxhhyqujq",
@@ -406,7 +406,7 @@
     "CreatedDate": "2023-10-15",
     "GenreId": 12,
     "OwnerId": 13,
-    "ReleaseCount": 0,
+    "ReleaseCount": 1,
     "ArtworkImages": [
       {
         "ImageUrl": "https://res.cloudinary.com/dlr9litcn/image/upload/f_auto,q_auto/v1/asp-net7/jvg6k1tebh4tgslwp8z5",
