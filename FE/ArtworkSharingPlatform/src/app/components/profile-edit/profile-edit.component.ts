@@ -6,6 +6,8 @@ import {take} from "rxjs";
 import {UserService} from "../../_services/user.service";
 import {ToastrService} from "ngx-toastr";
 import {NgForm} from "@angular/forms";
+import {LocalStorageService} from "../../_services/local-storage.service";
+import {UserInfo} from "../../_model/userInfo.model";
 
 @Component({
   selector: 'app-profile-edit',
@@ -16,6 +18,7 @@ export class ProfileEditComponent implements OnInit{
   user : User | undefined;
   validationErrors: string[] = [];
   @ViewChild('editForm') editForm: NgForm | undefined;
+  userInfo: UserInfo;
   @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any) {
     if (this.editForm?.dirty) {
       $event.returnValue = true;
@@ -23,12 +26,17 @@ export class ProfileEditComponent implements OnInit{
   }
   constructor(private accountService: AccountService,
               private userService: UserService,
-              private toastr: ToastrService) {
+              private toastr: ToastrService,
+              private localStorage: LocalStorageService) {
     this.accountService.currentUser$.pipe(take(1)).subscribe({
       next: user => {
         if (user) this.user = user;
       }
     });
+    this.userService.getRemainingCredits(this.user?.email).subscribe(response => {
+      this.userInfo = response;
+      console.log(this.userInfo)
+    })
   }
 
   ngOnInit() {
