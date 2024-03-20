@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace ArtworkSharingHost.Controllers
 {
     [Route("api/[controller]")]
@@ -82,7 +83,7 @@ namespace ArtworkSharingHost.Controllers
         }
 
         [HttpGet("transaction")]
-        [Authorize(Policy = "RequireManagerRole")]
+        //[Authorize(Policy = "RequireManagerRole")]
         public async Task<IActionResult> GetAllTransaction()
         {
             return Ok(await _transactionService.GetAllTransaction());
@@ -93,6 +94,18 @@ namespace ArtworkSharingHost.Controllers
         public async Task<IActionResult> GetTransactionById(int transactionId)
         {
             return Ok(await _transactionService.GetTransactionById(transactionId));
+        }
+
+        [HttpGet("export/{transactionId}")]
+        public async Task<IActionResult> ExportTransaction(int transactionId)
+        {
+            var workbook = await _transactionService.ExportTransaction(transactionId);
+            using (var stream = new MemoryStream())
+            {
+                workbook.SaveAs(stream);
+                var content = stream.ToArray();
+                return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"Transaction-{transactionId}.xlsx");
+            }
         }
     }
 }

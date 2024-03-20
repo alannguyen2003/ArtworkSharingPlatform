@@ -66,6 +66,11 @@ import { ConfigDetailComponent } from './components/admin/config-magement/config
 import { DetailComponent } from './components/user/commissions/detail/detail.component';
 import { CommissionArtistComponent } from './components/user/commission-artist/commission-artist.component';
 import { DetailCommissionComponent } from './components/user/commission-artist/detail-commission/detail-commission.component';
+import { TransactionListComponent } from './components/manager/transaction-management/transaction-list/transaction-list.component';
+import { ManagerLayoutComponent } from './components/manager/manager-layout/manager-layout.component';
+import { ManagerDashboardComponent } from './components/manager/manager-dashboard/manager-dashboard.component';
+import { ManagerSidebarComponent } from './components/manager/manager-sidebar/manager-sidebar.component';
+import { TransactionDetailComponent } from './components/manager/transaction-management/transaction-detail/transaction-detail.component';
 
 
 @NgModule({
@@ -121,7 +126,12 @@ import { DetailCommissionComponent } from './components/user/commission-artist/d
     ConfigDetailComponent,
     DetailComponent,
     CommissionArtistComponent,
-    DetailCommissionComponent
+    DetailCommissionComponent,
+    TransactionListComponent,
+    ManagerLayoutComponent,
+    ManagerDashboardComponent,
+    ManagerSidebarComponent,
+    TransactionDetailComponent
   ],
   imports: [
     BrowserModule,
