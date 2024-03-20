@@ -1,0 +1,14 @@
+a.truncate {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 150px;
+  }
+  .sticky-action-column {
+    position: sticky;
+    right: 0;
+    z-index: 100;
+  }
+  
+
+  

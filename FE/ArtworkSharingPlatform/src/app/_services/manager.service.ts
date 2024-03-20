@@ -28,4 +28,11 @@ export class ManagerService {
   getAllPackages(): Observable<Package[]> {
     return this.http.get<Package[]>(`${this.baseUrl}manager/packages`);
   }
+  getPackageById(packageId: number): Observable<Package> {
+    return this.http.get<Package>(`${this.baseUrl}manager/packages/${packageId}`);
+  }
+  deletePackage(packageId: number) {
+    return this.http.delete(`${this.baseUrl}manager/packages/${packageId}`);
+  }
+  
 }
