@@ -26,4 +26,22 @@ export class TransactionListComponent implements OnInit {
       this.dtTrigger.next(null);
     });
   }
+
+  exportTransactionList() {
+    this.managerService.exportTransactionList().subscribe(data => {
+      this.downloadFile(data, 'transaction-list.xlsx');
+    }, error => {
+      console.error('Error exporting transaction list:', error);
+    });
+  }
+  
+  downloadFile(data: Blob, filename: string) {
+    const url = window.URL.createObjectURL(data);
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = filename;
+    anchor.click();
+    window.URL.revokeObjectURL(url);
+  }
+  
 }

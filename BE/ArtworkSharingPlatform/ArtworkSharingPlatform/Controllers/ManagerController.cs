@@ -107,5 +107,20 @@ namespace ArtworkSharingHost.Controllers
                 return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"Transaction-{transactionId}.xlsx");
             }
         }
+
+        [HttpGet("export/list")]
+        public async Task<IActionResult> ExportTransactionList()
+        {
+            var workbook = await _transactionService.ExportTransactionList();
+            using (var stream = new MemoryStream())
+            {
+                workbook.SaveAs(stream);
+                var content = stream.ToArray();
+                return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "TransactionList.xlsx");
+            }
+        }
+
+
+
     }
 }

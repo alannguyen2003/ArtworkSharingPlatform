@@ -71,6 +71,10 @@ import { ManagerLayoutComponent } from './components/manager/manager-layout/mana
 import { ManagerDashboardComponent } from './components/manager/manager-dashboard/manager-dashboard.component';
 import { ManagerSidebarComponent } from './components/manager/manager-sidebar/manager-sidebar.component';
 import { TransactionDetailComponent } from './components/manager/transaction-management/transaction-detail/transaction-detail.component';
+import { PackageListComponent } from './components/manager/package-management/package-list/package-list.component';
+import { PackageDetailComponent } from './components/manager/package-management/package-detail/package-detail.component';
+import { PackageUpdateComponent } from './components/manager/package-management/package-update/package-update.component';
+import { PackageDeleteComponent } from './components/manager/package-management/package-delete/package-delete.component';
 
 
 @NgModule({
@@ -131,7 +135,11 @@ import { TransactionDetailComponent } from './components/manager/transaction-man
     ManagerLayoutComponent,
     ManagerDashboardComponent,
     ManagerSidebarComponent,
-    TransactionDetailComponent
+    TransactionDetailComponent,
+    PackageListComponent,
+    PackageDetailComponent,
+    PackageUpdateComponent,
+    PackageDeleteComponent
   ],
   imports: [
     BrowserModule,
