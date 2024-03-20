@@ -76,6 +76,14 @@ namespace ArtworkSharingHost.Controllers
 			var rating = await _artworkService.GetArtworkRatingForUser(User.GetUserId(), artworkId);
 			return Ok(rating);
 		}
+		[HttpPost("rating")]
+		[Authorize]
+		public async Task<ActionResult<int>> Rating([FromBody] ArtworkRatingDTO rating)
+		{
+            rating.UserId = User.GetUserId();
+			await _artworkService.UserRating(rating);
+			return Ok();
+		}
 
 		[HttpPost]
         [Authorize(Policy = "RequireArtistRole")]
